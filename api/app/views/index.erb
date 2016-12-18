@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/blazecss/latest/blaze.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.css' rel='stylesheet' />
-        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="<%= asset_path('css/style.css') %>" />
 
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -35,6 +35,6 @@
       <div id="container">
       </div>
 
-      <script src="assets/bundle.js"></script>
+      <script src="<%= asset_path('bundle.js') %>"></script>
     </body>
 </html>
