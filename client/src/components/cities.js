@@ -27,11 +27,11 @@ class Cities extends Component {
   }
 
   componentWillMount() {
-    CitiesStore.addChangeListener(this.onChange.bind(this));
+    CitiesStore.addChangeListener(() => this.onChange());
   }
 
   componentWillUnmount() {
-    CitiesStore.removeChangeListener(this.onChange.bind(this));
+    CitiesStore.removeChangeListener(() => this.onChange());
   }
 
   onChange() {
@@ -39,7 +39,9 @@ class Cities extends Component {
   }
 
   componentDidMount() {
-    CitiesStore.fetchCities();
+    // FIXME: If there is no check, there is an error (setState called
+    // in an unmounted component)
+    if (this.state.cities.length === 0) CitiesStore.fetchCities();
   }
 
   render() {
