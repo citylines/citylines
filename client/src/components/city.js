@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Panel from './panel';
+import {Panel, PanelHeader, PanelBody} from './panel';
 import MainStore from '../stores/main-store';
 
 class City extends Component {
@@ -30,7 +30,12 @@ class City extends Component {
   render() {
     return (
         <Panel display={this.state.main.displayPanel}>
-          <p>{this.props.params.city_id}</p>
+          <PanelHeader>
+            <h3 className="c-heading">{this.props.params.city_url_name}</h3>
+          </PanelHeader>
+          <PanelBody>
+            {"Some body"}
+          </PanelBody>
         </Panel>
         );
   }

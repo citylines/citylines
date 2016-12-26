@@ -10,7 +10,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={Main}>
         <IndexRoute component={Cities} />
-        <Route path=":city_id" component={City} />
+        <Route path=":city_url_name" component={City} />
       </Route>
     </Router>,
     document.getElementById('container')

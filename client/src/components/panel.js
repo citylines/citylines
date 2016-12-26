@@ -11,4 +11,26 @@ class Panel extends Component {
   }
 }
 
-export default Panel
+class PanelHeader extends Component {
+  render() {
+    return (
+      <div className="panel-header o-grid__cell o-grid__cell--width-100">
+        <div className="panel-header-title">
+          {this.props.children}
+        </div>
+      </div>
+      )
+  }
+}
+
+class PanelBody extends Component {
+  render() {
+    return (
+      <div className="panel-body">
+        {this.props.children}
+      </div>
+      )
+  }
+}
+
+export {Panel, PanelHeader, PanelBody};
