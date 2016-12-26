@@ -23,15 +23,16 @@ class Cities extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.bindedOnChange = this.onChange.bind(this);
     this.state = CitiesStore.getState();
   }
 
   componentWillMount() {
-    CitiesStore.addChangeListener(() => this.onChange());
+    CitiesStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
-    CitiesStore.removeChangeListener(() => this.onChange());
+    CitiesStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
@@ -39,9 +40,7 @@ class Cities extends Component {
   }
 
   componentDidMount() {
-    // FIXME: If there is no check, there is an error (setState called
-    // in an unmounted component)
-    if (this.state.cities.length === 0) CitiesStore.fetchCities();
+    CitiesStore.fetchCities();
   }
 
   render() {

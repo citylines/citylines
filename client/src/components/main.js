@@ -3,12 +3,18 @@ import { Link } from 'react-router';
 import MainStore from '../stores/main-store.js'
 
 class Main extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.bindedOnChange = this.onChange.bind(this);
+  }
+
   componentWillMount() {
-    MainStore.addChangeListener(() => this.onChange());
+    MainStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
-    MainStore.removeChangeListener(() => this.onChange());
+    MainStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
