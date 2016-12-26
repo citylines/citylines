@@ -1,6 +1,8 @@
 import Store from './store';
 
 const MainStore = Object.assign({}, Store, {
+  displayPanel: true,
+
   getState() {
     return {
       displayPanel: this.displayPanel
