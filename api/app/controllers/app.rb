@@ -1,9 +1,4 @@
 class App < Sinatra::Base
-  DEFAULT_ZOOM = 12
-  DEFAULT_BEARING = 0
-  DEFAULT_PITCH = 0
-  DEFAULT_SPEED = 1
-
   set :public_folder, File.join(APP_ROOT, '..', 'public')
   set :views, File.join(APP_ROOT, 'app', 'views')
 

@@ -2,22 +2,41 @@ import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
-  componentDidMount() {
-    mapboxgl.accessToken = this.props.mapboxAccessToken;
-    const map = new mapboxgl.Map({
+  setMap(props) {
+    if (!props.center) return;
+
+    if (this.map) {
+      // FIXME: This should be coordinated with the props comparison
+      return;
+    }
+
+    mapboxgl.accessToken = props.mapboxAccessToken;
+    this.map = new mapboxgl.Map({
       container: 'map',
-      style: this.props.mapboxStyle,
-      center: this.props.center,
-      zoom: this.props.zoom,
-      bearing: this.props.bearing,
-      pitch: this.props.pitch
+      style: props.mapboxStyle,
+      center: props.center,
+      zoom: props.zoom,
+      bearing: props.bearing,
+      pitch: props.pitch
     });
 
-    map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new mapboxgl.NavigationControl());
 
-    map.on('load',() => {
-      if (typeof this.props.onLoad === 'function') this.props.onLoad(map);
+    this.map.on('load',() => {
+      if (typeof props.onLoad === 'function') props.onLoad(map);
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // FIXME: The following comparison should be coordinated with the `this.map` check
+    // FIXME: The following comparison doesn't work
+    if (nextProps !== this.props) {
+      this.setMap(nextProps);
+    }
+  }
+
+  componentDidMount() {
+    this.setMap(this.props);
   }
 
   render() {

@@ -1,4 +1,9 @@
 class Api < App
+  DEFAULT_ZOOM = 12
+  DEFAULT_BEARING = 0
+  DEFAULT_PITCH = 0
+  DEFAULT_SPEED = 1
+
   get '/cities' do
     cities = City.map do |city|
       {name: city.name,
@@ -8,6 +13,25 @@ class Api < App
        url: city.url}
     end
     {cities: cities}.to_json
+  end
+
+  get '/:url_name/config' do |url_name|
+    @city = City[url_name: url_name]
+    {
+      mapbox_access_token: MAPBOX_ACCESS_TOKEN,
+      mapbox_style: MAPBOX_STYLE,
+      coords: @city.geojson_coords,
+      zoom: DEFAULT_ZOOM,
+      bearing: DEFAULT_BEARING,
+      pitch: DEFAULT_PITCH,
+      speed: DEFAULT_SPEED,
+      years: { start: @city.start_year,
+               end: Date.today.year,
+               current: nil,
+               previous: nil,
+               default: nil
+      }
+    }.to_json
   end
 
   get '/:url_name/plan/' do |url_name|
