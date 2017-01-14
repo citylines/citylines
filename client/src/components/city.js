@@ -29,7 +29,7 @@ class City extends Component {
   }
 
   componentDidMount() {
-    CityStore.load(this.urlName);
+    CityStore.load(this.urlName, this.props.location.query);
   }
 
   onChange() {

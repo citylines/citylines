@@ -15,10 +15,10 @@ const CityStore = Object.assign({}, Store, {
     return json;
   },
 
-  async load(urlName) {
+  async load(urlName, queryParams) {
     if (!this.cityData[urlName]) {
       const cityData = await this.fetchCityData(urlName);
-      this.cityData[urlName] = Object.assign(cityData, this.params());
+      this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
     }
     this.emitChangeEvent();
   },
@@ -28,7 +28,7 @@ const CityStore = Object.assign({}, Store, {
 
     const style = new Style(cityData.style);
 
-    const linesShown = cityData.linesShow || cityData.lines.map((line) => line.url_name);
+    const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
     cityData.linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
 
@@ -37,9 +37,17 @@ const CityStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  params() {
-    // TODO: Read params from browser
-    return {};
+  updateWithQuery(cityData, queryParams) {
+    if (queryParams.year) cityData.config.years.default = parseInt(queryParams.year);
+    if (queryParams.lines) cityData.linesShown = queryParams.lines.split(',');
+    if (queryParams.geo) {
+      const parts = queryParams.geo.split(',');
+      cityData.config.coords = [parseFloat(parts[1]), parseFloat(parts[0])];
+      cityData.config.zoom = parseFloat(parts[2]);
+      cityData.config.bearing = parseFloat(parts[3]);
+      cityData.config.pitch = parseFloat(parts[4]);
+    }
+    return cityData;
   },
 
   getState(urlName) {
