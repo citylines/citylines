@@ -4,10 +4,6 @@ import Map from './map';
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 
-import Style from '../lib/style';
-import LinesMapper from '../lib/lines-mapper';
-import Timeline from '../lib/timeline';
-
 class City extends Component {
   constructor(props, context) {
     super(props, context);
@@ -44,13 +40,7 @@ class City extends Component {
   }
 
   onMapLoaded(map) {
-    const style = new Style(this.state.city.style);
-    // The following has to be filtered with the lines in params in the store, something like 'initialLinesShown'
-    // and then, the linesMapper.linesShown shoud filter the lines togglet style in the ui (this has to be checked)
-    const linesShown = this.state.city.lines.map(line => line.url_name);
-    const linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
-    const timeline = new Timeline(linesMapper, this.state.city.config.years);
-    timeline.toYear(2004);
+    CityStore.setMap(this.urlName, map);
   }
 
   render() {
