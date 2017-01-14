@@ -4,6 +4,9 @@ import Map from './map';
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 
+import Style from '../lib/style';
+import LinesMapper from '../lib/lines-mapper';
+
 class City extends Component {
   constructor(props, context) {
     super(props, context);
@@ -40,6 +43,10 @@ class City extends Component {
   }
 
   onMapLoaded(map) {
+    const style = new Style(this.state.city.style);
+    const lines = this.state.city.lines.map(line => line.url_name); // this has to be filtered with a linesShown array (perhaps the one belonging to LinesMapper);
+    const linesMapper = new LinesMapper({map: map, style: style, lines: lines});
+    linesMapper.setYear(2004);
   }
 
   render() {

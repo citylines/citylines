@@ -1,18 +1,11 @@
 module CityHelpers
-  def city_lines(city, params)
-    param_lines = if params[:lines]
-                    params[:lines].split(',')
-                  end
-
-    lines = {}
-    city.lines.each { |line|
-      lines[line.name] = {show: param_lines && !param_lines.include?(line.url_name) ? false : true,
-                          url_name: line.url_name,
-                          style: line.style}
+  def city_lines(city)
+    city.lines.map { |line|
+      {url_name: line.url_name,
+       style: line.style}
     }
-    lines
   end
-
+=begin
   def city_plans(city, params)
     param_plan_lines = params[:plans] ? params[:plans].split(',') : []
 
@@ -66,6 +59,7 @@ module CityHelpers
     end
     lengths
   end
+=end
 
   def lines_features_collection(city, type)
     city_lines_ids = city.lines.map(&:id)
