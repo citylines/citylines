@@ -45,8 +45,10 @@ class City extends Component {
 
   onMapLoaded(map) {
     const style = new Style(this.state.city.style);
-    const lines = this.state.city.lines.map(line => line.url_name); // this has to be filtered with a linesShown array (perhaps the one belonging to LinesMapper);
-    const linesMapper = new LinesMapper({map: map, style: style, lines: lines});
+    // The following has to be filtered with the lines in params in the store, something like 'initialLinesShown'
+    // and then, the linesMapper.linesShown shoud filter the lines togglet style in the ui (this has to be checked)
+    const linesShown = this.state.city.lines.map(line => line.url_name);
+    const linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
     const timeline = new Timeline(linesMapper, this.state.city.config.years);
     timeline.toYear(2004);
   }

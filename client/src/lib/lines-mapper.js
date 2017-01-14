@@ -4,9 +4,7 @@ class LinesMapper extends Mapper {
   constructor(args) {
     super(args);
 
-    if (args.lines.length > 0) {
-      this.linesShown = args.lines;
-    }
+    this.linesShown = args.linesShown || [];
 
     this.currentYear = null;
 
@@ -58,10 +56,8 @@ class LinesMapper extends Mapper {
           ];
         }
 
-        if (this.linesShown) {
-          const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
-          filter.push(linesShownFilter);
-        }
+        const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
+        filter.push(linesShownFilter);
 
         if (filter) this.map.setFilter(layer, filter);
       });
