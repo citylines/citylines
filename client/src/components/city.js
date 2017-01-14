@@ -6,6 +6,7 @@ import CityStore from '../stores/city-store';
 
 import Style from '../lib/style';
 import LinesMapper from '../lib/lines-mapper';
+import Timeline from '../lib/timeline';
 
 class City extends Component {
   constructor(props, context) {
@@ -46,7 +47,8 @@ class City extends Component {
     const style = new Style(this.state.city.style);
     const lines = this.state.city.lines.map(line => line.url_name); // this has to be filtered with a linesShown array (perhaps the one belonging to LinesMapper);
     const linesMapper = new LinesMapper({map: map, style: style, lines: lines});
-    linesMapper.setYear(2004);
+    const timeline = new Timeline(linesMapper, this.state.city.config.years);
+    timeline.toYear(2004);
   }
 
   render() {
