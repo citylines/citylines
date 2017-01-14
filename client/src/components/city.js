@@ -29,7 +29,7 @@ class City extends Component {
   }
 
   componentDidMount() {
-    CityStore.loadConfig(this.urlName);
+    CityStore.load(this.urlName);
   }
 
   onChange() {
@@ -44,7 +44,7 @@ class City extends Component {
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
-              <h3 className="c-heading">{this.urlName}</h3>
+              <h3 className="c-heading">{this.state.city.name}</h3>
             </PanelHeader>
             <PanelBody>
               {"Some body"}

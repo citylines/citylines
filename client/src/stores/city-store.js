@@ -2,18 +2,18 @@ import Store from './store';
 import 'whatwg-fetch';
 
 const CityStore = Object.assign({}, Store, {
-  defaultConfig: {},
+  cityData: {},
 
-  async fetchDefaultConfig(urlName) {
-    const url = `/api/${urlName}/config`;
+  async fetchCityData(urlName) {
+    const url = `/api/${urlName}`;
     const response = await fetch(url);
     const json = await response.json();
-    this.defaultConfig[urlName] = json;
+    this.cityData[urlName] = json;
   },
 
-  async loadConfig(urlName) {
-    if (!this.defaultConfig[urlName]) {
-      await this.fetchDefaultConfig(urlName);
+  async load(urlName) {
+    if (!this.cityData[urlName]) {
+      await this.fetchCityData(urlName);
     }
     this.emitChangeEvent();
   },
@@ -23,15 +23,13 @@ const CityStore = Object.assign({}, Store, {
     return {};
   },
 
-  config(urlName) {
-    const config = this.defaultConfig[urlName] || {};
-    return Object.assign(config, this.params());
+  updatedConfig(config) {
+    return {config: Object.assign(config, this.params())};
   },
 
   getState(urlName) {
-    return {
-      config: this.config(urlName)
-    }
+    const cityData = this.cityData[urlName] || {config: {}};
+    return Object.assign({}, cityData, this.updatedConfig(cityData.config));
   }
 });
 

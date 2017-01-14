@@ -15,9 +15,9 @@ class Api < App
     {cities: cities}.to_json
   end
 
-  get '/:url_name/config' do |url_name|
+  get '/:url_name' do |url_name|
     @city = City[url_name: url_name]
-    {
+    config = {
       mapbox_access_token: MAPBOX_ACCESS_TOKEN,
       mapbox_style: MAPBOX_STYLE,
       coords: @city.geojson_coords,
@@ -31,7 +31,10 @@ class Api < App
                previous: nil,
                default: nil
       }
-    }.to_json
+    }
+
+    { name: @city.name,
+      config: config }.to_json
   end
 
   get '/:url_name/plan/' do |url_name|
