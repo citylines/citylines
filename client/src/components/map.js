@@ -23,7 +23,7 @@ class Map extends Component {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load',() => {
-      if (typeof props.onLoad === 'function') props.onLoad(map);
+      if (typeof props.onLoad === 'function') props.onLoad(this.map);
     });
   }
 

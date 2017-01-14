@@ -39,6 +39,9 @@ class City extends Component {
     });
   }
 
+  onMapLoaded(map) {
+  }
+
   render() {
     return (
         <div className="o-grid o-panel">
@@ -57,6 +60,7 @@ class City extends Component {
             zoom={this.state.city.config.zoom}
             bearing={this.state.city.config.bearing}
             pitch={this.state.city.config.pitch}
+            onLoad={this.onMapLoaded.bind(this)}
           />
         </div>
         );
