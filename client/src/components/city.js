@@ -49,12 +49,15 @@ class City extends Component {
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
               <h3 className="c-heading">{this.state.city.name}</h3>
+              { (this.state.city.currentYear) ?
               <Year
                 urlName={this.urlName}
                 min={(this.state.city.config.years || {}).start}
                 max={(this.state.city.config.years || {}).end}
-                year={this.state.city.currentYear || 0}
+                year={this.state.city.currentYear}
+                playing={this.state.city.playing}
               />
+                : null }
             </PanelHeader>
             <PanelBody>
             </PanelBody>
@@ -82,13 +85,15 @@ class Year extends Component {
   }
 
   render() {
+    const icon = this.props.playing ? 'fa-pause' : 'fa-play';
+
     return (
     <div>
       <div className="c-input-group c-input-group--right">
         <div className="o-field">
           <input ref="currentYear" className="c-field" type="number" value={this.props.year}/>
         </div>
-        <button ref="action" className="c-button c-button--ghost" onClick={this.animate.bind(this)}> <span className="fa fa-play"></span> </button>
+        <button ref="action" className="c-button c-button--ghost" onClick={this.animate.bind(this)}> <span className={`fa ${icon}`}></span> </button>
       </div>
       <input ref="slider"
         type="range"

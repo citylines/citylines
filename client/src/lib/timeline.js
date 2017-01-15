@@ -13,7 +13,7 @@ class Timeline {
     this.years.current = year;
   }
 
-  animateToYear(year, yearCallback, endCallback) {
+  animateToYear(year, startCallback, yearCallback, endCallback) {
     const difference = year - this.years.current;
     if (difference == 0) return;
 
@@ -21,6 +21,8 @@ class Timeline {
     let y = this.years.current;
 
     this.playing = true;
+
+    if (typeof startCallback === 'function') startCallback();
 
     this.interval = setInterval(() => {
       if (y == year) {

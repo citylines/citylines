@@ -58,15 +58,21 @@ const CityStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
-      currentYear: cityData.timeline ? cityData.timeline.years.current : null
+      currentYear: cityData.timeline ? cityData.timeline.years.current : null,
+      playing: cityData.timeline ? cityData.timeline.playing : false
     };
   },
 
   animate(urlName, yearCallback) {
     const cityData = this.cityData[urlName];
-    cityData.timeline.animateToYear(cityData.config.years.end, yearCallback, () => {
-      this.emitChangeEvent();
-    });
+    cityData.timeline.animateToYear(cityData.config.years.end,
+        () => {
+          this.emitChangeEvent();
+        },
+        yearCallback,
+        () => {
+          this.emitChangeEvent();
+        });
   }
 });
 
