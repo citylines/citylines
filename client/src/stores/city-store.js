@@ -4,6 +4,7 @@ import 'whatwg-fetch';
 import Style from '../lib/style';
 import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
+import MouseEvents from '../lib/mouse-events';
 
 const CityStore = Object.assign({}, Store, {
   cityData: {},
@@ -31,6 +32,7 @@ const CityStore = Object.assign({}, Store, {
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
     cityData.linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
+    cityData.mouseEvents = new MouseEvents(map, style, {lines: cityData.linesMapper});
 
     cityData.timeline.toYear(cityData.config.years.default || cityData.config.years.start);
 
