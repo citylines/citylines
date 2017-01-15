@@ -8,7 +8,7 @@ desc "Run database migrations"
 namespace :db do
     task :migrate do
         require 'sequel/extensions/migration'
-        Sequel::Migrator.run(DB, "db/migrations",
+        Sequel::Migrator.run(DB, "api/db/migrations",
                 use_transactions: true)
         puts "=> db:migrate executed"
     end
