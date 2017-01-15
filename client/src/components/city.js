@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
-import {Panel, PanelHeader, PanelBody} from './panel';
 
+import {Panel, PanelHeader, PanelBody} from './panel';
+import {LinesTreeContainer, LinesTree} from './city/lines-tree';
 import Map from './map';
 import Year from './city/year';
 
@@ -66,6 +67,15 @@ class City extends Component {
     this.updateParams({year: newYear});
   }
 
+  onLineToggle(lineUrlName) {
+    CityStore.toggleLine(this.urlName, lineUrlName);
+  }
+
+  onLinesShownChange() {
+    const linesShown = this.state.city.linesShown.join(',');
+    this.updateParams({lines: linesShown});
+  }
+
   render() {
     return (
         <div className="o-grid o-panel">
@@ -84,6 +94,16 @@ class City extends Component {
               />
             </PanelHeader>
             <PanelBody>
+              <LinesTreeContainer>
+                <LinesTree
+                  name={'Líneas'}
+                  defaultExpanded={true}
+                  lines={this.state.city.lines}
+                  linesShown={this.state.city.linesShown}
+                  onLineToggle={this.onLineToggle.bind(this)}
+                  onLinesShownChange={this.onLinesShownChange.bind(this)}
+                />
+              </LinesTreeContainer>
             </PanelBody>
           </Panel>
           <Map

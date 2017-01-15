@@ -1,8 +1,9 @@
 module CityHelpers
   def city_lines(city)
     city.lines.map { |line|
-      {url_name: line.url_name,
-       style: line.style}
+      { name: line.name,
+        url_name: line.url_name,
+        style: line.style }
     }
   end
 =begin

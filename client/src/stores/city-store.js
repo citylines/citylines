@@ -53,11 +53,15 @@ const CityStore = Object.assign({}, Store, {
   getState(urlName) {
     const cityData = this.cityData[urlName] || {};
 
+    // Here I use a #map so we create a new Object, instead of passing a reference to the same
+    // `linesShown` object
+    const linesShown = (cityData.linesMapper ? cityData.linesMapper.linesShown : []).map((l) => {return l});
+
     return {
       name: cityData.name,
       lines: cityData.lines,
       config: cityData.config || {},
-      linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
+      linesShown: linesShown,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false
     };
@@ -85,6 +89,12 @@ const CityStore = Object.assign({}, Store, {
   setYear(urlName, year) {
     const cityData = this.cityData[urlName];
     cityData.timeline.toYear(year);
+    this.emitChangeEvent();
+  },
+
+  toggleLine(urlName, lineUrlName) {
+    const cityData = this.cityData[urlName];
+    cityData.linesMapper.toggleLine(lineUrlName);
     this.emitChangeEvent();
   }
 });
