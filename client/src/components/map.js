@@ -22,6 +22,22 @@ class Map extends Component {
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
+    this.map.on('moveend', () => {
+      if (typeof props.onMove !== 'function') return;
+
+      const center = this.map.getCenter();
+
+      const geo = {
+        lat: center.lat.toFixed(6),
+        lon: center.lng.toFixed(6),
+        zoom: this.map.getZoom().toFixed(2),
+        bearing: this.map.getBearing().toFixed(2),
+        pitch: this.map.getPitch().toFixed(2)
+      }
+
+      props.onMove(geo);
+    });
+
     this.map.on('load',() => {
       if (typeof props.onLoad === 'function') props.onLoad(this.map);
     });

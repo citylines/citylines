@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 import {Panel, PanelHeader, PanelBody} from './panel';
 
 import Map from './map';
@@ -32,7 +33,16 @@ class City extends Component {
   }
 
   componentDidMount() {
-    CityStore.load(this.urlName, this.props.location.query);
+    CityStore.load(this.urlName, this.params());
+  }
+
+  params() {
+    return this.props.location.query;
+  }
+
+  updateParams(newParams) {
+    const params = Object.assign(this.params(), newParams);
+    browserHistory.push({...this.props.location, query: params});
   }
 
   onChange() {
@@ -44,6 +54,16 @@ class City extends Component {
 
   onMapLoaded(map) {
     CityStore.setMap(this.urlName, map);
+  }
+
+  onMapMoved(geo) {
+    const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
+    this.updateParams({geo: newGeo});
+  }
+
+  onYearChanged() {
+    const newYear = this.state.city.currentYear;
+    this.updateParams({year: newYear});
   }
 
   render() {
@@ -60,6 +80,7 @@ class City extends Component {
                 max={(this.state.city.config.years || {}).end}
                 year={this.state.city.currentYear}
                 playing={this.state.city.playing}
+                onYearChange={this.onYearChanged.bind(this)}
               />
             </PanelHeader>
             <PanelBody>
@@ -73,6 +94,7 @@ class City extends Component {
             bearing={this.state.city.config.bearing}
             pitch={this.state.city.config.pitch}
             onLoad={this.onMapLoaded.bind(this)}
+            onMove={this.onMapMoved.bind(this)}
           />
         </div>
         );

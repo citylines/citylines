@@ -23,6 +23,16 @@ class Year extends Component {
     CityStore.setYear(this.props.urlName, year);
   }
 
+  componentWillReceiveProps(newProps) {
+    const newYear = newProps.year;
+    if (newYear !== this.props.year &&
+        (newYear >= this.props.min && newYear <= this.props.max)) {
+      if (typeof this.props.onYearChange === 'function') {
+        this.props.onYearChange();
+      }
+    }
+  }
+
   render() {
     const icon = this.props.playing ? 'fa-pause' : 'fa-play';
 
