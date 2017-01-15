@@ -80,6 +80,12 @@ const CityStore = Object.assign({}, Store, {
         () => {
           this.emitChangeEvent();
         });
+  },
+
+  setYear(urlName, year) {
+    const cityData = this.cityData[urlName];
+    cityData.timeline.toYear(year);
+    this.emitChangeEvent();
   }
 });
 

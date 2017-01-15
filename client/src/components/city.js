@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Panel, PanelHeader, PanelBody} from './panel';
+
 import Map from './map';
+import Year from './city/year';
+
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 
@@ -49,7 +52,6 @@ class City extends Component {
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
               <h3 className="c-heading">{this.state.city.name}</h3>
-              { (this.state.city.currentYear) ?
               <Year
                 urlName={this.urlName}
                 min={(this.state.city.config.years || {}).start}
@@ -57,7 +59,6 @@ class City extends Component {
                 year={this.state.city.currentYear}
                 playing={this.state.city.playing}
               />
-                : null }
             </PanelHeader>
             <PanelBody>
             </PanelBody>
@@ -73,36 +74,6 @@ class City extends Component {
           />
         </div>
         );
-  }
-}
-
-class Year extends Component {
-  toggleAnimation() {
-    CityStore.toggleAnimation(this.props.urlName, (year) => {
-      this.refs.slider.value = year;
-      this.refs.currentYear.value = year;
-    });
-  }
-
-  render() {
-    const icon = this.props.playing ? 'fa-pause' : 'fa-play';
-
-    return (
-    <div>
-      <div className="c-input-group c-input-group--right">
-        <div className="o-field">
-          <input ref="currentYear" className="c-field" type="number" value={this.props.year}/>
-        </div>
-        <button ref="action" className="c-button c-button--ghost" onClick={this.toggleAnimation.bind(this)}> <span className={`fa ${icon}`}></span> </button>
-      </div>
-      <input ref="slider"
-        type="range"
-        className="c-range"
-        min={this.props.min}
-        max={this.props.max}
-        value={this.props.year} />
-     </div>
-     )
   }
 }
 
