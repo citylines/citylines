@@ -60,6 +60,13 @@ const CityStore = Object.assign({}, Store, {
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
       currentYear: cityData.timeline ? cityData.timeline.years.current : null
     };
+  },
+
+  animate(urlName, yearCallback) {
+    const cityData = this.cityData[urlName];
+    cityData.timeline.animateToYear(cityData.config.years.end, yearCallback, () => {
+      this.emitChangeEvent();
+    });
   }
 });
 
