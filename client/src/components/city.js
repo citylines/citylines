@@ -51,7 +51,9 @@ class City extends Component {
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
-              <h3 className="c-heading">{this.state.city.name}</h3>
+              <div className="panel-header-title">
+                <h3 className="c-heading">{this.state.city.name}</h3>
+              </div>
               <Year
                 urlName={this.urlName}
                 min={(this.state.city.config.years || {}).start}
