@@ -42,7 +42,7 @@ class City extends Component {
   }
 
   updateParams(newParams) {
-    const params = Object.assign(this.params(), newParams);
+    const params = Object.assign({}, this.params(), newParams);
 
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
