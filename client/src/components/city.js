@@ -77,8 +77,8 @@ class City extends Component {
 }
 
 class Year extends Component {
-  animate() {
-    CityStore.animate(this.props.urlName, (year) => {
+  toggleAnimation() {
+    CityStore.toggleAnimation(this.props.urlName, (year) => {
       this.refs.slider.value = year;
       this.refs.currentYear.value = year;
     });
@@ -93,7 +93,7 @@ class Year extends Component {
         <div className="o-field">
           <input ref="currentYear" className="c-field" type="number" value={this.props.year}/>
         </div>
-        <button ref="action" className="c-button c-button--ghost" onClick={this.animate.bind(this)}> <span className={`fa ${icon}`}></span> </button>
+        <button ref="action" className="c-button c-button--ghost" onClick={this.toggleAnimation.bind(this)}> <span className={`fa ${icon}`}></span> </button>
       </div>
       <input ref="slider"
         type="range"

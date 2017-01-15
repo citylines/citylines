@@ -63,8 +63,15 @@ const CityStore = Object.assign({}, Store, {
     };
   },
 
-  animate(urlName, yearCallback) {
+  toggleAnimation(urlName, yearCallback) {
     const cityData = this.cityData[urlName];
+
+    if (cityData.timeline.playing) {
+      cityData.timeline.stopAnimation();
+      this.emitChangeEvent();
+      return;
+    }
+
     cityData.timeline.animateToYear(cityData.config.years.end,
         () => {
           this.emitChangeEvent();
