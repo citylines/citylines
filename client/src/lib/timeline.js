@@ -25,14 +25,16 @@ class Timeline {
     if (typeof startCallback === 'function') startCallback();
 
     this.interval = setInterval(() => {
+      y += sum;
+      this.toYear(y);
+
       if (y == year) {
         this.stopAnimation();
         if (typeof endCallback === 'function') endCallback();
         return;
+      } else {
+        if (typeof yearCallback == 'function') yearCallback(y);
       }
-      y += sum;
-      this.toYear(y);
-      if (typeof yearCallback == 'function') yearCallback(y);
     }, this.speed);
   }
 
