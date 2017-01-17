@@ -30,9 +30,9 @@ const CityStore = Object.assign({}, Store, {
     const style = new Style(cityData.style);
 
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
-    cityData.linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
+    cityData.linesMapper = new LinesMapper({map:map, style: style, linesShown: linesShown});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
-    cityData.mouseEvents = new MouseEvents(map, style, {lines: cityData.linesMapper});
+    cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
 
     cityData.timeline.toYear(cityData.config.years.default || cityData.config.years.start);
 
@@ -101,6 +101,13 @@ const CityStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName];
     cityData.linesMapper.toggleLine(lineUrlName);
     this.emitChangeEvent();
+  },
+
+  hover(urlName, features) {
+    const cityData = this.cityData[urlName];
+    cityData.mouseEvents.hover(features, () => {
+      this.emitChangeEvent();
+    });
   }
 });
 

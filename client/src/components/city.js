@@ -82,6 +82,10 @@ class City extends Component {
     this.updateParams({lines: linesShown});
   }
 
+  onMouseMove(point, features){
+    CityStore.hover(this.urlName, features);
+  }
+
   render() {
     return (
         <div className="o-grid o-panel">
@@ -122,6 +126,7 @@ class City extends Component {
             filter={this.state.city.filter}
             onLoad={this.onMapLoaded.bind(this)}
             onMove={this.onMapMoved.bind(this)}
+            onMouseMove={this.onMouseMove.bind(this)}
           />
         </div>
         );

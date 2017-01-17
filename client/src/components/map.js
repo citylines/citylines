@@ -34,6 +34,30 @@ class Map extends Component {
     this.map.on('load',() => {
       if (typeof props.onLoad === 'function') props.onLoad(this.map);
     });
+
+    this.map.on("mousemove", (e) => {
+      const point = [e.point.x,e.point.y];
+      const features = this.queryRenderedFeatures(point);
+      this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(point, features);
+    });
+  }
+
+  queryRenderedFeatures(point){
+    return this.map.queryRenderedFeatures(point, {layers: this.layerNames()});
+  }
+
+  layerNames(){
+    // FIXME: retrive names from children layers
+    return [
+        'sections_buildstart',
+        'sections_opening',
+        'sections_hover',
+        'stations_buildstart',
+        'stations_opening',
+        'stations_hover',
+        'stations_inner_layer'
+    ]
   }
 
   componentWillReceiveProps(nextProps) {

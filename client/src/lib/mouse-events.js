@@ -1,17 +1,13 @@
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class MouseEvents {
-  constructor(map, style, mappers) {
-    this.map = map;
+  constructor(style, mappers) {
     this.style = style;
     this.mappers = mappers;
+  }
 
-    map.on("mousemove", (e) => {
-      const point = [e.point.x,e.point.y];
-      const features = this.queryRenderedFeatures(point);
+  hover(features, callback) {
       const ids = {lines: {sections: [], stations: []}, plans: {sections: [], stations: []}};
-
-      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
 
       features.map((feature) => {
         const type = feature.layer.type == 'circle'? 'stations' : 'sections';
@@ -32,10 +28,9 @@ class MouseEvents {
           const type = idEntry[0];
           const idsMapperType = idEntry[1];
           mapper.setHoverIds(type, idsMapperType);
+          if (typeof callback === 'function') callback();
         });
       });
-    });
-
   }
 
   layerNames() {
@@ -52,9 +47,6 @@ class MouseEvents {
     return layers;
   }
 
-  queryRenderedFeatures(point){
-    return this.map.queryRenderedFeatures(point, {layers: this.layerNames()});
-  }
 }
 
 export default MouseEvents
