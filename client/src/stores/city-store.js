@@ -64,12 +64,13 @@ const CityStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       linesShown: linesShown,
+      filter: cityData.linesMapper ? cityData.linesMapper.filter() : null,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false
     };
   },
 
-  toggleAnimation(urlName, yearCallback) {
+  toggleAnimation(urlName) {
     const cityData = this.cityData[urlName];
 
     if (cityData.timeline.playing) {
@@ -82,7 +83,9 @@ const CityStore = Object.assign({}, Store, {
         () => {
           this.emitChangeEvent();
         },
-        yearCallback,
+        () => {
+          this.emitChangeEvent();
+        },
         () => {
           this.emitChangeEvent();
         });

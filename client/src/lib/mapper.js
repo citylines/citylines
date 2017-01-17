@@ -69,8 +69,6 @@ class Mapper {
     } else {
       this.linesShown.splice(index, 1);
     }
-    this.filter();
-    return this.linesShown;
   }
 }
 

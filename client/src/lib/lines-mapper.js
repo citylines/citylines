@@ -29,6 +29,8 @@ class LinesMapper extends Mapper {
     const hoverId = this.currentHoverId;
     const year = this.currentYear;
 
+    const filters = [];
+
     ['sections', 'stations'].map((type) => {
       Object.values(this.layers[type]).map((layer) => {
         let filter;
@@ -59,14 +61,15 @@ class LinesMapper extends Mapper {
         const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
         filter.push(linesShownFilter);
 
-        if (filter) this.map.setFilter(layer, filter);
+        filters.push([layer, filter]);
       });
     });
+
+    return filters;
   }
 
   setYear(year) {
     this.currentYear = year;
-    this.filter();
   }
 }
 

@@ -68,6 +68,7 @@ class City extends Component {
   }
 
   onYearChanged() {
+    if (this.state.city.playing) return;
     const newYear = this.state.city.currentYear;
     this.updateParams({year: newYear});
   }
@@ -118,6 +119,7 @@ class City extends Component {
             zoom={this.state.city.config.zoom}
             bearing={this.state.city.config.bearing}
             pitch={this.state.city.config.pitch}
+            filter={this.state.city.filter}
             onLoad={this.onMapLoaded.bind(this)}
             onMove={this.onMapMoved.bind(this)}
           />

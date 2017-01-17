@@ -3,13 +3,6 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
   setMap(props) {
-    if (!props.center) return;
-
-    if (this.map) {
-      // FIXME: This should be coordinated with the props comparison
-      return;
-    }
-
     mapboxgl.accessToken = props.mapboxAccessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -44,15 +37,17 @@ class Map extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // FIXME: The following comparison should be coordinated with the `this.map` check
-    // FIXME: The following comparison doesn't work
-    if (nextProps !== this.props) {
+    if (nextProps.center && nextProps.center !== this.props.center && !this.map) {
       this.setMap(nextProps);
     }
-  }
 
-  componentDidMount() {
-    this.setMap(this.props);
+    if (!this.map) return;
+
+    if (nextProps.filter && nextProps.filter !== this.props.filter) {
+      nextProps.filter.map((filter) => {
+        this.map.setFilter(filter[0], filter[1]);
+      });
+    }
   }
 
   render() {

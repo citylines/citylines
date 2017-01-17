@@ -3,10 +3,7 @@ import CityStore from '../../stores/city-store';
 
 class Year extends Component {
   toggleAnimation() {
-    CityStore.toggleAnimation(this.props.urlName, (year) => {
-      this.refs.slider.value = year;
-      this.refs.currentYear.value = year;
-    });
+    CityStore.toggleAnimation(this.props.urlName);
   }
 
   yearChange(e) {
