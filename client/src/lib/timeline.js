@@ -28,8 +28,9 @@ class Timeline {
       y += sum;
       this.toYear(y);
 
-      if (y == year) {
-        this.stopAnimation();
+      if (y == year || !this.playing) {
+        clearInterval(this.interval);
+        this.playing = false;
         if (typeof endCallback === 'function') endCallback();
         return;
       } else {
@@ -39,9 +40,7 @@ class Timeline {
   }
 
   stopAnimation(callback) {
-    clearInterval(this.interval);
     this.playing = false;
-    if (typeof callback === 'function') callback(this.years.current);
   }
 }
 

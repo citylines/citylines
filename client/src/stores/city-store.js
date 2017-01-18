@@ -76,7 +76,6 @@ const CityStore = Object.assign({}, Store, {
 
     if (cityData.timeline.playing) {
       cityData.timeline.stopAnimation();
-      this.emitChangeEvent();
       return;
     }
 
