@@ -8,7 +8,7 @@ class Mapper {
     this.linesShown = [];
     this.currentHoverId = {sections: ['none'], stations: ['none']};
 
-    // Set this.layers and call this.loadLayers();
+    // Set this.layers;
   }
 
   filter() {
@@ -24,25 +24,28 @@ class Mapper {
     });
   }
 
-  loadLayers() {
+  getLayers() {
+    const layers = [];
+
     ['sections', 'stations'].map((type) => {
       Object.values(this.layers[type]).map((layer) => {
         const sourceName = `${type}_source`;
         const featureType = type === 'sections' ? 'line' : 'circle';
-        this.addLayer(sourceName, layer, featureType);
+        layers.push(this.layer(sourceName, layer, featureType));
       });
     });
+
+    return layers;
   }
 
-  addLayer(sourceName, layerName, featureType) {
-    const layer = {
+  layer(sourceName, layerName, featureType) {
+    return {
       id: layerName,
       source: sourceName,
       type: featureType,
-      paint: this.style.get(layerName)
+      paint: this.style.get(layerName),
+      filter: this.filter(layerName)
     };
-
-    this.map.addLayer(layer);
   }
 
   setHoverIds(type, ids) {
@@ -54,7 +57,6 @@ class Mapper {
     } else {
       this.currentHoverId[type] = ids;
     }
-    this.filter();
   }
 
   toggleLine(line, callback) {

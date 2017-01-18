@@ -72,14 +72,6 @@ class Map extends Component {
     if (nextProps.center && nextProps.center !== this.props.center && !this.map) {
       this.setMap(nextProps);
     }
-
-    if (!this.map) return;
-
-    if (nextProps.filter && nextProps.filter !== this.props.filter) {
-      nextProps.filter.map((filter) => {
-        this.map.setFilter(filter[0], filter[1]);
-      });
-    }
   }
 
   render() {
@@ -124,4 +116,39 @@ Source.contextTypes = {
   map: React.PropTypes.object
 }
 
-export {Map, Source};
+class Layer extends Component {
+  componentDidMount(){
+    this.map = this.context.map;
+    this.load();
+  }
+
+  componentWillUnmount(){
+    this.map.removeLayer(this.props.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.filter && nextProps.filter !== this.props.filter) {
+      this.map.setFilter(this.props.id, nextProps.filter);
+    }
+  }
+
+  load() {
+    this.map.addLayer({
+      id: this.props.id,
+      source: this.props.source,
+      type: this.props.type,
+      paint: this.props.paint
+    });
+
+    this.map.setFilter(this.props.id, this.props.filter);
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Layer.contextTypes = {
+  map: React.PropTypes.object
+}
+export {Map, Source, Layer};

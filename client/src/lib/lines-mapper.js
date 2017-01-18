@@ -21,51 +21,42 @@ class LinesMapper extends Mapper {
         INNER_LAYER: 'stations_inner_layer'
       }
     };
-
-    this.loadLayers();
   }
 
-  filter() {
+  filter(layer) {
     const hoverId = this.currentHoverId;
     const year = this.currentYear;
+    const type = layer.split('_')[0];
 
-    const filters = [];
+    let filter;
 
-    ['sections', 'stations'].map((type) => {
-      Object.values(this.layers[type]).map((layer) => {
-        let filter;
+    if (layer.indexOf('hover') !== -1){
+      const ids = ["in", "id"].concat(hoverId[type]);
+      filter = ["all", ids];
+    } else if (layer.indexOf('buildstart') !== -1) {
+      filter = [
+        "all",
+        ["<=", "buildstart", year],
+        [">", "buildstart_end", year],
+      ];
+    } else if (layer.indexOf('opening') !== -1){
+      filter = [
+        "all",
+        ["<=", "opening", year],
+        [">", "closure", year],
+      ];
+    } else if (layer.indexOf('inner') !== -1){
+      filter = [
+        "all",
+        ["<=", "buildstart", year],
+        [">", "closure", year],
+      ];
+    }
 
-        if (layer.indexOf('hover') !== -1){
-          const ids = ["in", "id"].concat(hoverId[type]);
-          filter = ["all", ids];
-        } else if (layer.indexOf('buildstart') !== -1) {
-          filter = [
-            "all",
-            ["<=", "buildstart", year],
-            [">", "buildstart_end", year],
-          ];
-        } else if (layer.indexOf('opening') !== -1){
-          filter = [
-            "all",
-            ["<=", "opening", year],
-            [">", "closure", year],
-          ];
-        } else if (layer.indexOf('inner') !== -1){
-          filter = [
-            "all",
-            ["<=", "buildstart", year],
-            [">", "closure", year],
-          ];
-        }
+    const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
+    filter.push(linesShownFilter);
 
-        const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
-        filter.push(linesShownFilter);
-
-        filters.push([layer, filter]);
-      });
-    });
-
-    return filters;
+    return filter;
   }
 
   setYear(year) {
