@@ -56,16 +56,16 @@ class Map extends Component {
   }
 
   layerNames(){
-    // FIXME: retrive names from children layers
-    return [
-        'sections_buildstart',
-        'sections_opening',
-        'sections_hover',
-        'stations_buildstart',
-        'stations_opening',
-        'stations_hover',
-        'stations_inner_layer'
-    ]
+    const children = [].concat.apply([], this.props.children);
+    const names = [];
+
+    children.map((child) => {
+      if (child.type.name === 'Layer') {
+        names.push(child.props.id);
+      }
+    });
+
+    return names;
   }
 
   componentWillReceiveProps(nextProps) {
