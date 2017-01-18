@@ -32,21 +32,6 @@ class MouseEvents {
         });
       });
   }
-
-  layerNames() {
-    const layers = [];
-    Object.values(this.mappers).map((mapper) => {
-      Object.values(mapper.layers).map((type) => {
-        Object.values(type).map((layer) => {
-          if (layer.indexOf('hover') === -1 && layer.indexOf('inner') === -1) {
-            layers.push(layer);
-          }
-        });
-      });
-    });
-    return layers;
-  }
-
 }
 
 export default MouseEvents
