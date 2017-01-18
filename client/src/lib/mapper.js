@@ -1,7 +1,6 @@
 class Mapper {
   constructor(args) {
     args = args || {};
-    this.map = args.map;
     this.style = args.style;
     this.urlName = args.urlName;
 
@@ -11,7 +10,7 @@ class Mapper {
     // Set this.layers;
   }
 
-  filter() {
+  filter(layer) {
     // To implement
   }
 

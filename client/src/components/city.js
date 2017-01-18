@@ -59,7 +59,7 @@ class City extends Component {
   }
 
   onMapLoaded(map) {
-    CityStore.setMap(this.urlName, map);
+    CityStore.loadStore(this.urlName);
   }
 
   onMapMoved(geo) {

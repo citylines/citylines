@@ -24,13 +24,13 @@ const CityStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  setMap(urlName, map) {
+  loadStore(urlName) {
     const cityData = this.cityData[urlName];
 
     const style = new Style(cityData.style);
 
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
-    cityData.linesMapper = new LinesMapper({map:map, style: style, linesShown: linesShown, urlName: urlName});
+    cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
 
