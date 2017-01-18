@@ -3,6 +3,7 @@ class Mapper {
     args = args || {};
     this.map = args.map;
     this.style = args.style;
+    this.urlName = args.urlName;
 
     this.linesShown = [];
     this.currentHoverId = {sections: ['none'], stations: ['none']};
@@ -14,25 +15,19 @@ class Mapper {
     // To implement
   }
 
-  addSource(type) {
-    const sourceName = type + '_source';
-
-    if (this.map.getSource(sourceName)) {
-      return sourceName;
-    }
-
-    this.map.addSource(sourceName, {
-      type: 'geojson',
-      data: '/api' + location.pathname + '/source/' + type
+  sources() {
+    return ['sections', 'stations'].map((type) => {
+      return {
+        name: `${type}_source`,
+        data: `/api/${this.urlName}/source/${type}`
+      }
     });
-
-    return sourceName;
   }
 
   loadLayers() {
     ['sections', 'stations'].map((type) => {
       Object.values(this.layers[type]).map((layer) => {
-        const sourceName = this.addSource(type);
+        const sourceName = `${type}_source`;
         const featureType = type === 'sections' ? 'line' : 'circle';
         this.addLayer(sourceName, layer, featureType);
       });

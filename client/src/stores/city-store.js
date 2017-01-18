@@ -30,7 +30,7 @@ const CityStore = Object.assign({}, Store, {
     const style = new Style(cityData.style);
 
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
-    cityData.linesMapper = new LinesMapper({map:map, style: style, linesShown: linesShown});
+    cityData.linesMapper = new LinesMapper({map:map, style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
 
@@ -64,6 +64,7 @@ const CityStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       linesShown: linesShown,
+      sources: cityData.linesMapper? cityData.linesMapper.sources() : [],
       filter: cityData.linesMapper ? cityData.linesMapper.filter() : null,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false

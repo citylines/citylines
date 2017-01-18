@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  getChildContext() {
+    return {map: this.map};
+  }
+
   setMap(props) {
     mapboxgl.accessToken = props.mapboxAccessToken;
     this.map = new mapboxgl.Map({
@@ -78,9 +86,42 @@ class Map extends Component {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
         <div id="map"></div>
+        {this.props.children}
       </main>
       )
   }
 }
 
-export default Map
+Map.childContextTypes = {
+  map: React.PropTypes.object
+}
+
+class Source extends Component {
+  componentDidMount(){
+    this.map = this.context.map;
+    this.load();
+  }
+
+  componentWillUnmount(){
+    this.map.removeSource(this.props.name);
+  }
+
+  load() {
+    if (this.map.getSource(this.props.name)) return;
+
+    this.map.addSource(this.props.name, {
+      type: 'geojson',
+      data: this.props.data
+    });
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Source.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source};

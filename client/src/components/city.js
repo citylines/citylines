@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import {LinesTreeContainer, LinesTree} from './city/lines-tree';
-import Map from './map';
+import {Map, Source} from './map';
 import Year from './city/year';
 
 import MainStore from '../stores/main-store';
@@ -126,8 +126,16 @@ class City extends Component {
             filter={this.state.city.filter}
             onLoad={this.onMapLoaded.bind(this)}
             onMove={this.onMapMoved.bind(this)}
-            onMouseMove={this.onMouseMove.bind(this)}
-          />
+            onMouseMove={this.onMouseMove.bind(this)} >
+            { this.state.city.sources.map((source) => { return (
+                <Source
+                  key={source.name}
+                  name={source.name}
+                  data={source.data}
+                />
+              )
+            }) }
+          </Map>
         </div>
         );
   }
