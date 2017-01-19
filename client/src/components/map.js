@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import deepEqual from 'deep-equal';
 
 class Map extends Component {
   constructor(props, context) {
@@ -44,6 +45,8 @@ class Map extends Component {
     });
 
     this.map.on("mousemove", (e) => {
+      if (this.props.disableMouseEvents) return;
+
       const point = [e.point.x,e.point.y];
       const features = this.queryRenderedFeatures(point);
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
@@ -72,6 +75,10 @@ class Map extends Component {
     if (nextProps.center && nextProps.center !== this.props.center && !this.map) {
       this.setMap(nextProps);
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !deepEqual(nextProps,this.props);
   }
 
   render() {
@@ -105,6 +112,10 @@ class Source extends Component {
       type: 'geojson',
       data: this.props.data
     });
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {
@@ -143,6 +154,10 @@ class Layer extends Component {
     this.map.setFilter(this.props.id, this.props.filter);
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return null;
   }
@@ -151,4 +166,5 @@ class Layer extends Component {
 Layer.contextTypes = {
   map: React.PropTypes.object
 }
+
 export {Map, Source, Layer};

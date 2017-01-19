@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
-import {LinesTreeContainer, LinesTree} from './city/lines-tree';
+import LinesTree from './city/lines-tree';
 import {Map, Source, Layer} from './map';
 import Year from './city/year';
 
@@ -21,6 +21,12 @@ class City extends Component {
     }
 
     this.bindedOnChange = this.onChange.bind(this);
+    this.bindedOnYearChange = this.onYearChange.bind(this);
+    this.bindedOnLineToggle = this.onLineToggle.bind(this);
+    this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
+    this.bindedOnMouseMove = this.onMouseMove.bind(this);
+    this.bindedOnMapMove = this.onMapMove.bind(this);
+    this.bindedOnMapLoad = this.onMapLoad.bind(this);
   }
 
   componentWillMount() {
@@ -58,16 +64,17 @@ class City extends Component {
     });
   }
 
-  onMapLoaded(map) {
+  onMapLoad(map) {
     CityStore.loadStore(this.urlName);
   }
 
-  onMapMoved(geo) {
+  onMapMove(geo) {
+    if (this.state.city.playing) return;
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});
   }
 
-  onYearChanged() {
+  onYearChange() {
     if (this.state.city.playing) return;
     const newYear = this.state.city.currentYear;
     this.updateParams({year: newYear});
@@ -100,20 +107,20 @@ class City extends Component {
                 max={(this.state.city.config.years || {}).end}
                 year={this.state.city.currentYear}
                 playing={this.state.city.playing}
-                onYearChange={this.onYearChanged.bind(this)}
+                onYearChange={this.bindedOnYearChange}
               />
             </PanelHeader>
             <PanelBody>
-              <LinesTreeContainer>
+              <ul style={{marginLeft: "1em"}} className="c-tree">
                 <LinesTree
                   name={'Líneas'}
                   defaultExpanded={true}
                   lines={this.state.city.lines}
                   linesShown={this.state.city.linesShown}
-                  onLineToggle={this.onLineToggle.bind(this)}
-                  onLinesShownChange={this.onLinesShownChange.bind(this)}
+                  onLineToggle={this.bindedOnLineToggle}
+                  onLinesShownChange={this.bindedOnLinesShownChange}
                 />
-              </LinesTreeContainer>
+              </ul>
             </PanelBody>
           </Panel>
           <Map
@@ -123,9 +130,10 @@ class City extends Component {
             zoom={this.state.city.config.zoom}
             bearing={this.state.city.config.bearing}
             pitch={this.state.city.config.pitch}
-            onLoad={this.onMapLoaded.bind(this)}
-            onMove={this.onMapMoved.bind(this)}
-            onMouseMove={this.onMouseMove.bind(this)} >
+            onLoad={this.bindedOnMapLoad}
+            onMove={this.bindedOnMapMove}
+            onMouseMove={this.bindedOnMouseMove}
+            disableMouseEvents={this.state.city.playing} >
             { this.state.city.sources.map((source) => { return (
                 <Source
                   key={source.name}

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
-class Panel extends Component {
+class Panel extends PureComponent {
   render() {
     const display = this.props.display ? 'block' : 'none';
     return (
@@ -11,7 +11,7 @@ class Panel extends Component {
   }
 }
 
-class PanelHeader extends Component {
+class PanelHeader extends PureComponent {
   render() {
     return (
       <div className="panel-header o-grid__cell o-grid__cell--width-100">
@@ -21,7 +21,7 @@ class PanelHeader extends Component {
   }
 }
 
-class PanelBody extends Component {
+class PanelBody extends PureComponent {
   render() {
     return (
       <div className="panel-body">
