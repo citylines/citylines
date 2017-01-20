@@ -15,10 +15,7 @@ class City extends PureComponent {
 
     this.urlName = this.props.params.city_url_name;
 
-    this.state = {
-      main: MainStore.getState(),
-      city: CityStore.getState(this.urlName)
-    }
+    this.state = CityStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnYearChange = this.onYearChange.bind(this);
@@ -58,10 +55,7 @@ class City extends PureComponent {
   }
 
   onChange() {
-    this.setState({
-      main: MainStore.getState(),
-      city: CityStore.getState(this.urlName)
-    });
+    this.setState(CityStore.getState(this.urlName));
   }
 
   onMapLoad(map) {
@@ -69,14 +63,14 @@ class City extends PureComponent {
   }
 
   onMapMove(geo) {
-    if (this.state.city.playing) return;
+    if (this.state.playing) return;
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});
   }
 
   onYearChange() {
-    if (this.state.city.playing) return;
-    const newYear = this.state.city.currentYear;
+    if (this.state.playing) return;
+    const newYear = this.state.currentYear;
     this.updateParams({year: newYear});
   }
 
@@ -85,7 +79,7 @@ class City extends PureComponent {
   }
 
   onLinesShownChange() {
-    const linesShown = this.state.city.linesShown.join(',');
+    const linesShown = this.state.linesShown.join(',');
     this.updateParams({lines: linesShown});
   }
 
@@ -99,14 +93,14 @@ class City extends PureComponent {
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
               <div className="panel-header-title">
-                <h3 className="c-heading">{this.state.city.name}</h3>
+                <h3 className="c-heading">{this.state.name}</h3>
               </div>
               <Year
                 urlName={this.urlName}
-                min={(this.state.city.config.years || {}).start}
-                max={(this.state.city.config.years || {}).end}
-                year={this.state.city.currentYear}
-                playing={this.state.city.playing}
+                min={(this.state.config.years || {}).start}
+                max={(this.state.config.years || {}).end}
+                year={this.state.currentYear}
+                playing={this.state.playing}
                 onYearChange={this.bindedOnYearChange}
               />
             </PanelHeader>
@@ -115,8 +109,8 @@ class City extends PureComponent {
                 <LinesTree
                   name={'Líneas'}
                   defaultExpanded={true}
-                  lines={this.state.city.lines}
-                  linesShown={this.state.city.linesShown}
+                  lines={this.state.lines}
+                  linesShown={this.state.linesShown}
                   onLineToggle={this.bindedOnLineToggle}
                   onLinesShownChange={this.bindedOnLinesShownChange}
                 />
@@ -124,17 +118,17 @@ class City extends PureComponent {
             </PanelBody>
           </Panel>
           <Map
-            mapboxAccessToken={this.state.city.config.mapbox_access_token}
-            mapboxStyle={this.state.city.config.mapbox_style}
-            center={this.state.city.config.coords}
-            zoom={this.state.city.config.zoom}
-            bearing={this.state.city.config.bearing}
-            pitch={this.state.city.config.pitch}
+            mapboxAccessToken={this.state.config.mapbox_access_token}
+            mapboxStyle={this.state.config.mapbox_style}
+            center={this.state.config.coords}
+            zoom={this.state.config.zoom}
+            bearing={this.state.config.bearing}
+            pitch={this.state.config.pitch}
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
-            disableMouseEvents={this.state.city.playing} >
-            { this.state.city.sources.map((source) => { return (
+            disableMouseEvents={this.state.playing} >
+            { this.state.sources.map((source) => { return (
                 <Source
                   key={source.name}
                   name={source.name}
@@ -142,7 +136,7 @@ class City extends PureComponent {
                 />
               )
             }) }
-            { this.state.city.layers.map((layer) => { return (
+            { this.state.layers.map((layer) => { return (
                 <Layer
                   key={layer.id}
                   id={layer.id}

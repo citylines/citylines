@@ -1,16 +1,20 @@
 import Store from './store';
 
 const MainStore = Object.assign({}, Store, {
-  displayPanel: true,
+
+  state: {
+    displayPanel: true
+  },
 
   getState() {
-    return {
-      displayPanel: this.displayPanel
-    }
+    return this.state;
   },
 
   togglePanel() {
-    this.displayPanel = !this.displayPanel;
+    this.state = {
+      displayPanel: !this.state.displayPanel
+    }
+
     this.emitChangeEvent();
   }
 });

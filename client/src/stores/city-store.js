@@ -6,6 +6,8 @@ import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
 import MouseEvents from '../lib/mouse-events';
 
+import MainStore from '../stores/main-store';
+
 const CityStore = Object.assign({}, Store, {
   cityData: {},
 
@@ -56,6 +58,7 @@ const CityStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName] || {};
 
     return {
+      main: MainStore.getState(),
       name: cityData.name,
       lines: cityData.lines,
       config: cityData.config || {},
