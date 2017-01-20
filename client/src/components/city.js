@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
@@ -9,7 +9,7 @@ import Year from './city/year';
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 
-class City extends Component {
+class City extends PureComponent {
   constructor(props, context) {
     super(props, context);
 

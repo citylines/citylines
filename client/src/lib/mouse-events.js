@@ -27,8 +27,7 @@ class MouseEvents {
         Object.entries(ids[mapperType]).map((idEntry) => {
           const type = idEntry[0];
           const idsMapperType = idEntry[1];
-          mapper.setHoverIds(type, idsMapperType);
-          if (typeof callback === 'function') callback();
+          mapper.setHoverIds(type, idsMapperType, callback);
         });
       });
   }

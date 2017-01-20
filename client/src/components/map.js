@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
-import deepEqual from 'deep-equal';
 
-class Map extends Component {
+class Map extends PureComponent {
   constructor(props, context) {
     super(props, context);
   }
@@ -75,10 +74,6 @@ class Map extends Component {
     if (nextProps.center && nextProps.center !== this.props.center && !this.map) {
       this.setMap(nextProps);
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return !deepEqual(nextProps,this.props);
   }
 
   render() {

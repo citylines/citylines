@@ -60,8 +60,8 @@ const CityStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
-      sources: cityData.linesMapper ? cityData.linesMapper.sources() : [],
-      layers: cityData.linesMapper ? cityData.linesMapper.getLayers() : [],
+      sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
+      layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false
     };

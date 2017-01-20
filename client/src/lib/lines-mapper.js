@@ -8,7 +8,7 @@ class LinesMapper extends Mapper {
 
     this.currentYear = null;
 
-    this.layers = {
+    this.layerNames = {
       sections: {
         BUILDSTART: 'sections_buildstart',
         OPENGING: 'sections_opening',
@@ -61,6 +61,8 @@ class LinesMapper extends Mapper {
 
   setYear(year) {
     this.currentYear = year;
+
+    this.updateLayers();
   }
 }
 
