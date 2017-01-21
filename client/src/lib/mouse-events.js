@@ -53,6 +53,10 @@ class MouseEvents {
     if (typeof callback === 'function') callback();
   }
 
+  unClickFeatures() {
+    this.clickedFeatures = null;
+  }
+
   calculateLayerNames() {
     const layers = [];
     Object.values(this.mappers).map((mapper) => {

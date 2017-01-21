@@ -194,7 +194,10 @@ class Popup extends Component {
     this.popup = new mapboxgl.Popup()
       .setLngLat(props.point)
       .setHTML(ReactDOMServer.renderToStaticMarkup(props.children))
-      .addTo(this.map);
+      .addTo(this.map)
+      .on('close', () => {
+        if (typeof props.onClose === 'function') props.onClose();
+      });
   }
 
   shouldComponentUpdate() {

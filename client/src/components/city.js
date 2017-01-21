@@ -25,6 +25,7 @@ class City extends PureComponent {
     this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
+    this.bindedOnPopupClose = this.onPopupClose.bind(this);
   }
 
   componentWillMount() {
@@ -90,6 +91,10 @@ class City extends PureComponent {
 
   onMouseClick(point, features) {
     CityStore.clickFeatures(this.urlName, point, features);
+  }
+
+  onPopupClose() {
+    CityStore.unClickFeatures(this.urlName);
   }
 
   validFeatureValue(value) {
@@ -159,7 +164,8 @@ class City extends PureComponent {
               )
             }) }
             { this.state.clickedFeatures && (<Popup
-              point = {this.state.clickedFeatures.point}>
+              point={this.state.clickedFeatures.point}
+              onClose={this.bindedOnPopupClose}>
               <div>
               {
                 this.state.clickedFeatures.features.map((feature) => {

@@ -118,6 +118,12 @@ const CityStore = Object.assign({}, Store, {
     cityData.mouseEvents.clickFeatures(point, features, () => {
       this.emitChangeEvent();
     });
+  },
+
+  unClickFeatures(urlName) {
+    const cityData = this.cityData[urlName];
+    cityData.mouseEvents.unClickFeatures();
+    this.emitChangeEvent();
   }
 });
 
