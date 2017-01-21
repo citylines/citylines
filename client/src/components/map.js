@@ -48,8 +48,20 @@ class Map extends Component {
 
       const point = [e.point.x,e.point.y];
       const features = this.queryRenderedFeatures(point);
+
+      const lngLat = [e.lngLat.lng, e.lngLat.lat]
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(point, features);
+      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(lngLat, features);
+    });
+
+    this.map.on('click', (e) => {
+      if (this.props.disableMouseEvents) return;
+
+      const point = [e.point.x,e.point.y];
+      const features = this.queryRenderedFeatures(point);
+
+      const lngLat = [e.lngLat.lng, e.lngLat.lat]
+      if (typeof this.props.onMouseClick === 'function') this.props.onMouseClick(lngLat, features);
     });
   }
 
@@ -62,7 +74,7 @@ class Map extends Component {
     const names = [];
 
     children.map((child) => {
-      if (child.type.name === 'Layer') {
+      if (child && child.type.name === 'Layer') {
         names.push(child.props.id);
       }
     });
@@ -178,4 +190,36 @@ Layer.contextTypes = {
   map: React.PropTypes.object
 }
 
-export {Map, Source, Layer};
+class Popup extends Component {
+  componentDidMount() {
+    this.map = this.context.map;
+    this.load(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.point != this.props.point) {
+      this.load(nextProps);
+    }
+  }
+
+  load(props) {
+    this.popup = new mapboxgl.Popup()
+      .setLngLat(props.point)
+      .setHTML("Hola")
+      .addTo(this.map);
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Popup.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source, Layer, Popup};

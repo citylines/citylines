@@ -31,6 +31,17 @@ class MouseEvents {
         });
       });
   }
+
+  clickFeatures(point, features, callback) {
+    if (features.length == 0) return;
+
+    this.clickedFeatures = {
+      point: point,
+      features: features
+    }
+
+    if (typeof callback === 'function') callback();
+  }
 }
 
 export default MouseEvents

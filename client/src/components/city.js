@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import LinesTree from './city/lines-tree';
-import {Map, Source, Layer} from './map';
+import {Map, Source, Layer, Popup} from './map';
 import Year from './city/year';
 
 import MainStore from '../stores/main-store';
@@ -22,6 +22,7 @@ class City extends PureComponent {
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
     this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
     this.bindedOnMouseMove = this.onMouseMove.bind(this);
+    this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
   }
@@ -83,8 +84,12 @@ class City extends PureComponent {
     this.updateParams({lines: linesShown});
   }
 
-  onMouseMove(point, features){
+  onMouseMove(point, features) {
     CityStore.hover(this.urlName, features);
+  }
+
+  onMouseClick(point, features) {
+    CityStore.clickFeatures(this.urlName, point, features);
   }
 
   render() {
@@ -127,6 +132,7 @@ class City extends PureComponent {
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
+            onMouseClick={this.bindedOnMouseClick}
             disableMouseEvents={this.state.playing} >
             { this.state.sources.map((source) => { return (
                 <Source
@@ -147,6 +153,9 @@ class City extends PureComponent {
                 />
               )
             }) }
+            { this.state.clickedFeatures && <Popup
+              point = {this.state.clickedFeatures.point}
+              />}
           </Map>
         </div>
         );
