@@ -1,65 +1,78 @@
 class Mapper {
   constructor(args) {
     args = args || {};
-    this.map = args.map;
     this.style = args.style;
+    this.urlName = args.urlName;
+
+    this.paintCache = {};
+    this.filterCache = {};
 
     this.linesShown = [];
+    this.layers = [];
+    this.sources = ['sections', 'stations'].map((type) => {
+      return {
+        name: `${type}_source`,
+        data: `/api/${this.urlName}/source/${type}`
+      }
+    });
+
     this.currentHoverId = {sections: ['none'], stations: ['none']};
 
-    // Set this.layers and call this.loadLayers();
+    this.NO_HOVER_IDS = ['none'];
+    // Set this.layerNames;
   }
 
-  filter() {
+  filter(layer) {
     // To implement
   }
 
-  addSource(type) {
-    const sourceName = type + '_source';
+  updateLayers() {
+    const layers = [];
 
-    if (this.map.getSource(sourceName)) {
-      return sourceName;
-    }
-
-    this.map.addSource(sourceName, {
-      type: 'geojson',
-      data: '/api' + location.pathname + '/source/' + type
-    });
-
-    return sourceName;
-  }
-
-  loadLayers() {
     ['sections', 'stations'].map((type) => {
-      Object.values(this.layers[type]).map((layer) => {
-        const sourceName = this.addSource(type);
+      Object.values(this.layerNames[type]).map((layer) => {
+        const sourceName = `${type}_source`;
         const featureType = type === 'sections' ? 'line' : 'circle';
-        this.addLayer(sourceName, layer, featureType);
+        layers.push(this.layer(sourceName, layer, featureType));
       });
     });
+
+    this.layers = layers;
   }
 
-  addLayer(sourceName, layerName, featureType) {
-    const layer = {
+  layer(sourceName, layerName, featureType) {
+    const paint = this.style.get(layerName);
+    if (JSON.stringify(this.paintCache[layerName]) != JSON.stringify(paint)) {
+      this.paintCache[layerName] = paint;
+    }
+
+    const filter = this.filter(layerName);
+    if (JSON.stringify(this.filterCache[layerName]) != JSON.stringify(filter)) {
+      this.filterCache[layerName] = filter;
+    }
+
+    return {
       id: layerName,
       source: sourceName,
       type: featureType,
-      paint: this.style.get(layerName)
+      paint: this.paintCache[layerName],
+      filter: this.filterCache[layerName]
     };
-
-    this.map.addLayer(layer);
   }
 
-  setHoverIds(type, ids) {
-    if ((ids && this.currentHoverId[type] == ids) ||
-        (!ids && this.currentHoverId[type] == ['none'])) return;
+  setHoverIds(type, ids, callback) {
+    if ((ids && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) ||
+        (!ids && this.currentHoverId[type] == this.NO_HOVER_IDS)) return;
 
     if (!ids) {
-      this.currentHoverId[type] = ['none'];
+      this.currentHoverId[type] = this.NO_HOVER_IDS;
     } else {
       this.currentHoverId[type] = ids;
     }
-    this.filter();
+
+    this.updateLayers();
+
+    if (typeof callback === 'function') callback();
   }
 
   toggleLine(line, callback) {
@@ -69,8 +82,8 @@ class Mapper {
     } else {
       this.linesShown.splice(index, 1);
     }
-    this.filter();
-    return this.linesShown;
+
+    this.updateLayers();
   }
 }
 

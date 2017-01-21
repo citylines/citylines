@@ -6,6 +6,8 @@ import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
 import MouseEvents from '../lib/mouse-events';
 
+import MainStore from '../stores/main-store';
+
 const CityStore = Object.assign({}, Store, {
   cityData: {},
 
@@ -24,15 +26,15 @@ const CityStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  setMap(urlName, map) {
+  loadStore(urlName) {
     const cityData = this.cityData[urlName];
 
     const style = new Style(cityData.style);
 
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
-    cityData.linesMapper = new LinesMapper({map: map, style: style, linesShown: linesShown});
+    cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
-    cityData.mouseEvents = new MouseEvents(map, style, {lines: cityData.linesMapper});
+    cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
 
     cityData.timeline.toYear(cityData.config.years.default || cityData.config.years.start);
 
@@ -55,26 +57,24 @@ const CityStore = Object.assign({}, Store, {
   getState(urlName) {
     const cityData = this.cityData[urlName] || {};
 
-    // Here I use a #map so we create a new Object, instead of passing a reference to the same
-    // `linesShown` object
-    const linesShown = (cityData.linesMapper ? cityData.linesMapper.linesShown : []).map((l) => {return l});
-
     return {
+      main: MainStore.getState(),
       name: cityData.name,
       lines: cityData.lines,
       config: cityData.config || {},
-      linesShown: linesShown,
+      linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
+      sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
+      layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false
     };
   },
 
-  toggleAnimation(urlName, yearCallback) {
+  toggleAnimation(urlName) {
     const cityData = this.cityData[urlName];
 
     if (cityData.timeline.playing) {
       cityData.timeline.stopAnimation();
-      this.emitChangeEvent();
       return;
     }
 
@@ -82,7 +82,9 @@ const CityStore = Object.assign({}, Store, {
         () => {
           this.emitChangeEvent();
         },
-        yearCallback,
+        () => {
+          this.emitChangeEvent();
+        },
         () => {
           this.emitChangeEvent();
         });
@@ -98,6 +100,15 @@ const CityStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName];
     cityData.linesMapper.toggleLine(lineUrlName);
     this.emitChangeEvent();
+  },
+
+  hover(urlName, features) {
+    const cityData = this.cityData[urlName];
+    if (!cityData.mouseEvents) return;
+
+    cityData.mouseEvents.hover(features, () => {
+      this.emitChangeEvent();
+    });
   }
 });
 

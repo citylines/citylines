@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  getChildContext() {
+    return {map: this.map};
+  }
+
   setMap(props) {
-    if (!props.center) return;
-
-    if (this.map) {
-      // FIXME: This should be coordinated with the props comparison
-      return;
-    }
-
     mapboxgl.accessToken = props.mapboxAccessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -39,29 +40,142 @@ class Map extends Component {
     });
 
     this.map.on('load',() => {
-      if (typeof props.onLoad === 'function') props.onLoad(this.map);
+      if (typeof props.onLoad === 'function') props.onLoad();
+    });
+
+    this.map.on("mousemove", (e) => {
+      if (this.props.disableMouseEvents) return;
+
+      const point = [e.point.x,e.point.y];
+      const features = this.queryRenderedFeatures(point);
+      this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(point, features);
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    // FIXME: The following comparison should be coordinated with the `this.map` check
-    // FIXME: The following comparison doesn't work
-    if (nextProps !== this.props) {
-      this.setMap(nextProps);
+  queryRenderedFeatures(point){
+    return this.map.queryRenderedFeatures(point, {layers: this.layerNames()});
+  }
+
+  layerNames(){
+    const children = [].concat.apply([], this.props.children);
+    const names = [];
+
+    children.map((child) => {
+      if (child.type.name === 'Layer') {
+        names.push(child.props.id);
+      }
+    });
+
+    return names;
+  }
+
+  componentDidMount(){
+    if (this.props.center && !this.map) {
+      this.setMap(this.props);
     }
   }
 
-  componentDidMount() {
-    this.setMap(this.props);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.center && !this.map) {
+      this.setMap(nextProps);
+    }
   }
 
   render() {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
         <div id="map"></div>
+        {this.props.children}
       </main>
       )
   }
 }
 
-export default Map
+Map.childContextTypes = {
+  map: React.PropTypes.object
+}
+
+class Source extends Component {
+  componentDidMount(){
+    this.map = this.context.map;
+    if (this.map) this.load();
+  }
+
+  componentWillUnmount(){
+    this.map.removeSource(this.props.name);
+  }
+
+  load() {
+    this.map.addSource(this.props.name, {
+      type: 'geojson',
+      data: this.props.data
+    });
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.map && nextContext.map) {
+      this.map = nextContext.map;
+      this.load();
+    }
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Source.contextTypes = {
+  map: React.PropTypes.object
+}
+
+class Layer extends Component {
+  componentDidMount(){
+    this.map = this.context.map;
+    if (this.map) this.load();
+  }
+
+  componentWillUnmount(){
+    this.map.removeLayer(this.props.id);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.map && nextContext.map) {
+      this.map = nextContext.map;
+      this.load();
+    }
+
+    if (nextProps.filter && nextProps.filter !== this.props.filter) {
+      this.map.setFilter(this.props.id, nextProps.filter);
+    }
+  }
+
+  load() {
+    this.map.addLayer({
+      id: this.props.id,
+      source: this.props.source,
+      type: this.props.type,
+      paint: this.props.paint
+    });
+
+    this.map.setFilter(this.props.id, this.props.filter);
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Layer.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source, Layer};

@@ -25,21 +25,22 @@ class Timeline {
     if (typeof startCallback === 'function') startCallback();
 
     this.interval = setInterval(() => {
-      if (y == year) {
-        this.stopAnimation();
-        if (typeof endCallback === 'function') endCallback();
-        return;
-      }
       y += sum;
       this.toYear(y);
-      if (typeof yearCallback == 'function') yearCallback(y);
+
+      if (y == year || !this.playing) {
+        clearInterval(this.interval);
+        this.playing = false;
+        if (typeof endCallback === 'function') endCallback();
+        return;
+      } else {
+        if (typeof yearCallback == 'function') yearCallback(y);
+      }
     }, this.speed);
   }
 
   stopAnimation(callback) {
-    clearInterval(this.interval);
     this.playing = false;
-    if (typeof callback === 'function') callback(this.years.current);
   }
 }
 

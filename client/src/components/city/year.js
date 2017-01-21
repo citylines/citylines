@@ -1,12 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import CityStore from '../../stores/city-store';
 
-class Year extends Component {
+class Year extends PureComponent {
   toggleAnimation() {
-    CityStore.toggleAnimation(this.props.urlName, (year) => {
-      this.refs.slider.value = year;
-      this.refs.currentYear.value = year;
-    });
+    CityStore.toggleAnimation(this.props.urlName);
   }
 
   yearChange(e) {
@@ -23,13 +20,9 @@ class Year extends Component {
     CityStore.setYear(this.props.urlName, year);
   }
 
-  componentWillReceiveProps(newProps) {
-    const newYear = newProps.year;
-    if (newYear !== this.props.year &&
-        (newYear >= this.props.min && newYear <= this.props.max)) {
-      if (typeof this.props.onYearChange === 'function') {
-        this.props.onYearChange();
-      }
+  componentDidUpdate() {
+    if (typeof this.props.onYearChange === 'function') {
+      this.props.onYearChange();
     }
   }
 

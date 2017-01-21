@@ -1,19 +1,10 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
-class LinesTreeContainer extends Component {
-  render() {
-    return (
-      <ul style={{marginLeft: "1em"}} className="c-tree">
-        {this.props.children}
-      </ul>
-    )
-  }
-}
-
-class LinesTree extends Component {
+class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
     this.state = {expanded: this.props.defaultExpanded || true};
+    this.bindedOnItemToggle = this.onItemToggle.bind(this);
   }
 
   onItemToggle(urlName) {
@@ -26,12 +17,8 @@ class LinesTree extends Component {
     this.setState({expanded: !this.state.expanded})
   }
 
-  componentWillReceiveProps(newProps) {
-    const newLinesShown = newProps.linesShown.sort().toString();
-    const linesShown = this.props.linesShown.sort().toString();
-
-    if (newLinesShown !== linesShown &&
-        typeof this.props.onLinesShownChange === 'function') {
+  componentDidUpdate() {
+    if (typeof this.props.onLinesShownChange === 'function') {
       this.props.onLinesShownChange();
     }
   }
@@ -51,7 +38,7 @@ class LinesTree extends Component {
               name={line.name}
               color={line.style.color}
               show={this.props.linesShown.includes(line.url_name)}
-              onToggle={this.onItemToggle.bind(this)}
+              onToggle={this.bindedOnItemToggle}
             />
           })}
         </ul>
@@ -60,7 +47,7 @@ class LinesTree extends Component {
   }
 }
 
-class LinesTreeItem extends Component {
+class LinesTreeItem extends PureComponent {
   onToggle() {
     if (this.props.onToggle) {
       this.props.onToggle(this.props.urlName);
@@ -82,4 +69,4 @@ class LinesTreeItem extends Component {
   }
 }
 
-export {LinesTreeContainer, LinesTree};
+export default LinesTree
