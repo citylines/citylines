@@ -18,10 +18,11 @@ class MouseEvents {
         const mapperType = feature.properties.plan ? 'plans' : 'lines';
 
         ids[mapperType] = ids[mapperType] || {};
-        ids[mapperType][type] = ids[type] || [];
+        ids[mapperType][type] = ids[mapperType][type] || [];
         ids[mapperType][type].push(id);
       });
 
+      let setHoverIds = false;
       Object.entries(this.mappers).map((entry) => {
         const mapperType = entry[0];
         const mapper = entry[1];
@@ -29,9 +30,12 @@ class MouseEvents {
         Object.entries(ids[mapperType]).map((idEntry) => {
           const type = idEntry[0];
           const idsMapperType = idEntry[1];
-          mapper.setHoverIds(type, idsMapperType, callback);
+          mapper.setHoverIds(type, idsMapperType);
+          setHoverIds = true;
         });
       });
+
+      if (setHoverIds && typeof callback === 'function') callback();
   }
 
   clickFeatures(point, features, callback) {
