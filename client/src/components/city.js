@@ -153,9 +153,10 @@ class City extends PureComponent {
                 />
               )
             }) }
-            { this.state.clickedFeatures && <Popup
-              point = {this.state.clickedFeatures.point}
-              />}
+            { this.state.clickedFeatures && (<Popup
+              point = {this.state.clickedFeatures.point}>
+                <div>Hola</div>
+              </Popup>) }
           </Map>
         </div>
         );

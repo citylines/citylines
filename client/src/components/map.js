@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
@@ -205,7 +206,7 @@ class Popup extends Component {
   load(props) {
     this.popup = new mapboxgl.Popup()
       .setLngLat(props.point)
-      .setHTML("Hola")
+      .setHTML(ReactDOMServer.renderToStaticMarkup(this.props.children))
       .addTo(this.map);
   }
 
