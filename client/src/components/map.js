@@ -67,20 +67,7 @@ class Map extends Component {
   }
 
   queryRenderedFeatures(point){
-    return this.map.queryRenderedFeatures(point, {layers: this.layerNames()});
-  }
-
-  layerNames(){
-    const children = [].concat.apply([], this.props.children);
-    const names = [];
-
-    children.map((child) => {
-      if (child && child.type.name === 'Layer') {
-        names.push(child.props.id);
-      }
-    });
-
-    return names;
+    return this.map.queryRenderedFeatures(point, {layers: this.props.mouseEventsLayerNames});
   }
 
   componentDidMount(){
@@ -206,7 +193,7 @@ class Popup extends Component {
   load(props) {
     this.popup = new mapboxgl.Popup()
       .setLngLat(props.point)
-      .setHTML(ReactDOMServer.renderToStaticMarkup(this.props.children))
+      .setHTML(ReactDOMServer.renderToStaticMarkup(props.children))
       .addTo(this.map);
   }
 

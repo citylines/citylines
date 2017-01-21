@@ -67,7 +67,8 @@ const CityStore = Object.assign({}, Store, {
       layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false,
-      clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null
+      clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null,
+      mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : []
     };
   },
 

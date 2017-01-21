@@ -92,6 +92,10 @@ class City extends PureComponent {
     CityStore.clickFeatures(this.urlName, point, features);
   }
 
+  validFeatureValue(value) {
+    return (value !== null && value !== 999999)
+  }
+
   render() {
     return (
         <div className="o-grid o-panel">
@@ -129,6 +133,7 @@ class City extends PureComponent {
             zoom={this.state.config.zoom}
             bearing={this.state.config.bearing}
             pitch={this.state.config.pitch}
+            mouseEventsLayerNames={this.state.mouseEventsLayerNames}
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
@@ -155,7 +160,27 @@ class City extends PureComponent {
             }) }
             { this.state.clickedFeatures && (<Popup
               point = {this.state.clickedFeatures.point}>
-                <div>Hola</div>
+              <div>
+              {
+                this.state.clickedFeatures.features.map((feature) => {
+                  const fProps = feature.properties;
+                  const lineStyle = {color: fProps.lineLabelColor || '#fff', backgroundColor: fProps.lineColor, marginLeft:5};
+                  return (
+                    <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
+                      <ul className="c-list c-list--unstyled">
+                        <li className="c-list__item"><strong>{fProps.name ? `Estación ${fProps.name} ` : "Tramo de la Línea "}</strong>
+                          <span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
+                        </li>
+                        { fProps.buildstart ? <li className="c-list__item">{`Comienzo de construcción: ${fProps.buildstart}`}</li> : ''}
+                        { this.validFeatureValue(fProps.opening) ? <li className="c-list__item">{`Inauguración: ${fProps.opening}`}</li> : ''}
+                        { this.validFeatureValue(fProps.closure) ? <li className="c-list__item">{`Cierre: ${fProps.closure}`}</li> : ''}
+                        { fProps.length ? <li className="c-list__item">{`Longitud aproximada: ${(parseFloat(fProps.length)/1000).toFixed(2)}km`}</li> : ''}
+                      </ul>
+                    </div>
+                  )
+                })
+              }
+              </div>
               </Popup>) }
           </Map>
         </div>

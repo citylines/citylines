@@ -4,6 +4,8 @@ class MouseEvents {
   constructor(style, mappers) {
     this.style = style;
     this.mappers = mappers;
+
+    this.layerNames = this.calculateLayerNames();
   }
 
   hover(features, callback) {
@@ -37,10 +39,28 @@ class MouseEvents {
 
     this.clickedFeatures = {
       point: point,
-      features: features
+      features: features.map((f) => {
+        f.properties.lineColor = this.style.lineColor(f.properties.line_url_name);
+        f.properties.lineLabelColor = this.style.lineLabelFontColor(f.properties.line_url_name);
+        return f;
+      })
     }
 
     if (typeof callback === 'function') callback();
+  }
+
+  calculateLayerNames() {
+    const layers = [];
+    Object.values(this.mappers).map((mapper) => {
+      Object.values(mapper.layerNames).map((type) => {
+        Object.values(type).map((layer) => {
+          if (!layer.includes('hover') && !layer.includes('inner')) {
+            layers.push(layer);
+          }
+        });
+      });
+    });
+    return layers;
   }
 }
 
