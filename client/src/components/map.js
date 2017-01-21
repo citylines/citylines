@@ -1,7 +1,7 @@
-import React, {Component, PureComponent} from 'react';
+import React, {Component} from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
-class Map extends PureComponent {
+class Map extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -40,7 +40,7 @@ class Map extends PureComponent {
     });
 
     this.map.on('load',() => {
-      if (typeof props.onLoad === 'function') props.onLoad(this.map);
+      if (typeof props.onLoad === 'function') props.onLoad();
     });
 
     this.map.on("mousemove", (e) => {
@@ -70,8 +70,14 @@ class Map extends PureComponent {
     return names;
   }
 
+  componentDidMount(){
+    if (this.props.center && !this.map) {
+      this.setMap(this.props);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.center && nextProps.center !== this.props.center && !this.map) {
+    if (nextProps.center && !this.map) {
       this.setMap(nextProps);
     }
   }
@@ -93,7 +99,7 @@ Map.childContextTypes = {
 class Source extends Component {
   componentDidMount(){
     this.map = this.context.map;
-    this.load();
+    if (this.map) this.load();
   }
 
   componentWillUnmount(){
@@ -101,12 +107,17 @@ class Source extends Component {
   }
 
   load() {
-    if (this.map.getSource(this.props.name)) return;
-
     this.map.addSource(this.props.name, {
       type: 'geojson',
       data: this.props.data
     });
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.map && nextContext.map) {
+      this.map = nextContext.map;
+      this.load();
+    }
   }
 
   shouldComponentUpdate() {
@@ -125,14 +136,19 @@ Source.contextTypes = {
 class Layer extends Component {
   componentDidMount(){
     this.map = this.context.map;
-    this.load();
+    if (this.map) this.load();
   }
 
   componentWillUnmount(){
     this.map.removeLayer(this.props.id);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.map && nextContext.map) {
+      this.map = nextContext.map;
+      this.load();
+    }
+
     if (nextProps.filter && nextProps.filter !== this.props.filter) {
       this.map.setFilter(this.props.id, nextProps.filter);
     }
