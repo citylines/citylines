@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 class Map extends Component {
@@ -48,26 +49,25 @@ class Map extends Component {
 
       const point = [e.point.x,e.point.y];
       const features = this.queryRenderedFeatures(point);
+
+      const lngLat = [e.lngLat.lng, e.lngLat.lat]
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(point, features);
+      if (typeof this.props.onMouseMove === 'function') this.props.onMouseMove(lngLat, features);
+    });
+
+    this.map.on('click', (e) => {
+      if (this.props.disableMouseEvents) return;
+
+      const point = [e.point.x,e.point.y];
+      const features = this.queryRenderedFeatures(point);
+
+      const lngLat = [e.lngLat.lng, e.lngLat.lat]
+      if (typeof this.props.onMouseClick === 'function') this.props.onMouseClick(lngLat, features);
     });
   }
 
   queryRenderedFeatures(point){
-    return this.map.queryRenderedFeatures(point, {layers: this.layerNames()});
-  }
-
-  layerNames(){
-    const children = [].concat.apply([], this.props.children);
-    const names = [];
-
-    children.map((child) => {
-      if (child.type.name === 'Layer') {
-        names.push(child.props.id);
-      }
-    });
-
-    return names;
+    return this.map.queryRenderedFeatures(point, {layers: this.props.mouseEventsLayerNames});
   }
 
   componentDidMount(){
@@ -178,4 +178,39 @@ Layer.contextTypes = {
   map: React.PropTypes.object
 }
 
-export {Map, Source, Layer};
+class Popup extends Component {
+  componentDidMount() {
+    this.map = this.context.map;
+    this.load(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.point != this.props.point) {
+      this.load(nextProps);
+    }
+  }
+
+  load(props) {
+    this.popup = new mapboxgl.Popup()
+      .setLngLat(props.point)
+      .setHTML(ReactDOMServer.renderToStaticMarkup(props.children))
+      .addTo(this.map)
+      .on('close', () => {
+        if (typeof props.onClose === 'function') props.onClose();
+      });
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Popup.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source, Layer, Popup};

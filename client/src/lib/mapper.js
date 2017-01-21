@@ -60,7 +60,7 @@ class Mapper {
     };
   }
 
-  setHoverIds(type, ids, callback) {
+  setHoverIds(type, ids) {
     if ((ids && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) ||
         (!ids && this.currentHoverId[type] == this.NO_HOVER_IDS)) return;
 
@@ -71,8 +71,6 @@ class Mapper {
     }
 
     this.updateLayers();
-
-    if (typeof callback === 'function') callback();
   }
 
   toggleLine(line, callback) {

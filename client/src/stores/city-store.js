@@ -66,7 +66,9 @@ const CityStore = Object.assign({}, Store, {
       sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
-      playing: cityData.timeline ? cityData.timeline.playing : false
+      playing: cityData.timeline ? cityData.timeline.playing : false,
+      clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null,
+      mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : []
     };
   },
 
@@ -109,6 +111,19 @@ const CityStore = Object.assign({}, Store, {
     cityData.mouseEvents.hover(features, () => {
       this.emitChangeEvent();
     });
+  },
+
+  clickFeatures(urlName, point, features) {
+    const cityData = this.cityData[urlName];
+    cityData.mouseEvents.clickFeatures(point, features, () => {
+      this.emitChangeEvent();
+    });
+  },
+
+  unClickFeatures(urlName) {
+    const cityData = this.cityData[urlName];
+    cityData.mouseEvents.unClickFeatures();
+    this.emitChangeEvent();
   }
 });
 

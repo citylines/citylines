@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import LinesTree from './city/lines-tree';
-import {Map, Source, Layer} from './map';
+import {Map, Source, Layer, Popup} from './map';
 import Year from './city/year';
 
 import MainStore from '../stores/main-store';
@@ -22,8 +22,10 @@ class City extends PureComponent {
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
     this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
     this.bindedOnMouseMove = this.onMouseMove.bind(this);
+    this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
+    this.bindedOnPopupClose = this.onPopupClose.bind(this);
   }
 
   componentWillMount() {
@@ -83,8 +85,20 @@ class City extends PureComponent {
     this.updateParams({lines: linesShown});
   }
 
-  onMouseMove(point, features){
+  onMouseMove(point, features) {
     CityStore.hover(this.urlName, features);
+  }
+
+  onMouseClick(point, features) {
+    CityStore.clickFeatures(this.urlName, point, features);
+  }
+
+  onPopupClose() {
+    CityStore.unClickFeatures(this.urlName);
+  }
+
+  validFeatureValue(value) {
+    return (value !== null && value !== 999999)
   }
 
   render() {
@@ -124,9 +138,11 @@ class City extends PureComponent {
             zoom={this.state.config.zoom}
             bearing={this.state.config.bearing}
             pitch={this.state.config.pitch}
+            mouseEventsLayerNames={this.state.mouseEventsLayerNames}
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
+            onMouseClick={this.bindedOnMouseClick}
             disableMouseEvents={this.state.playing} >
             { this.state.sources.map((source) => { return (
                 <Source
@@ -147,6 +163,31 @@ class City extends PureComponent {
                 />
               )
             }) }
+            { this.state.clickedFeatures && (<Popup
+              point={this.state.clickedFeatures.point}
+              onClose={this.bindedOnPopupClose}>
+              <div>
+              {
+                this.state.clickedFeatures.features.map((feature) => {
+                  const fProps = feature.properties;
+                  const lineStyle = {color: fProps.lineLabelColor || '#fff', backgroundColor: fProps.lineColor, marginLeft:5};
+                  return (
+                    <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
+                      <ul className="c-list c-list--unstyled">
+                        <li className="c-list__item"><strong>{fProps.name ? `Estación ${fProps.name} ` : "Tramo de la Línea "}</strong>
+                          <span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
+                        </li>
+                        { fProps.buildstart ? <li className="c-list__item">{`Comienzo de construcción: ${fProps.buildstart}`}</li> : ''}
+                        { this.validFeatureValue(fProps.opening) ? <li className="c-list__item">{`Inauguración: ${fProps.opening}`}</li> : ''}
+                        { this.validFeatureValue(fProps.closure) ? <li className="c-list__item">{`Cierre: ${fProps.closure}`}</li> : ''}
+                        { fProps.length ? <li className="c-list__item">{`Longitud aproximada: ${(parseFloat(fProps.length)/1000).toFixed(2)}km`}</li> : ''}
+                      </ul>
+                    </div>
+                  )
+                })
+              }
+              </div>
+              </Popup>) }
           </Map>
         </div>
         );
