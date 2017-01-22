@@ -2,7 +2,6 @@ class Api < App
   DEFAULT_ZOOM = 12
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
-  DEFAULT_SPEED = 1
 
   get '/cities' do
     cities = City.map do |city|
@@ -24,7 +23,6 @@ class Api < App
       zoom: DEFAULT_ZOOM,
       bearing: DEFAULT_BEARING,
       pitch: DEFAULT_PITCH,
-      speed: DEFAULT_SPEED,
       years: { start: @city.start_year,
                end: Date.today.year,
                current: nil,
