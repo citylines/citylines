@@ -53,4 +53,19 @@ class Api < App
     @city = City[url_name: url_name]
     lines_features_collection(@city, type).to_json
   end
+
+  get '/editor/:url_name' do |url_name|
+    @city = City[url_name: url_name]
+    config = {
+      mapbox_access_token: MAPBOX_ACCESS_TOKEN,
+      mapbox_style: MAPBOX_STYLE,
+      coords: @city.geojson_coords,
+      zoom: DEFAULT_ZOOM,
+      bearing: DEFAULT_BEARING,
+      pitch: DEFAULT_PITCH,
+    }
+
+    { name: @city.name,
+      config: config }.to_json
+  end
 end

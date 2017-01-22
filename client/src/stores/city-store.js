@@ -1,4 +1,6 @@
 import Store from './store';
+import MainStore from './main-store';
+
 import 'whatwg-fetch';
 
 import Style from '../lib/style';
@@ -6,8 +8,6 @@ import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
 import MouseEvents from '../lib/mouse-events';
 import KmInfo from '../lib/km-info';
-
-import MainStore from '../stores/main-store';
 
 const CityStore = Object.assign({}, Store, {
   cityData: {},

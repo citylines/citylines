@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import {Link} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import {LinesTreeContainer, LinesTree} from './city/lines-tree';
@@ -111,6 +112,7 @@ class City extends PureComponent {
             <PanelHeader>
               <div className="panel-header-title">
                 <h3 className="c-heading">{this.state.name}</h3>
+                <Link className="c-link" to={`/${this.urlName}/edit`}>Editar</Link>
               </div>
               <Year
                 urlName={this.urlName}
