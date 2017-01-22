@@ -5,6 +5,7 @@ import {Panel, PanelHeader, PanelBody} from './panel';
 import {LinesTreeContainer, LinesTree} from './city/lines-tree';
 import {Map, Source, Layer, Popup} from './map';
 import Year from './city/year';
+import KmIndicator from './city/km-indicator';
 
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
@@ -74,6 +75,7 @@ class City extends PureComponent {
     if (this.state.playing) return;
     const newYear = this.state.currentYear;
     this.updateParams({year: newYear});
+    CityStore.setKmYear(this.urlName, newYear, null);
   }
 
   onLineToggle(lineUrlName) {
@@ -116,6 +118,10 @@ class City extends PureComponent {
                 year={this.state.currentYear}
                 playing={this.state.playing}
                 onYearChange={this.bindedOnYearChange}
+              />
+              <KmIndicator
+                kmOperative={this.state.kmOperative}
+                kmUnderConstruction={this.state.kmUnderConstruction}
               />
             </PanelHeader>
             <PanelBody>

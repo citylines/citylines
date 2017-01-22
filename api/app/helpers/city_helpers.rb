@@ -6,29 +6,6 @@ module CityHelpers
         style: line.style }
     }
   end
-=begin
-  def city_plans(city, params)
-    param_plan_lines = params[:plans] ? params[:plans].split(',') : []
-
-    plans = {}
-
-    city.plans
-    .sort_by{ |plan| plan.extra["year"].to_i }
-    .each { |plan|
-      lines = plan.plan_lines.map {|line|
-        {show: param_plan_lines.include?(line.parent_url_name),
-         parent_url_name: line.parent_url_name,
-         name: line.name,
-         style: line.style}
-      }
-      plans[plan.name]= {
-        lines: lines,
-        year: plan.extra["year"],
-        url: plan.extra["url"]
-      }
-    }
-    plans
-  end
 
   def lines_length_by_year(city)
     lengths = {}
@@ -51,16 +28,6 @@ module CityHelpers
     end
     lengths
   end
-
-  def plans_length(city)
-    lengths = {}
-    plan_ids = Plan.where(city_id: city.id).select_map(:id)
-    PlanLine.where(plan_id: plan_ids).each do |line|
-      lengths[line.parent_url_name] = line.length
-    end
-    lengths
-  end
-=end
 
   def lines_features_collection(city, type)
     city_lines_ids = city.lines.map(&:id)

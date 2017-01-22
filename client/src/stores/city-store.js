@@ -5,6 +5,7 @@ import Style from '../lib/style';
 import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
 import MouseEvents from '../lib/mouse-events';
+import KmInfo from '../lib/km-info';
 
 import MainStore from '../stores/main-store';
 
@@ -35,8 +36,11 @@ const CityStore = Object.assign({}, Store, {
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
+    cityData.kmInfo = new KmInfo(cityData.lines_length_by_year);
 
-    cityData.timeline.toYear(cityData.config.years.default || cityData.config.years.start);
+    const startingYear = cityData.config.years.default || cityData.config.years.start;
+    cityData.timeline.toYear(startingYear);
+    cityData.kmInfo.update({year: startingYear, lines: linesShown});
 
     this.emitChangeEvent();
   },
@@ -68,7 +72,9 @@ const CityStore = Object.assign({}, Store, {
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false,
       clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null,
-      mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : []
+      mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : [],
+      kmOperative: cityData.kmInfo ? cityData.kmInfo.kmOperative : null,
+      kmUnderConstruction: cityData.kmInfo ? cityData.kmInfo.kmUnderConstruction : null
     };
   },
 
@@ -101,6 +107,7 @@ const CityStore = Object.assign({}, Store, {
   toggleLine(urlName, lineUrlName) {
     const cityData = this.cityData[urlName];
     cityData.linesMapper.toggleLine(lineUrlName);
+    cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
     this.emitChangeEvent();
   },
 
@@ -123,6 +130,13 @@ const CityStore = Object.assign({}, Store, {
   unClickFeatures(urlName) {
     const cityData = this.cityData[urlName];
     cityData.mouseEvents.unClickFeatures();
+    this.emitChangeEvent();
+  },
+
+  setKmYear(urlName, year) {
+    const cityData = this.cityData[urlName];
+    if (!cityData.kmInfo) return;
+    cityData.kmInfo.update({year: year});
     this.emitChangeEvent();
   }
 });

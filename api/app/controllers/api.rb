@@ -36,6 +36,7 @@ class Api < App
     { name: @city.name,
       style: @city.style,
       lines: city_lines(@city),
+      lines_length_by_year: lines_length_by_year(@city),
       config: config }.to_json
   end
 
