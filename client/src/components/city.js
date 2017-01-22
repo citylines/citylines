@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
-import LinesTree from './city/lines-tree';
+import {LinesTreeContainer, LinesTree} from './city/lines-tree';
 import {Map, Source, Layer, Popup} from './map';
 import Year from './city/year';
 
@@ -119,7 +119,7 @@ class City extends PureComponent {
               />
             </PanelHeader>
             <PanelBody>
-              <ul style={{marginLeft: "1em"}} className="c-tree">
+              <LinesTreeContainer>
                 <LinesTree
                   name={'Líneas'}
                   defaultExpanded={true}
@@ -128,7 +128,7 @@ class City extends PureComponent {
                   onLineToggle={this.bindedOnLineToggle}
                   onLinesShownChange={this.bindedOnLinesShownChange}
                 />
-              </ul>
+              </LinesTreeContainer>
             </PanelBody>
           </Panel>
           <Map

@@ -1,5 +1,7 @@
 import React, {PureComponent} from 'react';
 
+const LinesTreeContainer = (props) => <ul style={{marginLeft: "1em"}} className="c-tree">{props.children}</ul>;
+
 class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -69,4 +71,4 @@ class LinesTreeItem extends PureComponent {
   }
 }
 
-export default LinesTree
+export {LinesTree, LinesTreeContainer};
