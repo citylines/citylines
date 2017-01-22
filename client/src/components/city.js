@@ -69,6 +69,7 @@ class City extends PureComponent {
     if (this.state.playing) return;
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});
+    CityStore.storeGeoData(this.urlName, geo);
   }
 
   onYearChange() {

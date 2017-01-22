@@ -140,6 +140,14 @@ const CityStore = Object.assign({}, Store, {
     if (!cityData.kmInfo) return;
     cityData.kmInfo.update({year: year});
     this.emitChangeEvent();
+  },
+
+  storeGeoData(urlName, geo) {
+    const cityData = this.cityData[urlName];
+    cityData.config.coords = [geo.lon, geo.lat];
+    cityData.config.zoom = geo.zoom;
+    cityData.config.bearing = geo.bearing;
+    cityData.config.pitch = geo.pitch;
   }
 });
 
