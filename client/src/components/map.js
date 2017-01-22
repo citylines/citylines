@@ -41,6 +41,7 @@ class Map extends Component {
     });
 
     this.map.on('load',() => {
+      this.forceUpdate();
       if (typeof props.onLoad === 'function') props.onLoad();
     });
 
