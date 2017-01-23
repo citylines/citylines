@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 import {Link} from 'react-router';
 
-import {Map} from './map';
+import {Map, Draw} from './map';
 import {Panel, PanelHeader, PanelBody} from './panel';
 
 import EditorStore from '../stores/editor-store';
@@ -84,6 +84,7 @@ class Editor extends PureComponent {
           pitch={this.state.config.pitch}
           onLoad={this.bindedOnMapLoad}
           onMove={this.bindedOnMapMove}>
+            <Draw />
         </Map>
       </div>
     )

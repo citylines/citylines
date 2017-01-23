@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import MapboxDraw from 'mapbox-gl-draw/dist/mapbox-gl-draw';
 
 class Map extends Component {
   constructor(props, context) {
@@ -214,4 +215,45 @@ Popup.contextTypes = {
   map: React.PropTypes.object
 }
 
-export {Map, Source, Layer, Popup};
+class Draw extends Component {
+  componentDidMount() {
+    this.map = this.context.map;
+    if (this.map) this.load(this.props);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.map && nextContext.map) {
+      this.map = nextContext.map;
+      this.load(nextProps);
+    }
+  }
+
+  load(props) {
+    var options = {
+      boxSelect: false,
+      displayControlsDefault: false,
+      controls: {
+        point: true,
+        line_string: true,
+        trash: true
+      }
+    }
+
+    this.draw = new MapboxDraw(options);
+    this.map.addControl(this.draw)
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Draw.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source, Layer, Popup, Draw};
