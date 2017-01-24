@@ -235,6 +235,12 @@ class Draw extends Component {
     this.draw = new MapboxDraw(options);
     this.map.addControl(this.draw);
 
+    this.map.on('draw.selectionchange', (selection) => {
+      if (typeof props.onSelectionChange === 'function') {
+        props.onSelectionChange(selection.features);
+      }
+    });
+
     this.draw.add(props.features);
   }
 

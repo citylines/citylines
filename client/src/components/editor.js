@@ -18,6 +18,7 @@ class Editor extends PureComponent {
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
+    this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
   }
 
   componentWillMount() {
@@ -63,6 +64,10 @@ class Editor extends PureComponent {
     EditorStore.storeGeoData(this.urlName, geo);
   }
 
+  onSelectionChange(features) {
+    EditorStore.changeSelection(this.urlName, features);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -74,6 +79,7 @@ class Editor extends PureComponent {
             </div>
           </PanelHeader>
           <PanelBody>
+          {JSON.stringify(this.state.selectedFeature)}
           </PanelBody>
         </Panel>
         <Map
@@ -88,6 +94,7 @@ class Editor extends PureComponent {
           { this.mapLoaded &&
             <Draw
               features={this.state.features}
+              onSelectionChange={this.bindedOnSelectionChange}
             /> }
         </Map>
       </div>

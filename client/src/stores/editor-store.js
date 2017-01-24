@@ -56,7 +56,8 @@ const EditorStore = Object.assign({}, Store, {
       main: MainStore.getState(),
       name: cityData.name,
       features: cityData.features,
-      config: cityData.config || {}
+      config: cityData.config || {},
+      selectedFeature: cityData.selectedFeature
     }
   },
 
@@ -66,6 +67,12 @@ const EditorStore = Object.assign({}, Store, {
     cityData.config.zoom = geo.zoom;
     cityData.config.bearing = geo.bearing;
     cityData.config.pitch = geo.pitch;
+  },
+
+  changeSelection(urlName, features) {
+    const cityData = this.cityData[urlName];
+    cityData.selectedFeature = features[0];
+    this.emitChangeEvent();
   }
 });
 
