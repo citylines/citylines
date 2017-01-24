@@ -55,6 +55,7 @@ const EditorStore = Object.assign({}, Store, {
     return {
       main: MainStore.getState(),
       name: cityData.name,
+      features: cityData.features,
       config: cityData.config || {}
     }
   },

@@ -63,7 +63,11 @@ class Api < App
       pitch: DEFAULT_PITCH,
     }
 
+    features_collection = lines_features_collection(@city, 'sections').clone
+    features_collection[:features] += lines_features_collection(@city, 'stations')[:features]
+
     { name: @city.name,
+      features: features_collection,
       config: config }.to_json
   end
 end

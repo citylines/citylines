@@ -221,13 +221,6 @@ class Draw extends Component {
     if (this.map) this.load(this.props);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (!this.map && nextContext.map) {
-      this.map = nextContext.map;
-      this.load(nextProps);
-    }
-  }
-
   load(props) {
     var options = {
       boxSelect: false,
@@ -240,7 +233,9 @@ class Draw extends Component {
     }
 
     this.draw = new MapboxDraw(options);
-    this.map.addControl(this.draw)
+    this.map.addControl(this.draw);
+
+    this.draw.add(props.features);
   }
 
   shouldComponentUpdate() {

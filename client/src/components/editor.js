@@ -53,7 +53,8 @@ class Editor extends PureComponent {
   }
 
   onMapLoad() {
-    //TODO
+    this.mapLoaded = true;
+    this.forceUpdate();
   }
 
   onMapMove(geo) {
@@ -84,7 +85,10 @@ class Editor extends PureComponent {
           pitch={this.state.config.pitch}
           onLoad={this.bindedOnMapLoad}
           onMove={this.bindedOnMapMove}>
-            <Draw />
+          { this.mapLoaded &&
+            <Draw
+              features={this.state.features}
+            /> }
         </Map>
       </div>
     )
