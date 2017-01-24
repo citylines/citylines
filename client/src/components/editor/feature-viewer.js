@@ -10,11 +10,8 @@ class FeatureViewer extends PureComponent {
   }
 
   render() {
-    const properties = this.props.feature.properties;
-
-    return (
-      <div className="c-card">
-        <div className="c-card__item">
+    const properties = this.props.feature ? this.props.feature.properties : null;
+    const content = this.props.feature ?
           <table className="c-table c-table--striped">
             <caption className="c-table__caption">{`${properties.klass} Id: ${properties.id}`}</caption>
             <tbody className="c-table__body">
@@ -31,7 +28,12 @@ class FeatureViewer extends PureComponent {
                 )
               }) }
             </tbody>
-          </table>
+          </table> : 'Ningún elemento seleccionado';
+
+    return (
+      <div className="c-card">
+        <div className="c-card__item">
+        { content }
         </div>
       </div>
       )

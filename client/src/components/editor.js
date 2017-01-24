@@ -81,10 +81,9 @@ class Editor extends PureComponent {
           </PanelHeader>
           <PanelBody>
             <div className="editor-cards-container">
-            { this.state.selectedFeature &&
               <FeatureViewer
                 feature={this.state.selectedFeature}
-                /> }
+                />
             </div>
           </PanelBody>
         </Panel>
