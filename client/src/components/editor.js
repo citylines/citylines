@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 
 import {Map, Draw} from './map';
 import {Panel, PanelHeader, PanelBody} from './panel';
+import FeatureViewer from './editor/feature-viewer';
 
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
@@ -79,7 +80,12 @@ class Editor extends PureComponent {
             </div>
           </PanelHeader>
           <PanelBody>
-          {JSON.stringify(this.state.selectedFeature)}
+            <div className="editor-cards-container">
+            { this.state.selectedFeature &&
+              <FeatureViewer
+                feature={this.state.selectedFeature}
+                /> }
+            </div>
           </PanelBody>
         </Panel>
         <Map
