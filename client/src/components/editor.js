@@ -22,6 +22,7 @@ class Editor extends PureComponent {
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
+    this.bindedOnDrawLoad = this.onDrawLoad.bind(this);
   }
 
   componentWillMount() {
@@ -71,8 +72,13 @@ class Editor extends PureComponent {
     EditorStore.changeSelection(this.urlName, features);
   }
 
-  onFeaturePropsChange(feature) {
+  onFeaturePropsChange(feature, modifiedKey, newValue) {
+    this.draw.setFeatureProperty(feature.id, modifiedKey, newValue);
     EditorStore.setFeaturePropsChange(this.urlName, feature);
+  }
+
+  onDrawLoad(draw) {
+    this.draw = draw;
   }
 
   render() {
@@ -110,6 +116,7 @@ class Editor extends PureComponent {
             <Draw
               features={this.state.features}
               onSelectionChange={this.bindedOnSelectionChange}
+              onDrawLoad={this.bindedOnDrawLoad}
             /> }
         </Map>
       </div>

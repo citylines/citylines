@@ -218,10 +218,10 @@ Popup.contextTypes = {
 class Draw extends Component {
   componentDidMount() {
     this.map = this.context.map;
-    if (this.map) this.load(this.props);
+    if (this.map) this.load();
   }
 
-  load(props) {
+  load() {
     var options = {
       boxSelect: false,
       displayControlsDefault: false,
@@ -236,12 +236,16 @@ class Draw extends Component {
     this.map.addControl(this.draw);
 
     this.map.on('draw.selectionchange', (selection) => {
-      if (typeof props.onSelectionChange === 'function') {
-        props.onSelectionChange(selection.features);
+      if (typeof this.props.onSelectionChange === 'function') {
+        this.props.onSelectionChange(selection.features);
       }
     });
 
-    this.draw.add(props.features);
+    this.draw.add(this.props.features);
+
+    if (typeof this.props.onDrawLoad === 'function') {
+      this.props.onDrawLoad(this.draw);
+    }
   }
 
   shouldComponentUpdate() {

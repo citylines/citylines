@@ -16,9 +16,15 @@ class FeatureViewer extends PureComponent {
   }
 
   onValueChange(e) {
-    // TODO check that value has changed
-    // TODO save value
-    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature);
+    const key = e.target.attributes.name.value;
+    let value = e.target.innerText;
+
+    const oldValue = this.props.feature.properties[key];
+    if (typeof oldValue != 'string') value = parseInt(value);
+
+    if (value == oldValue) return;
+
+    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature, key, value);
   }
 
   render() {
@@ -35,7 +41,7 @@ class FeatureViewer extends PureComponent {
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell">{key}</td>
-                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} onKeyUp={this.bindedOnValueChange}>{value}</td>
+                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} name={key} onKeyUp={this.bindedOnValueChange}>{value}</td>
                   </tr>
                 )
               }) }
