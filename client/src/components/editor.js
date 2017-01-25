@@ -23,6 +23,7 @@ class Editor extends PureComponent {
     this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
     this.bindedOnDrawLoad = this.onDrawLoad.bind(this);
+    this.bindedOnModifiedFeatureClick = this.onModifiedFeatureClick.bind(this);
   }
 
   componentWillMount() {
@@ -81,6 +82,11 @@ class Editor extends PureComponent {
     this.draw = draw;
   }
 
+  onModifiedFeatureClick(id) {
+    this.draw.changeMode('simple_select', {featureIds: [id]});
+    this.onSelectionChange([this.draw.get(id)]);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -99,6 +105,7 @@ class Editor extends PureComponent {
                 />
               <ModifiedFeaturesViewer
                 modifiedFeatures={this.state.modifiedFeatures}
+                onClick={this.bindedOnModifiedFeatureClick}
               />
             </div>
           </PanelBody>
