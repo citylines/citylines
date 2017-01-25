@@ -16,7 +16,8 @@ class FeatureViewer extends PureComponent {
   }
 
   onValueChange(e) {
-    // FIXME check that value has changed
+    // TODO check that value has changed
+    // TODO save value
     if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature);
   }
 
