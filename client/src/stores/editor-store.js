@@ -57,7 +57,8 @@ const EditorStore = Object.assign({}, Store, {
       name: cityData.name,
       features: cityData.features,
       config: cityData.config || {},
-      selectedFeature: cityData.selectedFeature
+      selectedFeature: cityData.selectedFeature,
+      modifiedFeatures: cityData.modifiedFeatures
     }
   },
 
@@ -72,6 +73,16 @@ const EditorStore = Object.assign({}, Store, {
   changeSelection(urlName, features) {
     const cityData = this.cityData[urlName];
     cityData.selectedFeature = features[0];
+    this.emitChangeEvent();
+  },
+
+  setFeaturePropsChange(urlName, feature) {
+    const cityData = this.cityData[urlName];
+    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
+    cityData.modifiedFeatures[feature.id] = cityData.modifiedFeatures[feature.id] || {};
+    cityData.modifiedFeatures[feature.id].klass = feature.properties.klass;
+    cityData.modifiedFeatures[feature.id].id = feature.properties.id;
+    cityData.modifiedFeatures[feature.id].properties = feature.properties;
     this.emitChangeEvent();
   }
 });

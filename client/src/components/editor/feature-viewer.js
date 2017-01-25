@@ -1,12 +1,23 @@
 import React, {PureComponent} from 'react';
 
 class FeatureViewer extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.bindedOnValueChange = this.onValueChange.bind(this);
+  }
+
   editableFields() {
     return ['opening', 'buildstart', 'closure', 'name']
   }
 
   visibleFields() {
     return this.editableFields().concat(['length']);
+  }
+
+  onValueChange(e) {
+    // FIXME check that value has changed
+    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature);
   }
 
   render() {
@@ -21,9 +32,9 @@ class FeatureViewer extends PureComponent {
                 if (!this.visibleFields().includes(key)) return;
 
                 return (
-                  <tr key={key} className="c-table__row">
+                  <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell">{key}</td>
-                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)}>{value}</td>
+                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} onKeyUp={this.bindedOnValueChange}>{value}</td>
                   </tr>
                 )
               }) }
@@ -32,6 +43,7 @@ class FeatureViewer extends PureComponent {
 
     return (
       <div className="c-card">
+        <li className="c-card__item c-card__item--divider">Elemento seleccionado</li>
         <div className="c-card__item">
         { content }
         </div>

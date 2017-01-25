@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import {Map, Draw} from './map';
 import {Panel, PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
+import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
@@ -20,6 +21,7 @@ class Editor extends PureComponent {
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
+    this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
   }
 
   componentWillMount() {
@@ -69,6 +71,10 @@ class Editor extends PureComponent {
     EditorStore.changeSelection(this.urlName, features);
   }
 
+  onFeaturePropsChange(feature) {
+    EditorStore.setFeaturePropsChange(this.urlName, feature);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -83,7 +89,11 @@ class Editor extends PureComponent {
             <div className="editor-cards-container">
               <FeatureViewer
                 feature={this.state.selectedFeature}
+                onFeatureChange={this.bindedOnFeaturePropsChange}
                 />
+              <ModifiedFeaturesViewer
+                modifiedFeatures={this.state.modifiedFeatures}
+              />
             </div>
           </PanelBody>
         </Panel>
