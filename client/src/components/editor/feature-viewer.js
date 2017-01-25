@@ -16,6 +16,8 @@ class FeatureViewer extends PureComponent {
   }
 
   onValueChange(e) {
+    if (e.key != 'Enter') return;
+
     const key = e.target.attributes.name.value;
     let value = e.target.innerText;
 
