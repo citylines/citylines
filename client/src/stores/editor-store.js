@@ -82,7 +82,8 @@ const EditorStore = Object.assign({}, Store, {
     cityData.modifiedFeatures[feature.id] = cityData.modifiedFeatures[feature.id] || {};
     cityData.modifiedFeatures[feature.id].klass = feature.properties.klass;
     cityData.modifiedFeatures[feature.id].id = feature.properties.id;
-    cityData.modifiedFeatures[feature.id].properties = feature.properties;
+    cityData.modifiedFeatures[feature.id].props = true;
+
     this.emitChangeEvent();
   }
 });
