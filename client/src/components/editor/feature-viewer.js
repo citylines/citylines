@@ -41,7 +41,7 @@ class FeatureViewer extends PureComponent {
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell">{key}</td>
-                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} name={key} onKeyUp={this.bindedOnValueChange}>{value}</td>
+                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} suppressContentEditableWarning={true} name={key} onKeyUp={this.bindedOnValueChange}>{value}</td>
                   </tr>
                 )
               }) }
