@@ -79,10 +79,27 @@ const EditorStore = Object.assign({}, Store, {
   setFeaturePropsChange(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
-    cityData.modifiedFeatures[feature.id] = cityData.modifiedFeatures[feature.id] || {};
-    cityData.modifiedFeatures[feature.id].klass = feature.properties.klass;
-    cityData.modifiedFeatures[feature.id].id = feature.properties.id;
+
+    if (!cityData.modifiedFeatures[feature.id]) {
+      cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+    }
+
     cityData.modifiedFeatures[feature.id].props = true;
+
+    this.emitChangeEvent();
+  },
+
+  setFeatureGeoChange(urlName, features) {
+    const cityData = this.cityData[urlName];
+    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
+
+    features.map((feature) => {
+      if (!cityData.modifiedFeatures[feature.id]) {
+        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+      }
+
+      cityData.modifiedFeatures[feature.id].geo = true;
+    });
 
     this.emitChangeEvent();
   }
