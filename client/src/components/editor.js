@@ -25,6 +25,7 @@ class Editor extends PureComponent {
     this.bindedOnDrawLoad = this.onDrawLoad.bind(this);
     this.bindedOnModifiedFeatureClick = this.onModifiedFeatureClick.bind(this);
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
+    this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
   }
 
   componentWillMount() {
@@ -92,6 +93,20 @@ class Editor extends PureComponent {
     EditorStore.setFeatureGeoChange(this.urlName, features);
   }
 
+  onFeatureCreate(features) {
+    const createdFeatures = features.map((feature) => {
+      const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
+      this.draw.setFeatureProperty(feature.id, 'klass', klass);
+      this.draw.setFeatureProperty(feature.id, 'opening', 0);
+      this.draw.setFeatureProperty(feature.id, 'buildstart', 0);
+      this.draw.setFeatureProperty(feature.id, 'closure', 999999);
+      feature.properties.klass = klass;
+      return feature;
+    });
+
+    EditorStore.setFeatureCreated(this.urlName, createdFeatures);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -130,6 +145,7 @@ class Editor extends PureComponent {
               onSelectionChange={this.bindedOnSelectionChange}
               onDrawLoad={this.bindedOnDrawLoad}
               onFeatureUpdate={this.bindedOnFeatureUpdate}
+              onFeatureCreate={this.bindedOnFeatureCreate}
             /> }
         </Map>
       </div>

@@ -31,9 +31,11 @@ class FeatureViewer extends PureComponent {
 
   render() {
     const properties = this.props.feature ? this.props.feature.properties : null;
+    const idLabel = this.props.feature && this.props.feature.properties.id ? `Id: ${properties.id}` :'';
+
     const content = this.props.feature ?
           <table className="c-table c-table--striped">
-            <caption className="c-table__caption">{`${properties.klass} Id: ${properties.id}`}</caption>
+            <caption className="c-table__caption">{`${properties.klass} ${idLabel}`}</caption>
             <tbody className="c-table__body">
               { Object.entries(properties).map((entry) => {
                 const key = entry[0];

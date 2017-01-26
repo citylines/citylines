@@ -102,6 +102,21 @@ const EditorStore = Object.assign({}, Store, {
     });
 
     this.emitChangeEvent();
+  },
+
+  setFeatureCreated(urlName, features) {
+    const cityData = this.cityData[urlName];
+    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
+
+    features.map((feature) => {
+      if (!cityData.modifiedFeatures[feature.id]) {
+        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass};
+      }
+
+      cityData.modifiedFeatures[feature.id].created = true;
+    });
+
+    this.emitChangeEvent();
   }
 });
 

@@ -247,6 +247,12 @@ class Draw extends Component {
       }
     });
 
+    this.map.on('draw.create', (create) => {
+      if (typeof this.props.onFeatureCreate === 'function') {
+        this.props.onFeatureCreate(create.features);
+      }
+    });
+
     this.draw.add(this.props.features);
 
     if (typeof this.props.onDrawLoad === 'function') {

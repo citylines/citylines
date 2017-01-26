@@ -11,6 +11,7 @@ class ModifiedFeaturesViewer extends PureComponent {
     let type = "";
     if (feature.props && !feature.geo) type = "(Props)";
     if (!feature.props && feature.geo) type = "(Geo)";
+    if (feature.created) type = "(New)";
     return type;
   }
 
@@ -24,9 +25,10 @@ class ModifiedFeaturesViewer extends PureComponent {
       Object.entries(this.props.modifiedFeatures).map((entry) => {
         const id = entry[0];
         const feature = entry[1];
+        const idLabel = feature.id ? `Id: ${feature.id}`: '';
 
         return (
-          <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>{`${this.type(feature)} ${feature.klass} Id: ${feature.id}`}</li>
+          <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>{`${this.type(feature)} ${feature.klass} ${idLabel}`}</li>
         )
       })
       : <div className="c-card__item">Ningún elemento modificado</div>;
