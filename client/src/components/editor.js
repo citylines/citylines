@@ -26,6 +26,7 @@ class Editor extends PureComponent {
     this.bindedOnModifiedFeatureClick = this.onModifiedFeatureClick.bind(this);
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
     this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
+    this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
   }
 
   componentWillMount() {
@@ -107,6 +108,10 @@ class Editor extends PureComponent {
     EditorStore.setFeatureCreated(this.urlName, createdFeatures);
   }
 
+  onFeatureDelete(features) {
+    EditorStore.setFeatureDeleted(this.urlName, features);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -146,6 +151,7 @@ class Editor extends PureComponent {
               onDrawLoad={this.bindedOnDrawLoad}
               onFeatureUpdate={this.bindedOnFeatureUpdate}
               onFeatureCreate={this.bindedOnFeatureCreate}
+              onFeatureDelete={this.bindedOnFeatureDelete}
             /> }
         </Map>
       </div>

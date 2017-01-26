@@ -9,9 +9,12 @@ class ModifiedFeaturesViewer extends PureComponent {
 
   type(feature) {
     let type = "";
+
     if (feature.props && !feature.geo) type = "(Props)";
     if (!feature.props && feature.geo) type = "(Geo)";
     if (feature.created) type = "(New)";
+    if (feature.removed) type = "(Removed)";
+
     return type;
   }
 

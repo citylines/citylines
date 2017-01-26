@@ -117,6 +117,22 @@ const EditorStore = Object.assign({}, Store, {
     });
 
     this.emitChangeEvent();
+  },
+
+  setFeatureDeleted(urlName, features) {
+    const cityData = this.cityData[urlName];
+
+    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
+
+    features.map((feature) => {
+      if (!cityData.modifiedFeatures[feature.id]) {
+        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+      }
+
+      cityData.modifiedFeatures[feature.id].removed = true;
+    });
+
+    this.emitChangeEvent();
   }
 });
 
