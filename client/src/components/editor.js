@@ -79,6 +79,9 @@ class Editor extends PureComponent {
   onFeaturePropsChange(feature, modifiedKey, newValue) {
     this.draw.setFeatureProperty(feature.id, modifiedKey, newValue);
     EditorStore.setFeaturePropsChange(this.urlName, feature);
+
+    // And we refresh the selected feature
+    EditorStore.changeSelection(this.urlName, [this.draw.get(feature.id)]);
   }
 
   onDrawLoad(draw) {
@@ -125,6 +128,7 @@ class Editor extends PureComponent {
           <PanelBody>
             <div className="editor-cards-container">
               <FeatureViewer
+                lines={this.state.lines}
                 feature={this.state.selectedFeature}
                 onFeatureChange={this.bindedOnFeaturePropsChange}
                 />

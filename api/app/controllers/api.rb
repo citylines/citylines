@@ -68,6 +68,7 @@ class Api < App
 
     { name: @city.name,
       features: features_collection,
+      lines: city_lines(@city),
       config: config }.to_json
   end
 end

@@ -5,6 +5,7 @@ class FeatureViewer extends PureComponent {
     super(props, context);
 
     this.bindedOnValueChange = this.onValueChange.bind(this);
+    this.bindedOnLineChange = this.onLineChange.bind(this);
   }
 
   editableFields() {
@@ -29,6 +30,11 @@ class FeatureViewer extends PureComponent {
     if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature, key, value);
   }
 
+  onLineChange(e) {
+    const newLineUrlName = e.target.value;
+    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature, 'line_url_name', newLineUrlName);
+  }
+
   render() {
     const properties = this.props.feature ? this.props.feature.properties : null;
     const idLabel = this.props.feature && this.props.feature.properties.id ? `Id: ${properties.id}` :'';
@@ -37,6 +43,18 @@ class FeatureViewer extends PureComponent {
           <table className="c-table c-table--striped">
             <caption className="c-table__caption">{`${properties.klass} ${idLabel}`}</caption>
             <tbody className="c-table__body">
+              <tr className="c-table__row">
+                <td className="c-table__cell">{"Línea"}</td>
+                <td className="c-table__cell">
+                  <select className="c-field" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
+                    {this.props.lines.map((line) => {
+                      return (
+                        <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{line.name}</option>
+                      )
+                     })}
+                  </select>
+                </td>
+              </tr>
               { Object.entries(properties).map((entry) => {
                 const key = entry[0];
                 const value = entry[1];
