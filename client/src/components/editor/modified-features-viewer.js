@@ -36,10 +36,19 @@ class ModifiedFeaturesViewer extends PureComponent {
       })
       : <div className="c-card__item">Ningún elemento modificado</div>;
 
+      const buttons = this.props.modifiedFeatures ?
+        <div className="c-card__item">
+          <span className="c-input-group">
+            <button className="c-button c-button--block c-button--brand">Descartar</button><button className="c-button c-button--block c-button--info">Guardar</button>
+          </span>
+        </div>
+        : null;
+
     return (
       <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped" : ""}`}>
       <li className="c-card__item c-card__item--divider">Elementos modificados</li>
         { content }
+        { buttons }
       </ul>
     )
   }
