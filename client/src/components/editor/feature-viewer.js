@@ -46,7 +46,7 @@ class FeatureViewer extends PureComponent {
               <tr className="c-table__row">
                 <td className="c-table__cell">{"Línea"}</td>
                 <td className="c-table__cell">
-                  <select className="c-field" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
+                  <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
                     {this.props.lines.map((line) => {
                       return (
                         <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{line.name}</option>
