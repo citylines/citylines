@@ -5,6 +5,7 @@ class ModifiedFeaturesViewer extends PureComponent {
     super(props, context);
 
     this.bindedOnClick = this.onClick.bind(this);
+    this.bindedOnDiscard = this.onDiscard.bind(this);
   }
 
   type(feature) {
@@ -23,6 +24,10 @@ class ModifiedFeaturesViewer extends PureComponent {
     if (typeof this.props.onClick === 'function') this.props.onClick(id);
   }
 
+  onDiscard() {
+    if (typeof this.props.onDiscard === 'function') this.props.onDiscard();
+  }
+
   render() {
     const content = this.props.modifiedFeatures ?
       Object.entries(this.props.modifiedFeatures).map((entry) => {
@@ -39,7 +44,7 @@ class ModifiedFeaturesViewer extends PureComponent {
       const buttons = this.props.modifiedFeatures ?
         <div className="c-card__item">
           <span className="c-input-group">
-            <button className="c-button c-button--block c-button--brand">Descartar</button><button className="c-button c-button--block c-button--info">Guardar</button>
+            <button onClick={this.bindedOnDiscard} className="c-button c-button--block c-button--brand">Descartar</button><button className="c-button c-button--block c-button--info">Guardar</button>
           </span>
         </div>
         : null;

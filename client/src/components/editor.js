@@ -27,6 +27,7 @@ class Editor extends PureComponent {
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
     this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
     this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
+    this.bindedOnDiscardChanges = this.onDiscardChanges.bind(this);
   }
 
   componentWillMount() {
@@ -115,6 +116,11 @@ class Editor extends PureComponent {
     EditorStore.setFeatureDeleted(this.urlName, features);
   }
 
+  onDiscardChanges() {
+    this.draw.set(this.state.features);
+    EditorStore.discardChanges(this.urlName);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -135,6 +141,7 @@ class Editor extends PureComponent {
               <ModifiedFeaturesViewer
                 modifiedFeatures={this.state.modifiedFeatures}
                 onClick={this.bindedOnModifiedFeatureClick}
+                onDiscard={this.bindedOnDiscardChanges}
               />
             </div>
           </PanelBody>

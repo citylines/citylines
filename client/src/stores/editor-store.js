@@ -134,6 +134,13 @@ const EditorStore = Object.assign({}, Store, {
     });
 
     this.emitChangeEvent();
+  },
+
+  discardChanges(urlName) {
+    const cityData = this.cityData[urlName];
+    delete cityData.modifiedFeatures;
+    delete cityData.selectedFeature;
+    this.emitChangeEvent();
   }
 });
 
