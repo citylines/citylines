@@ -96,6 +96,19 @@ const EditorStore = Object.assign({}, Store, {
     cityData.features = Object.assign({}, cityData.features);
   },
 
+  removeFeature(urlName, feature) {
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+
+    const cityData = this.cityData[urlName];
+    const index = cityData.features.features.findIndex((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+
+    cityData.features.features.splice(index, 1);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
   setModifiedFeature(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
@@ -147,9 +160,15 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureDeleted(urlName, features) {
     features.map((feature) => {
-      // TODO: remove from features
+      this.removeFeature(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
-      modifiedFeature.removed = true;
+      if (modifiedFeature.created) {
+        const cityData = this.cityData[urlName];
+        delete cityData.modifiedFeatures[feature.id];
+        cityData.selectedFeature = null;
+      } else {
+        modifiedFeature.removed = true;
+      }
     });
 
     this.emitChangeEvent();
