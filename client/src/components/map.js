@@ -261,9 +261,11 @@ class Draw extends Component {
 
     this.draw.add(this.props.features);
 
+    // TODO: Remove following callback
     if (typeof this.props.onDrawLoad === 'function') {
       this.props.onDrawLoad(this.draw);
     }
+    // ----
   }
 
   componentWillReceiveProps(nextProps) {

@@ -82,10 +82,12 @@ class Editor extends PureComponent {
   }
 
   onDrawLoad(draw) {
+    // TODO: Remove once all changes are done
     this.draw = draw;
   }
 
   onModifiedFeatureClick(id) {
+    // TODO: refactor so this is done reactively
     this.draw.changeMode('simple_select', {featureIds: [id]});
     this.onSelectionChange([this.draw.get(id)]);
   }
@@ -113,6 +115,7 @@ class Editor extends PureComponent {
   }
 
   onDiscardChanges() {
+    // TODO: Pass the following logic to the Store (with a request updating cityData.features
     this.draw.set(this.state.features);
     EditorStore.discardChanges(this.urlName);
   }
