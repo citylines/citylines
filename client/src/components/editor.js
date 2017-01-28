@@ -78,7 +78,6 @@ class Editor extends PureComponent {
   }
 
   onFeaturePropsChange(feature, modifiedKey, newValue) {
-    this.draw.setFeatureProperty(feature.id, modifiedKey, newValue);
     EditorStore.setFeaturePropsChange(this.urlName, feature);
   }
 
@@ -98,10 +97,7 @@ class Editor extends PureComponent {
   onFeatureCreate(features) {
     const createdFeatures = features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      this.draw.setFeatureProperty(feature.id, 'klass', klass);
-      this.draw.setFeatureProperty(feature.id, 'opening', 0);
-      this.draw.setFeatureProperty(feature.id, 'buildstart', 0);
-      this.draw.setFeatureProperty(feature.id, 'closure', 999999);
+      feature.properties.id = Date.now();
       feature.properties.klass = klass;
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;

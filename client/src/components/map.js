@@ -266,6 +266,12 @@ class Draw extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.features != this.props.features) {
+      this.draw.set(nextProps.features);
+    }
+  }
+
   shouldComponentUpdate() {
     return false;
   }

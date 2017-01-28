@@ -77,21 +77,39 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  updateFeature(urlName, feature) {
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+
+    const cityData = this.cityData[urlName];
+    const index = cityData.features.features.findIndex((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+
+    cityData.features.features[index] = Object.assign({}, feature);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
   setModifiedFeature(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
 
-    if (!cityData.modifiedFeatures[feature.id]) {
-      cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+    const key = `${klass}_${id}`;
+
+    if (!cityData.modifiedFeatures[key]) {
+      cityData.modifiedFeatures[key] = {klass: klass, id: id};
     }
 
-    const modifiedFeature = cityData.modifiedFeatures[feature.id];
+    const modifiedFeature = cityData.modifiedFeatures[key];
     modifiedFeature.feature = Object.assign({}, feature);
 
     return modifiedFeature;
   },
 
   setFeaturePropsChange(urlName, feature) {
+    this.updateFeature(urlName, feature);
     const modifiedFeature = this.setModifiedFeature(urlName, feature);
     modifiedFeature.props = true;
 
@@ -103,6 +121,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureGeoChange(urlName, features) {
     features.map((feature) => {
+      this.updateFeature(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.geo = true;
     });
@@ -112,6 +131,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureCreated(urlName, features) {
     features.map((feature) => {
+      // TODO: Push to features
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.created = true;
     });
@@ -121,6 +141,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureDeleted(urlName, features) {
     features.map((feature) => {
+      // TODO: remove from features
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.removed = true;
     });
