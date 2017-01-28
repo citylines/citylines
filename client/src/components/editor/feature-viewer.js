@@ -27,12 +27,19 @@ class FeatureViewer extends PureComponent {
 
     if (value == oldValue) return;
 
-    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature, key, value);
+    const modifiedFeature = Object.assign({}, this.props.feature);
+    modifiedFeature.properties[key] = value;
+
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, key, value);
   }
 
   onLineChange(e) {
     const newLineUrlName = e.target.value;
-    if (this.props.onFeatureChange) this.props.onFeatureChange(this.props.feature, 'line_url_name', newLineUrlName);
+
+    const modifiedFeature = Object.assign({}, this.props.feature);
+    modifiedFeature.properties['line_url_name'] = newLineUrlName;
+
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, 'line_url_name', newLineUrlName);
   }
 
   render() {

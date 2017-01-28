@@ -80,9 +80,6 @@ class Editor extends PureComponent {
   onFeaturePropsChange(feature, modifiedKey, newValue) {
     this.draw.setFeatureProperty(feature.id, modifiedKey, newValue);
     EditorStore.setFeaturePropsChange(this.urlName, feature);
-
-    // And we refresh the selected feature
-    EditorStore.changeSelection(this.urlName, [this.draw.get(feature.id)]);
   }
 
   onDrawLoad(draw) {
@@ -106,6 +103,9 @@ class Editor extends PureComponent {
       this.draw.setFeatureProperty(feature.id, 'buildstart', 0);
       this.draw.setFeatureProperty(feature.id, 'closure', 999999);
       feature.properties.klass = klass;
+      feature.properties.opening = 0;
+      feature.properties.buildstart = 0;
+      feature.properties.closure = 0;
       return feature;
     });
 
