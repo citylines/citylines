@@ -101,7 +101,7 @@ class Editor extends PureComponent {
       feature.properties.klass = klass;
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;
-      feature.properties.closure = 0;
+      feature.properties.closure = 999999;
       return feature;
     });
 

@@ -33,7 +33,7 @@ class ModifiedFeaturesViewer extends PureComponent {
       Object.entries(this.props.modifiedFeatures).map((entry) => {
         const id = entry[0];
         const feature = entry[1];
-        const idLabel = feature.id ? `Id: ${feature.id}`: '';
+        const idLabel = !feature.created ? `Id: ${feature.id}`: '';
 
         return (
           <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>{`${this.type(feature)} ${feature.klass} ${idLabel}`}</li>

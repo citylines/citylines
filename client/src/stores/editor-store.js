@@ -90,13 +90,19 @@ const EditorStore = Object.assign({}, Store, {
     cityData.features = Object.assign({}, cityData.features);
   },
 
+  pushFeature(urlName, feature) {
+    const cityData = this.cityData[urlName];
+    cityData.features.features.push(feature);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
   setModifiedFeature(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
 
     const klass = feature.properties.klass;
     const id = feature.properties.id;
-    const key = `${klass}_${id}`;
+    const key = feature.id;
 
     if (!cityData.modifiedFeatures[key]) {
       cityData.modifiedFeatures[key] = {klass: klass, id: id};
@@ -131,7 +137,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureCreated(urlName, features) {
     features.map((feature) => {
-      // TODO: Push to features
+      this.pushFeature(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.created = true;
     });
