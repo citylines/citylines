@@ -44,7 +44,8 @@ class ModifiedFeaturesViewer extends PureComponent {
       const buttons = this.props.modifiedFeatures ?
         <div className="c-card__item">
           <span className="c-input-group">
-            <button onClick={this.bindedOnDiscard} className="c-button c-button--block c-button--brand">Descartar</button><button className="c-button c-button--block c-button--info">Guardar</button>
+            <button onClick={this.bindedOnDiscard} className="c-button c-button--block c-button--brand">Descartar</button>
+            <button className="c-button c-button--block c-button--info">Guardar</button>
           </span>
         </div>
         : null;
