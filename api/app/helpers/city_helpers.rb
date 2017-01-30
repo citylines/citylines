@@ -42,4 +42,10 @@ module CityHelpers
     {type: "FeatureCollection",
      features: features}
   end
+
+  def all_features_collection(city)
+    features_collection = lines_features_collection(city, 'sections').clone
+    features_collection[:features] += lines_features_collection(city, 'stations')[:features]
+    features_collection
+  end
 end

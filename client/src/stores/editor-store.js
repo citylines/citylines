@@ -64,6 +64,13 @@ const EditorStore = Object.assign({}, Store, {
     }
   },
 
+  async fetchFeatures(urlName) {
+    const url = `/api/editor/${urlName}/features`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  },
+
   storeGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
     cityData.config.coords = [geo.lon, geo.lat];
@@ -193,10 +200,15 @@ const EditorStore = Object.assign({}, Store, {
     EditorStore.changeSelection(urlName, [feature]);
   },
 
-  discardChanges(urlName) {
+  async discardChanges(urlName) {
+    const features = await this.fetchFeatures(urlName);
+
     const cityData = this.cityData[urlName];
+
+    cityData.features = Object.assign({}, features);
     delete cityData.modifiedFeatures;
     delete cityData.selectedFeature;
+
     this.emitChangeEvent();
   }
 });

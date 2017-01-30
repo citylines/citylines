@@ -107,7 +107,6 @@ class Editor extends PureComponent {
   }
 
   onDiscardChanges() {
-    // TODO: Store: make a new request
     EditorStore.discardChanges(this.urlName);
   }
 
