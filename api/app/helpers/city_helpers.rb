@@ -49,42 +49,47 @@ module CityHelpers
     features_collection
   end
 
-  def create_feature(change)
-    # TODO
+  def update_feature_properties(feature, properties)
+    line_id = Line[url_name: properties[:line_url_name]].id
+    feature.line_id = line_id
+    feature.buildstart = properties[:buildstart]
+    feature.opening = properties[:opening]
+    feature.closure = properties[:closure]
+    feature.name = properties[:name] if feature.class == Station
+    feature.save
   end
 
-  def remove_feature(change)
-    # TODO
+  def update_feature_geometry(feature, geometry)
+    feature.set_geometry_from_geojson(geometry)
+    feature.save
+    feature.set_length if feature.class == Section
+    feature.save
   end
 
   def update_create_or_delete_feature(change)
-    if change[:removed]
-      remove_feature(change[:feature])
-    end
+    klass = Object.const_get(change[:klass])
 
     if change[:created]
-      create_feature(change[:feature])
+      new_feature = klass.new
+      update_feature_properties(new_feature, change[:feature][:properties])
+      update_feature_geometry(new_feature, change[:feature][:geometry])
+      return
     end
 
-    klass = Object.const_get(change[:klass])
     id = change[:id]
     feature = klass[id]
 
-    if change[:geo]
-      feature.set_geometry_from_geojson(change[:feature][:geometry])
-      feature.set_length if klass == Section
+    if change[:removed]
+      feature.delete
+      return
     end
 
     if change[:props]
-      properties = change[:feature][:properties]
-
-      line_id = Line[url_name: properties[:line_url_name]].id
-      feature.line_id = line_id
-      feature.buildstart = properties[:buildstart]
-      feature.opening = properties[:opening]
-      feature.closure = properties[:closure]
+      update_feature_properties(feature, change[:feature][:properties])
     end
 
-    feature.save
+    if change[:geo]
+      update_feature_geometry(feature, change[:feature][:geometry])
+    end
   end
 end
