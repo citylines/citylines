@@ -8,8 +8,20 @@ module Sequel
                     self[column] = wkt(geometry)
                 end
 
+                def set_geometry_from_geojson(geometry, column = :geometry)
+                    unless geometry[:crs]
+                      geometry[:crs]={type:'name', properties: {name: "EPSG:#{SRID}"}}
+                    end
+
+                    self[column] = geojson(geometry.to_json)
+                end
+
                 def wkt(geometry)
                     Sequel.lit("ST_GeomFromText('#{geometry}', #{SRID})")
+                end
+
+                def geojson(geometry)
+                    Sequel.lit("ST_GeomFromGeoJSON('#{geometry}')")
                 end
 
                 def geojson_geometry(column = :geometry)

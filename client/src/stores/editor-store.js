@@ -71,6 +71,13 @@ const EditorStore = Object.assign({}, Store, {
     return json;
   },
 
+  async update(urlName, body) {
+    const url = `/api/editor/${urlName}/update`;
+    const response = await fetch(url, {method:'PUT', body: body});
+    const json = await response.json();
+    return json;
+  },
+
   storeGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
     cityData.config.coords = [geo.lon, geo.lat];
@@ -206,6 +213,22 @@ const EditorStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName];
 
     cityData.features = Object.assign({}, features);
+    delete cityData.modifiedFeatures;
+    delete cityData.selectedFeature;
+
+    this.emitChangeEvent();
+  },
+
+  async saveChanges(urlName) {
+    const cityData = this.cityData[urlName];
+
+    const changes = Object.entries(cityData.modifiedFeatures).map((entry) => {
+      return entry[1];
+    });
+
+    const updatedFeatures = await this.update(urlName, JSON.stringify(changes));
+
+    cityData.features = Object.assign({}, updatedFeatures);
     delete cityData.modifiedFeatures;
     delete cityData.selectedFeature;
 

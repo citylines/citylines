@@ -73,4 +73,15 @@ class Api < App
     @city = City[url_name: url_name]
     all_features_collection(@city).to_json
   end
+
+  put '/editor/:url_name/update' do |url_name|
+    @city = City[url_name: url_name]
+    changes = JSON.parse(request.body.read, symbolize_names: true)
+
+    changes.each do |change|
+      update_create_or_delete_feature(change);
+    end
+
+    all_features_collection(@city).to_json
+  end
 end

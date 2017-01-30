@@ -48,4 +48,43 @@ module CityHelpers
     features_collection[:features] += lines_features_collection(city, 'stations')[:features]
     features_collection
   end
+
+  def create_feature(change)
+    # TODO
+  end
+
+  def remove_feature(change)
+    # TODO
+  end
+
+  def update_create_or_delete_feature(change)
+    if change[:removed]
+      remove_feature(change[:feature])
+    end
+
+    if change[:created]
+      create_feature(change[:feature])
+    end
+
+    klass = Object.const_get(change[:klass])
+    id = change[:id]
+    feature = klass[id]
+
+    if change[:geo]
+      feature.set_geometry_from_geojson(change[:feature][:geometry])
+      feature.set_length if klass == Section
+    end
+
+    if change[:props]
+      properties = change[:feature][:properties]
+
+      line_id = Line[url_name: properties[:line_url_name]].id
+      feature.line_id = line_id
+      feature.buildstart = properties[:buildstart]
+      feature.opening = properties[:opening]
+      feature.closure = properties[:closure]
+    end
+
+    feature.save
+  end
 end
