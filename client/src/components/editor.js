@@ -22,7 +22,6 @@ class Editor extends PureComponent {
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
-    this.bindedOnDrawLoad = this.onDrawLoad.bind(this);
     this.bindedOnModifiedFeatureClick = this.onModifiedFeatureClick.bind(this);
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
     this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
@@ -78,20 +77,11 @@ class Editor extends PureComponent {
   }
 
   onFeaturePropsChange(feature, modifiedKey, newValue) {
-    this.draw.setFeatureProperty(feature.id, modifiedKey, newValue);
     EditorStore.setFeaturePropsChange(this.urlName, feature);
-
-    // And we refresh the selected feature
-    EditorStore.changeSelection(this.urlName, [this.draw.get(feature.id)]);
   }
 
-  onDrawLoad(draw) {
-    this.draw = draw;
-  }
-
-  onModifiedFeatureClick(id) {
-    this.draw.changeMode('simple_select', {featureIds: [id]});
-    this.onSelectionChange([this.draw.get(id)]);
+  onModifiedFeatureClick(klass, id) {
+    EditorStore.setSelectedFeature(this.urlName, klass, id);
   }
 
   onFeatureUpdate(features) {
@@ -101,11 +91,11 @@ class Editor extends PureComponent {
   onFeatureCreate(features) {
     const createdFeatures = features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      this.draw.setFeatureProperty(feature.id, 'klass', klass);
-      this.draw.setFeatureProperty(feature.id, 'opening', 0);
-      this.draw.setFeatureProperty(feature.id, 'buildstart', 0);
-      this.draw.setFeatureProperty(feature.id, 'closure', 999999);
+      feature.properties.id = Date.now();
       feature.properties.klass = klass;
+      feature.properties.opening = 0;
+      feature.properties.buildstart = 0;
+      feature.properties.closure = 999999;
       return feature;
     });
 
@@ -117,7 +107,6 @@ class Editor extends PureComponent {
   }
 
   onDiscardChanges() {
-    this.draw.set(this.state.features);
     EditorStore.discardChanges(this.urlName);
   }
 
@@ -163,6 +152,7 @@ class Editor extends PureComponent {
               onFeatureUpdate={this.bindedOnFeatureUpdate}
               onFeatureCreate={this.bindedOnFeatureCreate}
               onFeatureDelete={this.bindedOnFeatureDelete}
+              selectedFeatureById={this.state.selectedFeatureById}
             /> }
         </Map>
       </div>

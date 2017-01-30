@@ -59,8 +59,16 @@ const EditorStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       selectedFeature: cityData.selectedFeature,
-      modifiedFeatures: cityData.modifiedFeatures
+      modifiedFeatures: cityData.modifiedFeatures,
+      selectedFeatureById: this.selectedFeatureById
     }
+  },
+
+  async fetchFeatures(urlName) {
+    const url = `/api/editor/${urlName}/features`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
   },
 
   storeGeoData(urlName, geo) {
@@ -71,75 +79,136 @@ const EditorStore = Object.assign({}, Store, {
     cityData.config.pitch = geo.pitch;
   },
 
+  getFeatureByKlassAndId(urlName, klass, id){
+    const cityData = this.cityData[urlName];
+    return cityData.features.features.find((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+  },
+
   changeSelection(urlName, features) {
     const cityData = this.cityData[urlName];
     cityData.selectedFeature = features[0];
+
+    // Most of the times, the feature will be already selected,
+    // but for cases where the selection is triggered by the Modified Features
+    // Panel, we set manually the feature to be selected in Draw
+    this.selectedFeatureById = features[0] ? features[0].id : null;
+
     this.emitChangeEvent();
   },
 
-  setFeaturePropsChange(urlName, feature) {
+  updateFeature(urlName, feature) {
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+
+    const cityData = this.cityData[urlName];
+    const index = cityData.features.features.findIndex((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+
+    cityData.features.features[index] = Object.assign({}, feature);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
+  pushFeature(urlName, feature) {
+    const cityData = this.cityData[urlName];
+    cityData.features.features.push(feature);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
+  removeFeature(urlName, feature) {
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+
+    const cityData = this.cityData[urlName];
+    const index = cityData.features.features.findIndex((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+
+    cityData.features.features.splice(index, 1);
+    cityData.features = Object.assign({}, cityData.features);
+  },
+
+  setModifiedFeature(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
 
-    if (!cityData.modifiedFeatures[feature.id]) {
-      cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+    const klass = feature.properties.klass;
+    const id = feature.properties.id;
+    const key = feature.id;
+
+    if (!cityData.modifiedFeatures[key]) {
+      cityData.modifiedFeatures[key] = {klass: klass, id: id};
     }
 
-    cityData.modifiedFeatures[feature.id].props = true;
+    const modifiedFeature = cityData.modifiedFeatures[key];
+    modifiedFeature.feature = Object.assign({}, feature);
+
+    return modifiedFeature;
+  },
+
+  setFeaturePropsChange(urlName, feature) {
+    this.updateFeature(urlName, feature);
+    const modifiedFeature = this.setModifiedFeature(urlName, feature);
+    modifiedFeature.props = true;
+
+    const cityData = this.cityData[urlName];
+    cityData.selectedFeature = Object.assign({}, feature);
 
     this.emitChangeEvent();
   },
 
   setFeatureGeoChange(urlName, features) {
-    const cityData = this.cityData[urlName];
-    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
-
     features.map((feature) => {
-      if (!cityData.modifiedFeatures[feature.id]) {
-        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
-      }
-
-      cityData.modifiedFeatures[feature.id].geo = true;
+      this.updateFeature(urlName, feature);
+      const modifiedFeature = this.setModifiedFeature(urlName, feature);
+      modifiedFeature.geo = true;
     });
 
     this.emitChangeEvent();
   },
 
   setFeatureCreated(urlName, features) {
-    const cityData = this.cityData[urlName];
-    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
-
     features.map((feature) => {
-      if (!cityData.modifiedFeatures[feature.id]) {
-        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass};
-      }
-
-      cityData.modifiedFeatures[feature.id].created = true;
+      this.pushFeature(urlName, feature);
+      const modifiedFeature = this.setModifiedFeature(urlName, feature);
+      modifiedFeature.created = true;
     });
 
     this.emitChangeEvent();
   },
 
   setFeatureDeleted(urlName, features) {
-    const cityData = this.cityData[urlName];
-
-    cityData.modifiedFeatures = Object.assign({}, cityData.modifiedFeatures || {});
-
     features.map((feature) => {
-      if (!cityData.modifiedFeatures[feature.id]) {
-        cityData.modifiedFeatures[feature.id] = {klass: feature.properties.klass, id: feature.properties.id};
+      this.removeFeature(urlName, feature);
+      const modifiedFeature = this.setModifiedFeature(urlName, feature);
+      if (modifiedFeature.created) {
+        const cityData = this.cityData[urlName];
+        delete cityData.modifiedFeatures[feature.id];
+        cityData.selectedFeature = null;
+      } else {
+        modifiedFeature.removed = true;
       }
-
-      cityData.modifiedFeatures[feature.id].removed = true;
     });
 
     this.emitChangeEvent();
   },
 
-  discardChanges(urlName) {
+  setSelectedFeature(urlName, klass, id) {
+    const feature = this.getFeatureByKlassAndId(urlName, klass, id);
+    EditorStore.changeSelection(urlName, [feature]);
+  },
+
+  async discardChanges(urlName) {
+    const features = await this.fetchFeatures(urlName);
+
     const cityData = this.cityData[urlName];
+
+    cityData.features = Object.assign({}, features);
     delete cityData.modifiedFeatures;
     delete cityData.selectedFeature;
+
     this.emitChangeEvent();
   }
 });

@@ -21,7 +21,11 @@ class ModifiedFeaturesViewer extends PureComponent {
 
   onClick(e) {
     const id = e.target.attributes.name.value;
-    if (typeof this.props.onClick === 'function') this.props.onClick(id);
+    const feature = this.props.modifiedFeatures[id];
+
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(feature.klass, feature.id);
+    }
   }
 
   onDiscard() {
@@ -33,7 +37,7 @@ class ModifiedFeaturesViewer extends PureComponent {
       Object.entries(this.props.modifiedFeatures).map((entry) => {
         const id = entry[0];
         const feature = entry[1];
-        const idLabel = feature.id ? `Id: ${feature.id}`: '';
+        const idLabel = !feature.created ? `Id: ${feature.id}`: '';
 
         return (
           <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>{`${this.type(feature)} ${feature.klass} ${idLabel}`}</li>

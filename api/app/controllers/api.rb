@@ -63,12 +63,14 @@ class Api < App
       pitch: DEFAULT_PITCH,
     }
 
-    features_collection = lines_features_collection(@city, 'sections').clone
-    features_collection[:features] += lines_features_collection(@city, 'stations')[:features]
-
     { name: @city.name,
-      features: features_collection,
+      features: all_features_collection(@city),
       lines: city_lines(@city),
       config: config }.to_json
+  end
+
+  get '/editor/:url_name/features' do |url_name|
+    @city = City[url_name: url_name]
+    all_features_collection(@city).to_json
   end
 end
