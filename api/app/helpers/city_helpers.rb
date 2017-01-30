@@ -55,14 +55,14 @@ module CityHelpers
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
     feature.closure = properties[:closure]
-    feature.name = properties[:name] if feature.class == Station
+    feature.name = properties[:name] if feature.is_a?(Station)
     feature.save
   end
 
   def update_feature_geometry(feature, geometry)
     feature.set_geometry_from_geojson(geometry)
     feature.save
-    feature.set_length if feature.class == Section
+    feature.set_length if feature.is_a?(Section)
     feature.save
   end
 

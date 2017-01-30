@@ -97,6 +97,7 @@ class Editor extends PureComponent {
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;
       feature.properties.closure = 999999;
+      if (klass == 'Station') feature.properties.name = '';
       return feature;
     });
 
