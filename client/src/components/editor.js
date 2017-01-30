@@ -22,7 +22,6 @@ class Editor extends PureComponent {
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
-    this.bindedOnDrawLoad = this.onDrawLoad.bind(this);
     this.bindedOnModifiedFeatureClick = this.onModifiedFeatureClick.bind(this);
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
     this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
@@ -81,15 +80,8 @@ class Editor extends PureComponent {
     EditorStore.setFeaturePropsChange(this.urlName, feature);
   }
 
-  onDrawLoad(draw) {
-    // TODO: Remove once all changes are done
-    this.draw = draw;
-  }
-
-  onModifiedFeatureClick(id) {
-    // TODO: refactor so this is done reactively
-    this.draw.changeMode('simple_select', {featureIds: [id]});
-    this.onSelectionChange([this.draw.get(id)]);
+  onModifiedFeatureClick(klass, id) {
+    EditorStore.setSelectedFeature(this.urlName, klass, id);
   }
 
   onFeatureUpdate(features) {
@@ -115,8 +107,7 @@ class Editor extends PureComponent {
   }
 
   onDiscardChanges() {
-    // TODO: Pass the following logic to the Store (with a request updating cityData.features
-    this.draw.set(this.state.features);
+    // TODO: Store: make a new request
     EditorStore.discardChanges(this.urlName);
   }
 
@@ -162,6 +153,7 @@ class Editor extends PureComponent {
               onFeatureUpdate={this.bindedOnFeatureUpdate}
               onFeatureCreate={this.bindedOnFeatureCreate}
               onFeatureDelete={this.bindedOnFeatureDelete}
+              selectedFeatureById={this.state.selectedFeatureById}
             /> }
         </Map>
       </div>

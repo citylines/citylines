@@ -59,7 +59,8 @@ const EditorStore = Object.assign({}, Store, {
       lines: cityData.lines,
       config: cityData.config || {},
       selectedFeature: cityData.selectedFeature,
-      modifiedFeatures: cityData.modifiedFeatures
+      modifiedFeatures: cityData.modifiedFeatures,
+      selectedFeatureById: this.selectedFeatureById
     }
   },
 
@@ -71,9 +72,22 @@ const EditorStore = Object.assign({}, Store, {
     cityData.config.pitch = geo.pitch;
   },
 
+  getFeatureByKlassAndId(urlName, klass, id){
+    const cityData = this.cityData[urlName];
+    return cityData.features.features.find((f) => {
+      return (f.properties.klass == klass && f.properties.id == id)
+    });
+  },
+
   changeSelection(urlName, features) {
     const cityData = this.cityData[urlName];
     cityData.selectedFeature = features[0];
+
+    // Most of the times, the feature will be already selected,
+    // but for cases where the selection is triggered by the Modified Features
+    // Panel, we set manually the feature to be selected in Draw
+    this.selectedFeatureById = features[0] ? features[0].id : null;
+
     this.emitChangeEvent();
   },
 
@@ -172,6 +186,11 @@ const EditorStore = Object.assign({}, Store, {
     });
 
     this.emitChangeEvent();
+  },
+
+  setSelectedFeature(urlName, klass, id) {
+    const feature = this.getFeatureByKlassAndId(urlName, klass, id);
+    EditorStore.changeSelection(urlName, [feature]);
   },
 
   discardChanges(urlName) {

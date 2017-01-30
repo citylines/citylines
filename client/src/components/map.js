@@ -260,17 +260,15 @@ class Draw extends Component {
     });
 
     this.draw.add(this.props.features);
-
-    // TODO: Remove following callback
-    if (typeof this.props.onDrawLoad === 'function') {
-      this.props.onDrawLoad(this.draw);
-    }
-    // ----
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.features != this.props.features) {
       this.draw.set(nextProps.features);
+    }
+
+    if (nextProps.selectedFeatureById != this.props.selectedFeatureById) {
+      this.draw.changeMode('simple_select', {featureIds: [nextProps.selectedFeatureById]});
     }
   }
 

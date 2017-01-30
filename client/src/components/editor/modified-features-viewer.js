@@ -21,7 +21,11 @@ class ModifiedFeaturesViewer extends PureComponent {
 
   onClick(e) {
     const id = e.target.attributes.name.value;
-    if (typeof this.props.onClick === 'function') this.props.onClick(id);
+    const feature = this.props.modifiedFeatures[id];
+
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(feature.klass, feature.id);
+    }
   }
 
   onDiscard() {
