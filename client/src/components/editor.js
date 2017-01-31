@@ -14,6 +14,13 @@ class Editor extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    this.modes = {
+      EDIT_ELEMENTS: 'edit-elements',
+      EDIT_LINES: 'edit-lines'
+    }
+
+    this.currentMode = this.modes.EDIT_ELEMENTS;
+
     this.urlName = this.props.params.city_url_name;
     this.state = EditorStore.getState(this.urlName);
 
@@ -28,6 +35,7 @@ class Editor extends PureComponent {
     this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
     this.bindedOnDiscardChanges = this.onDiscardChanges.bind(this);
     this.bindedOnSaveChanges = this.onSaveChanges.bind(this);
+    this.bindedToggleMode = this.toggleMode.bind(this);
   }
 
   componentWillMount() {
@@ -116,7 +124,18 @@ class Editor extends PureComponent {
     EditorStore.saveChanges(this.urlName);
   }
 
+  toggleMode() {
+    if (this.currentMode == this.modes.EDIT_LINES) {
+      this.currentMode = this.modes.EDIT_ELEMENTS;
+    } else {
+      this.currentMode = this.modes.EDIT_LINES;
+    }
+
+    this.forceUpdate();
+  }
+
   render() {
+    const mode_buttons_class = 'c-button c-button--block c-button--ghost-error';
     return (
       <div className="o-grid o-panel">
         <Panel display={this.state.main.displayPanel}>
@@ -125,6 +144,14 @@ class Editor extends PureComponent {
               <h3 className="c-heading">{this.state.name}</h3>
               <Link className="c-link" to={`/${this.urlName}`}>Volver</Link>
             </div>
+            <span className="c-input-group">
+              <button className={`${mode_buttons_class} ${this.currentMode == this.modes.EDIT_ELEMENTS ? 'c-button--active' : null}`} onClick={this.bindedToggleMode}>
+                Editar elementos
+              </button>
+              <button className={`${mode_buttons_class} ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`} onClick={this.bindedToggleMode}>
+                Editar líneas
+              </button>
+            </span>
           </PanelHeader>
           <PanelBody>
             <div className="editor-cards-container">
