@@ -60,7 +60,7 @@ const EditorStore = Object.assign({}, Store, {
       config: cityData.config || {},
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
-      selectedFeatureById: this.selectedFeatureById
+      selectedFeatureById: cityData.selectedFeatureById
     }
   },
 
@@ -100,7 +100,7 @@ const EditorStore = Object.assign({}, Store, {
     // Most of the times, the feature will be already selected,
     // but for cases where the selection is triggered by the Modified Features
     // Panel, we set manually the feature to be selected in Draw
-    this.selectedFeatureById = features[0] ? features[0].id : null;
+    cityData.selectedFeatureById = features[0] ? features[0].id : null;
 
     this.emitChangeEvent();
   },
