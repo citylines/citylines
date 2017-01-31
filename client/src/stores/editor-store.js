@@ -134,7 +134,13 @@ const EditorStore = Object.assign({}, Store, {
     });
 
     cityData.features.features.splice(index, 1);
-    cityData.features = Object.assign({}, cityData.features);
+
+    // FIXME: The following line is commented because:
+    // 1. It's not that necessary (the Draw element already has the element removed, even though it's state is outdated)
+    // 2. It triggers an "undefined is not an object (evaluating 'e.toGeoJSON')" error.
+    // But eventually it has to be uncommented so Draw has an up-to-date state
+    //
+    // cityData.features = Object.assign({}, cityData.features);
   },
 
   setModifiedFeature(urlName, feature) {
@@ -191,14 +197,13 @@ const EditorStore = Object.assign({}, Store, {
       this.removeFeature(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       if (modifiedFeature.created) {
-        const cityData = this.cityData[urlName];
-        delete cityData.modifiedFeatures[feature.id];
-        cityData.selectedFeature = null;
+        delete this.cityData[urlName].modifiedFeatures[feature.id];
       } else {
         modifiedFeature.removed = true;
       }
     });
 
+    this.cityData[urlName].selectedFeature = null;
     this.emitChangeEvent();
   },
 
