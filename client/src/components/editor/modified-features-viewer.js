@@ -60,7 +60,7 @@ class ModifiedFeaturesViewer extends PureComponent {
         : null;
 
     return (
-      <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped" : ""}`}>
+      <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
       <li className="c-card__item c-card__item--divider">Elementos modificados</li>
         { content }
         { buttons }

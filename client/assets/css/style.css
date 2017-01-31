@@ -167,3 +167,7 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 .alert {
   background-color: #F5A9A9;
 }
+
+.no-max-height {
+  max-height:none;
+}
