@@ -15,11 +15,11 @@ class Editor extends PureComponent {
     super(props, context);
 
     this.modes = {
-      EDIT_ELEMENTS: 'edit-elements',
+      EDIT_FEATURES: 'edit-features',
       EDIT_LINES: 'edit-lines'
     }
 
-    this.currentMode = this.modes.EDIT_ELEMENTS;
+    this.currentMode = this.modes.EDIT_FEATURES;
 
     this.urlName = this.props.params.city_url_name;
     this.state = EditorStore.getState(this.urlName);
@@ -128,7 +128,7 @@ class Editor extends PureComponent {
     if (e.target.name === this.currentMode) return;
 
     if (this.currentMode === this.modes.EDIT_LINES) {
-      this.currentMode = this.modes.EDIT_ELEMENTS;
+      this.currentMode = this.modes.EDIT_FEATURES;
       MainStore.togglePanelFullWidth();
     } else {
       this.currentMode = this.modes.EDIT_LINES;
@@ -148,8 +148,8 @@ class Editor extends PureComponent {
               <Link className="c-link" to={`/${this.urlName}`}>Volver</Link>
             </div>
             <span className="c-input-group">
-              <button name={this.modes.EDIT_ELEMENTS}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_ELEMENTS ? 'c-button--active' : null}`}
+              <button name={this.modes.EDIT_FEATURES}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
                       onClick={this.bindedToggleMode}>
                 Editar elementos
               </button>
@@ -161,7 +161,7 @@ class Editor extends PureComponent {
             </span>
           </PanelHeader>
           <PanelBody>
-            { this.currentMode === this.modes.EDIT_ELEMENTS ?
+            { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
               <FeatureViewer
                 lines={this.state.lines}
