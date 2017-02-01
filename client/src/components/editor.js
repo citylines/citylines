@@ -124,36 +124,44 @@ class Editor extends PureComponent {
     EditorStore.saveChanges(this.urlName);
   }
 
-  toggleMode() {
-    if (this.currentMode == this.modes.EDIT_LINES) {
+  toggleMode(e) {
+    if (e.target.name === this.currentMode) return;
+
+    if (this.currentMode === this.modes.EDIT_LINES) {
       this.currentMode = this.modes.EDIT_ELEMENTS;
+      MainStore.togglePanelFullWidth();
     } else {
       this.currentMode = this.modes.EDIT_LINES;
+      MainStore.togglePanelFullWidth();
     }
 
     this.forceUpdate();
   }
 
   render() {
-    const mode_buttons_class = 'c-button c-button--block c-button--ghost-error';
     return (
       <div className="o-grid o-panel">
-        <Panel display={this.state.main.displayPanel}>
+        <Panel display={this.state.main.displayPanel} fullWidth={this.state.main.panelFullWidth}>
           <PanelHeader>
             <div className="panel-header-title">
               <h3 className="c-heading">{this.state.name}</h3>
               <Link className="c-link" to={`/${this.urlName}`}>Volver</Link>
             </div>
             <span className="c-input-group">
-              <button className={`${mode_buttons_class} ${this.currentMode == this.modes.EDIT_ELEMENTS ? 'c-button--active' : null}`} onClick={this.bindedToggleMode}>
+              <button name={this.modes.EDIT_ELEMENTS}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_ELEMENTS ? 'c-button--active' : null}`}
+                      onClick={this.bindedToggleMode}>
                 Editar elementos
               </button>
-              <button className={`${mode_buttons_class} ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`} onClick={this.bindedToggleMode}>
+              <button name={this.modes.EDIT_LINES}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`}
+                      onClick={this.bindedToggleMode}>
                 Editar líneas
               </button>
             </span>
           </PanelHeader>
           <PanelBody>
+            { this.currentMode === this.modes.EDIT_ELEMENTS ?
             <div className="editor-cards-container">
               <FeatureViewer
                 lines={this.state.lines}
@@ -167,6 +175,10 @@ class Editor extends PureComponent {
                 onSave={this.bindedOnSaveChanges}
               />
             </div>
+            :
+            <div className="editor-cards-container">
+            </div>
+            }
           </PanelBody>
         </Panel>
         <Map
