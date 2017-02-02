@@ -6,6 +6,7 @@ import {Map, Draw} from './map';
 import {Panel, PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
+import LinesEditor from './editor/lines-editor';
 
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
@@ -176,8 +177,7 @@ class Editor extends PureComponent {
               />
             </div>
             :
-            <div className="editor-cards-container">
-            </div>
+            <LinesEditor lines={this.state.lines}/>
             }
           </PanelBody>
         </Panel>
