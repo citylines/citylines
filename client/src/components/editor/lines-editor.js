@@ -4,26 +4,6 @@ import {SketchPicker} from 'react-color';
 class LinesEditor extends PureComponent {
   constructor(props, context) {
     super(props, context);
-
-    this.displayColorPicker = {};
-
-    this.bindedToggleColorPicker = this.toggleColorPicker.bind(this);
-    this.bindedCloseColorPicker = this.closeColorPicker.bind(this);
-  }
-
-  toggleColorPicker(e) {
-    const line_url_name = e.target.attributes.name.value.split(':')[1];
-    const display = !this.displayColorPicker[line_url_name];
-    this.displayColorPicker = {}
-    this.displayColorPicker[line_url_name] = display;
-    this.forceUpdate();
-  }
-
-  closeColorPicker(e) {
-    if (e.target.className != 'color') {
-      this.displayColorPicker = {};
-      this.forceUpdate();
-    }
   }
 
   render() {
@@ -33,25 +13,13 @@ class LinesEditor extends PureComponent {
           {
             this.props.lines.map((line) => {
               return (
-                <div key={line.url_name} className="c-card__item" onClick={this.bindedCloseColorPicker}>
-                  <div className="c-input-group">
-                    <div className="o-field">
-                      <input className="c-field" type="text" defaultValue={line.name}></input>
-                    </div>
-                    <div className="o-field">
-                      <div className="editor-line-color"><div name={`color:${line.url_name}`} className="color" style={{backgroundColor: line.style.color}} onClick={this.bindedToggleColorPicker}></div></div>
-                      {this.displayColorPicker[line.url_name] ?
-                      <div className="color-picker-container"><SketchPicker color={ line.style.color } /></div> : null
-                      }
-                    </div>
-                    <div className="o-field">
-                      <span className="c-input-group" style={{float:'right'}}>
-                        <button className="c-button c-button--brand">Actualizar</button>
-                        <button className="c-button">Borrar</button>
-                      </span>
-                    </div>
-                  </div>
-                </div>)
+                  <LinesEditorItem
+                    key={line.url_name}
+                    url_name={line.url_name}
+                    name={line.name}
+                    color={line.style.color}
+                  />
+                )
             })
           }
         </div>
@@ -60,4 +28,83 @@ class LinesEditor extends PureComponent {
   }
 }
 
+class LinesEditorItem extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.color = this.props.color;
+    this.name = this.props.name;
+
+    this.state = {
+      color: this.color,
+      name: this.name
+    }
+
+    this.displayColorPicker = false;
+    this.displaySaveButton = false;
+
+    this.bindedToggleColorPicker = this.toggleColorPicker.bind(this);
+    this.bindedCloseColorPicker = this.closeColorPicker.bind(this);
+    this.bindedOnColorChange = this.onColorChange.bind(this);
+    this.bindedOnNameChange = this.onNameChange.bind(this);
+  }
+
+  toggleColorPicker(e) {
+    this.displayColorPicker = !this.displayColorPicker;
+    this.forceUpdate();
+  }
+
+  closeColorPicker(e) {
+    if (e.target.className != 'color') {
+      this.displayColorPicker = false;
+      this.forceUpdate();
+    }
+  }
+
+  onColorChange(color) {
+    this.displaySaveButton = true;
+    this.color = color.hex;
+    this.updateState();
+  }
+
+  onNameChange(e) {
+    const newName = e.target.value;
+    this.name = newName;
+    if (newName && newName != '') {
+      this.displaySaveButton = true;
+    }
+    this.updateState();
+  }
+
+  updateState() {
+    this.setState({
+      color: this.color,
+      name: this.name
+    });
+  }
+
+  render() {
+    return (
+      <div className="c-card__item" onClick={this.bindedCloseColorPicker}>
+        <div className="c-input-group">
+          <div className="o-field">
+            <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>
+          </div>
+          <div className="o-field">
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
+            {this.displayColorPicker ?
+            <div className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            }
+          </div>
+          <div className="o-field">
+            <span className="c-input-group" style={{float:'right'}}>
+              { this.displaySaveButton && <button className="c-button c-button--brand">Actualizar</button> }
+              <button className="c-button">Borrar</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
 export default LinesEditor
