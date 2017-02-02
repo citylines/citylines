@@ -28,7 +28,7 @@ class LinesEditor extends PureComponent {
 
   render() {
     return (
-      <div className="editor-cards-container">
+      <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
         <div className="c-card c-card--highest">
           {
             this.props.lines.map((line) => {
@@ -45,7 +45,7 @@ class LinesEditor extends PureComponent {
                       }
                     </div>
                     <div className="o-field">
-                      <span className="c-input-group">
+                      <span className="c-input-group" style={{float:'right'}}>
                         <button className="c-button c-button--brand">Actualizar</button>
                         <button className="c-button">Borrar</button>
                       </span>
