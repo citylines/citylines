@@ -74,7 +74,7 @@ class Api < App
     all_features_collection(@city).to_json
   end
 
-  put '/editor/:url_name/update' do |url_name|
+  put '/editor/:url_name/features' do |url_name|
     @city = City[url_name: url_name]
     changes = JSON.parse(request.body.read, symbolize_names: true)
 

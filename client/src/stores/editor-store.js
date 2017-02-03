@@ -24,7 +24,7 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   async updateFeatures(urlName, body) {
-    const url = `/api/editor/${urlName}/update`;
+    const url = `/api/editor/${urlName}/features`;
     const response = await fetch(url, {method:'PUT', body: body});
     const json = await response.json();
     return json;
