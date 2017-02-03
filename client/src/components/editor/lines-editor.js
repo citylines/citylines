@@ -28,6 +28,7 @@ class LinesEditor extends PureComponent {
                     key={line.url_name}
                     url_name={line.url_name}
                     name={line.name}
+                    deletable={line.deletable}
                     color={line.style.color}
                     onSave={this.bindedOnSave}
                     onDelete={this.bindedOnDelete}
@@ -141,7 +142,7 @@ class LinesEditorItem extends PureComponent {
               deleteWarningControl :
               <span className="c-input-group" style={{float:'right'}}>
                 { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--brand">Guardar</button> }
-                <button onClick={this.bindedOnDelete} className="c-button">Borrar</button>
+                { this.props.deletable && <button onClick={this.bindedOnDelete} className="c-button">Borrar</button> }
               </span>
             }
           </div>
