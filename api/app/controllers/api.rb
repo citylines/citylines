@@ -84,4 +84,18 @@ class Api < App
 
     all_features_collection(@city).to_json
   end
+
+  put '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    @city = City[url_name: url_name]
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    @city.style["line"]["opening"][line_url_name]["color"] = args[:color]
+    @city.save
+
+    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    @line.name = args[:name]
+    @line.save
+
+    city_lines(@city).to_json
+  end
 end

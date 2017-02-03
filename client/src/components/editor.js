@@ -37,6 +37,8 @@ class Editor extends PureComponent {
     this.bindedOnDiscardChanges = this.onDiscardChanges.bind(this);
     this.bindedOnSaveChanges = this.onSaveChanges.bind(this);
     this.bindedToggleMode = this.toggleMode.bind(this);
+    this.bindedOnLineSave = this.onLineSave.bind(this);
+    this.bindedOnLineDelete = this.onLineDelete.bind(this);
   }
 
   componentWillMount() {
@@ -140,6 +142,14 @@ class Editor extends PureComponent {
     this.forceUpdate();
   }
 
+  onLineSave(args) {
+    EditorStore.updateLine(this.urlName, args);
+  }
+
+  onLineDelete(lineUrlName) {
+    // TODO
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
@@ -178,7 +188,9 @@ class Editor extends PureComponent {
               />
             </div>
             :
-            <LinesEditor lines={this.state.lines}/>
+            <LinesEditor lines={this.state.lines}
+                         onSave={this.bindedOnLineSave}
+                         onDelete={this.bindedOnLineDelete}/>
             }
           </PanelBody>
         </Panel>
