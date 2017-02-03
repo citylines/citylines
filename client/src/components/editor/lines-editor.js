@@ -113,7 +113,7 @@ class LinesEditorItem extends PureComponent {
 
   onSave() {
     this.displaySaveButton = false;
-    const args = Object.assign({},this.state, {url_name: this.props.url_name});
+    const args = Object.assign({},this.state, {urlName: this.props.url_name});
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
   }
 
