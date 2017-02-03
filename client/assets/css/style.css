@@ -200,3 +200,7 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
   position:fixed;
   z-index:1000;
 }
+
+.editor-delete-warning-text {
+  padding:5px 10px 5px 5px;
+}

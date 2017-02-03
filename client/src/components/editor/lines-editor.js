@@ -4,6 +4,17 @@ import {SketchPicker} from 'react-color';
 class LinesEditor extends PureComponent {
   constructor(props, context) {
     super(props, context);
+
+    this.bindedOnSave = this.onSave.bind(this);
+    this.bindedOnDelete = this.onDelete.bind(this);
+  }
+
+  onSave(args) {
+    if (typeof this.props.onSave === 'function') this.props.onSave(args);
+  }
+
+  onDelete(lineUrlName) {
+    if (typeof this.props.onDelete === 'function') this.props.onDelete(lineUrlName);
   }
 
   render() {
@@ -18,6 +29,8 @@ class LinesEditor extends PureComponent {
                     url_name={line.url_name}
                     name={line.name}
                     color={line.style.color}
+                    onSave={this.bindedOnSave}
+                    onDelete={this.bindedOnDelete}
                   />
                 )
             })
@@ -47,6 +60,9 @@ class LinesEditorItem extends PureComponent {
     this.bindedCloseColorPicker = this.closeColorPicker.bind(this);
     this.bindedOnColorChange = this.onColorChange.bind(this);
     this.bindedOnNameChange = this.onNameChange.bind(this);
+    this.bindedOnDelete = this.onDelete.bind(this);
+    this.bindedOnActualDelete = this.onActualDelete.bind(this);
+    this.bindedOnSave = this.onSave.bind(this);
   }
 
   toggleColorPicker(e) {
@@ -77,13 +93,37 @@ class LinesEditorItem extends PureComponent {
   }
 
   updateState() {
+    this.displayDeleteWarning = false;
+
     this.setState({
       color: this.color,
       name: this.name
     });
   }
 
+  onDelete() {
+    this.displayDeleteWarning = true;
+    this.forceUpdate();
+  }
+
+  onActualDelete() {
+    this.displayDeleteWarning = false;
+    if (typeof this.props.onDelete === 'function') this.props.onDelete(this.props.url_name);
+  }
+
+  onSave() {
+    this.displaySaveButton = false;
+    const args = Object.assign({},this.state, {url_name: this.props.url_name});
+    if (typeof this.props.onSave === 'function') this.props.onSave(args);
+  }
+
   render() {
+    const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
+        <span className="editor-delete-warning-text">¿Estás seguro?</span>
+        <button className="c-button" onClick={this.bindedOnActualDelete}>Sí</button>
+        <button className="c-button" onClick={() => this.displayDeleteWarning = false}>No</button>
+      </span>;
+
     return (
       <div className="c-card__item" onClick={this.bindedCloseColorPicker}>
         <div className="c-input-group">
@@ -97,10 +137,13 @@ class LinesEditorItem extends PureComponent {
             }
           </div>
           <div className="o-field">
-            <span className="c-input-group" style={{float:'right'}}>
-              { this.displaySaveButton && <button className="c-button c-button--brand">Actualizar</button> }
-              <button className="c-button">Borrar</button>
-            </span>
+            { this.displayDeleteWarning ?
+              deleteWarningControl :
+              <span className="c-input-group" style={{float:'right'}}>
+                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--brand">Guardar</button> }
+                <button onClick={this.bindedOnDelete} className="c-button">Borrar</button>
+              </span>
+            }
           </div>
         </div>
       </div>
