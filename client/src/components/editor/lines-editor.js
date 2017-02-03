@@ -1,20 +1,10 @@
 import React, {PureComponent} from 'react';
 import {SketchPicker} from 'react-color';
+import EditorStore from '../../stores/editor-store';
 
 class LinesEditor extends PureComponent {
   constructor(props, context) {
     super(props, context);
-
-    this.bindedOnSave = this.onSave.bind(this);
-    this.bindedOnDelete = this.onDelete.bind(this);
-  }
-
-  onSave(args) {
-    if (typeof this.props.onSave === 'function') this.props.onSave(args);
-  }
-
-  onDelete(lineUrlName) {
-    if (typeof this.props.onDelete === 'function') this.props.onDelete(lineUrlName);
   }
 
   render() {
@@ -108,13 +98,13 @@ class LinesEditorItem extends PureComponent {
 
   onActualDelete() {
     this.displayDeleteWarning = false;
-    if (typeof this.props.onDelete === 'function') this.props.onDelete(this.props.url_name);
+    //EditorStore.deleteLine(this.props.url_name);
   }
 
   onSave() {
     this.displaySaveButton = false;
     const args = Object.assign({},this.state, {url_name: this.props.url_name});
-    if (typeof this.props.onSave === 'function') this.props.onSave(args);
+    //EditorStore.updateLine(args);
   }
 
   render() {
