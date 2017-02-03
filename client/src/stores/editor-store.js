@@ -7,12 +7,30 @@ import 'whatwg-fetch';
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
 
+/* --Requests-- */
+
   async fetchCityData(urlName) {
     const url = `/api/editor/${urlName}`;
     const response = await fetch(url);
     const json = await response.json();
     return json;
   },
+
+  async fetchFeatures(urlName) {
+    const url = `/api/editor/${urlName}/features`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  },
+
+  async updateFeatures(urlName, body) {
+    const url = `/api/editor/${urlName}/update`;
+    const response = await fetch(url, {method:'PUT', body: body});
+    const json = await response.json();
+    return json;
+  },
+
+/* ------------ */
 
   async load(urlName, queryParams) {
     if (!this.cityData[urlName]) {
@@ -64,20 +82,6 @@ const EditorStore = Object.assign({}, Store, {
     }
   },
 
-  async fetchFeatures(urlName) {
-    const url = `/api/editor/${urlName}/features`;
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-  },
-
-  async update(urlName, body) {
-    const url = `/api/editor/${urlName}/update`;
-    const response = await fetch(url, {method:'PUT', body: body});
-    const json = await response.json();
-    return json;
-  },
-
   storeGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
     cityData.config.coords = [geo.lon, geo.lat];
@@ -105,7 +109,7 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  updateFeature(urlName, feature) {
+  updateFeatureInFeatureCollection(urlName, feature) {
     const klass = feature.properties.klass;
     const id = feature.properties.id;
 
@@ -118,13 +122,13 @@ const EditorStore = Object.assign({}, Store, {
     cityData.features = Object.assign({}, cityData.features);
   },
 
-  pushFeature(urlName, feature) {
+  pushFeatureToFeatureCollection(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.features.features.push(feature);
     cityData.features = Object.assign({}, cityData.features);
   },
 
-  removeFeature(urlName, feature) {
+  removeFeatureFromFeatureCollection(urlName, feature) {
     const klass = feature.properties.klass;
     const id = feature.properties.id;
 
@@ -162,7 +166,7 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   setFeaturePropsChange(urlName, feature) {
-    this.updateFeature(urlName, feature);
+    this.updateFeatureInFeatureCollection(urlName, feature);
     const modifiedFeature = this.setModifiedFeature(urlName, feature);
     modifiedFeature.props = true;
 
@@ -174,7 +178,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureGeoChange(urlName, features) {
     features.map((feature) => {
-      this.updateFeature(urlName, feature);
+      this.updateFeatureInFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.geo = true;
     });
@@ -184,7 +188,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureCreated(urlName, features) {
     features.map((feature) => {
-      this.pushFeature(urlName, feature);
+      this.pushFeatureToFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.created = true;
     });
@@ -194,7 +198,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureDeleted(urlName, features) {
     features.map((feature) => {
-      this.removeFeature(urlName, feature);
+      this.removeFeatureFromFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       if (modifiedFeature.created) {
         delete this.cityData[urlName].modifiedFeatures[feature.id];
@@ -231,7 +235,7 @@ const EditorStore = Object.assign({}, Store, {
       return entry[1];
     });
 
-    const updatedFeatures = await this.update(urlName, JSON.stringify(changes));
+    const updatedFeatures = await this.updateFeatures(urlName, JSON.stringify(changes));
 
     cityData.features = Object.assign({}, updatedFeatures);
     delete cityData.modifiedFeatures;
