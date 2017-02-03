@@ -18,8 +18,15 @@ const MainStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  togglePanelFullWidth() {
-    this.state.panelFullWidth = !this.state.panelFullWidth;
+  setPanelFullWidth() {
+    this.state.panelFullWidth = true;
+
+    this.state = Object.assign({}, this.state);
+    this.emitChangeEvent();
+  },
+
+  unsetPanelFullWidth() {
+    this.state.panelFullWidth = false;
 
     this.state = Object.assign({}, this.state);
     this.emitChangeEvent();

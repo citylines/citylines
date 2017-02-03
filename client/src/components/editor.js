@@ -54,6 +54,7 @@ class Editor extends PureComponent {
   }
 
   componentDidMount() {
+    MainStore.unsetPanelFullWidth();
     EditorStore.load(this.urlName, this.params());
   }
 
@@ -130,10 +131,10 @@ class Editor extends PureComponent {
 
     if (this.currentMode === this.modes.EDIT_LINES) {
       this.currentMode = this.modes.EDIT_FEATURES;
-      MainStore.togglePanelFullWidth();
+      MainStore.unsetPanelFullWidth();
     } else {
       this.currentMode = this.modes.EDIT_LINES;
-      MainStore.togglePanelFullWidth();
+      MainStore.setPanelFullWidth();
     }
 
     this.forceUpdate();
