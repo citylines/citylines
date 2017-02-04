@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import {Link} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import {LinesTreeContainer, LinesTree} from './city/lines-tree';
@@ -15,8 +16,6 @@ class City extends PureComponent {
     super(props, context);
 
     this.urlName = this.props.params.city_url_name;
-
-    this.state = CityStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnYearChange = this.onYearChange.bind(this);
@@ -61,7 +60,7 @@ class City extends PureComponent {
     this.setState(CityStore.getState(this.urlName));
   }
 
-  onMapLoad(map) {
+  onMapLoad() {
     CityStore.loadStore(this.urlName);
   }
 
@@ -105,12 +104,15 @@ class City extends PureComponent {
   }
 
   render() {
+    if (!this.state) return null;
+
     return (
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel}>
             <PanelHeader>
               <div className="panel-header-title">
                 <h3 className="c-heading">{this.state.name}</h3>
+                <Link className="c-link" to={`/${this.urlName}/edit`}>Editar</Link>
               </div>
               <Year
                 urlName={this.urlName}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import MapboxDraw from 'mapbox-gl-draw/dist/mapbox-gl-draw';
 
 class Map extends Component {
   constructor(props, context) {
@@ -214,4 +215,74 @@ Popup.contextTypes = {
   map: React.PropTypes.object
 }
 
-export {Map, Source, Layer, Popup};
+class Draw extends Component {
+  componentDidMount() {
+    this.map = this.context.map;
+    if (this.map) this.load();
+  }
+
+  load() {
+    var options = {
+      boxSelect: false,
+      displayControlsDefault: false,
+      controls: {
+        point: true,
+        line_string: true,
+        trash: true
+      }
+    }
+
+    this.draw = new MapboxDraw(options);
+    this.map.addControl(this.draw);
+
+    this.map.on('draw.selectionchange', (selection) => {
+      if (typeof this.props.onSelectionChange === 'function') {
+        this.props.onSelectionChange(selection.features);
+      }
+    });
+
+    this.map.on('draw.update', (update) => {
+      if (typeof this.props.onFeatureUpdate === 'function') {
+        this.props.onFeatureUpdate(update.features);
+      }
+    });
+
+    this.map.on('draw.create', (create) => {
+      if (typeof this.props.onFeatureCreate === 'function') {
+        this.props.onFeatureCreate(create.features);
+      }
+    });
+
+    this.map.on('draw.delete', (remove) => {
+      if (typeof this.props.onFeatureDelete === 'function') {
+        this.props.onFeatureDelete(remove.features);
+      }
+    });
+
+    this.draw.add(this.props.features);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.features != this.props.features) {
+      this.draw.set(nextProps.features);
+    }
+
+    if (nextProps.selectedFeatureById != this.props.selectedFeatureById) {
+      this.draw.changeMode('simple_select', {featureIds: [nextProps.selectedFeatureById]});
+    }
+  }
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    return null;
+  }
+}
+
+Draw.contextTypes = {
+  map: React.PropTypes.object
+}
+
+export {Map, Source, Layer, Popup, Draw};

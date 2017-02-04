@@ -1,4 +1,6 @@
 import Store from './store';
+import MainStore from './main-store';
+
 import 'whatwg-fetch';
 
 import Style from '../lib/style';
@@ -6,8 +8,6 @@ import LinesMapper from '../lib/lines-mapper';
 import Timeline from '../lib/timeline';
 import MouseEvents from '../lib/mouse-events';
 import KmInfo from '../lib/km-info';
-
-import MainStore from '../stores/main-store';
 
 const CityStore = Object.assign({}, Store, {
   cityData: {},
@@ -20,29 +20,33 @@ const CityStore = Object.assign({}, Store, {
   },
 
   async load(urlName, queryParams) {
-    if (!this.cityData[urlName]) {
-      const cityData = await this.fetchCityData(urlName);
+    const previousCityData = this.cityData[urlName] ? Object.assign({}, this.cityData[urlName]) : null;
+
+    const cityData = await this.fetchCityData(urlName);
+
+    if (previousCityData) {
+      this.cityData[urlName] = this.updateWithPreviousCityData(cityData, previousCityData);
+    } else {
       this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
     }
+
     this.emitChangeEvent();
   },
 
   loadStore(urlName) {
     const cityData = this.cityData[urlName];
 
-    if (!cityData.linesMapper) {
-      const style = new Style(cityData.style);
+    const style = new Style(cityData.style);
 
-      const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
-      cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
-      cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
-      cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
-      cityData.kmInfo = new KmInfo(cityData.lines_length_by_year);
+    const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
+    cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
+    cityData.timeline = new Timeline(cityData.linesMapper, cityData.config.years);
+    cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
+    cityData.kmInfo = new KmInfo(cityData.lines_length_by_year);
 
-      const startingYear = cityData.config.years.default || cityData.config.years.start;
-      cityData.timeline.toYear(startingYear);
-      cityData.kmInfo.update({year: startingYear, lines: linesShown});
-    }
+    const startingYear = cityData.config.years.default || cityData.config.years.start;
+    cityData.timeline.toYear(startingYear);
+    cityData.kmInfo.update({year: startingYear, lines: linesShown});
 
     this.emitChangeEvent();
   },
@@ -57,6 +61,17 @@ const CityStore = Object.assign({}, Store, {
       cityData.config.bearing = parseFloat(parts[3]);
       cityData.config.pitch = parseFloat(parts[4]);
     }
+    return cityData;
+  },
+
+  updateWithPreviousCityData(cityData, previousCityData) {
+    cityData.linesShown = previousCityData.linesMapper.linesShown.slice();
+    cityData.config.years.default = previousCityData.timeline.years.current;
+    cityData.config.coords = previousCityData.config.coords;
+    cityData.config.zoom = previousCityData.config.zoom;
+    cityData.config.bearing = previousCityData.config.bearing;
+    cityData.config.pitch = previousCityData.config.pitch;
+
     return cityData;
   },
 

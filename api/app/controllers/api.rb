@@ -51,4 +51,78 @@ class Api < App
     @city = City[url_name: url_name]
     lines_features_collection(@city, type).to_json
   end
+
+  get '/editor/:url_name' do |url_name|
+    @city = City[url_name: url_name]
+    config = {
+      mapbox_access_token: MAPBOX_ACCESS_TOKEN,
+      mapbox_style: MAPBOX_STYLE,
+      coords: @city.geojson_coords,
+      zoom: DEFAULT_ZOOM,
+      bearing: DEFAULT_BEARING,
+      pitch: DEFAULT_PITCH,
+    }
+
+    { name: @city.name,
+      features: all_features_collection(@city),
+      lines: city_lines(@city),
+      config: config }.to_json
+  end
+
+  get '/editor/:url_name/features' do |url_name|
+    @city = City[url_name: url_name]
+    all_features_collection(@city).to_json
+  end
+
+  put '/editor/:url_name/features' do |url_name|
+    @city = City[url_name: url_name]
+    changes = JSON.parse(request.body.read, symbolize_names: true)
+
+    changes.each do |change|
+      update_create_or_delete_feature(change);
+    end
+
+    all_features_collection(@city).to_json
+  end
+
+  put '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    @city = City[url_name: url_name]
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    @city.style["line"]["opening"][line_url_name]["color"] = args[:color]
+    @city.save
+
+    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    @line.name = args[:name]
+    @line.save
+
+    city_lines(@city).to_json
+  end
+
+  post '/editor/:url_name/line' do |url_name|
+    @city = City[url_name: url_name]
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    line = Line.new(city_id: @city.id, name: args[:name])
+    line.save
+    line.reload.generate_url_name
+    line.save
+
+    @city.style["line"]["opening"][line.url_name] = {"color": args[:color]}
+    @city.save
+
+    city_lines(@city).to_json
+  end
+
+  delete '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    @city = City[url_name: url_name]
+
+    @city.style["line"]["opening"].delete(line_url_name)
+    @city.save
+
+    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    @line.delete
+
+    city_lines(@city).to_json
+  end
 end

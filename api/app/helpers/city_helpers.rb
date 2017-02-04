@@ -3,8 +3,9 @@ module CityHelpers
     city.lines.map { |line|
       { name: line.name,
         url_name: line.url_name,
-        style: line.style }
-    }
+        style: line.style,
+        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
+    }.sort_by{ |line| line[:name] }
   end
 
   def lines_length_by_year(city)
@@ -41,5 +42,55 @@ module CityHelpers
 
     {type: "FeatureCollection",
      features: features}
+  end
+
+  def all_features_collection(city)
+    features_collection = lines_features_collection(city, 'sections').clone
+    features_collection[:features] += lines_features_collection(city, 'stations')[:features]
+    features_collection
+  end
+
+  def update_feature_properties(feature, properties)
+    line_id = Line[url_name: properties[:line_url_name]].id
+    feature.line_id = line_id
+    feature.buildstart = properties[:buildstart]
+    feature.opening = properties[:opening]
+    feature.closure = properties[:closure]
+    feature.name = properties[:name] if feature.is_a?(Station)
+    feature.save
+  end
+
+  def update_feature_geometry(feature, geometry)
+    feature.set_geometry_from_geojson(geometry)
+    feature.save
+    feature.set_length if feature.is_a?(Section)
+    feature.save
+  end
+
+  def update_create_or_delete_feature(change)
+    klass = Object.const_get(change[:klass])
+
+    if change[:created]
+      new_feature = klass.new
+      update_feature_properties(new_feature, change[:feature][:properties])
+      update_feature_geometry(new_feature, change[:feature][:geometry])
+      return
+    end
+
+    id = change[:id]
+    feature = klass[id]
+
+    if change[:removed]
+      feature.delete
+      return
+    end
+
+    if change[:props]
+      update_feature_properties(feature, change[:feature][:properties])
+    end
+
+    if change[:geo]
+      update_feature_geometry(feature, change[:feature][:geometry])
+    end
   end
 end
