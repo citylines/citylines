@@ -3,8 +3,9 @@ module CityHelpers
     city.lines.map { |line|
       { name: line.name,
         url_name: line.url_name,
-        style: line.style }
-    }
+        style: line.style,
+        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
+    }.sort_by{ |line| line[:name] }
   end
 
   def lines_length_by_year(city)

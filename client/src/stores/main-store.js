@@ -3,7 +3,8 @@ import Store from './store';
 const MainStore = Object.assign({}, Store, {
 
   state: {
-    displayPanel: true
+    displayPanel: true,
+    panelFullWidth: false
   },
 
   getState() {
@@ -11,10 +12,23 @@ const MainStore = Object.assign({}, Store, {
   },
 
   togglePanel() {
-    this.state = {
-      displayPanel: !this.state.displayPanel
-    }
+    this.state.displayPanel = !this.state.displayPanel;
 
+    this.state = Object.assign({}, this.state);
+    this.emitChangeEvent();
+  },
+
+  setPanelFullWidth() {
+    this.state.panelFullWidth = true;
+
+    this.state = Object.assign({}, this.state);
+    this.emitChangeEvent();
+  },
+
+  unsetPanelFullWidth() {
+    this.state.panelFullWidth = false;
+
+    this.state = Object.assign({}, this.state);
     this.emitChangeEvent();
   }
 });

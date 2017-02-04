@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 
-const Panel = (props) => <div id="panel" style={{display: props.display ? 'block' : 'none'}}>{props.children}</div>;
+class Panel extends Component {
+  render() {
+    const style = {display: this.props.display ? 'block' : 'none'};
+    if (this.props.fullWidth) style.width = '100%';
+
+    return <div id="panel" style={style}>{this.props.children}</div>;
+  }
+}
 
 const PanelHeader = (props) => <div className="panel-header o-grid__cell o-grid__cell--width-100">{props.children}</div>;
 

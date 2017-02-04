@@ -17,8 +17,6 @@ class City extends PureComponent {
 
     this.urlName = this.props.params.city_url_name;
 
-    this.state = CityStore.getState(this.urlName);
-
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnYearChange = this.onYearChange.bind(this);
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
@@ -62,7 +60,7 @@ class City extends PureComponent {
     this.setState(CityStore.getState(this.urlName));
   }
 
-  onMapLoad(map) {
+  onMapLoad() {
     CityStore.loadStore(this.urlName);
   }
 
@@ -106,6 +104,8 @@ class City extends PureComponent {
   }
 
   render() {
+    if (!this.state) return null;
+
     return (
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel}>

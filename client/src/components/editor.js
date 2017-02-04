@@ -6,6 +6,7 @@ import {Map, Draw} from './map';
 import {Panel, PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
+import LinesEditor from './editor/lines-editor';
 
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
@@ -13,6 +14,13 @@ import MainStore from '../stores/main-store';
 class Editor extends PureComponent {
   constructor(props, context) {
     super(props, context);
+
+    this.modes = {
+      EDIT_FEATURES: 'edit-features',
+      EDIT_LINES: 'edit-lines'
+    }
+
+    this.currentMode = this.modes.EDIT_FEATURES;
 
     this.urlName = this.props.params.city_url_name;
     this.state = EditorStore.getState(this.urlName);
@@ -28,6 +36,10 @@ class Editor extends PureComponent {
     this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
     this.bindedOnDiscardChanges = this.onDiscardChanges.bind(this);
     this.bindedOnSaveChanges = this.onSaveChanges.bind(this);
+    this.bindedToggleMode = this.toggleMode.bind(this);
+    this.bindedOnLineSave = this.onLineSave.bind(this);
+    this.bindedOnLineDelete = this.onLineDelete.bind(this);
+    this.bindedOnLineCreate = this.onLineCreate.bind(this);
   }
 
   componentWillMount() {
@@ -45,6 +57,7 @@ class Editor extends PureComponent {
   }
 
   componentDidMount() {
+    MainStore.unsetPanelFullWidth();
     EditorStore.load(this.urlName, this.params());
   }
 
@@ -116,17 +129,56 @@ class Editor extends PureComponent {
     EditorStore.saveChanges(this.urlName);
   }
 
+  toggleMode(e) {
+    if (e.target.name === this.currentMode) return;
+
+    if (this.currentMode === this.modes.EDIT_LINES) {
+      this.currentMode = this.modes.EDIT_FEATURES;
+      MainStore.unsetPanelFullWidth();
+    } else {
+      this.currentMode = this.modes.EDIT_LINES;
+      MainStore.setPanelFullWidth();
+    }
+
+    this.forceUpdate();
+  }
+
+  onLineSave(args) {
+    EditorStore.updateLine(this.urlName, args);
+  }
+
+  onLineDelete(lineUrlName) {
+    EditorStore.deleteLine(this.urlName, lineUrlName);
+  }
+
+  onLineCreate(args) {
+    EditorStore.createLine(this.urlName, args);
+  }
+
   render() {
     return (
       <div className="o-grid o-panel">
-        <Panel display={this.state.main.displayPanel}>
+        <Panel display={this.state.main.displayPanel} fullWidth={this.state.main.panelFullWidth}>
           <PanelHeader>
             <div className="panel-header-title">
               <h3 className="c-heading">{this.state.name}</h3>
               <Link className="c-link" to={`/${this.urlName}`}>Volver</Link>
             </div>
+            <span className="c-input-group">
+              <button name={this.modes.EDIT_FEATURES}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
+                      onClick={this.bindedToggleMode}>
+                Editar elementos
+              </button>
+              <button name={this.modes.EDIT_LINES}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`}
+                      onClick={this.bindedToggleMode}>
+                Editar líneas
+              </button>
+            </span>
           </PanelHeader>
           <PanelBody>
+            { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
               <FeatureViewer
                 lines={this.state.lines}
@@ -140,6 +192,12 @@ class Editor extends PureComponent {
                 onSave={this.bindedOnSaveChanges}
               />
             </div>
+            :
+            <LinesEditor lines={this.state.lines}
+                         onSave={this.bindedOnLineSave}
+                         onDelete={this.bindedOnLineDelete}
+                         onCreate={this.bindedOnLineCreate}/>
+            }
           </PanelBody>
         </Panel>
         <Map

@@ -7,6 +7,8 @@ import 'whatwg-fetch';
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
 
+/* --Requests-- */
+
   async fetchCityData(urlName) {
     const url = `/api/editor/${urlName}`;
     const response = await fetch(url);
@@ -14,27 +16,79 @@ const EditorStore = Object.assign({}, Store, {
     return json;
   },
 
+  async fetchFeatures(urlName) {
+    const url = `/api/editor/${urlName}/features`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  },
+
+  async updateFeatures(urlName, body) {
+    const url = `/api/editor/${urlName}/features`;
+    const response = await fetch(url, {method:'PUT', body: body});
+    const json = await response.json();
+    return json;
+  },
+
+  async updateLine(urlName, args) {
+    const url = `/api/editor/${urlName}/line/${args.urlName}`;
+    const body = JSON.stringify(args);
+    const response = await fetch(url, {method: 'PUT', body: body});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
+  async createLine(urlName, args) {
+    const url = `/api/editor/${urlName}/line`;
+    const body = JSON.stringify(args);
+    const response = await fetch(url, {method: 'POST', body: body});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
+  async deleteLine(urlName, lineUrlName) {
+    const url = `/api/editor/${urlName}/line/${lineUrlName}`;
+    const response = await fetch(url, {method: 'DELETE'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
+/* ------------ */
+
   async load(urlName, queryParams) {
-    if (!this.cityData[urlName]) {
-      const cityData = await this.fetchCityData(urlName);
+    const existingEditorCityData = this.cityData[urlName] ? Object.assign({}, this.cityData[urlName]) : null;
+    const existingCityData = CityStore.cityData[urlName] ? Object.assign({}, CityStore.cityData[urlName]) : null;
 
-      const existingCityData = CityStore.cityData[urlName];
+    const cityData = await this.fetchCityData(urlName);
 
-      if (existingCityData) {
-        this.cityData[urlName] = this.updateWithExistingCityData(cityData, Object.assign({}, existingCityData));
-      } else {
-        this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
-      }
+    const previousCityData = existingEditorCityData || existingCityData;
+
+    if (previousCityData) {
+      this.cityData[urlName] = this.updateWithPreviousCityData(cityData, previousCityData);
+    } else {
+      this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
     }
 
     this.emitChangeEvent();
   },
 
-  updateWithExistingCityData(cityData, existingCityData) {
-    cityData.config.coords = existingCityData.config.coords;
-    cityData.config.zoom = existingCityData.config.zoom;
-    cityData.config.bearing = existingCityData.config.bearing;
-    cityData.config.pitch = existingCityData.config.pitch;
+  updateWithPreviousCityData(cityData, previousCityData) {
+    cityData.config.coords = previousCityData.config.coords;
+    cityData.config.zoom = previousCityData.config.zoom;
+    cityData.config.bearing = previousCityData.config.bearing;
+    cityData.config.pitch = previousCityData.config.pitch;
     return cityData;
   },
 
@@ -64,20 +118,6 @@ const EditorStore = Object.assign({}, Store, {
     }
   },
 
-  async fetchFeatures(urlName) {
-    const url = `/api/editor/${urlName}/features`;
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-  },
-
-  async update(urlName, body) {
-    const url = `/api/editor/${urlName}/update`;
-    const response = await fetch(url, {method:'PUT', body: body});
-    const json = await response.json();
-    return json;
-  },
-
   storeGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
     cityData.config.coords = [geo.lon, geo.lat];
@@ -105,7 +145,7 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  updateFeature(urlName, feature) {
+  updateFeatureInFeatureCollection(urlName, feature) {
     const klass = feature.properties.klass;
     const id = feature.properties.id;
 
@@ -118,13 +158,13 @@ const EditorStore = Object.assign({}, Store, {
     cityData.features = Object.assign({}, cityData.features);
   },
 
-  pushFeature(urlName, feature) {
+  pushFeatureToFeatureCollection(urlName, feature) {
     const cityData = this.cityData[urlName];
     cityData.features.features.push(feature);
     cityData.features = Object.assign({}, cityData.features);
   },
 
-  removeFeature(urlName, feature) {
+  removeFeatureFromFeatureCollection(urlName, feature) {
     const klass = feature.properties.klass;
     const id = feature.properties.id;
 
@@ -162,7 +202,7 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   setFeaturePropsChange(urlName, feature) {
-    this.updateFeature(urlName, feature);
+    this.updateFeatureInFeatureCollection(urlName, feature);
     const modifiedFeature = this.setModifiedFeature(urlName, feature);
     modifiedFeature.props = true;
 
@@ -174,7 +214,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureGeoChange(urlName, features) {
     features.map((feature) => {
-      this.updateFeature(urlName, feature);
+      this.updateFeatureInFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.geo = true;
     });
@@ -184,7 +224,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureCreated(urlName, features) {
     features.map((feature) => {
-      this.pushFeature(urlName, feature);
+      this.pushFeatureToFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.created = true;
     });
@@ -194,7 +234,7 @@ const EditorStore = Object.assign({}, Store, {
 
   setFeatureDeleted(urlName, features) {
     features.map((feature) => {
-      this.removeFeature(urlName, feature);
+      this.removeFeatureFromFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       if (modifiedFeature.created) {
         delete this.cityData[urlName].modifiedFeatures[feature.id];
@@ -231,7 +271,7 @@ const EditorStore = Object.assign({}, Store, {
       return entry[1];
     });
 
-    const updatedFeatures = await this.update(urlName, JSON.stringify(changes));
+    const updatedFeatures = await this.updateFeatures(urlName, JSON.stringify(changes));
 
     cityData.features = Object.assign({}, updatedFeatures);
     delete cityData.modifiedFeatures;

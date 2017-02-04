@@ -1,4 +1,8 @@
+require 'accentless'
+
 class Line < Sequel::Model(:lines)
+    using Accentless
+
     many_to_one :city
     one_to_many :sections
     one_to_many :stations
@@ -8,6 +12,6 @@ class Line < Sequel::Model(:lines)
     end
 
     def generate_url_name
-        self.url_name = self.name.gsub(' ','-').downcase
+        self.url_name = "#{self.id}-#{self.name.accentless.gsub(' ','-').downcase}"
     end
 end
