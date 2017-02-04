@@ -42,6 +42,18 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async createLine(urlName, args) {
+    const url = `/api/editor/${urlName}/line`;
+    const body = JSON.stringify(args);
+    const response = await fetch(url, {method: 'POST', body: body});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
 /* ------------ */
 
   async load(urlName, queryParams) {

@@ -7,6 +7,7 @@ class LinesEditor extends PureComponent {
 
     this.bindedOnSave = this.onSave.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
+    this.bindedOnCreate = this.onCreate.bind(this);
   }
 
   onSave(args) {
@@ -15,6 +16,10 @@ class LinesEditor extends PureComponent {
 
   onDelete(lineUrlName) {
     if (typeof this.props.onDelete === 'function') this.props.onDelete(lineUrlName);
+  }
+
+  onCreate(args) {
+    if (typeof this.props.onCreate === 'function') this.props.onCreate(args);
   }
 
   render() {
@@ -36,6 +41,11 @@ class LinesEditor extends PureComponent {
                 )
             })
           }
+          <LinesEditorNew
+            color="#000"
+            name=""
+            onSave={this.bindedOnCreate}
+          />
         </div>
       </div>
     )
@@ -141,7 +151,7 @@ class LinesEditorItem extends PureComponent {
             { this.displayDeleteWarning ?
               deleteWarningControl :
               <span className="c-input-group" style={{float:'right'}}>
-                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--brand">Guardar</button> }
+                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">Guardar</button> }
                 { this.props.deletable && <button onClick={this.bindedOnDelete} className="c-button">Borrar</button> }
               </span>
             }
@@ -151,4 +161,37 @@ class LinesEditorItem extends PureComponent {
     )
   }
 }
+
+class LinesEditorNew extends LinesEditorItem {
+  onSave() {
+    if (this.state.name == '') return;
+    this.displaySaveButton = false;
+    const args = Object.assign({},this.state, {urlName: this.props.url_name});
+    if (typeof this.props.onSave === 'function') this.props.onSave(args);
+  }
+
+  render() {
+    return (
+      <div className="c-card__item" onClick={this.bindedCloseColorPicker}>
+        <div className="c-input-group">
+          <div className="o-field">
+            <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange} placeholder="Nueva línea"></input>
+          </div>
+          <div className="o-field">
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
+            {this.displayColorPicker ?
+            <div className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            }
+          </div>
+          <div className="o-field">
+            <span className="c-input-group" style={{float:'right'}}>
+              { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">Crear</button> }
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
 export default LinesEditor

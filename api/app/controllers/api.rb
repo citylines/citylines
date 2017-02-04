@@ -98,4 +98,19 @@ class Api < App
 
     city_lines(@city).to_json
   end
+
+  post '/editor/:url_name/line' do |url_name|
+    @city = City[url_name: url_name]
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    line = Line.new(city_id: @city.id, name: args[:name])
+    line.save
+    line.reload.generate_url_name
+    line.save
+
+    @city.style["line"]["opening"][line.url_name] = {"color": args[:color]}
+    @city.save
+
+    city_lines(@city).to_json
+  end
 end

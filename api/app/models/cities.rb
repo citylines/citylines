@@ -1,6 +1,9 @@
 require 'json'
+require 'accentless'
 
 class City < Sequel::Model(:cities)
+    using Accentless
+
     one_to_many :lines
     one_to_many :plans
 
@@ -16,7 +19,7 @@ class City < Sequel::Model(:cities)
     end
 
     def generate_url_name
-        self.url_name = self.name.gsub(' ','-').downcase
+        self.url_name = self.name.accentless.gsub(' ','-').downcase
     end
 
     def url
