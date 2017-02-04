@@ -22,13 +22,7 @@ class Api < App
       coords: @city.geojson_coords,
       zoom: DEFAULT_ZOOM,
       bearing: DEFAULT_BEARING,
-      pitch: DEFAULT_PITCH,
-      years: { start: @city.start_year,
-               end: Date.today.year,
-               current: nil,
-               previous: nil,
-               default: nil
-      }}.to_json
+      pitch: DEFAULT_PITCH }.to_json
   end
 
   get '/:url_name/view_data' do |url_name|
@@ -37,7 +31,13 @@ class Api < App
     { name: @city.name,
       style: @city.style,
       lines: city_lines(@city),
-      lines_length_by_year: lines_length_by_year(@city)}.to_json
+      lines_length_by_year: lines_length_by_year(@city),
+      years: { start: @city.start_year,
+               end: Date.today.year,
+               current: nil,
+               previous: nil,
+               default: nil }
+    }.to_json
   end
 
   get '/:url_name/edit_data' do |url_name|

@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react';
-import CityStore from '../../stores/city-store';
+import CityViewStore from '../../stores/city-view-store';
 
 class Year extends PureComponent {
   toggleAnimation() {
-    CityStore.toggleAnimation(this.props.urlName);
+    CityViewStore.toggleAnimation(this.props.urlName);
   }
 
   yearChange(e) {
     let year = parseInt(e.target.value);
-    CityStore.setYear(this.props.urlName, year);
+    CityViewStore.setYear(this.props.urlName, year);
   }
 
   onKeyPress(e) {
@@ -17,7 +17,7 @@ class Year extends PureComponent {
     let year = parseInt(e.target.value);
     if (year < this.props.min) year = this.props.min
     if (year > this.props.max) year = this.props.max
-    CityStore.setYear(this.props.urlName, year);
+    CityViewStore.setYear(this.props.urlName, year);
   }
 
   componentDidUpdate() {

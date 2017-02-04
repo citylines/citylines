@@ -39,6 +39,21 @@ const CityStore = Object.assign({}, Store, {
     };
   },
 
+  setSourcesAndLayers(urlName, sources, layers) {
+    const cityData = this.cityData[urlName];
+    cityData.sources = sources;
+    cityData.layers = layers;
+
+    this.emitChangeEvent();
+  },
+
+  unsetSourcesAndLayers(urlName, sources, layers) {
+    const cityData = this.cityData[urlName];
+    delete cityData.sources;
+    delete cityData.layers;
+
+    this.emitChangeEvent();
+  },
 });
 
 export default CityStore

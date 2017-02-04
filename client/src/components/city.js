@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
-import {Link} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup} from './map';
@@ -55,6 +54,8 @@ class City extends PureComponent {
   }
 
   onMapLoad() {
+    this.mapLoaded = true;
+    this.forceUpdate();
   }
 
   onMapMove(geo) {
@@ -73,7 +74,7 @@ class City extends PureComponent {
     return (
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel}>
-            { this.props.children }
+            { this.mapLoaded && this.props.children }
           </Panel>
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
