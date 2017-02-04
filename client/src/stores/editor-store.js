@@ -54,6 +54,17 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async deleteLine(urlName, lineUrlName) {
+    const url = `/api/editor/${urlName}/line/${lineUrlName}`;
+    const response = await fetch(url, {method: 'DELETE'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
 /* ------------ */
 
   async load(urlName, queryParams) {

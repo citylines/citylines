@@ -148,7 +148,7 @@ class Editor extends PureComponent {
   }
 
   onLineDelete(lineUrlName) {
-    // TODO
+    EditorStore.deleteLine(this.urlName, lineUrlName);
   }
 
   onLineCreate(args) {

@@ -113,4 +113,16 @@ class Api < App
 
     city_lines(@city).to_json
   end
+
+  delete '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    @city = City[url_name: url_name]
+
+    @city.style["line"]["opening"].delete(line_url_name)
+    @city.save
+
+    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    @line.delete
+
+    city_lines(@city).to_json
+  end
 end
