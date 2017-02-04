@@ -1,5 +1,4 @@
 import Store from './store';
-import CityStore from './city-store';
 
 import 'whatwg-fetch';
 
@@ -37,13 +36,11 @@ const CityViewStore = Object.assign({}, Store, {
 
     this.cityData[urlName] = cityData;
 
-    CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
-
     this.emitChangeEvent();
   },
 
   unload(urlName) {
-    CityStore.unsetSourcesAndLayers();
+    delete this.cityData[urlName];
   },
 
   updateWithQuery(cityData, queryParams) {
@@ -59,6 +56,8 @@ const CityViewStore = Object.assign({}, Store, {
     return {
       name: cityData.name,
       lines: cityData.lines,
+      sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
+      layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
       years: cityData.years,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
@@ -80,15 +79,12 @@ const CityViewStore = Object.assign({}, Store, {
 
     cityData.timeline.animateToYear(cityData.years.end,
         () => {
-          CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
           this.emitChangeEvent();
         },
         () => {
-          CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
           this.emitChangeEvent();
         },
         () => {
-          CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
           this.emitChangeEvent();
         });
   },
@@ -97,7 +93,6 @@ const CityViewStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName];
     cityData.timeline.toYear(year);
 
-    CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
     this.emitChangeEvent();
   },
 
@@ -106,7 +101,6 @@ const CityViewStore = Object.assign({}, Store, {
     cityData.linesMapper.toggleLine(lineUrlName);
     cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
 
-    CityStore.setSourcesAndLayers(urlName, cityData.linesMapper.sources, cityData.linesMapper.layers);
     this.emitChangeEvent();
   },
 

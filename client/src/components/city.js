@@ -6,6 +6,7 @@ import {Map, Source, Layer, Popup} from './map';
 
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
+import CityViewStore from '../stores/city-view-store';
 
 class City extends PureComponent {
   constructor(props, context) {
@@ -24,11 +25,13 @@ class City extends PureComponent {
   componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     MainStore.removeChangeListener(this.bindedOnChange);
     CityStore.removeChangeListener(this.bindedOnChange);
+    CityViewStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {

@@ -1,5 +1,6 @@
 import Store from './store';
 import MainStore from './main-store';
+import CityViewStore from './city-view-store';
 
 import 'whatwg-fetch';
 
@@ -33,9 +34,13 @@ const CityStore = Object.assign({}, Store, {
   },
 
   getState(urlName) {
+    const cityViewState = CityViewStore.getState(urlName);
+
     return {
       ...(this.cityData[urlName] || {}),
       main: MainStore.getState(),
+      sources: cityViewState.sources,
+      layers: cityViewState.layers
     };
   },
 
