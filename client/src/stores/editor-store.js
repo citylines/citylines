@@ -45,26 +45,27 @@ const EditorStore = Object.assign({}, Store, {
 /* ------------ */
 
   async load(urlName, queryParams) {
-    if (!this.cityData[urlName]) {
-      const cityData = await this.fetchCityData(urlName);
+    const existingEditorCityData = this.cityData[urlName] ? Object.assign({}, this.cityData[urlName]) : null;
+    const existingCityData = CityStore.cityData[urlName] ? Object.assign({}, CityStore.cityData[urlName]) : null;
 
-      const existingCityData = CityStore.cityData[urlName];
+    const cityData = await this.fetchCityData(urlName);
 
-      if (existingCityData) {
-        this.cityData[urlName] = this.updateWithExistingCityData(cityData, Object.assign({}, existingCityData));
-      } else {
-        this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
-      }
+    const previousCityData = existingEditorCityData || existingCityData;
+
+    if (previousCityData) {
+      this.cityData[urlName] = this.updateWithPreviousCityData(cityData, previousCityData);
+    } else {
+      this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
     }
 
     this.emitChangeEvent();
   },
 
-  updateWithExistingCityData(cityData, existingCityData) {
-    cityData.config.coords = existingCityData.config.coords;
-    cityData.config.zoom = existingCityData.config.zoom;
-    cityData.config.bearing = existingCityData.config.bearing;
-    cityData.config.pitch = existingCityData.config.pitch;
+  updateWithPreviousCityData(cityData, previousCityData) {
+    cityData.config.coords = previousCityData.config.coords;
+    cityData.config.zoom = previousCityData.config.zoom;
+    cityData.config.bearing = previousCityData.config.bearing;
+    cityData.config.pitch = previousCityData.config.pitch;
     return cityData;
   },
 
