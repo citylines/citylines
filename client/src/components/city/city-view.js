@@ -68,18 +68,6 @@ class CityView extends PureComponent {
     this.updateParams({lines: linesShown});
   }
 
-  onMouseMove(point, features) {
-    CityViewStore.hover(this.urlName, features);
-  }
-
-  onMouseClick(point, features) {
-    CityViewStore.clickFeatures(this.urlName, point, features);
-  }
-
-  onPopupClose() {
-    CityViewStore.unClickFeatures(this.urlName);
-  }
-
   render() {
     if (!this.state) return null;
 

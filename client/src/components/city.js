@@ -17,9 +17,9 @@ class City extends PureComponent {
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
-    //this.bindedOnMouseMove = this.onMouseMove.bind(this);
-    //this.bindedOnMouseClick = this.onMouseClick.bind(this);
-    //this.bindedOnPopupClose = this.onPopupClose.bind(this);
+    this.bindedOnMouseMove = this.onMouseMove.bind(this);
+    this.bindedOnMouseClick = this.onMouseClick.bind(this);
+    this.bindedOnPopupClose = this.onPopupClose.bind(this);
   }
 
   componentWillMount() {
@@ -71,6 +71,18 @@ class City extends PureComponent {
     return (value !== null && value !== 999999)
   }
 
+  onMouseMove(point, features) {
+    CityViewStore.hover(this.urlName, features);
+  }
+
+  onMouseClick(point, features) {
+    CityViewStore.clickFeatures(this.urlName, point, features);
+  }
+
+  onPopupClose() {
+    CityViewStore.unClickFeatures(this.urlName);
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -86,7 +98,7 @@ class City extends PureComponent {
             zoom={this.state.zoom}
             bearing={this.state.bearing}
             pitch={this.state.pitch}
-            mouseEventsLayerNames={this.mouseEventsLayerNames}
+            mouseEventsLayerNames={this.state.mouseEventsLayerNames}
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}

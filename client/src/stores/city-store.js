@@ -40,7 +40,10 @@ const CityStore = Object.assign({}, Store, {
       ...(this.cityData[urlName] || {}),
       main: MainStore.getState(),
       sources: cityViewState.sources,
-      layers: cityViewState.layers
+      layers: cityViewState.layers,
+      playing: cityViewState.playing,
+      mouseEventsLayerNames: cityViewState.mouseEventsLayerNames,
+      clickedFeatures: cityViewState.clickedFeatures
     };
   },
 
