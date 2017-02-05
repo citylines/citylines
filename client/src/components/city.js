@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
-import {Panel, PanelHeader, PanelBody} from './panel';
+import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
 import MainStore from '../stores/main-store';
@@ -9,7 +9,7 @@ import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
-class City extends Component {
+class City extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -123,19 +123,25 @@ class City extends Component {
 
   /* ------------- */
 
+  panelStyle() {
+    const style = {display: this.state.main.displayPanel ? 'block' : 'none'};
+    if (this.state.main.panelFullWidth) style.width = '100%';
+    return style;
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <div className="o-grid o-panel">
-          <Panel display={this.state.main.displayPanel} fullWidth={this.state.main.panelFullWidth}>
+          <div id="panel" style={this.panelStyle()}>
             <PanelHeader
               name={this.state.name}
               pathName={this.props.location.pathname}
               urlName={this.urlName}
             />
             { this.mapLoaded && this.props.children }
-          </Panel>
+          </div>
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
             mapboxStyle={this.state.mapbox_style}

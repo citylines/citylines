@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import CityViewStore from '../../stores/city-view-store';
 
 import {PanelHeader, PanelBody} from '../panel';
-import {LinesTreeContainer, LinesTree} from './lines-tree';
+import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 
-class CityView extends Component {
+class CityView extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -86,16 +86,14 @@ class CityView extends Component {
               kmUnderConstruction={this.state.kmUnderConstruction}
             />
           </div>
-          <LinesTreeContainer>
-            <LinesTree
-              name={'Líneas'}
-              defaultExpanded={true}
-              lines={this.state.lines}
-              linesShown={this.state.linesShown}
-              onLineToggle={this.bindedOnLineToggle}
-              onLinesShownChange={this.bindedOnLinesShownChange}
-            />
-          </LinesTreeContainer>
+          <LinesTree
+            name={'Líneas'}
+            defaultExpanded={true}
+            lines={this.state.lines}
+            linesShown={this.state.linesShown}
+            onLineToggle={this.bindedOnLineToggle}
+            onLinesShownChange={this.bindedOnLinesShownChange}
+          />
         </PanelBody>
     )
   }

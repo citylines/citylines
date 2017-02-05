@@ -1,7 +1,5 @@
 import React, {PureComponent} from 'react';
 
-const LinesTreeContainer = (props) => <ul style={{marginLeft: "1em"}} className="c-tree">{props.children}</ul>;
-
 class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -30,21 +28,23 @@ class LinesTree extends PureComponent {
     const expandClass = this.state.expanded ? 'c-tree__item--expanded' : 'c-tree__item--expandable';
 
     return (
-      <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
-        <span className="c-link"> {this.props.name} </span>
-        <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
-          { lines.map((line) => {
-            return <LinesTreeItem
-              key={line.url_name}
-              urlName={line.url_name}
-              name={line.name}
-              color={line.style.color}
-              show={this.props.linesShown.includes(line.url_name)}
-              onToggle={this.bindedOnItemToggle}
-            />
-          })}
-        </ul>
-      </li>
+      <ul style={{marginLeft: "1em"}} className="c-tree">
+        <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
+          <span className="c-link"> {this.props.name} </span>
+          <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
+            { lines.map((line) => {
+              return <LinesTreeItem
+                key={line.url_name}
+                urlName={line.url_name}
+                name={line.name}
+                color={line.style.color}
+                show={this.props.linesShown.includes(line.url_name)}
+                onToggle={this.bindedOnItemToggle}
+              />
+            })}
+          </ul>
+        </li>
+      </ul>
     )
   }
 }
@@ -71,4 +71,4 @@ class LinesTreeItem extends PureComponent {
   }
 }
 
-export {LinesTree, LinesTreeContainer};
+export default LinesTree

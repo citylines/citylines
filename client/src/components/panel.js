@@ -1,15 +1,6 @@
 import React, {Component, PureComponent} from 'react';
 import {Link} from 'react-router';
 
-class Panel extends Component {
-  render() {
-    const style = {display: this.props.display ? 'block' : 'none'};
-    if (this.props.fullWidth) style.width = '100%';
-
-    return <div id="panel" style={style}>{this.props.children}</div>;
-  }
-}
-
 class PanelHeader extends PureComponent {
   render() {
     const editPath = this.props.pathName.includes('/edit');
@@ -41,4 +32,4 @@ class PanelBody extends Component {
   }
 }
 
-export {Panel, PanelHeader, PanelBody};
+export {PanelHeader, PanelBody};
