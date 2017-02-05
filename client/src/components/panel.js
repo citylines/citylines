@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
+import {Link} from 'react-router';
 
 class Panel extends Component {
   render() {
@@ -9,10 +10,25 @@ class Panel extends Component {
   }
 }
 
-const PanelHeader = (props) => <div className="panel-header o-grid__cell o-grid__cell--width-100">{props.children}</div>;
+class PanelHeader extends PureComponent {
+  render() {
+    const editPath = this.props.pathName.includes('/edit');
+    const linkLabel = editPath ? 'Dejar de editar' : 'Editar';
+    const linkTo = editPath ? `/${this.props.urlName}` : `/${this.props.urlName}/edit`;
+
+    return (
+      <div className="panel-header o-grid__cell o-grid__cell--width-100">
+        <div className="panel-header-title">
+          <h3 className="c-heading">{this.props.name}</h3>
+          <Link className="c-link" to={linkTo}>{linkLabel}</Link>
+        </div>
+      </div>
+    );
+  }
+}
 
 class PanelBody extends Component {
-  componentDidUpdate() {
+  componentDidMount() {
     const panel = this.refs.node.parentNode;
     const headerHeight = panel.children[0].clientHeight;
     const panelHeight = panel.clientHeight;

@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Link, browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
@@ -123,25 +123,17 @@ class City extends PureComponent {
 
   /* ------------- */
 
-  editPath() {
-    return this.props.location.pathname.includes('/edit');
-  }
-
   render() {
     if (!this.state) return null;
-
-    const linkLabel = this.editPath() ? 'Dejar de editar' : 'Editar';
-    const linkTo = this.editPath() ? `/${this.urlName}` : `/${this.urlName}/edit`;
 
     return (
         <div className="o-grid o-panel">
           <Panel display={this.state.main.displayPanel} fullWidth={this.state.main.panelFullWidth}>
-          <PanelHeader>
-            <div className="panel-header-title">
-              <h3 className="c-heading">{this.state.name}</h3>
-              <Link className="c-link" to={linkTo}>{linkLabel}</Link>
-            </div>
-          </PanelHeader>
+            <PanelHeader
+              name={this.state.name}
+              pathName={this.props.location.pathname}
+              urlName={this.urlName}
+            />
             { this.mapLoaded && this.props.children }
           </Panel>
           <Map
