@@ -115,13 +115,8 @@ class Editor extends PureComponent {
 
   render() {
     return (
-      <div style={{height:'100%'}}>
-          <PanelHeader>
-            <div className="panel-header-title">
-              <h3 className="c-heading">{this.state.name}</h3>
-              <Link className="c-link" to={`/${this.urlName}`}>Volver</Link>
-            </div>
-            <span className="c-input-group">
+          <PanelBody>
+            <span className="c-input-group edit-mode-buttons">
               <button name={this.modes.EDIT_FEATURES}
                       className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
                       onClick={this.bindedToggleMode}>
@@ -133,8 +128,6 @@ class Editor extends PureComponent {
                 Editar líneas
               </button>
             </span>
-          </PanelHeader>
-          <PanelBody>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
               <FeatureViewer
@@ -156,7 +149,6 @@ class Editor extends PureComponent {
                          onCreate={this.bindedOnLineCreate}/>
             }
           </PanelBody>
-      </div>
     )
   }
 }

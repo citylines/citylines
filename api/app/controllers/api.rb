@@ -17,7 +17,8 @@ class Api < App
   get '/:url_name/config' do |url_name|
     @city = City[url_name: url_name]
 
-    { mapbox_access_token: MAPBOX_ACCESS_TOKEN,
+    { name: @city.name,
+      mapbox_access_token: MAPBOX_ACCESS_TOKEN,
       mapbox_style: MAPBOX_STYLE,
       coords: @city.geojson_coords,
       zoom: DEFAULT_ZOOM,
@@ -28,8 +29,7 @@ class Api < App
   get '/:url_name/view_data' do |url_name|
     @city = City[url_name: url_name]
 
-    { name: @city.name,
-      style: @city.style,
+    { style: @city.style,
       lines: city_lines(@city),
       lines_length_by_year: lines_length_by_year(@city),
       years: { start: @city.start_year,
@@ -43,8 +43,7 @@ class Api < App
   get '/editor/:url_name/data' do |url_name|
     @city = City[url_name: url_name]
 
-    { name: @city.name,
-      features: all_features_collection(@city),
+    { features: all_features_collection(@city),
       lines: city_lines(@city)}.to_json
   end
 

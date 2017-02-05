@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
-import {Link} from 'react-router';
 
 import CityViewStore from '../../stores/city-view-store';
 
@@ -72,26 +71,21 @@ class CityView extends PureComponent {
     if (!this.state) return null;
 
     return (
-       <div>
-        <PanelHeader>
-          <div className="panel-header-title">
-            <h3 className="c-heading">{this.state.name}</h3>
-            <Link className="c-link" to={`/${this.urlName}/edit`}>Editar</Link>
-          </div>
-          <Year
-            urlName={this.urlName}
-            min={(this.state.years || {}).start}
-            max={(this.state.years || {}).end}
-            year={this.state.currentYear}
-            playing={this.state.playing}
-            onYearChange={this.bindedOnYearChange}
-          />
-          <KmIndicator
-            kmOperative={this.state.kmOperative}
-            kmUnderConstruction={this.state.kmUnderConstruction}
-          />
-        </PanelHeader>
         <PanelBody>
+          <div className="year-and-km-container">
+            <Year
+              urlName={this.urlName}
+              min={(this.state.years || {}).start}
+              max={(this.state.years || {}).end}
+              year={this.state.currentYear}
+              playing={this.state.playing}
+              onYearChange={this.bindedOnYearChange}
+            />
+            <KmIndicator
+              kmOperative={this.state.kmOperative}
+              kmUnderConstruction={this.state.kmUnderConstruction}
+            />
+          </div>
           <LinesTreeContainer>
             <LinesTree
               name={'Líneas'}
@@ -103,7 +97,6 @@ class CityView extends PureComponent {
             />
           </LinesTreeContainer>
         </PanelBody>
-      </div>
     )
   }
 }
