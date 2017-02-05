@@ -54,6 +54,7 @@ const CityViewStore = Object.assign({}, Store, {
     }
 
     delete this.cityData[urlName];
+    this.emitChangeEvent();
   },
 
   updateWithQuery(cityData, queryParams) {
