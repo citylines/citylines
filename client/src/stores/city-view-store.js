@@ -10,6 +10,7 @@ import KmInfo from '../lib/km-info';
 
 const CityViewStore = Object.assign({}, Store, {
   cityData: {},
+  stateCache: {},
 
   async fetchCityData(urlName) {
     const url = `/api/${urlName}/view_data`;
@@ -20,7 +21,12 @@ const CityViewStore = Object.assign({}, Store, {
 
   async load(urlName, queryParams) {
     let cityData = await this.fetchCityData(urlName);
-    cityData = this.updateWithQuery(cityData, queryParams);
+
+    if (this.stateCache[urlName]) {
+      cityData = this.updateWithStateCache(cityData, Object.assign({}, this.stateCache[urlName]));
+    } else {
+      cityData = this.updateWithQuery(cityData, queryParams);
+    }
 
     const style = new Style(cityData.style);
 
@@ -40,12 +46,26 @@ const CityViewStore = Object.assign({}, Store, {
   },
 
   unload(urlName) {
+    const cityData = Object.assign({}, this.cityData[urlName]);
+
+    this.stateCache[urlName] = {
+      currentYear: cityData.timeline.years.current,
+      linesShown: cityData.linesMapper.linesShown,
+    }
+
     delete this.cityData[urlName];
   },
 
   updateWithQuery(cityData, queryParams) {
     if (queryParams.year) cityData.years.default = parseInt(queryParams.year);
     if (queryParams.lines) cityData.linesShown = queryParams.lines.split(',');
+
+    return cityData;
+  },
+
+  updateWithStateCache(cityData, stateCache) {
+    cityData.years.default = stateCache.currentYear;
+    cityData.linesShown = stateCache.linesShown;
 
     return cityData;
   },

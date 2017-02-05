@@ -16,10 +16,10 @@ const CityStore = Object.assign({}, Store, {
   },
 
   async load(urlName, queryParams) {
-    const cityData = await this.fetchCityData(urlName);
-
-    this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
-
+    if (!this.cityData[urlName]) {
+      const cityData = await this.fetchCityData(urlName);
+      this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
+    }
     this.emitChangeEvent();
   },
 
@@ -51,21 +51,13 @@ const CityStore = Object.assign({}, Store, {
     };
   },
 
-  setSourcesAndLayers(urlName, sources, layers) {
+  storeGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
-    cityData.sources = sources;
-    cityData.layers = layers;
-
-    this.emitChangeEvent();
-  },
-
-  unsetSourcesAndLayers(urlName, sources, layers) {
-    const cityData = this.cityData[urlName];
-    delete cityData.sources;
-    delete cityData.layers;
-
-    this.emitChangeEvent();
-  },
+    cityData.coords = [geo.lon, geo.lat];
+    cityData.zoom = geo.zoom;
+    cityData.bearing = geo.bearing;
+    cityData.pitch = geo.pitch;
+  }
 });
 
 export default CityStore
