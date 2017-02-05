@@ -1,6 +1,7 @@
 import Store from './store';
 import MainStore from './main-store';
 import CityViewStore from './city-view-store';
+import EditorStore from './editor-store';
 
 import 'whatwg-fetch';
 
@@ -35,6 +36,7 @@ const CityStore = Object.assign({}, Store, {
 
   getState(urlName) {
     const cityViewState = CityViewStore.getState(urlName);
+    const editorState = EditorStore.getState(urlName);
 
     return {
       ...(this.cityData[urlName] || {}),
@@ -43,7 +45,9 @@ const CityStore = Object.assign({}, Store, {
       layers: cityViewState.layers,
       playing: cityViewState.playing,
       mouseEventsLayerNames: cityViewState.mouseEventsLayerNames,
-      clickedFeatures: cityViewState.clickedFeatures
+      clickedFeatures: cityViewState.clickedFeatures,
+      drawFeatures: editorState.features,
+      drawSelectedFeatureById: editorState.selectedFeatureById
     };
   },
 

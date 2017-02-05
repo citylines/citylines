@@ -40,7 +40,7 @@ class Api < App
     }.to_json
   end
 
-  get '/:url_name/edit_data' do |url_name|
+  get '/editor/:url_name/data' do |url_name|
     @city = City[url_name: url_name]
 
     { name: @city.name,

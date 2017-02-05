@@ -106,7 +106,7 @@ const CityViewStore = Object.assign({}, Store, {
 
   hover(urlName, features) {
     const cityData = this.cityData[urlName];
-    if (!cityData.mouseEvents) return;
+    if (!cityData || !cityData.mouseEvents) return;
 
     cityData.mouseEvents.hover(features, () => {
       this.emitChangeEvent();
@@ -115,6 +115,8 @@ const CityViewStore = Object.assign({}, Store, {
 
   clickFeatures(urlName, point, features) {
     const cityData = this.cityData[urlName];
+    if (!cityData || !cityData.mouseEvents) return;
+
     cityData.mouseEvents.clickFeatures(point, features, () => {
       this.emitChangeEvent();
     });

@@ -14,7 +14,7 @@ render(
         <IndexRoute component={Cities} />
         <Route path=":city_url_name" component={City}>
           <IndexRoute component={CityView} />
-          <Route path="/edit" component={Editor} />
+          <Route path="edit" component={Editor} />
         </Route>
       </Route>
     </Router>,

@@ -2,11 +2,12 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import {Panel, PanelHeader, PanelBody} from './panel';
-import {Map, Source, Layer, Popup} from './map';
+import {Map, Source, Layer, Popup, Draw} from './map';
 
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
+import EditorStore from '../stores/editor-store';
 
 class City extends PureComponent {
   constructor(props, context) {
@@ -20,18 +21,25 @@ class City extends PureComponent {
     this.bindedOnMouseMove = this.onMouseMove.bind(this);
     this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnPopupClose = this.onPopupClose.bind(this);
+
+    this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
+    this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
+    this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
+    this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
   }
 
   componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
     CityViewStore.addChangeListener(this.bindedOnChange);
+    EditorStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     MainStore.removeChangeListener(this.bindedOnChange);
     CityStore.removeChangeListener(this.bindedOnChange);
     CityViewStore.removeChangeListener(this.bindedOnChange);
+    EditorStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {
@@ -83,12 +91,43 @@ class City extends PureComponent {
     CityViewStore.unClickFeatures(this.urlName);
   }
 
+  /* Draw Listeners */
+
+  onSelectionChange(features) {
+    EditorStore.changeSelection(this.urlName, features);
+  }
+
+  onFeatureUpdate(features) {
+    EditorStore.setFeatureGeoChange(this.urlName, features);
+  }
+
+  onFeatureCreate(features) {
+    const createdFeatures = features.map((feature) => {
+      const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
+      feature.properties.id = Date.now();
+      feature.properties.klass = klass;
+      feature.properties.opening = 0;
+      feature.properties.buildstart = 0;
+      feature.properties.closure = 999999;
+      if (klass == 'Station') feature.properties.name = '';
+      return feature;
+    });
+
+    EditorStore.setFeatureCreated(this.urlName, createdFeatures);
+  }
+
+  onFeatureDelete(features) {
+    EditorStore.setFeatureDeleted(this.urlName, features);
+  }
+
+  /* ------------- */
+
   render() {
     if (!this.state) return null;
 
     return (
         <div className="o-grid o-panel">
-          <Panel display={this.state.main.displayPanel}>
+          <Panel display={this.state.main.displayPanel} fullWidth={this.state.main.panelFullWidth}>
             { this.mapLoaded && this.props.children }
           </Panel>
           <Map
@@ -148,6 +187,16 @@ class City extends PureComponent {
               }
               </div>
               </Popup>) }
+              { this.state.drawFeatures &&
+                <Draw
+                  features={this.state.drawFeatures}
+                  onSelectionChange={this.bindedOnSelectionChange}
+                  onFeatureUpdate={this.bindedOnFeatureUpdate}
+                  onFeatureCreate={this.bindedOnFeatureCreate}
+                  onFeatureDelete={this.bindedOnFeatureDelete}
+                  selectedFeatureById={this.state.drawSelectedFeatureById}
+                />
+              }
           </Map>
         </div>
         );
