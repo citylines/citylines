@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 
 import CityViewStore from '../../stores/city-view-store';
@@ -8,7 +8,7 @@ import {LinesTreeContainer, LinesTree} from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 
-class CityView extends PureComponent {
+class CityView extends Component {
   constructor(props, context) {
     super(props, context);
 
