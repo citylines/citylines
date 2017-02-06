@@ -76,6 +76,19 @@ class LinesEditorItem extends PureComponent {
     this.bindedOnSave = this.onSave.bind(this);
   }
 
+  componentDidUpdate() {
+    const colorPickerContainer = this.refs.colorPickerContainer;
+
+    if (!colorPickerContainer) return;
+
+    const bottom = colorPickerContainer.getBoundingClientRect().bottom;
+    const parentHeight = document.documentElement.clientHeight + document.documentElement.scrollHeight;
+
+    if (bottom > parentHeight) {
+      colorPickerContainer.style.setProperty('bottom','0px');
+    }
+  }
+
   toggleColorPicker(e) {
     this.displayColorPicker = !this.displayColorPicker;
     this.forceUpdate();
@@ -144,7 +157,7 @@ class LinesEditorItem extends PureComponent {
           <div className="o-field">
             <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
             {this.displayColorPicker ?
-            <div className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
           <div className="o-field">
@@ -189,7 +202,7 @@ class LinesEditorNew extends LinesEditorItem {
           <div className="o-field">
             <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
             {this.displayColorPicker ?
-            <div className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
           <div className="o-field">

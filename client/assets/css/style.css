@@ -197,8 +197,8 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 }
 
 .color-picker-container {
-  position:fixed;
-  z-index:1000;
+  position:absolute;
+  z-index:100000;
 }
 
 .editor-delete-warning-text {
