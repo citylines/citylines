@@ -163,11 +163,20 @@ class LinesEditorItem extends PureComponent {
 }
 
 class LinesEditorNew extends LinesEditorItem {
+  resetState() {
+    this.name = this.props.name;
+    this.color = this.props.color;
+
+    this.updateState();
+  }
+
   onSave() {
     if (this.state.name == '') return;
     this.displaySaveButton = false;
     const args = Object.assign({},this.state, {urlName: this.props.url_name});
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
+
+    this.resetState();
   }
 
   render() {

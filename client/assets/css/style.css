@@ -36,7 +36,7 @@
 }
 
 .panel-header {
-  padding-bottom:20px;
+
 }
 
 .panel-header-title {
@@ -203,4 +203,12 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 
 .editor-delete-warning-text {
   padding:5px 10px 5px 5px;
+}
+
+.year-and-km-container {
+  padding: 10px 20px 20px 20px;
+}
+
+.edit-mode-buttons {
+  padding: 10px 15px 20px 15px;
 }

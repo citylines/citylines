@@ -1,15 +1,13 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
-import {Link} from 'react-router';
 
-import {Panel, PanelHeader, PanelBody} from './panel';
-import {LinesTreeContainer, LinesTree} from './city/lines-tree';
-import {Map, Source, Layer, Popup} from './map';
-import Year from './city/year';
-import KmIndicator from './city/km-indicator';
+import {PanelHeader, PanelBody} from './panel';
+import {Map, Source, Layer, Popup, Draw} from './map';
 
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
+import CityViewStore from '../stores/city-view-store';
+import EditorStore from '../stores/editor-store';
 
 class City extends PureComponent {
   constructor(props, context) {
@@ -18,24 +16,30 @@ class City extends PureComponent {
     this.urlName = this.props.params.city_url_name;
 
     this.bindedOnChange = this.onChange.bind(this);
-    this.bindedOnYearChange = this.onYearChange.bind(this);
-    this.bindedOnLineToggle = this.onLineToggle.bind(this);
-    this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
-    this.bindedOnMouseMove = this.onMouseMove.bind(this);
-    this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
     this.bindedOnMapLoad = this.onMapLoad.bind(this);
+    this.bindedOnMouseMove = this.onMouseMove.bind(this);
+    this.bindedOnMouseClick = this.onMouseClick.bind(this);
     this.bindedOnPopupClose = this.onPopupClose.bind(this);
+
+    this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
+    this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
+    this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
+    this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
   }
 
   componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
+    EditorStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     MainStore.removeChangeListener(this.bindedOnChange);
     CityStore.removeChangeListener(this.bindedOnChange);
+    CityViewStore.removeChangeListener(this.bindedOnChange);
+    EditorStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {
@@ -61,46 +65,68 @@ class City extends PureComponent {
   }
 
   onMapLoad() {
-    CityStore.loadStore(this.urlName);
+    this.mapLoaded = true;
+    this.forceUpdate();
   }
 
   onMapMove(geo) {
     if (this.state.playing) return;
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});
-    CityStore.storeGeoData(this.urlName, geo);
-  }
-
-  onYearChange() {
-    if (this.state.playing) return;
-    const newYear = this.state.currentYear;
-    this.updateParams({year: newYear});
-    CityStore.setKmYear(this.urlName, newYear, null);
-  }
-
-  onLineToggle(lineUrlName) {
-    CityStore.toggleLine(this.urlName, lineUrlName);
-  }
-
-  onLinesShownChange() {
-    const linesShown = this.state.linesShown.join(',');
-    this.updateParams({lines: linesShown});
-  }
-
-  onMouseMove(point, features) {
-    CityStore.hover(this.urlName, features);
-  }
-
-  onMouseClick(point, features) {
-    CityStore.clickFeatures(this.urlName, point, features);
-  }
-
-  onPopupClose() {
-    CityStore.unClickFeatures(this.urlName);
+    CityStore.storeGeoData(this.urlName, geo)
   }
 
   validFeatureValue(value) {
     return (value !== null && value !== 999999)
+  }
+
+  onMouseMove(point, features) {
+    CityViewStore.hover(this.urlName, features);
+  }
+
+  onMouseClick(point, features) {
+    CityViewStore.clickFeatures(this.urlName, point, features);
+  }
+
+  onPopupClose() {
+    CityViewStore.unClickFeatures(this.urlName);
+  }
+
+  /* Draw Listeners */
+
+  onSelectionChange(features) {
+    EditorStore.changeSelection(this.urlName, features);
+  }
+
+  onFeatureUpdate(features) {
+    EditorStore.setFeatureGeoChange(this.urlName, features);
+  }
+
+  onFeatureCreate(features) {
+    const createdFeatures = features.map((feature) => {
+      const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
+      feature.properties.id = Date.now();
+      feature.properties.klass = klass;
+      feature.properties.opening = 0;
+      feature.properties.buildstart = 0;
+      feature.properties.closure = 999999;
+      if (klass == 'Station') feature.properties.name = '';
+      return feature;
+    });
+
+    EditorStore.setFeatureCreated(this.urlName, createdFeatures);
+  }
+
+  onFeatureDelete(features) {
+    EditorStore.setFeatureDeleted(this.urlName, features);
+  }
+
+  /* ------------- */
+
+  panelStyle() {
+    const style = {display: this.state.main.displayPanel ? 'block' : 'none'};
+    if (this.state.main.panelFullWidth) style.width = '100%';
+    return style;
   }
 
   render() {
@@ -108,52 +134,28 @@ class City extends PureComponent {
 
     return (
         <div className="o-grid o-panel">
-          <Panel display={this.state.main.displayPanel}>
-            <PanelHeader>
-              <div className="panel-header-title">
-                <h3 className="c-heading">{this.state.name}</h3>
-                <Link className="c-link" to={`/${this.urlName}/edit`}>Editar</Link>
-              </div>
-              <Year
-                urlName={this.urlName}
-                min={(this.state.config.years || {}).start}
-                max={(this.state.config.years || {}).end}
-                year={this.state.currentYear}
-                playing={this.state.playing}
-                onYearChange={this.bindedOnYearChange}
-              />
-              <KmIndicator
-                kmOperative={this.state.kmOperative}
-                kmUnderConstruction={this.state.kmUnderConstruction}
-              />
-            </PanelHeader>
-            <PanelBody>
-              <LinesTreeContainer>
-                <LinesTree
-                  name={'Líneas'}
-                  defaultExpanded={true}
-                  lines={this.state.lines}
-                  linesShown={this.state.linesShown}
-                  onLineToggle={this.bindedOnLineToggle}
-                  onLinesShownChange={this.bindedOnLinesShownChange}
-                />
-              </LinesTreeContainer>
-            </PanelBody>
-          </Panel>
+          <div id="panel" style={this.panelStyle()}>
+            <PanelHeader
+              name={this.state.name}
+              pathName={this.props.location.pathname}
+              urlName={this.urlName}
+            />
+            { this.mapLoaded && this.props.children }
+          </div>
           <Map
-            mapboxAccessToken={this.state.config.mapbox_access_token}
-            mapboxStyle={this.state.config.mapbox_style}
-            center={this.state.config.coords}
-            zoom={this.state.config.zoom}
-            bearing={this.state.config.bearing}
-            pitch={this.state.config.pitch}
+            mapboxAccessToken={this.state.mapbox_access_token}
+            mapboxStyle={this.state.mapbox_style}
+            center={this.state.coords}
+            zoom={this.state.zoom}
+            bearing={this.state.bearing}
+            pitch={this.state.pitch}
             mouseEventsLayerNames={this.state.mouseEventsLayerNames}
             onLoad={this.bindedOnMapLoad}
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
             disableMouseEvents={this.state.playing} >
-            { this.state.sources.map((source) => { return (
+            { this.state.sources && this.state.sources.map((source) => { return (
                 <Source
                   key={source.name}
                   name={source.name}
@@ -161,7 +163,7 @@ class City extends PureComponent {
                 />
               )
             }) }
-            { this.state.layers.map((layer) => { return (
+            { this.state.layers && this.state.layers.map((layer) => { return (
                 <Layer
                   key={layer.id}
                   id={layer.id}
@@ -197,6 +199,16 @@ class City extends PureComponent {
               }
               </div>
               </Popup>) }
+              { this.state.drawFeatures &&
+                <Draw
+                  features={this.state.drawFeatures}
+                  onSelectionChange={this.bindedOnSelectionChange}
+                  onFeatureUpdate={this.bindedOnFeatureUpdate}
+                  onFeatureCreate={this.bindedOnFeatureCreate}
+                  onFeatureDelete={this.bindedOnFeatureDelete}
+                  selectedFeatureById={this.state.drawSelectedFeatureById}
+                />
+              }
           </Map>
         </div>
         );

@@ -1,6 +1,4 @@
 import Store from './store';
-import MainStore from './main-store';
-import CityStore from './city-store';
 
 import 'whatwg-fetch';
 
@@ -10,7 +8,7 @@ const EditorStore = Object.assign({}, Store, {
 /* --Requests-- */
 
   async fetchCityData(urlName) {
-    const url = `/api/editor/${urlName}`;
+    const url = `/api/editor/${urlName}/data`;
     const response = await fetch(url);
     const json = await response.json();
     return json;
@@ -67,47 +65,20 @@ const EditorStore = Object.assign({}, Store, {
 
 /* ------------ */
 
-  async load(urlName, queryParams) {
-    const existingEditorCityData = this.cityData[urlName] ? Object.assign({}, this.cityData[urlName]) : null;
-    const existingCityData = CityStore.cityData[urlName] ? Object.assign({}, CityStore.cityData[urlName]) : null;
-
-    const cityData = await this.fetchCityData(urlName);
-
-    const previousCityData = existingEditorCityData || existingCityData;
-
-    if (previousCityData) {
-      this.cityData[urlName] = this.updateWithPreviousCityData(cityData, previousCityData);
-    } else {
-      this.cityData[urlName] = this.updateWithQuery(cityData, queryParams);
-    }
+  async load(urlName) {
+    this.cityData[urlName] = await this.fetchCityData(urlName);
 
     this.emitChangeEvent();
   },
 
-  updateWithPreviousCityData(cityData, previousCityData) {
-    cityData.config.coords = previousCityData.config.coords;
-    cityData.config.zoom = previousCityData.config.zoom;
-    cityData.config.bearing = previousCityData.config.bearing;
-    cityData.config.pitch = previousCityData.config.pitch;
-    return cityData;
-  },
-
-  updateWithQuery(cityData, queryParams) {
-    if (queryParams.geo) {
-      const parts = queryParams.geo.split(',');
-      cityData.config.coords = [parseFloat(parts[1]), parseFloat(parts[0])];
-      cityData.config.zoom = parseFloat(parts[2]);
-      cityData.config.bearing = parseFloat(parts[3]);
-      cityData.config.pitch = parseFloat(parts[4]);
-    }
-    return cityData;
+  unload(urlName) {
+    delete this.cityData[urlName];
   },
 
   getState(urlName) {
     const cityData = this.cityData[urlName] || {};
 
     return {
-      main: MainStore.getState(),
       name: cityData.name,
       features: cityData.features,
       lines: cityData.lines,
@@ -116,14 +87,6 @@ const EditorStore = Object.assign({}, Store, {
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById
     }
-  },
-
-  storeGeoData(urlName, geo) {
-    const cityData = this.cityData[urlName];
-    cityData.config.coords = [geo.lon, geo.lat];
-    cityData.config.zoom = geo.zoom;
-    cityData.config.bearing = geo.bearing;
-    cityData.config.pitch = geo.pitch;
   },
 
   getFeatureByKlassAndId(urlName, klass, id){

@@ -221,6 +221,12 @@ class Draw extends Component {
     if (this.map) this.load();
   }
 
+  componentWillUnmount() {
+    this.draw.deleteAll();
+    this.map.removeControl(this.draw)
+    delete this.draw;
+  }
+
   load() {
     var options = {
       boxSelect: false,

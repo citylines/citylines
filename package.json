@@ -5,7 +5,8 @@
   "main": "assets/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/webpack --config client/config/webpack.config.js"
+    "build": "node_modules/.bin/webpack --config client/config/webpack.config.js",
+    "build_production": "node_modules/.bin/webpack --config client/config/production.webpack.config.js"
   },
   "author": "Bruno Salerno",
   "license": "ISC",
