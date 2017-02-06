@@ -5,9 +5,12 @@ class LinesEditor extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {displayColorPicker: {}};
+
     this.bindedOnSave = this.onSave.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnCreate = this.onCreate.bind(this);
+    this.bindedOnItemClick = this.onItemClick.bind(this);
   }
 
   onSave(args) {
@@ -20,6 +23,16 @@ class LinesEditor extends PureComponent {
 
   onCreate(args) {
     if (typeof this.props.onCreate === 'function') this.props.onCreate(args);
+  }
+
+  onItemClick(e, lineUrlName) {
+    if (e.target.className != 'color') {
+      this.setState({displayColorPicker: {}});
+    } else {
+      const displayColorPicker = {};
+      displayColorPicker[lineUrlName] = !this.state.displayColorPicker[lineUrlName];
+      this.setState({displayColorPicker: displayColorPicker});
+    }
   }
 
   render() {
@@ -37,6 +50,8 @@ class LinesEditor extends PureComponent {
                     color={line.style.color}
                     onSave={this.bindedOnSave}
                     onDelete={this.bindedOnDelete}
+                    displayColorPicker={this.state.displayColorPicker[line.url_name]}
+                    onClick={this.bindedOnItemClick}
                   />
                 )
             })
@@ -45,6 +60,9 @@ class LinesEditor extends PureComponent {
             color="#000"
             name=""
             onSave={this.bindedOnCreate}
+            url_name={"the-new-one"}
+            displayColorPicker={this.state.displayColorPicker["the-new-one"]}
+            onClick={this.bindedOnItemClick}
           />
         </div>
       </div>
@@ -64,16 +82,14 @@ class LinesEditorItem extends PureComponent {
       name: this.name
     }
 
-    this.displayColorPicker = false;
     this.displaySaveButton = false;
 
-    this.bindedToggleColorPicker = this.toggleColorPicker.bind(this);
-    this.bindedCloseColorPicker = this.closeColorPicker.bind(this);
     this.bindedOnColorChange = this.onColorChange.bind(this);
     this.bindedOnNameChange = this.onNameChange.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnActualDelete = this.onActualDelete.bind(this);
     this.bindedOnSave = this.onSave.bind(this);
+    this.bindedOnClick = this.onClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -89,20 +105,10 @@ class LinesEditorItem extends PureComponent {
     }
   }
 
-  toggleColorPicker(e) {
-    this.displayColorPicker = !this.displayColorPicker;
-    this.forceUpdate();
-  }
-
-  closeColorPicker(e) {
-    if (e.target.className != 'color') {
-      this.displayColorPicker = false;
-      this.forceUpdate();
-    }
-  }
-
   onColorChange(color) {
-    this.displaySaveButton = true;
+    if (this.name && this.name != '') {
+      this.displaySaveButton = true;
+    }
     this.color = color.hex;
     this.updateState();
   }
@@ -141,6 +147,10 @@ class LinesEditorItem extends PureComponent {
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
   }
 
+  onClick(e) {
+    if (typeof this.props.onClick) this.props.onClick(e, this.props.url_name);
+  }
+
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
         <span className="editor-delete-warning-text">¿Estás seguro?</span>
@@ -149,14 +159,14 @@ class LinesEditorItem extends PureComponent {
       </span>;
 
     return (
-      <div className="c-card__item" onClick={this.bindedCloseColorPicker}>
+      <div className="c-card__item" onClick={this.bindedOnClick}>
         <div className="c-input-group">
           <div className="o-field">
             <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>
           </div>
           <div className="o-field">
-            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
-            {this.displayColorPicker ?
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}}></div></div>
+            {this.props.displayColorPicker ?
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
@@ -194,14 +204,14 @@ class LinesEditorNew extends LinesEditorItem {
 
   render() {
     return (
-      <div className="c-card__item" onClick={this.bindedCloseColorPicker}>
+      <div className="c-card__item" onClick={this.bindedOnClick}>
         <div className="c-input-group">
           <div className="o-field">
             <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange} placeholder="Nueva línea"></input>
           </div>
           <div className="o-field">
-            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}} onClick={this.bindedToggleColorPicker}></div></div>
-            {this.displayColorPicker ?
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}}></div></div>
+            {this.props.displayColorPicker ?
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
