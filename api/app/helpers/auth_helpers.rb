@@ -15,5 +15,3 @@ def payload(user_id)
     }
   }
 end
-
-

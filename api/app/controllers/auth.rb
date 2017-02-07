@@ -6,7 +6,14 @@ class Auth < Api
 
     user = User.authenticate(email, password)
 
-    {token: token(user.id),
-     username: user.name}.to_json
+    one_month = 60 * 60 * 24 * 30
+
+    response.set_cookie("citylines_token",
+                        value: token(user.id),
+                        path: '/',
+                        expires: Time.now + one_month,
+                        httponly: true)
+
+    {username: user.name}.to_json
   end
 end
