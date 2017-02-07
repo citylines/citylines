@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     accentless (1.0.0)
+    armor (0.0.3)
     coderay (1.1.1)
     coffee-script (2.4.1)
       coffee-script-source
@@ -21,6 +22,8 @@ GEM
     rake (11.3.0)
     sass (3.4.22)
     sequel (4.41.0)
+    shield (2.1.1)
+      armor
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -49,6 +52,7 @@ DEPENDENCIES
   pry
   rake
   sequel
+  shield
   sinatra
   sinatra-asset-pipeline (>= 1.0.2)
 
