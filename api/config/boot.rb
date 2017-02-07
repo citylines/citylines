@@ -6,7 +6,7 @@ require 'sinatra/asset_pipeline'
 
 require_relative 'database'
 require_relative 'mapbox'
-require_relative 'jwt'
+require_relative 'auth'
 
 require_relative '../lib/sequel/geometry'
 
