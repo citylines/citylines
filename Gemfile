@@ -8,5 +8,6 @@ gem 'sequel'
 gem 'pg'
 gem 'accentless'
 gem 'shield'
+gem 'jwt'
 
 gem 'pry', require: false

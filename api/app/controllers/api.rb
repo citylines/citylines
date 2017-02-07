@@ -3,16 +3,6 @@ class Api < App
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
 
-  post '/session' do
-    body = JSON.parse request.body.read
-    email = body['email']
-    password = body['password']
-
-    user = User.authenticate(email, password)
-
-    {msg: "User #{user.name} logged in"}.to_json
-  end
-
   get '/cities' do
     cities = City.map do |city|
       {name: city.name,
