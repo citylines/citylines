@@ -25,15 +25,14 @@ end
 
 def protect
   begin
-    options = { algorithm: 'HS256'}
+    options = {algorithm: 'HS256'}
     cookie = request.cookies[token_cookie_name]
 
     unless cookie
       raise MissingTokenCookieError
     end
 
-    bearer = cookie.slice(7..-1)
-    payload, header = JWT.decode bearer, JWT_SECRET, true, options
+    payload, header = JWT.decode cookie, JWT_SECRET, true, options
 
   rescue MissingTokenCookieError
     halt 403, {'Content-Type' => 'application/json'}, {msg: 'Token missing'}.to_json
