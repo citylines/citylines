@@ -41,6 +41,8 @@ class Api < App
   end
 
   get '/editor/:url_name/data' do |url_name|
+    protect
+
     @city = City[url_name: url_name]
 
     { features: all_features_collection(@city),
@@ -53,11 +55,15 @@ class Api < App
   end
 
   get '/editor/:url_name/features' do |url_name|
+    protect
+
     @city = City[url_name: url_name]
     all_features_collection(@city).to_json
   end
 
   put '/editor/:url_name/features' do |url_name|
+    protect
+
     @city = City[url_name: url_name]
     changes = JSON.parse(request.body.read, symbolize_names: true)
 
@@ -69,6 +75,8 @@ class Api < App
   end
 
   put '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    protect
+
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
@@ -83,6 +91,8 @@ class Api < App
   end
 
   post '/editor/:url_name/line' do |url_name|
+    protect
+
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
@@ -98,6 +108,8 @@ class Api < App
   end
 
   delete '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+    protect
+
     @city = City[url_name: url_name]
 
     @city.style["line"]["opening"].delete(line_url_name)

@@ -10,12 +10,12 @@ class Auth < App
       halt 404, {'Content-Type' => 'application/json'}, {msg: 'Email or password is invalid'}.to_json
     end
 
-    one_month = 60 * 60 * 24 * 30
+    one_week = 60 * 60 * 24 * 7
 
-    response.set_cookie("citylines_token",
+    response.set_cookie(token_cookie_name,
                         value: token(user.id),
                         path: '/',
-                        expires: Time.now + one_month,
+                        expires: Time.now + one_week,
                         httponly: true)
 
     {username: user.name,
