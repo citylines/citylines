@@ -22,7 +22,7 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return (this.props.location.pathname !== '/');
+    return !['/', 'auth'].includes(this.props.location.pathname);
   }
 
   togglePanel() {
