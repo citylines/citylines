@@ -35,7 +35,7 @@ class Auth extends Component {
   render() {
     return (
         <div className="u-center-block__content">
-          <h1 className="c-heading">Iniciar sesión</h1>
+          <h2 className="c-heading">Iniciar sesión</h2>
           <form onSubmit={this.bindedOnSubmit}>
           <div className="o-form-element">
             <p>{this.state.msg}</p>
