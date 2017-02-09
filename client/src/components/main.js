@@ -6,6 +6,8 @@ class Main extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {};
+
     this.bindedOnChange = this.onChange.bind(this);
   }
 
@@ -38,8 +40,11 @@ class Main extends Component {
               </span>
               <Link to="/" className="c-nav__item c-text--loud">
                   <span className="fa fa-subway"></span>
-                  {" citylines.co"}
+                  {" citylines.co "}
               </Link>
+              { this.state.username ?
+              <span className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</span>  :
+              <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> Ingresar</Link> }
           </nav>
           <div className="o-grid o-panel o-panel--nav-top">
             {this.props.children}

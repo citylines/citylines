@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import MainStore from '../stores/main-store';
+import {browserHistory} from 'react-router';
 
 class Auth extends Component {
   constructor(props, context) {
@@ -29,7 +31,11 @@ class Auth extends Component {
     const response = await fetch(url, {method: 'POST', body: body});
     const json = await response.json();
 
+    MainStore.setUser(json.username);
+
     this.setState({msg: json.msg});
+
+    browserHistory.push('/');
   }
 
   render() {

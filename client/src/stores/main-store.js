@@ -30,6 +30,17 @@ const MainStore = Object.assign({}, Store, {
 
     this.state = Object.assign({}, this.state);
     this.emitChangeEvent();
+  },
+
+  setUser(username) {
+    this.state.username = username;
+
+    this.state = Object.assign({}, this.state);
+    this.emitChangeEvent();
+  },
+
+  userLoggedIn() {
+    return !!this.state.username;
   }
 });
 
