@@ -8,15 +8,18 @@ def token(user_id)
 end
 
 def payload(user_id)
-  one_week = 60 * 60 * 24 * 7
-
   {
-    exp: Time.now.to_i + one_week,
+    exp: expiration_time,
     iat: Time.now.to_i,
     user: {
       user_id: user_id
     }
   }
+end
+
+def expiration_time
+  one_week = 60 * 60 * 24 * 7
+  Time.now.to_i + one_week
 end
 
 def token_cookie_name

@@ -13,7 +13,6 @@ class Auth < App
       halt "Cannot validate: #{e}"
     end
 
-    exp = payload['exp']
     name = payload['name']
     email = payload['email']
 
@@ -27,7 +26,7 @@ class Auth < App
     response.set_cookie(token_cookie_name,
                         value: token(user.id),
                         path: '/',
-                        expires: Time.at(exp),
+                        expires: Time.at(expiration_time),
                         httponly: true)
 
     {username: user.name,
