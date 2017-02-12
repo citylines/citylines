@@ -43,7 +43,6 @@ class Main extends Component {
 
     if (json.username) {
       MainStore.setUser(json.username);
-      this.forceUpdate();
     }
   }
 
