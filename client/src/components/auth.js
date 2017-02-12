@@ -1,39 +1,35 @@
 import React, {Component} from 'react';
 import MainStore from '../stores/main-store';
 import {browserHistory} from 'react-router';
+import GoogleLogin from 'react-google-login';
 
 class Auth extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {msg: ''}
-
-    this.bindedOnSubmit = this.onSubmit.bind(this);
+    this.state = {};
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    this.login();
+  componentDidMount() {
+    this.loadGoogleSignIn()
   }
 
-  async login() {
+  async loadGoogleSignIn() {
+    const url = '/api/auth/google_client_id';
+    const response = await fetch(url);
+    const json = await response.json();
+    this.setState({google_client_id: json.google_client_id});
+  }
+
+  async onGoogleResponse(googleResponse) {
     const url = '/api/auth';
-    const email = this.refs.email.value;
-    const password = this.refs.password.value;
-
-    if (!email || !password) {
-      this.setState({msg: 'Fields missing'});
-      return;
-    }
-
-    const body = JSON.stringify({email: email, password: password});
+    const token = googleResponse.tokenId;
+    const body = JSON.stringify({token: token});
 
     const response = await fetch(url, {method: 'POST', body: body});
     const json = await response.json();
 
     MainStore.setUser(json.username);
-
-    this.setState({msg: json.msg});
 
     browserHistory.push('/');
   }
@@ -41,23 +37,17 @@ class Auth extends Component {
   render() {
     return (
         <div className="u-center-block__content">
-          <h2 className="c-heading">Iniciar sesión</h2>
-          <form onSubmit={this.bindedOnSubmit}>
+          <h3 className="c-heading">Iniciar sesión</h3>
           <div className="o-form-element">
-            <p>{this.state.msg}</p>
-            <div className="c-input-group c-input-group--stacked">
-              <div className="o-field">
-                <input ref="email" className="c-field" placeholder="Email" type="email" required></input>
-              </div>
-              <div className="o-field">
-                <input ref="password" className="c-field" placeholder="Contraseña" type="password" required></input>
-              </div>
-            </div>
+            {this.state.google_client_id &&
+              <GoogleLogin
+                clientId={this.state.google_client_id}
+                buttonText="Iniciar sesión con Google"
+                fetchBasicProfile={true}
+                autoLoad={true}
+                onSuccess={this.onGoogleResponse} />
+            }
           </div>
-          <div className="o-form-element">
-            <button type="submit" className="c-button c-button--info c-button--block">Iniciar sesión</button>
-          </div>
-          </form>
         </div>
     )
   }

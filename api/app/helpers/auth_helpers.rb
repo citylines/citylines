@@ -32,7 +32,7 @@ def protect
       raise MissingTokenCookieError
     end
 
-    payload, header = JWT.decode cookie, JWT_SECRET, true, options
+    JWT.decode cookie, JWT_SECRET, true, options
 
   rescue MissingTokenCookieError
     halt 403, {'Content-Type' => 'application/json'}, {msg: 'Token missing'}.to_json

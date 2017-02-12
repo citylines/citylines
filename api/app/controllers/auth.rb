@@ -1,24 +1,49 @@
+require 'google-id-token'
+
 class Auth < App
   post '/' do
     body = JSON.parse request.body.read
-    email = body['email']
-    password = body['password']
 
-    user = User.authenticate(email, password)
+    validator = GoogleIDToken::Validator.new
+    required_audience = required_client_id = GOOGLE_CLIENT_ID
 
-    unless user
-      halt 404, {'Content-Type' => 'application/json'}, {msg: 'Email or password is invalid'}.to_json
+    begin
+      payload = validator.check(body['token'], required_audience, required_client_id)
+    rescue GoogleIDToken::ValidationError => e
+      halt "Cannot validate: #{e}"
     end
 
-    one_week = 60 * 60 * 24 * 7
+    exp = payload['exp']
+    name = payload['name']
+    email = payload['email']
+
+    user = User[email: email]
+
+    unless user
+      user = User.new(name: name, email: email)
+      user.save
+    end
 
     response.set_cookie(token_cookie_name,
                         value: token(user.id),
                         path: '/',
-                        expires: Time.now + one_week,
+                        expires: Time.at(exp),
                         httponly: true)
 
     {username: user.name,
      msg: "Login succesful"}.to_json
+  end
+
+  get '/check' do
+    payload, header = protect
+
+    user = payload['user']
+
+    {username: User[user['user_id']].name,
+     msg: "User fetched succesfully"}.to_json
+  end
+
+  get '/google_client_id' do
+    {google_client_id: GOOGLE_CLIENT_ID}.to_json
   end
 end

@@ -19,6 +19,10 @@ class Main extends Component {
     MainStore.removeChangeListener(this.bindedOnChange);
   }
 
+  componentDidMount() {
+    this.checkAuth();
+  }
+
   onChange() {
     this.setState(MainStore.getState());
   }
@@ -29,6 +33,17 @@ class Main extends Component {
 
   togglePanel() {
     MainStore.togglePanel();
+  }
+
+  async checkAuth() {
+    const url = '/api/auth/check';
+
+    const response = await fetch(url);
+    const json = await response.json();
+
+    if (json.username) {
+      MainStore.setUser(json.username);
+    }
   }
 
   render() {
