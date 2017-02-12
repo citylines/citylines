@@ -9,5 +9,6 @@ gem 'pg'
 gem 'accentless'
 gem 'shield'
 gem 'jwt'
+gem 'google-id-token'
 
 gem 'pry', require: false

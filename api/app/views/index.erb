@@ -13,6 +13,8 @@
 
         <meta name="robots" content="index/follow" />
 
+        <meta name="google-signin-client_id" content="<%= GOOGLE_CLIENT_ID %>">
+
         <link rel="icon" type="image/png" href="<%= image_path('favicon-32x32.png')  %>" sizes="32x32">
 
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -21,7 +23,7 @@
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.16.0/mapbox-gl-draw.css' type='text/css' />
         <link rel="stylesheet" href="<%= asset_path('css/style.css') %>" />
-
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
