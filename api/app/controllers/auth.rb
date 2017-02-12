@@ -28,4 +28,13 @@ class Auth < App
     {username: name,
      msg: "Login succesful"}.to_json
   end
+
+  get '/check' do
+    payload, header = protect
+
+    user = payload['user']
+
+    {username: User[user['user_id']].name,
+     msg: "User fetched succesfully"}.to_json
+  end
 end
