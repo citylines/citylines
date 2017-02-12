@@ -1,26 +1,29 @@
 import React, {Component} from 'react';
 import MainStore from '../stores/main-store';
 import {browserHistory} from 'react-router';
+import GoogleLogin from 'react-google-login';
 
 class Auth extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.state = {};
   }
 
   componentDidMount() {
-    gapi.signin2.render('g-signin2', {
-      'scope': 'https://www.googleapis.com/auth/plus.login',
-      'width': 200,
-      'height': 50,
-      'longtitle': true,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn
-    });
+    this.loadGoogleSignIn()
   }
 
-  async onSignIn(googleUser) {
+  async loadGoogleSignIn() {
+    const url = '/api/auth/google_client_id';
+    const response = await fetch(url);
+    const json = await response.json();
+    this.setState({google_client_id: json.google_client_id});
+  }
+
+  async onGoogleResponse(googleResponse) {
     const url = '/api/auth';
-    const token = googleUser.getAuthResponse().id_token;
+    const token = googleResponse.tokenId;
     const body = JSON.stringify({token: token});
 
     const response = await fetch(url, {method: 'POST', body: body});
@@ -36,7 +39,14 @@ class Auth extends Component {
         <div className="u-center-block__content">
           <h3 className="c-heading">Iniciar sesión</h3>
           <div className="o-form-element">
-            <div id="g-signin2"></div>
+            {this.state.google_client_id &&
+              <GoogleLogin
+                clientId={this.state.google_client_id}
+                buttonText="Iniciar sesión con Google"
+                fetchBasicProfile={true}
+                autoLoad={true}
+                onSuccess={this.onGoogleResponse} />
+            }
           </div>
         </div>
     )

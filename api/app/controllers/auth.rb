@@ -17,7 +17,12 @@ class Auth < App
     name = payload['name']
     email = payload['email']
 
-    user = User.find_or_create(name: name, email: email)
+    user = User[email: email]
+
+    unless user
+      user = User.new(name: name, email: email)
+      user.save
+    end
 
     response.set_cookie(token_cookie_name,
                         value: token(user.id),
@@ -25,7 +30,7 @@ class Auth < App
                         expires: Time.at(exp),
                         httponly: true)
 
-    {username: name,
+    {username: user.name,
      msg: "Login succesful"}.to_json
   end
 
@@ -36,5 +41,9 @@ class Auth < App
 
     {username: User[user['user_id']].name,
      msg: "User fetched succesfully"}.to_json
+  end
+
+  get '/google_client_id' do
+    {google_client_id: GOOGLE_CLIENT_ID}.to_json
   end
 end
