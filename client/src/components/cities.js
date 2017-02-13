@@ -6,10 +6,13 @@ class CityItem extends Component {
   render() {
     return (
       <div className="c-card u-high">
-        <div className="c-card__item c-card__item--info">{this.props.name}</div>
-        <div className="c-card__item">
-          <p className="c-paragraph"> {`Desde ${this.props.start_year}`} </p>
-          <p className="c-paragraph"> {`${this.props.lines_count} líneas y ${this.props.plans_count} planes`} </p>
+      <header className="c-card__header">
+          <h3 className="c-heading">
+          {this.props.name}
+          <div className="c-heading__sub">{`${this.props.lines_count} líneas`}</div>
+          </h3>
+          </header>
+        <div className="c-card__body">
           <p className="c-paragraph">
             <Link className="c-link c-link--primary" to={this.props.url}>Visitar ciudad</Link>
           </p>
@@ -43,8 +46,25 @@ class Cities extends Component {
     CitiesStore.fetchCities();
   }
 
+  onInputChange(e) {
+    CitiesStore.setValue(e.target.value)
+  }
+
+  filterCities() {
+    if (this.state.value == '') {
+      return this.state.cities;
+    }
+
+    const regex = new RegExp(this.state.value, 'i');
+    return this.state.cities.filter((city) => regex.test(city.name));
+  }
+
+  sortCities(a,b) {
+    return a.name > b.name ? 1 : -1
+  }
+
   render() {
-    const cities = this.state.cities.map((city) => {
+    const cities = this.filterCities().sort(this.sortCities).map((city) => {
       return (
         <CityItem
           key={city.name}
@@ -60,27 +80,34 @@ class Cities extends Component {
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--small">
-          <h3 className="c-heading c-heading--medium">
-            En <strong>Citylines</strong> queremos construir una historia espacial de los sistemas de metro del mundo.
-          </h3>
 
-          <h3 className="c-heading c-heading--medium">
-            Ciudades
-          </h3>
+          <div className="u-letter-box--large">
+            <h1 className="c-heading c-heading--medium">
+              <b>Citylines.co</b>: ¡Explorá los sistemas de transporte de las ciudades del mundo!
+            </h1>
+          </div>
 
-          { cities }
+          <div className="u-letter-box--large">
+            <div className="o-field o-field--icon-right" style={{padding:"5px"}}>
+              <input className="c-field" type="text" placeholder="Buscá tu ciudad" onChange={this.onInputChange}></input>
+              <i className="fa fa-fw fa-search c-icon"></i>
+            </div>
 
-          <h3 className="c-heading c-heading--medium">
-            Contacto
-          </h3>
+            <div className="cities-container">
+              <div>
+              { cities }
+              </div>
+            </div>
+          </div>
 
-          <p className="c-paragragh">
-            ¿Tenés comentarios? ¿Querés colaborar? ¿Querés agregar una ciudad?
-          </p>
-
-          <p className="c-paragragh">
-            Contactanos en <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a> o visitá nuestro <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.
-          </p>
+          <div className="u-letter-box--large">
+            <h3 className="c-heading c-heading--medium">
+              Contacto
+            </h3>
+            <p className="c-paragragh">
+              Entrá a nuestro <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Grupo de Google</a>, contactame en <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a>, o visitá nuestro <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.
+            </p>
+          </div>
         </div>
       </div>
     );

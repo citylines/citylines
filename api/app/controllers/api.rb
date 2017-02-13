@@ -6,9 +6,7 @@ class Api < App
   get '/cities' do
     cities = City.map do |city|
       {name: city.name,
-       start_year: city.start_year,
        lines_count: city.lines.count,
-       plans_count: city.plans.count,
        url: city.url}
     end
     {cities: cities}.to_json

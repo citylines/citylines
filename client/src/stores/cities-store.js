@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 
 const CitiesStore = Object.assign({}, Store, {
   cities: [],
+  value: '',
 
   async fetchCities() {
     const url = '/api/cities';
@@ -12,8 +13,14 @@ const CitiesStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  setValue(value) {
+    this.value = value;
+    this.emitChangeEvent();
+  },
+
   getState() {
     return {
+      value: this.value,
       cities: this.cities
     }
   }

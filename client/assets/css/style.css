@@ -212,3 +212,10 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 .edit-mode-buttons {
   padding: 10px 15px 20px 15px;
 }
+
+.cities-container {
+  padding-top:20px;
+  max-height:500px;
+  overflow:auto;
+  padding:20px 5px 10px 5px;
+}
