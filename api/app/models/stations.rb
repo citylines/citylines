@@ -1,20 +1,22 @@
 class Station < Sequel::Model(:stations)
-    many_to_one :line
+  include StartYear
 
-    plugin :geometry
+  many_to_one :line
 
-    def feature
-        h = super
+  plugin :geometry
 
-        closure = self.closure || Section::FUTURE
+  def feature
+    h = super
 
-        h[:properties].merge!({line:self.line.name,
-                               line_url_name: self.line.url_name,
-                               name: self.name,
-                               opening: self.opening || Section::FUTURE,
-                               buildstart: self.buildstart || self.opening,
-                               buildstart_end: self.opening || closure,
-                               closure: closure })
-        h
-    end
+    closure = self.closure || Section::FUTURE
+
+    h[:properties].merge!({line:self.line.name,
+                           line_url_name: self.line.url_name,
+                           name: self.name,
+                           opening: self.opening || Section::FUTURE,
+                           buildstart: self.buildstart || self.opening,
+                           buildstart_end: self.opening || closure,
+                           closure: closure })
+    h
+  end
 end

@@ -1,29 +1,29 @@
-require "./api/lib/length"
-include Length
-
 class Section < Sequel::Model(:sections)
-    many_to_one :line
+  include Length
+  include StartYear
 
-    plugin :geometry
+  many_to_one :line
 
-    FUTURE = 999999
+  plugin :geometry
 
-    def city
-        self.line.city
-    end
+  FUTURE = 999999
 
-    def feature
-        h = super
+  def city
+    self.line.city
+  end
 
-        closure = self.closure || FUTURE
+  def feature
+    h = super
 
-        h[:properties].merge!({length: self.length,
-                               line: self.line.name,
-                               line_url_name: self.line.url_name,
-                               opening: self.opening || FUTURE,
-                               buildstart: self.buildstart || self.opening,
-                               buildstart_end: self.opening || closure,
-                               closure: closure })
-        h
-    end
+    closure = self.closure || FUTURE
+
+    h[:properties].merge!({length: self.length,
+                           line: self.line.name,
+                           line_url_name: self.line.url_name,
+                           opening: self.opening || FUTURE,
+                           buildstart: self.buildstart || self.opening,
+                           buildstart_end: self.opening || closure,
+                           closure: closure })
+    h
+  end
 end
