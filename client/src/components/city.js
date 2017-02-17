@@ -103,18 +103,7 @@ class City extends PureComponent {
   }
 
   onFeatureCreate(features) {
-    const createdFeatures = features.map((feature) => {
-      const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      feature.properties.id = Date.now();
-      feature.properties.klass = klass;
-      feature.properties.opening = 0;
-      feature.properties.buildstart = 0;
-      feature.properties.closure = 999999;
-      if (klass == 'Station') feature.properties.name = '';
-      return feature;
-    });
-
-    EditorStore.setFeatureCreated(this.urlName, createdFeatures);
+    EditorStore.setFeatureCreated(this.urlName, features);
   }
 
   onFeatureDelete(features) {

@@ -186,7 +186,18 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   setFeatureCreated(urlName, features) {
+    const cityData = this.cityData[urlName];
+
     features.map((feature) => {
+      const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
+      feature.properties.id = Date.now();
+      feature.properties.klass = klass;
+      feature.properties.opening = 0;
+      feature.properties.buildstart = 0;
+      feature.properties.closure = 999999;
+      feature.properties.line_url_name = cityData.lines[0] ? cityData.lines[0].url_name : null;
+      if (klass == 'Station') feature.properties.name = '';
+
       this.pushFeatureToFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.created = true;

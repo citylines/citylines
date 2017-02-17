@@ -14,6 +14,8 @@ class KmInfo {
 
     const yearInfo = this.kmLinesInfo[this.year];
 
+    if (!yearInfo) return;
+
     Object.values(this.lines).map((line) => {
       if (!yearInfo[line]) return;
 
