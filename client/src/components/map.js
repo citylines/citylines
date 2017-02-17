@@ -265,7 +265,9 @@ class Draw extends Component {
       }
     });
 
-    this.draw.add(this.props.features);
+    this.map.once('data',() => {
+      this.draw.add(this.props.features);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
