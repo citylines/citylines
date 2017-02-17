@@ -8,15 +8,11 @@ class CityItem extends Component {
       <div className="c-card u-high">
       <header className="c-card__header">
           <h3 className="c-heading">
-          {this.props.name}
+          <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>
           <div className="c-heading__sub">{`${this.props.lines_count} líneas`}</div>
           </h3>
           </header>
-        <div className="c-card__body">
-          <p className="c-paragraph">
-            <Link className="c-link c-link--primary" to={this.props.url}>Visitar ciudad</Link>
-          </p>
-        </div>
+          <div className="c-card__body"></div>
       </div>
     )
   }
@@ -83,7 +79,7 @@ class Cities extends Component {
 
           <div className="u-letter-box--large">
             <h1 className="c-heading c-heading--medium">
-              <b>Citylines.co</b>: ¡Explorá los sistemas de transporte de las ciudades del mundo!
+              En <b>Citylines.co</b> queremos explorar los sistemas de transporte de las ciudades del mundo
             </h1>
           </div>
 
