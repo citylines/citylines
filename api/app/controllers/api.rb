@@ -10,6 +10,7 @@ class Api < App
        contributors_count: contributors(city),
        url: city.url}
     end
+
     {cities: cities}.to_json
   end
 
