@@ -83,7 +83,7 @@ class Cities extends Component {
 
           <div className="u-letter-box--large">
             <h1 className="c-heading c-heading--medium">
-              En <b>Citylines.co</b> queremos explorar los sistemas de transporte de las ciudades del mundo
+              En <b>Citylines.co</b> queremos reconstruir los sistemas de transporte de las ciudades del mundo
             </h1>
           </div>
 
@@ -105,7 +105,7 @@ class Cities extends Component {
               Contacto
             </h3>
             <p className="c-paragragh">
-              Entrá a nuestro <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Grupo de Google</a>, contactame en <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a>, o visitá nuestro <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.
+              Entrá al <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Grupo de Google</a>, contactame en <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a>, o visitá el <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.
             </p>
           </div>
         </div>
