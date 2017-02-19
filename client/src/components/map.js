@@ -216,15 +216,31 @@ Popup.contextTypes = {
 }
 
 class Draw extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.bindedOnMapReady = this.onMapReady.bind(this);
+  }
+
   componentDidMount() {
     this.map = this.context.map;
-    if (this.map) this.load();
+    if (this.map && this.map.loaded()) {
+      this.load();
+    } else if (this.map) {
+      this.map.on('render', this.bindedOnMapReady);
+    }
   }
 
   componentWillUnmount() {
     this.draw.deleteAll();
     this.map.removeControl(this.draw)
     delete this.draw;
+  }
+
+  onMapReady() {
+    if (!this.map.loaded()) return;
+    this.map.off('render', this.bindedOnMapReady)
+    this.load();
   }
 
   load() {
