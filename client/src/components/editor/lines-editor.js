@@ -38,7 +38,7 @@ class LinesEditor extends PureComponent {
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
-        <div className="c-card c-card--highest">
+        <div className="c-card c-card--highest lines-editor-container">
           {
             this.props.lines.map((line) => {
               return (

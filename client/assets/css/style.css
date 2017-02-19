@@ -219,3 +219,7 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
   overflow:auto;
   padding:20px 5px 10px 5px;
 }
+
+.lines-editor-container {
+  overflow: initial;
+}
