@@ -9,7 +9,7 @@ class CityItem extends Component {
       <header className="c-card__header">
           <h3 className="c-heading">
           <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>
-          <div className="c-heading__sub">{`${this.props.lines_count} líneas`}</div>
+          <div className="c-heading__sub">{`${this.props.lines_count} líneas | ${this.props.contributors_count} colaboradores`}</div>
           </h3>
           </header>
           <div className="c-card__body"></div>
@@ -22,6 +22,7 @@ class Cities extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.bindedSortCities = this.sortCities.bind(this);
     this.bindedOnChange = this.onChange.bind(this);
     this.state = CitiesStore.getState();
   }
@@ -55,19 +56,22 @@ class Cities extends Component {
     return this.state.cities.filter((city) => regex.test(city.name));
   }
 
+  cityIndex(city) {
+    return (city.contributors_count + city.lines_count) / 2
+  }
+
   sortCities(a,b) {
-    return a.name > b.name ? 1 : -1
+    return this.cityIndex(a) > this.cityIndex(b) ? -1 : 1
   }
 
   render() {
-    const cities = this.filterCities().sort(this.sortCities).map((city) => {
+    const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
       return (
         <CityItem
           key={city.name}
           name={city.name}
-          start_year={city.start_year}
           lines_count={city.lines_count}
-          plans_count={city.plans_count}
+          contributors_count={city.contributors_count}
           url={city.url}
         />
       )

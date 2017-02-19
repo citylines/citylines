@@ -97,4 +97,13 @@ module CityHelpers
       ModifiedFeatureGeo.push(user, feature)
     end
   end
+
+  def contributors(city)
+    ModifiedFeatureProps.where(city_id: city.id)
+                        .distinct(:user_id).select(:user_id)
+                        .union(ModifiedFeatureGeo.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
+                        .union(CreatedFeature.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
+                        .union(DeletedFeature.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
+                        .count
+  end
 end

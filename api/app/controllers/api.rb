@@ -7,6 +7,7 @@ class Api < App
     cities = City.map do |city|
       {name: city.name,
        lines_count: city.lines.count,
+       contributors_count: contributors(city),
        url: city.url}
     end
     {cities: cities}.to_json
