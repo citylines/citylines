@@ -5,6 +5,10 @@ class Station < Sequel::Model(:stations)
 
   plugin :geometry
 
+  def city
+    self.line.city
+  end
+
   def feature
     h = super
 

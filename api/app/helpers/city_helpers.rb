@@ -67,13 +67,14 @@ module CityHelpers
     feature.save
   end
 
-  def update_create_or_delete_feature(change)
+  def update_create_or_delete_feature(user, change)
     klass = Object.const_get(change[:klass])
 
     if change[:created]
       new_feature = klass.new
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature, change[:feature][:geometry])
+      CreatedFeature.push(user, new_feature.reload)
       return
     end
 
@@ -81,16 +82,19 @@ module CityHelpers
     feature = klass[id]
 
     if change[:removed]
+      DeletedFeature.push(user, feature)
       feature.delete
       return
     end
 
     if change[:props]
       update_feature_properties(feature, change[:feature][:properties])
+      ModifiedFeatureProps.push(user, feature)
     end
 
     if change[:geo]
       update_feature_geometry(feature, change[:feature][:geometry])
+      ModifiedFeatureGeo.push(user, feature)
     end
   end
 end

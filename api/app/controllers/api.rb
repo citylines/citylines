@@ -60,13 +60,14 @@ class Api < App
   end
 
   put '/editor/:url_name/features' do |url_name|
-    protect
+    payload, header = protect
+    user = User[payload['user']['user_id']]
 
     @city = City[url_name: url_name]
     changes = JSON.parse(request.body.read, symbolize_names: true)
 
     changes.each do |change|
-      update_create_or_delete_feature(change);
+      update_create_or_delete_feature(user, change);
     end
 
     all_features_collection(@city).to_json
