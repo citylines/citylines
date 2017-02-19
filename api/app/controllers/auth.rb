@@ -23,11 +23,17 @@ class Auth < App
       user.save
     end
 
-    response.set_cookie(token_cookie_name,
-                        value: token(user.id),
-                        path: '/',
-                        expires: Time.at(expiration_time),
-                        httponly: true)
+    cookie_opts = {value: token(user.id),
+                   path: '/',
+                   expires: Time.at(expiration_time),
+                   httponly: true}
+
+    # We set the domain only in production. In localhost, this will only work in Safari
+    if ENV['RACK_ENV'] == 'production'
+      cookie_opts[:domain] = 'citylines.co'
+    end
+
+    response.set_cookie(token_cookie_name, cookie_opts)
 
     {username: user.name,
      msg: "Login succesful"}.to_json
