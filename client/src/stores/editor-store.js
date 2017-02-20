@@ -9,21 +9,21 @@ const EditorStore = Object.assign({}, Store, {
 
   async fetchCityData(urlName) {
     const url = `/api/editor/${urlName}/data`;
-    const response = await fetch(url);
+    const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
     return json;
   },
 
   async fetchFeatures(urlName) {
     const url = `/api/editor/${urlName}/features`;
-    const response = await fetch(url);
+    const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
     return json;
   },
 
   async updateFeatures(urlName, body) {
     const url = `/api/editor/${urlName}/features`;
-    const response = await fetch(url, {method:'PUT', body: body});
+    const response = await fetch(url, {method:'PUT', body: body, credentials: 'same-origin'});
     const json = await response.json();
     return json;
   },
@@ -31,7 +31,7 @@ const EditorStore = Object.assign({}, Store, {
   async updateLine(urlName, args) {
     const url = `/api/editor/${urlName}/line/${args.urlName}`;
     const body = JSON.stringify(args);
-    const response = await fetch(url, {method: 'PUT', body: body});
+    const response = await fetch(url, {method: 'PUT', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
     const cityData = this.cityData[urlName];
@@ -43,7 +43,7 @@ const EditorStore = Object.assign({}, Store, {
   async createLine(urlName, args) {
     const url = `/api/editor/${urlName}/line`;
     const body = JSON.stringify(args);
-    const response = await fetch(url, {method: 'POST', body: body});
+    const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
     const cityData = this.cityData[urlName];
@@ -54,7 +54,7 @@ const EditorStore = Object.assign({}, Store, {
 
   async deleteLine(urlName, lineUrlName) {
     const url = `/api/editor/${urlName}/line/${lineUrlName}`;
-    const response = await fetch(url, {method: 'DELETE'});
+    const response = await fetch(url, {method: 'DELETE', credentials: 'same-origin'});
     const json = await response.json();
 
     const cityData = this.cityData[urlName];

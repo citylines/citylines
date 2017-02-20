@@ -26,7 +26,7 @@ class Auth extends Component {
     const token = googleResponse.tokenId;
     const body = JSON.stringify({token: token});
 
-    const response = await fetch(url, {method: 'POST', body: body});
+    const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
     MainStore.setUser(json.username);

@@ -38,7 +38,7 @@ class Main extends Component {
   async checkAuth() {
     const url = '/api/auth/check';
 
-    const response = await fetch(url);
+    const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
 
     if (json.username) {
