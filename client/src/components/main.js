@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
 import MainStore from '../stores/main-store.js'
+import CookieNotice from './cookie-notice.js';
 
 class Main extends Component {
   constructor(props, context) {
@@ -64,6 +65,7 @@ class Main extends Component {
           <div className="o-grid o-panel o-panel--nav-top">
             {this.props.children}
           </div>
+          <CookieNotice />
         </div>
       )
   }
