@@ -19,7 +19,15 @@ class City < Sequel::Model(:cities)
     end
 
     def generate_url_name
-        self.url_name = self.name.accentless.gsub(' ','-').downcase
+      return if self.url_name
+
+      new_url_name = self.name.accentless.gsub(' ','-').downcase
+
+      if City[url_name: new_url_name]
+        new_url_name = "#{new_url_name}-#{self.country.accentless.gsub(' ', '-').downcase}"
+      end
+
+      self.url_name = new_url_name
     end
 
     def url
