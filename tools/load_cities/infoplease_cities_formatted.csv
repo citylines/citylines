@@ -1,0 +1,121 @@
+city,country,lat,lon
+Aberdeen, Scotland,57.15,-2.15
+Adelaide, Australia,-34.91666667,138.6
+Algiers, Algeria,36.83333333,3
+Amsterdam, Netherlands,52.36666667,4.883333333
+Ankara, Turkey,39.91666667,32.91666667
+Asunción, Paraguay,-25.25,-57.66666667
+Athens, Greece,37.96666667,23.71666667
+Auckland, New Zealand,-36.86666667,174.75
+Bangkok, Thailand,13.75,100.5
+Barcelona, Spain,41.38333333,2.15
+Beijing, China,39.91666667,116.4166667
+Belém, Brazil,-1.466666667,-48.48333333
+Belfast, Northern Ireland,54.61666667,-5.933333333
+Belgrade, Serbia,44.86666667,20.53333333
+Berlin, Germany,52.5,13.41666667
+Birmingham, England,52.41666667,-1.916666667
+Bogotá, Colombia,4.533333333,-74.25
+Bombay, India,19,72.8
+Bordeaux, France,44.83333333,-0.5166666667
+Bremen, Germany,53.08333333,8.816666667
+Brisbane, Australia,-27.48333333,153.1333333
+Bristol, England,51.46666667,-2.583333333
+Brussels, Belgium,50.86666667,4.366666667
+Bucharest, Romania,44.41666667,26.11666667
+Budapest, Hungary,47.5,19.08333333
+Buenos Aires, Argentina,-34.58333333,-58.36666667
+Cairo, Egypt,30.03333333,31.35
+Calcutta, India,22.56666667,88.4
+Canton, China,23.11666667,113.25
+Cape Town, South Africa,-33.91666667,18.36666667
+Caracas, Venezuela,10.46666667,-67.03333333
+Cayenne, French Guiana,4.816666667,-52.3
+Chihuahua, Mexico,28.61666667,-106.0833333
+Chongqing, China,29.76666667,106.5666667
+Copenhagen, Denmark,55.66666667,12.56666667
+Córdoba, Argentina,-31.46666667,-64.16666667
+Dakar, Senegal,14.66666667,-17.46666667
+Darwin, Australia,-12.46666667,130.85
+Djibouti, Djibouti,11.5,43.05
+Dublin, Ireland,53.33333333,-6.25
+Durban, South Africa,-29.88333333,30.88333333
+Edinburgh, Scotland,55.91666667,-3.166666667
+Frankfurt, Germany,50.11666667,8.683333333
+Georgetown, Guyana,6.75,-58.25
+Glasgow, Scotland,55.83333333,-4.25
+Guatemala City, Guatemala,14.61666667,-90.51666667
+Guayaquil, Ecuador,-2.166666667,-79.93333333
+Hamburg, Germany,53.55,10.03333333
+Hammerfest, Norway,70.63333333,23.63333333
+Havana, Cuba,23.13333333,-82.38333333
+Helsinki, Finland,60.16666667,25
+Hobart, Tasmania,-42.86666667,147.3166667
+Hong Kong, China,22.33333333,114.1833333
+Iquique, Chile,-20.16666667,-70.11666667
+Irkutsk, Russia,52.5,104.3333333
+Jakarta, Indonesia,-6.266666667,106.8
+Johannesburg, South Africa,-26.2,28.06666667
+Kingston, Jamaica,17.98333333,-76.81666667
+Kinshasa, Congo,-4.3,15.28333333
+Kuala Lumpur, Malaysia,3.133333333,101.7
+La Paz, Bolivia,-16.45,-68.36666667
+Leeds, England,53.75,-1.5
+Lima, Peru,-12,-77.03333333
+Lisbon, Portugal,38.73333333,-9.15
+Liverpool, England,53.41666667,-3
+London, England,51.53333333,-0.08333333333
+Lyons, France,45.75,4.833333333
+Madrid, Spain,40.43333333,-3.7
+Manchester, England,53.5,-2.25
+Manila, Philippines,14.58333333,120.95
+Marseilles, France,43.33333333,5.333333333
+Mazatlán, Mexico,23.2,-106.4166667
+Mecca, Saudi Arabia,21.48333333,39.75
+Melbourne, Australia,-37.78333333,144.9666667
+Mexico City, Mexico,19.43333333,-99.11666667
+Milan, Italy,45.45,9.166666667
+Montevideo, Uruguay,-34.88333333,-56.16666667
+Moscow, Russia,55.75,37.6
+Munich, Germany,48.13333333,11.58333333
+Nagasaki, Japan,32.8,129.95
+Nagoya, Japan,35.11666667,136.9333333
+Nairobi, Kenya,-1.416666667,36.91666667
+Nanjing (Nanking), China,32.05,118.8833333
+Naples, Italy,40.83333333,14.25
+New Delhi, India,28.58333333,77.2
+Newcastle-on-Tyne, England,54.96666667,-1.616666667
+Odessa, Ukraine,46.45,30.8
+Osaka, Japan,34.53333333,135.5
+Oslo, Norway,59.95,10.7
+Panama City, Panama,8.966666667,-79.53333333
+Paramaribo, Suriname,5.75,-55.25
+Paris, France,48.8,2.333333333
+Perth, Australia,-31.95,115.8666667
+Plymouth, England,50.41666667,-4.083333333
+Port Moresby, Papua New Guinea,-9.416666667,147.1333333
+Prague, Czech Republic,50.08333333,14.43333333
+Rangoon, Myanmar,16.83333333,96
+Reykjavík, Iceland,64.06666667,-21.96666667
+Rio de Janeiro, Brazil,-22.95,-43.2
+Rome, Italy,41.9,12.45
+Salvador, Brazil,-12.93333333,-38.45
+Santiago, Chile,-33.46666667,-70.75
+St. Petersburg, Russia,59.93333333,30.3
+São Paulo, Brazil,-23.51666667,-46.51666667
+Shanghai, China,31.16666667,121.4666667
+Singapore, Singapore,1.233333333,103.9166667
+Sofia, Bulgaria,42.66666667,23.33333333
+Stockholm, Sweden,59.28333333,18.05
+Sydney, Australia,-34,151
+Tananarive, Madagascar,-18.83333333,47.55
+Teheran, Iran,35.75,51.75
+Tokyo, Japan,35.66666667,139.75
+Tripoli, Libya,32.95,13.2
+Venice, Italy,45.43333333,12.33333333
+Veracruz, Mexico,19.16666667,-96.16666667
+Vienna, Austria,48.23333333,16.33333333
+Vladivostok, Russia,43.16666667,132
+Warsaw, Poland,52.23333333,21
+Wellington, New Zealand,-41.28333333,174.7833333
+Zürich, Switzerland,47.35,8.516666667
