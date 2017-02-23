@@ -85,7 +85,8 @@ const EditorStore = Object.assign({}, Store, {
       config: cityData.config || {},
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
-      selectedFeatureById: cityData.selectedFeatureById
+      selectedFeatureById: cityData.selectedFeatureById,
+      savingData: cityData.savingData
     }
   },
 
@@ -241,6 +242,9 @@ const EditorStore = Object.assign({}, Store, {
   async saveChanges(urlName) {
     const cityData = this.cityData[urlName];
 
+    cityData.savingData = true;
+    this.emitChangeEvent();
+
     const changes = Object.entries(cityData.modifiedFeatures).map((entry) => {
       return entry[1];
     });
@@ -251,6 +255,7 @@ const EditorStore = Object.assign({}, Store, {
     delete cityData.modifiedFeatures;
     delete cityData.selectedFeature;
 
+    cityData.savingData = false;
     this.emitChangeEvent();
   }
 });

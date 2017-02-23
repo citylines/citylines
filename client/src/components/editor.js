@@ -137,6 +137,7 @@ class Editor extends PureComponent {
                 />
               <ModifiedFeaturesViewer
                 modifiedFeatures={this.state.modifiedFeatures}
+                savingData={this.state.savingData}
                 onClick={this.bindedOnModifiedFeatureClick}
                 onDiscard={this.bindedOnDiscardChanges}
                 onSave={this.bindedOnSaveChanges}
