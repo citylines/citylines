@@ -73,7 +73,7 @@ module CityHelpers
     if change[:created]
       new_feature = klass.new
       update_feature_properties(new_feature, change[:feature][:properties])
-      update_feature_geometry(new_feature, change[:feature][:geometry])
+      update_feature_geometry(new_feature.reload, change[:feature][:geometry])
       CreatedFeature.push(user, new_feature.reload)
       return
     end
