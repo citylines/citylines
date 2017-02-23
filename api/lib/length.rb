@@ -1,6 +1,6 @@
 module Length
     def srid
-        city.srid || 3857
+        self.city.srid || 3857
     end
 
     def set_length
