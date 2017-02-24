@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
+import BrowserCookies from 'browser-cookies';
 
 class Main extends Component {
   constructor(props, context) {
@@ -22,6 +23,7 @@ class Main extends Component {
 
   componentDidMount() {
     this.checkAuth();
+    this.checkCookieAdviceCookie();
   }
 
   onChange() {
@@ -47,7 +49,19 @@ class Main extends Component {
     }
   }
 
+  checkCookieAdviceCookie() {
+    if (!BrowserCookies.get('cookie-advice-accepted')) {
+      MainStore.showCookieAdvice();
+    }
+  }
+
+  onAcceptCookie() {
+    BrowserCookies.set('cookie-advice-accepted', "yes");
+    MainStore.hideCookieAdvice();
+  }
+
   render() {
+    console.log("render main");
     return (
         <div>
           <nav className="c-nav c-nav--inline">
@@ -65,7 +79,9 @@ class Main extends Component {
           <div className="o-grid o-panel o-panel--nav-top">
             {this.props.children}
           </div>
-          <CookieNotice />
+          {this.state.showCookieAdvice && <CookieNotice
+            onAccept={this.onAcceptCookie}
+            />}
         </div>
       )
   }

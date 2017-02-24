@@ -223,3 +223,16 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 .lines-editor-container {
   overflow: initial;
 }
+
+.cookie-notice-container {
+  background-color:#f2f2ea;
+  padding:0 15px;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+.cookie-notice-container button{
+  float: right;
+}
