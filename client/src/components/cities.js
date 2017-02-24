@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import Diacritics from 'diacritics';
 import CitiesStore from '../stores/cities-store'
 
 class CityItem extends Component {
@@ -52,8 +53,8 @@ class Cities extends Component {
       return this.state.cities;
     }
 
-    const regex = new RegExp(this.state.value, 'i');
-    return this.state.cities.filter((city) => regex.test(city.name));
+    const regex = new RegExp(Diacritics.remove(this.state.value), 'i');
+    return this.state.cities.filter((city) => regex.test(Diacritics.remove(city.name)));
   }
 
   cityIndex(city) {
