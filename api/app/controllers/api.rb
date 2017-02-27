@@ -82,6 +82,7 @@ class Api < App
     args = JSON.parse(request.body.read, symbolize_names: true)
 
     @city.style["line"]["opening"][line_url_name]["color"] = args[:color]
+    @city.style["line"]["opening"][line_url_name]["line-width"] = args[:width].to_i
     @city.save
 
     @line = Line.where(city_id: @city.id, url_name: line_url_name).first
@@ -102,7 +103,7 @@ class Api < App
     line.reload.generate_url_name
     line.save
 
-    @city.style["line"]["opening"][line.url_name] = {"color": args[:color]}
+    @city.style["line"]["opening"][line.url_name] = {"color": args[:color], "line_width": args[:width].to_i}
     @city.save
 
     city_lines(@city).to_json
