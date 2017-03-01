@@ -1,5 +1,6 @@
 module Length
     def srid
+        puts "Length#self: #{self}"
         city.srid || 3857
     end
 
