@@ -231,6 +231,7 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
   bottom:0;
   left:0;
   right:0;
+  z-index: 100000;
 }
 
 .cookie-notice-container button{
