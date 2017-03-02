@@ -39,6 +39,16 @@ const MainStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  showCookieAdvice() {
+    this.state.showCookieAdvice = true;
+    this.emitChangeEvent();
+  },
+
+  hideCookieAdvice() {
+    this.state.showCookieAdvice = false;
+    this.emitChangeEvent();
+  },
+
   userLoggedIn() {
     return !!this.state.username;
   }
