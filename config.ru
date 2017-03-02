@@ -3,6 +3,8 @@ require File.join(File.dirname(__FILE__), "api", "app", "controllers", "app")
 require File.join(File.dirname(__FILE__), "api", "app", "controllers", "api")
 require File.join(File.dirname(__FILE__), "api", "app", "controllers", "auth")
 
+$stdout.sync = true
+
 map "/" do
   run App.new
 end
