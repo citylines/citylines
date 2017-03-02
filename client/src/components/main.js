@@ -61,7 +61,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log("render main");
     return (
         <div>
           <nav className="c-nav c-nav--inline">
