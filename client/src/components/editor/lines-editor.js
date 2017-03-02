@@ -48,6 +48,7 @@ class LinesEditor extends PureComponent {
                     name={line.name}
                     deletable={line.deletable}
                     color={line.style.color}
+                    width={line.style['line-width']}
                     onSave={this.bindedOnSave}
                     onDelete={this.bindedOnDelete}
                     displayColorPicker={this.state.displayColorPicker[line.url_name]}
@@ -85,6 +86,7 @@ class LinesEditorItem extends PureComponent {
     this.displaySaveButton = false;
 
     this.bindedOnColorChange = this.onColorChange.bind(this);
+    this.bindedOnWidthChange = this.onWidthChange.bind(this);
     this.bindedOnNameChange = this.onNameChange.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnActualDelete = this.onActualDelete.bind(this);
@@ -122,12 +124,22 @@ class LinesEditorItem extends PureComponent {
     this.updateState();
   }
 
+  onWidthChange(e) {
+    const newWidth = e.target.value;
+    if (this.name && this.name != '') {
+      this.displaySaveButton = true
+    }
+    this.width = newWidth;
+    this.updateState();
+  }
+
   updateState() {
     this.displayDeleteWarning = false;
 
     this.setState({
       color: this.color,
-      name: this.name
+      name: this.name,
+      width: this.width
     });
   }
 
@@ -143,12 +155,20 @@ class LinesEditorItem extends PureComponent {
 
   onSave() {
     this.displaySaveButton = false;
-    const args = Object.assign({},this.state, {urlName: this.props.url_name});
+    const args = Object.assign({}, this.state, {urlName: this.props.url_name});
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
   }
 
   onClick(e) {
     if (typeof this.props.onClick) this.props.onClick(e, this.props.url_name);
+  }
+
+  widths() {
+    const widths = [];
+    for (let i=1; i< 11; i++) {
+      widths.push(<option key={`${this.props.url_name}_${i}`} value={i}>{i}</option>);
+    }
+    return widths;
   }
 
   render() {
@@ -157,6 +177,7 @@ class LinesEditorItem extends PureComponent {
         <button className="c-button" onClick={this.bindedOnActualDelete}>Sí</button>
         <button className="c-button" onClick={() => this.displayDeleteWarning = false}>No</button>
       </span>;
+
 
     return (
       <div className="c-card__item" onClick={this.bindedOnClick}>
@@ -169,6 +190,14 @@ class LinesEditorItem extends PureComponent {
             {this.props.displayColorPicker ?
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
+          </div>
+          <div className="line-width-label">
+            Grosor:
+          </div>
+          <div>
+            <select className="c-field" value={this.props.width || 7} onChange={this.bindedOnWidthChange}>
+            {this.widths()}
+            </select>
           </div>
           <div className="o-field">
             { this.displayDeleteWarning ?
