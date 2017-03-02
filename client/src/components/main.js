@@ -56,7 +56,7 @@ class Main extends Component {
   }
 
   onAcceptCookie() {
-    BrowserCookies.set('cookie-advice-accepted', "yes");
+    BrowserCookies.set('cookie-advice-accepted', "yes", {expires: 365});
     MainStore.hideCookieAdvice();
   }
 
