@@ -104,12 +104,24 @@ module CityHelpers
     end
   end
 
-  def contributors(city)
-    ModifiedFeatureProps.where(city_id: city.id)
-                        .distinct(:user_id).select(:user_id)
-                        .union(ModifiedFeatureGeo.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
-                        .union(CreatedFeature.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
-                        .union(DeletedFeature.where(city_id: city.id).distinct(:user_id).select(:user_id), from_self: false)
-                        .count
+  def contributors
+    query = %{
+      select city_id, count(user_id) from
+        (select distinct city_id, user_id from
+          (select city_id, user_id from modified_features_props union
+           select city_id, user_id from created_features union
+           select city_id, user_id from deleted_features union
+           select city_id, user_id from modified_features_geo) as modifications
+        ) as different
+      group by (city_id)
+    }
+
+    cities = {}
+
+    DB.fetch(query).each do |register|
+      cities[register[:city_id]] = register[:count]
+    end
+
+    cities
   end
 end

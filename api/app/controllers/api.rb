@@ -4,10 +4,12 @@ class Api < App
   DEFAULT_PITCH = 0
 
   get '/cities' do
+    contributors_by_city = contributors
+
     cities = City.map do |city|
       {name: city.name,
        lines_count: city.lines.count,
-       contributors_count: contributors(city),
+       contributors_count: contributors_by_city[city.id] || 0,
        url: city.url}
     end
 
