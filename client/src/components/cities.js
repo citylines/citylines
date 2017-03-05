@@ -9,7 +9,7 @@ class CityItem extends Component {
       <div className="c-card u-high">
       <header className="c-card__header">
           <h3 className="c-heading">
-          <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>
+          <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
           <div className="c-heading__sub">{`${this.props.lines_count} líneas | ${this.props.contributors_count} colaboradores`}</div>
           </h3>
           </header>
@@ -54,7 +54,11 @@ class Cities extends Component {
     }
 
     const regex = new RegExp(Diacritics.remove(this.state.value), 'i');
-    return this.state.cities.filter((city) => regex.test(Diacritics.remove(city.name)));
+    return this.state.cities.filter((city) =>
+        regex.test(Diacritics.remove(city.name)) ||
+        (city.state && regex.test(Diacritics.remove(city.state))) ||
+        regex.test(Diacritics.remove(city.country))
+        );
   }
 
   cityIndex(city) {
@@ -69,8 +73,10 @@ class Cities extends Component {
     const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
       return (
         <CityItem
-          key={city.name}
+          key={`${city.name}-${city.state}-${city.country}`}
           name={city.name}
+          state={city.state}
+          country={city.country}
           lines_count={city.lines_count}
           contributors_count={city.contributors_count}
           url={city.url}

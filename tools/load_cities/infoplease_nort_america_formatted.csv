@@ -1,0 +1,130 @@
+city,state,country,lat,lon
+Albany, N.Y.,United States,42.66666667,-73.75
+Albuquerque, N.M.,United States,35.08333333,-106.65
+Amarillo, Tex.,United States,35.18333333,-101.8333333
+Anchorage, Alaska,United States,61.21666667,-149.9
+Atlanta, Ga.,United States,33.75,-84.38333333
+Austin, Tex.,United States,30.26666667,-97.73333333
+Baker, Ore.,United States,44.78333333,-117.8333333
+Baltimore, Md.,United States,39.3,-76.63333333
+Bangor, Maine,United States,44.8,-68.78333333
+Birmingham, Ala.,United States,33.5,-86.83333333
+Bismarck, N.D.,United States,46.8,-100.7833333
+Boise, Idaho,United States,43.6,-116.2166667
+Boston, Mass.,United States,42.35,-71.08333333
+Buffalo, N.Y.,United States,42.91666667,-78.83333333
+Calgary, Alba.,Canada,51.01666667,-114.0166667
+Carlsbad, N.M.,United States,32.43333333,-104.25
+Charleston, S.C.,United States,32.78333333,-79.93333333
+Charleston, W. Va.,United States,38.35,-81.63333333
+Charlotte, N.C.,United States,35.23333333,-80.83333333
+Cheyenne, Wyo.,United States,41.15,-104.8666667
+Chicago, Ill.,United States,41.83333333,-87.61666667
+Cincinnati, Ohio,United States,39.13333333,-84.5
+Cleveland, Ohio,United States,41.46666667,-81.61666667
+Columbia, S.C.,United States,34,-81.03333333
+Columbus, Ohio,United States,40,-83.01666667
+Dallas, Tex.,United States,32.76666667,-96.76666667
+Denver, Colo.,United States,39.75,-105
+Des Moines, Iowa,United States,41.58333333,-93.61666667
+Detroit, Mich.,United States,42.33333333,-83.05
+Dubuque, Iowa,United States,42.51666667,-90.66666667
+Duluth, Minn.,United States,46.81666667,-92.08333333
+Eastport, Maine,United States,44.9,-67
+Edmonton, Alb.,Canada,53.56666667,-113.4666667
+El Centro, Calif.,United States,32.63333333,-115.55
+El Paso, Tex.,United States,31.76666667,-106.4833333
+Eugene, Ore.,United States,44.05,-123.0833333
+Fargo, N.D.,United States,46.86666667,-96.8
+Flagstaff, Ariz.,United States,35.21666667,-111.6833333
+Fort Worth, Tex.,United States,32.71666667,-97.31666667
+Fresno, Calif.,United States,36.73333333,-119.8
+Grand Junction, Colo.,United States,39.08333333,-108.55
+Grand Rapids, Mich.,United States,42.96666667,-85.66666667
+Havre, Mont.,United States,48.55,-109.7166667
+Helena, Mont.,United States,46.58333333,-112.0333333
+Honolulu, Hawaii,United States,21.3,-157.8333333
+Hot Springs, Ark.,United States,34.51666667,-93.05
+Houston, Tex.,United States,29.75,-95.35
+Idaho Falls, Idaho,United States,43.5,-112.0166667
+Indianapolis, Ind.,United States,39.76666667,-86.16666667
+Jackson, Miss.,United States,32.33333333,-90.2
+Jacksonville, Fla.,United States,30.36666667,-81.66666667
+Juneau, Alaska,United States,58.3,-134.4
+Kansas City, Mo.,United States,39.1,-94.58333333
+Key West, Fla.,United States,24.55,-81.8
+Kingston, Ont.,Canada,44.25,-76.5
+Klamath Falls, Ore.,United States,42.16666667,-121.7333333
+Knoxville, Tenn.,United States,35.95,-83.93333333
+Las Vegas, Nev.,United States,36.16666667,-115.2
+Lewiston, Idaho,United States,46.4,-117.0333333
+Lincoln, Neb.,United States,40.83333333,-96.66666667
+London, Ont.,Canada,43.03333333,-81.56666667
+Long Beach, Calif.,United States,33.76666667,-118.1833333
+Los Angeles, Calif.,United States,34.05,-118.25
+Louisville, Ky.,United States,38.25,-85.76666667
+Manchester, N.H.,United States,43,-71.5
+Memphis, Tenn.,United States,35.15,-90.05
+Miami, Fla.,United States,25.76666667,-80.2
+Milwaukee, Wis.,United States,43.03333333,-87.91666667
+Minneapolis, Minn.,United States,44.98333333,-93.23333333
+Mobile, Ala.,United States,30.7,-88.05
+Montgomery, Ala.,United States,32.35,-86.3
+Montpelier, Vt.,United States,44.25,-72.53333333
+Montréal, Que.,Canada,45.5,-73.58333333
+Moose Jaw, Sask.,Canada,50.61666667,-105.5166667
+Nashville, Tenn.,United States,36.16666667,-86.78333333
+Nelson, B.C.,Canada,49.5,-117.2833333
+Newark, N.J.,United States,40.73333333,-74.16666667
+New Haven, Conn.,United States,41.31666667,-72.91666667
+New Orleans, La.,United States,29.95,-90.06666667
+New York, N.Y.,United States,40.78333333,-73.96666667
+Nome, Alaska,United States,64.41666667,-165.5
+Oakland, Calif.,United States,37.8,-122.2666667
+Oklahoma City, Okla.,United States,35.43333333,-97.46666667
+Omaha, Neb.,United States,41.25,-95.93333333
+Ottawa, Ont.,Canada,45.4,-75.71666667
+Philadelphia, Pa.,United States,39.95,-75.16666667
+Phoenix, Ariz.,United States,33.48333333,-112.0666667
+Pierre, S.D.,United States,44.36666667,-100.35
+Pittsburgh, Pa.,United States,40.45,-79.95
+Portland, Maine,United States,43.66666667,-70.25
+Portland, Ore.,United States,45.51666667,-122.6833333
+Providence, R.I.,United States,41.83333333,-71.4
+Quebec, Que.,Canada,46.81666667,-71.18333333
+Raleigh, N.C.,United States,35.76666667,-78.65
+Reno, Nev.,United States,39.5,-119.8166667
+Richfield, Utah,United States,38.76666667,-112.0833333
+Richmond, Va.,United States,37.55,-77.48333333
+Roanoke, Va.,United States,37.28333333,-79.95
+Sacramento, Calif.,United States,38.58333333,-121.5
+St. John, N.B.,Canada,45.3,-66.16666667
+St. Louis, Mo.,United States,38.58333333,-90.2
+Salt Lake City, Utah,United States,40.76666667,-111.9
+San Antonio, Tex.,United States,29.38333333,-98.55
+San Diego, Calif.,United States,32.7,-117.1666667
+San Francisco, Calif.,United States,37.78333333,-122.4333333
+San Jose, Calif.,United States,37.33333333,-121.8833333
+San Juan, P.R.,United States,18.5,-66.16666667
+Santa Fe, N.M.,United States,35.68333333,-105.95
+Savannah, Ga.,United States,32.08333333,-81.08333333
+Seattle, Wash.,United States,47.61666667,-122.3333333
+Shreveport, La.,United States,32.46666667,-93.7
+Sioux Falls, S.D.,United States,43.55,-96.73333333
+Sitka, Alaska,United States,57.16666667,-135.25
+Spokane, Wash.,United States,47.66666667,-117.4333333
+Springfield, Ill.,United States,39.8,-89.63333333
+Springfield, Mass.,United States,42.1,-72.56666667
+Springfield, Mo.,United States,37.21666667,-93.28333333
+Syracuse, N.Y.,United States,43.03333333,-76.13333333
+Tampa, Fla.,United States,27.95,-82.45
+Toledo, Ohio,United States,41.65,-83.55
+Toronto, Ont.,Canada,43.66666667,-79.4
+Tulsa, Okla.,United States,36.15,-95.98333333
+Vancouver, B.C.,Canada,49.21666667,-123.1
+Victoria, B.C.,Canada,48.41666667,-123.35
+Virginia Beach, Va.,United States,36.85,-75.96666667
+Washington, D.C.,United States,38.88333333,-77.03333333
+Wichita, Kan.,United States,37.71666667,-97.28333333
+Wilmington, N.C.,United States,34.23333333,-77.95
+Winnipeg, Man.,Canada,49.9,-97.11666667

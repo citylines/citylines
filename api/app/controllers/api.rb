@@ -8,6 +8,8 @@ class Api < App
 
     cities = City.map do |city|
       {name: city.name,
+       state: city.country_state,
+       country: city.country,
        lines_count: city.lines.count,
        contributors_count: contributors_by_city[city.id] || 0,
        url: city.url}
