@@ -170,7 +170,7 @@ class City extends PureComponent {
               {
                 this.state.clickedFeatures.features.map((feature) => {
                   const fProps = feature.properties;
-                  const lineStyle = {color: fProps.lineLabelColor || '#fff', backgroundColor: fProps.lineColor, marginLeft:5};
+                  const lineStyle = {color: fProps.lineLabelColor, backgroundColor: fProps.lineColor, marginLeft:5, boxShadow: (fProps.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
                   return (
                     <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
                       <ul className="c-list c-list--unstyled">
