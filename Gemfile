@@ -10,5 +10,6 @@ gem 'pg'
 gem 'accentless'
 gem 'jwt'
 gem 'google-id-token'
+gem 'naturally'
 
 gem 'pry', require: false

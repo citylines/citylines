@@ -1,11 +1,15 @@
+require 'naturally'
+
 module CityHelpers
   def city_lines(city)
-    city.lines.map { |line|
+    lines = city.lines.map { |line|
       { name: line.name,
         url_name: line.url_name,
         style: line.style,
         deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
-    }.sort_by{ |line| line[:name] }
+    }
+
+    Naturally.sort_by(lines){|line| line[:name]}
   end
 
   def lines_length_by_year(city)
