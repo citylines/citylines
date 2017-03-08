@@ -5,5 +5,12 @@ export default {
       city_item: '%(lines)s lines | %(contributors)s contributors',
       contact: 'Contact',
       contact_link: 'Enter to the <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Google Group</a>, contact me at <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a>, or visit the <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">Github repository</a>.'
+    },
+    main: {
+      log_in: 'Log in'
+    },
+    auth: {
+      log_in: 'Log in',
+      log_in_with_google: 'Log in with Google'
     }
   }
