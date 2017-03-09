@@ -8,6 +8,7 @@ import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
+import Translate from 'react-translate-component';
 
 class City extends PureComponent {
   constructor(props, context) {
@@ -174,13 +175,14 @@ class City extends PureComponent {
                   return (
                     <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
                       <ul className="c-list c-list--unstyled">
-                        <li className="c-list__item"><strong>{fProps.name ? `Estación ${fProps.name} ` : "Tramo de la Línea "}</strong>
+                        <li className="c-list__item">
+                          <strong>{fProps.name ? <Translate content="city.popup.station" with={{name: fProps.name}} /> : <Translate content="city.popup.track" />}</strong>
                           <span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
                         </li>
-                        { fProps.buildstart ? <li className="c-list__item">{`Comienzo de construcción: ${fProps.buildstart}`}</li> : ''}
-                        { this.validFeatureValue(fProps.opening) ? <li className="c-list__item">{`Inauguración: ${fProps.opening}`}</li> : ''}
-                        { this.validFeatureValue(fProps.closure) ? <li className="c-list__item">{`Cierre: ${fProps.closure}`}</li> : ''}
-                        { fProps.length ? <li className="c-list__item">{`Longitud aproximada: ${(parseFloat(fProps.length)/1000).toFixed(2)}km`}</li> : ''}
+                        { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
+                        { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
+                        { this.validFeatureValue(fProps.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: fProps.closure}} /></li> : ''}
+                        { fProps.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(fProps.length)/1000).toFixed(2)}} /></li> : ''}
                       </ul>
                     </div>
                   )

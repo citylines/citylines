@@ -30,6 +30,14 @@ export default {
     stop_editing: 'Dejar de editar',
     lines: 'Líneas',
     km_operative: 'Operativos: %(km)s km',
-    km_under_construction: 'En construcción: %(km)s km'
+    km_under_construction: 'En construcción: %(km)s km',
+    popup: {
+      station: 'Estación %(name)s',
+      track: 'Tramo de la línea',
+      buildstart: 'Comienzo de construcción: %(year)s',
+      opening: 'Inauguración: %(year)s',
+      closure: 'Cierre: %(year)s',
+      length: 'Longitud aproximada: %(km)s km'
+    }
   }
 }
