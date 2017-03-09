@@ -4,11 +4,12 @@ import {browserHistory} from 'react-router';
 import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
+import Translate from 'react-translate-component';
+
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
-import Translate from 'react-translate-component';
 
 class City extends PureComponent {
   constructor(props, context) {

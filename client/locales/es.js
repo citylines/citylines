@@ -39,5 +39,9 @@ export default {
       closure: 'Cierre: %(year)s',
       length: 'Longitud aproximada: %(km)s km'
     }
+  },
+  editor: {
+    edit_features: 'Editar elementos',
+    edit_lines: 'Editar líneas'
   }
 }
