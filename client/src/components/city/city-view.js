@@ -8,6 +8,8 @@ import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 
+import Translate from 'react-translate-component';
+
 class CityView extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -86,8 +88,9 @@ class CityView extends PureComponent {
               kmUnderConstruction={this.state.kmUnderConstruction}
             />
           </div>
-          <LinesTree
-            name={'Líneas'}
+          <Translate
+            component={LinesTree}
+            attributes={{name: "city.lines"}}
             defaultExpanded={true}
             lines={this.state.lines}
             linesShown={this.state.linesShown}

@@ -27,6 +27,9 @@ export default {
   },
   city: {
     edit: 'Editar',
-    stop_editing: 'Dejar de editar'
+    stop_editing: 'Dejar de editar',
+    lines: 'Líneas',
+    km_operative: 'Operativos: %(km)s km',
+    km_under_construction: 'En construcción: %(km)s km'
   }
 }
