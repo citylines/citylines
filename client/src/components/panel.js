@@ -1,10 +1,11 @@
 import React, {Component, PureComponent} from 'react';
 import {Link} from 'react-router';
+import Translate from 'react-translate-component';
 
 class PanelHeader extends PureComponent {
   render() {
     const editPath = this.props.pathName.includes('/edit');
-    const linkLabel = editPath ? 'Dejar de editar' : 'Editar';
+    const linkLabel = editPath ? <Translate content="city.stop_editing" /> : <Translate content="city.edit" />;
     const linkTo = editPath ? `/${this.props.urlName}` : `/${this.props.urlName}/edit`;
 
     return (
