@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import Translate from 'react-translate-component';
 
 class FeatureViewer extends PureComponent {
   constructor(props, context) {
@@ -13,7 +14,7 @@ class FeatureViewer extends PureComponent {
   }
 
   visibleFields() {
-    return this.editableFields().concat(['length']);
+    return this.editableFields();
   }
 
   onValueChange(e) {
@@ -50,7 +51,7 @@ class FeatureViewer extends PureComponent {
             <caption className="c-table__caption">{`${properties.klass} Id: ${properties.id}`}</caption>
             <tbody className="c-table__body">
               <tr className="c-table__row">
-                <td className="c-table__cell">{"Línea"}</td>
+                <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
                 <td className="c-table__cell">
                   <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
                     {this.props.lines.map((line) => {
@@ -68,17 +69,17 @@ class FeatureViewer extends PureComponent {
 
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
-                    <td className="c-table__cell">{key}</td>
+                    <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
                     <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} suppressContentEditableWarning={true} name={key} onKeyUp={this.bindedOnValueChange}>{value}</td>
                   </tr>
                 )
               }) }
             </tbody>
-          </table> : 'Ningún elemento seleccionado';
+          </table> : <Translate content="editor.feature_viewer.no_feature_selected" />;
 
     return (
       <div className="c-card">
-        <li className="c-card__item c-card__item--divider">Elemento seleccionado</li>
+        <li className="c-card__item c-card__item--divider"><Translate content="editor.feature_viewer.selected_feature" /></li>
         <div className="c-card__item">
         { content }
         </div>

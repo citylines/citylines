@@ -42,6 +42,16 @@ export default {
   },
   editor: {
     edit_features: 'Editar elementos',
-    edit_lines: 'Editar líneas'
+    edit_lines: 'Editar líneas',
+    feature_viewer: {
+      selected_feature: 'Elemento seleccionado',
+      no_feature_selected: 'Ningún elemento seleccionado',
+      fields: {
+        line: 'Línea',
+        opening: 'Inauguración',
+        buildstart: 'Comienzo de construcción',
+        closure: 'Cierre'
+      }
+    }
   }
 }
