@@ -48,6 +48,7 @@ export default {
       no_feature_selected: 'No feature selected',
       fields: {
         line: 'Line',
+        name: 'Name',
         opening: 'Opening',
         buildstart: 'Beginning of construction',
         closure: 'Closure'

@@ -48,6 +48,7 @@ export default {
       no_feature_selected: 'Ningún elemento seleccionado',
       fields: {
         line: 'Línea',
+        name: 'Nombre',
         opening: 'Inauguración',
         buildstart: 'Comienzo de construcción',
         closure: 'Cierre'
