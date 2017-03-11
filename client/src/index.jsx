@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import Counterpart from 'counterpart';
 
 import Main from './components/main';
 import Cities from './components/cities';
@@ -10,6 +11,17 @@ import Editor from './components/editor';
 import Auth from './components/auth';
 import CookieNoticeText from './components/cookie-notice-text';
 import MainStore from './stores/main-store';
+
+import locale from 'browser-locale';
+const browserLocale = locale().split('-')[0].toLowerCase();
+
+import EN from '../locales/en';
+import ES from '../locales/es';
+
+Counterpart.registerTranslations('en', EN);
+Counterpart.registerTranslations('es', ES);
+Counterpart.setFallbackLocale('en')
+Counterpart.setLocale(browserLocale);
 
 const requireAuth = () => {
   if (!MainStore.userLoggedIn()) {

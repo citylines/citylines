@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Diacritics from 'diacritics';
 import CitiesStore from '../stores/cities-store'
+import Translate from 'react-translate-component';
 
 class CityItem extends Component {
   render() {
@@ -10,7 +11,7 @@ class CityItem extends Component {
       <header className="c-card__header">
           <h3 className="c-heading">
           <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
-          <div className="c-heading__sub">{`${this.props.lines_count} líneas | ${this.props.contributors_count} colaboradores`}</div>
+          <div className="c-heading__sub"><Translate content="cities.city_item" with={{lines: this.props.lines_count, contributors: this.props.contributors_count}} /></div>
           </h3>
           </header>
           <div className="c-card__body"></div>
@@ -90,13 +91,13 @@ class Cities extends Component {
 
           <div className="u-letter-box--large">
             <h1 className="c-heading c-heading--medium">
-              En <b>Citylines.co</b> queremos reconstruir los sistemas de transporte de las ciudades del mundo
+              <Translate content="cities.title" unsafe/>
             </h1>
           </div>
 
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding:"5px"}}>
-              <input className="c-field" type="text" placeholder="Buscá tu ciudad" onChange={this.onInputChange}></input>
+              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
               <i className="fa fa-fw fa-search c-icon"></i>
             </div>
 
@@ -109,10 +110,10 @@ class Cities extends Component {
 
           <div className="u-letter-box--large">
             <h3 className="c-heading c-heading--medium">
-              Contacto
+              <Translate content="cities.contact" />
             </h3>
             <p className="c-paragragh">
-              Entrá al <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Grupo de Google</a>, contactame en <a className="c-link c-link--secondary" href="https://twitter.com/SalernoBr" target="_blank">@SalernoBr</a>, o visitá el <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.
+              <Translate content="cities.contact_link" unsafe/>
             </p>
           </div>
         </div>

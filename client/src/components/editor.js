@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 import {Link} from 'react-router';
 
+import Translate from 'react-translate-component';
+
 import {PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
@@ -88,7 +90,7 @@ class Editor extends PureComponent {
   }
 
   toggleMode(e) {
-    if (e.target.name === this.currentMode) return;
+    if (e.currentTarget.name === this.currentMode) return;
 
     if (this.currentMode === this.modes.EDIT_LINES) {
       this.currentMode = this.modes.EDIT_FEATURES;
@@ -120,12 +122,12 @@ class Editor extends PureComponent {
               <button name={this.modes.EDIT_FEATURES}
                       className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
                       onClick={this.bindedToggleMode}>
-                Editar elementos
+                <Translate content="editor.edit_features" />
               </button>
               <button name={this.modes.EDIT_LINES}
                       className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`}
                       onClick={this.bindedToggleMode}>
-                Editar líneas
+                <Translate content="editor.edit_lines" />
               </button>
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?

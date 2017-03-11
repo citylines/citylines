@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
+import Translate from 'react-translate-component';
 
 class Main extends Component {
   constructor(props, context) {
@@ -73,7 +74,7 @@ class Main extends Component {
               </Link>
               { this.state.username ?
               <span className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</span>  :
-              <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> Ingresar</Link> }
+              <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> <Translate content="main.log_in" /></Link> }
           </nav>
           <div className="o-grid o-panel o-panel--nav-top">
             {this.props.children}

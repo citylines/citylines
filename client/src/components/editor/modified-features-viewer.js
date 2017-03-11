@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import Translate from 'react-translate-component';
 
 class ModifiedFeaturesViewer extends PureComponent {
   constructor(props, context) {
@@ -10,18 +11,18 @@ class ModifiedFeaturesViewer extends PureComponent {
   }
 
   type(feature) {
-    let type = "";
+    let type = null;
 
-    if (feature.props && !feature.geo) type = "(Props)";
-    if (!feature.props && feature.geo) type = "(Geo)";
-    if (feature.created) type = "(New)";
-    if (feature.removed) type = "(Removed)";
+    if (feature.props && !feature.geo) type = 'props';
+    if (!feature.props && feature.geo) type = 'geo';
+    if (feature.created) type = 'created';
+    if (feature.removed) type = 'removed';
 
     return type;
   }
 
   onClick(e) {
-    const id = e.target.attributes.name.value;
+    const id = e.currentTarget.attributes.name.value;
     const feature = this.props.modifiedFeatures[id];
 
     if (typeof this.props.onClick === 'function') {
@@ -45,23 +46,27 @@ class ModifiedFeaturesViewer extends PureComponent {
         const idLabel = !feature.created ? `Id: ${feature.id}`: '';
 
         return (
-          <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>{`${this.type(feature)} ${feature.klass} ${idLabel}`}</li>
+          <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>
+            {this.type(feature) && <Translate content={`editor.modified_features.types.${this.type(feature)}`} className="modified-features-list-subitem" />}
+            <Translate content={`editor.modified_features.klasses.${feature.klass.toLowerCase()}`} className="modified-features-list-subitem" />
+            <span className="modified-features-list-subitem">{idLabel}</span>
+          </li>
         )
       })
-      : <div className="c-card__item">Ningún elemento modificado</div>;
+      : <div className="c-card__item"><Translate content="editor.modified_features.no_features_modified" /></div>;
 
       const buttons = this.props.modifiedFeatures ?
         <div className="c-card__item">
           <span className="c-input-group">
-            <button onClick={this.bindedOnDiscard} className="c-button c-button--block c-button--brand">Descartar</button>
-            <button onClick={this.bindedOnSave} disabled={this.props.savingData} className="c-button c-button--block c-button--info">Guardar</button>
+            <button onClick={this.bindedOnDiscard} className="c-button c-button--block c-button--brand"><Translate content="editor.modified_features.discard" /></button>
+            <button onClick={this.bindedOnSave} disabled={this.props.savingData} className="c-button c-button--block c-button--info"><Translate content="editor.modified_features.save" /></button>
           </span>
         </div>
         : null;
 
     return (
       <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
-      <li className="c-card__item c-card__item--divider">Elementos modificados</li>
+      <li className="c-card__item c-card__item--divider"><Translate content="editor.modified_features.title" /></li>
         { content }
         { buttons }
       </ul>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MainStore from '../stores/main-store';
 import {browserHistory} from 'react-router';
 import GoogleLogin from 'react-google-login';
+import Translate from 'react-translate-component';
 
 class Auth extends Component {
   constructor(props, context) {
@@ -37,12 +38,13 @@ class Auth extends Component {
   render() {
     return (
         <div className="u-center-block__content">
-          <h3 className="c-heading">Iniciar sesión</h3>
+          <Translate component="h3" className="c-heading" content="auth.log_in" />
           <div className="o-form-element">
             {this.state.google_client_id &&
-              <GoogleLogin
+              <Translate
+                component={GoogleLogin}
                 clientId={this.state.google_client_id}
-                buttonText="Iniciar sesión con Google"
+                attributes={{buttonText: "auth.log_in_with_google"}}
                 fetchBasicProfile={true}
                 autoLoad={true}
                 onSuccess={this.onGoogleResponse} />

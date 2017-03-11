@@ -237,3 +237,7 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 .cookie-notice-container button{
   float: right;
 }
+
+.modified-features-list-subitem {
+  margin-right:5px;
+}
