@@ -48,7 +48,7 @@ class FeatureViewer extends PureComponent {
 
     const content = this.props.feature ?
           <table className="c-table c-table--striped">
-            <caption className="c-table__caption">{`${properties.klass} Id: ${properties.id}`}</caption>
+            <caption className="c-table__caption"><Translate content={`editor.feature_viewer.fields.klasses_id.${properties.klass.toLowerCase()}`} with={{id: properties.id}} /></caption>
             <tbody className="c-table__body">
               <tr className="c-table__row">
                 <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
