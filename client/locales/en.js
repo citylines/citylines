@@ -1,6 +1,6 @@
 export default {
     cities: {
-      title: 'In <b>citylines.co</b> we want to build the transport systems of the cities of the World',
+      title: "In <b>citylines.co</b> we want to build the transport systems of the World's cities",
       search: 'Enter a city or a country',
       city_item: '%(lines)s lines | %(contributors)s contributors',
       contact: 'Contact',
