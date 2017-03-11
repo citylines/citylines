@@ -90,7 +90,7 @@ class Editor extends PureComponent {
   }
 
   toggleMode(e) {
-    if (e.target.name === this.currentMode) return;
+    if (e.currentTarget.name === this.currentMode) return;
 
     if (this.currentMode === this.modes.EDIT_LINES) {
       this.currentMode = this.modes.EDIT_FEATURES;
