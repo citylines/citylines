@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {SketchPicker} from 'react-color';
+import Translate from 'react-translate-component';
 
 class LinesEditor extends PureComponent {
   constructor(props, context) {
@@ -88,6 +89,7 @@ class LinesEditorItem extends PureComponent {
     this.bindedOnNameChange = this.onNameChange.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnActualDelete = this.onActualDelete.bind(this);
+    this.bindedOnCancelDelete = this.onCancelDelete.bind(this);
     this.bindedOnSave = this.onSave.bind(this);
     this.bindedOnClick = this.onClick.bind(this);
   }
@@ -141,6 +143,11 @@ class LinesEditorItem extends PureComponent {
     if (typeof this.props.onDelete === 'function') this.props.onDelete(this.props.url_name);
   }
 
+  onCancelDelete() {
+    this.displayDeleteWarning = false;
+    this.forceUpdate();
+  }
+
   onSave() {
     this.displaySaveButton = false;
     const args = Object.assign({},this.state, {urlName: this.props.url_name});
@@ -153,9 +160,9 @@ class LinesEditorItem extends PureComponent {
 
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
-        <span className="editor-delete-warning-text">¿Estás seguro?</span>
-        <button className="c-button" onClick={this.bindedOnActualDelete}>Sí</button>
-        <button className="c-button" onClick={() => this.displayDeleteWarning = false}>No</button>
+        <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
+        <button className="c-button" onClick={this.bindedOnActualDelete}><Translate content="editor.lines_editor.yes" /></button>
+        <button className="c-button" onClick={this.bindedOnCancelDelete}><Translate content="editor.lines_editor.no" /></button>
       </span>;
 
     return (
@@ -174,8 +181,12 @@ class LinesEditorItem extends PureComponent {
             { this.displayDeleteWarning ?
               deleteWarningControl :
               <span className="c-input-group" style={{float:'right'}}>
-                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">Guardar</button> }
-                { this.props.deletable && <button onClick={this.bindedOnDelete} className="c-button">Borrar</button> }
+                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">
+                    <Translate content="editor.lines_editor.save" />
+                  </button> }
+                { this.props.deletable && <button onClick={this.bindedOnDelete} className="c-button">
+                    <Translate content="editor.lines_editor.delete" />
+                  </button> }
               </span>
             }
           </div>
@@ -207,7 +218,14 @@ class LinesEditorNew extends LinesEditorItem {
       <div className="c-card__item" onClick={this.bindedOnClick}>
         <div className="c-input-group">
           <div className="o-field">
-            <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange} placeholder="Nueva línea"></input>
+            <Translate
+              component="input"
+              className="c-field"
+              type="text"
+              value={this.state.name}
+              onChange={this.bindedOnNameChange}
+              attributes={{placeholder:"editor.lines_editor.new_line_placeholder"}}
+            />
           </div>
           <div className="o-field">
             <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}}></div></div>
@@ -217,7 +235,9 @@ class LinesEditorNew extends LinesEditorItem {
           </div>
           <div className="o-field">
             <span className="c-input-group" style={{float:'right'}}>
-              { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">Crear</button> }
+              { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">
+                  <Translate content="editor.lines_editor.create" />
+                </button> }
             </span>
           </div>
         </div>

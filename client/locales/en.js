@@ -73,6 +73,15 @@ export default {
       },
       save: 'Save',
       discard: 'Discard'
+    },
+    lines_editor: {
+      create: 'Create',
+      new_line_placeholder: 'New line',
+      save: 'Save',
+      delete: 'Delete',
+      are_you_sure: 'Are you sure?',
+      yes: 'Yes',
+      no: 'No'
     }
   }
 }
