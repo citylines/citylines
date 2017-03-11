@@ -57,6 +57,22 @@ export default {
         buildstart: 'Beginning of construction',
         closure: 'Closure'
       }
+    },
+    modified_features: {
+      title: 'Modified features',
+      no_features_modified: 'No features modified',
+      types: {
+        geo: '(Geo)',
+        props: '(Props)',
+        created: '(New)',
+        removed: '(Removed)'
+      },
+      klasses: {
+        section: 'Track',
+        station: 'Station'
+      },
+      save: 'Save',
+      discard: 'Discard'
     }
   }
 }
