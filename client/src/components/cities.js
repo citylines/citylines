@@ -7,7 +7,7 @@ import Translate from 'react-translate-component';
 class CityItem extends Component {
   render() {
     return (
-      <div className="c-card u-high">
+      <div className="c-card">
       <header className="c-card__header">
           <h3 className="c-heading">
           <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
