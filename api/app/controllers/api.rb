@@ -1,5 +1,5 @@
 class Api < App
-  DEFAULT_ZOOM = 12
+  DEFAULT_ZOOM = 11
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
 
@@ -40,7 +40,7 @@ class Api < App
                end: Date.today.year,
                current: nil,
                previous: nil,
-               default: nil }
+               default: Date.today.year }
     }.to_json
   end
 
