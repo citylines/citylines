@@ -12,13 +12,16 @@ import Auth from './components/auth';
 import CookieNoticeText from './components/cookie-notice-text';
 import MainStore from './stores/main-store';
 
+import locale from 'browser-locale';
+const browserLocale = locale().split('-')[0].toLowerCase();
+
 import EN from '../locales/en';
 import ES from '../locales/es';
 
 Counterpart.registerTranslations('en', EN);
 Counterpart.registerTranslations('es', ES);
-
-Counterpart.setLocale('en');
+Counterpart.setFallbackLocale('en')
+Counterpart.setLocale(browserLocale);
 
 const requireAuth = () => {
   if (!MainStore.userLoggedIn()) {
