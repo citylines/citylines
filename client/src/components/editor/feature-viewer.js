@@ -18,14 +18,13 @@ class FeatureViewer extends PureComponent {
   }
 
   onValueChange(e) {
-    if (e.key != 'Enter') return;
-
     const key = e.target.attributes.name.value;
     let value = e.target.innerText;
 
     const oldValue = this.props.feature.properties[key];
     if (typeof oldValue != 'string') value = parseInt(value);
 
+    if (typeof oldValue != 'string' && isNaN(value)) return;
     if (value == oldValue) return;
 
     const modifiedFeature = Object.assign({}, this.props.feature);
@@ -70,7 +69,7 @@ class FeatureViewer extends PureComponent {
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
-                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} suppressContentEditableWarning={true} name={key} onKeyUp={this.bindedOnValueChange}>{value}</td>
+                    <td className="c-table__cell" contentEditable={this.editableFields().includes(key)} suppressContentEditableWarning={true} name={key} onInput={this.bindedOnValueChange}>{value}</td>
                   </tr>
                 )
               }) }
