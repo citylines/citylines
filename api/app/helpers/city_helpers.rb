@@ -91,6 +91,9 @@ module CityHelpers
     id = change[:id]
     feature = klass[id]
 
+    puts "Feature to modify #{klass}:#{id} = #{feature}"
+    puts change.inspect
+
     if change[:removed]
       DeletedFeature.push(user, feature)
       feature.delete
