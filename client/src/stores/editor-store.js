@@ -79,10 +79,8 @@ const EditorStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName] || {};
 
     return {
-      name: cityData.name,
       features: cityData.features,
       lines: cityData.lines,
-      config: cityData.config || {},
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,
