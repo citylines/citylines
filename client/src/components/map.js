@@ -220,6 +220,10 @@ class Draw extends Component {
     super(props, context);
 
     this.bindedOnMapReady = this.onMapReady.bind(this);
+    this.bindedOnSelectionChange = this.onSelectionChange.bind(this);
+    this.bindedOnUpdate = this.onUpdate.bind(this);
+    this.bindedOnCreate = this.onCreate.bind(this);
+    this.bindedOnDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
@@ -232,6 +236,11 @@ class Draw extends Component {
   }
 
   componentWillUnmount() {
+    this.map.off('draw.selectionchange', this.bindedOnSelectionChange);
+    this.map.off('draw.update', this.bindedOnUpdate);
+    this.map.off('draw.create', this.bindedOnCreate);
+    this.map.off('draw.delete', this.bindedOnDelete);
+
     this.draw.deleteAll();
     this.map.removeControl(this.draw)
     delete this.draw;
@@ -257,31 +266,36 @@ class Draw extends Component {
     this.draw = new MapboxDraw(options);
     this.map.addControl(this.draw);
 
-    this.map.on('draw.selectionchange', (selection) => {
-      if (typeof this.props.onSelectionChange === 'function') {
-        this.props.onSelectionChange(selection.features);
-      }
-    });
-
-    this.map.on('draw.update', (update) => {
-      if (typeof this.props.onFeatureUpdate === 'function') {
-        this.props.onFeatureUpdate(update.features);
-      }
-    });
-
-    this.map.on('draw.create', (create) => {
-      if (typeof this.props.onFeatureCreate === 'function') {
-        this.props.onFeatureCreate(create.features);
-      }
-    });
-
-    this.map.on('draw.delete', (remove) => {
-      if (typeof this.props.onFeatureDelete === 'function') {
-        this.props.onFeatureDelete(remove.features);
-      }
-    });
+    this.map.on('draw.selectionchange', this.bindedOnSelectionChange);
+    this.map.on('draw.update', this.bindedOnUpdate);
+    this.map.on('draw.create', this.bindedOnCreate);
+    this.map.on('draw.delete', this.bindedOnDelete);
 
     this.draw.add(this.props.features);
+  }
+
+  onSelectionChange(selection) {
+    if (typeof this.props.onSelectionChange === 'function') {
+      this.props.onSelectionChange(selection.features);
+    }
+  }
+
+  onUpdate(update) {
+    if (typeof this.props.onFeatureUpdate === 'function') {
+      this.props.onFeatureUpdate(update.features);
+    }
+  }
+
+  onCreate(create) {
+    if (typeof this.props.onFeatureCreate === 'function') {
+      this.props.onFeatureCreate(create.features);
+    }
+  }
+
+  onDelete(remove) {
+    if (typeof this.props.onFeatureDelete === 'function') {
+      this.props.onFeatureDelete(remove.features);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
