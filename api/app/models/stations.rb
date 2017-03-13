@@ -1,4 +1,6 @@
 class Station < Sequel::Model(:stations)
+  plugin :timestamps, :update_on_create => true
+
   include StartYear
 
   many_to_one :line

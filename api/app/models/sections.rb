@@ -1,4 +1,6 @@
 class Section < Sequel::Model(:sections)
+  plugin :timestamps, :update_on_create => true
+
   include Length
   include StartYear
 
