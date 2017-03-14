@@ -8,6 +8,7 @@ Test
 API
 ---
 - Create the test database in the psql command line: `create database citylines_test`
+- Install postgis extension in the database: `create extension postgis`
 - Run migration in the test database: `RACK_ENV=test rake db:migrate`
 - To run tests:
 ```
