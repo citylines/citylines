@@ -1,3 +1,3 @@
-class SectionBackup < Sequel::Model(:section_backups)
+class SectionBackup < Sequel::Model
   plugin :timestamps
 end

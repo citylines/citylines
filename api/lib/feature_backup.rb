@@ -1,6 +1,6 @@
 module FeatureBackup
   def backup!
-    klass = self.is_a?(Section) ? SectionBackup : nil #StationBackup
+    klass = self.is_a?(Section) ? SectionBackup : StationBackup
     values = self.values.clone
 
     values.delete(:created_at)
