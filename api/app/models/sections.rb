@@ -3,6 +3,7 @@ class Section < Sequel::Model(:sections)
 
   include Length
   include StartYear
+  include FeatureBackup
 
   many_to_one :line
 
