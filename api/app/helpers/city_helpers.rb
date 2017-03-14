@@ -91,6 +91,8 @@ module CityHelpers
     id = change[:id]
     feature = klass[id]
 
+    feature.backup!
+
     puts "Feature to modify #{klass}:#{id} = #{feature}"
     puts change.inspect
 
