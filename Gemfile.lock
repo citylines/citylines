@@ -8,12 +8,14 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.3)
+    database_cleaner (1.5.3)
     execjs (2.7.0)
     google-id-token (1.3.1)
       jwt
       multi_json
     jwt (1.5.6)
     method_source (0.8.2)
+    minitest (5.8.3)
     multi_json (1.12.1)
     naturally (2.1.0)
     pg (0.19.0)
@@ -24,6 +26,8 @@ GEM
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rake (11.3.0)
     sass (3.4.22)
     sequel (4.41.0)
@@ -51,11 +55,14 @@ PLATFORMS
 
 DEPENDENCIES
   accentless
+  database_cleaner
   google-id-token
   jwt
+  minitest
   naturally
   pg
   pry
+  rack-test
   rake
   sequel
   sinatra

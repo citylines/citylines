@@ -1,6 +1,7 @@
 require './api/config/boot'
 require 'sinatra/asset_pipeline/task'
 require './api/app/controllers/app'
+require 'rake/testtask'
 
 Sinatra::AssetPipeline::Task.define! App
 
@@ -28,4 +29,11 @@ end
 task :console do
     require 'pry'
     binding.pry
+end
+
+Rake::TestTask.new do |t|
+  t.description = "Run tests"
+  t.test_files = FileList['api/test/**/*.rb']
+  t.verbose = true
+  t.warning = false
 end
