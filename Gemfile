@@ -13,3 +13,9 @@ gem 'google-id-token'
 gem 'naturally'
 
 gem 'pry', require: false
+
+group :test do
+  gem 'rack-test'
+  gem 'minitest'
+  gem 'database_cleaner'
+end

@@ -1,3 +1,7 @@
+unless defined?(APP_ENV)
+  APP_ENV = ENV['RACK_ENV'] || 'development'
+end
+
 APP_ROOT = File.expand_path('../..', __FILE__)
 
 require 'sequel'

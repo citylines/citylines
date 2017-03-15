@@ -1,5 +1,12 @@
-username: subtogram
-password: subtogram
-database: subtogram
-host: localhost
-port: 5432
+development:
+  username: subtogram
+  password: subtogram
+  database: subtogram
+  host: localhost
+  port: 5432
+test:
+  username: subtogram
+  password: subtogram
+  database: citylines_test
+  host: localhost
+  port: 5432

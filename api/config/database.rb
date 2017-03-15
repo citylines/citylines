@@ -3,7 +3,8 @@ require 'yaml'
 connection = ENV['DATABASE_URL']
 
 unless connection
-  config = YAML::load_file('api/config/database.yml')
+  yaml = YAML::load_file('api/config/database.yml')
+  config = yaml[APP_ENV]
   connection = "postgres://#{config['username']}:#{config['password']}@#{config['host']}:#{config['port']}/#{config['database']}"
 end
 

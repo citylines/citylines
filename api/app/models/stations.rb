@@ -2,6 +2,7 @@ class Station < Sequel::Model(:stations)
   plugin :timestamps, :update_on_create => true
 
   include StartYear
+  include FeatureBackup
 
   many_to_one :line
 
