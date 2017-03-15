@@ -38,10 +38,7 @@ class FeatureViewer extends PureComponent {
 
   onValueChange(e) {
     const key = e.target.attributes.name.value;
-    let value = e.target.value;
-
-    const oldValue = this.props.feature.properties[key];
-    if (value == oldValue) return;
+    const value = e.target.value;
 
     const modifiedFeature = Object.assign({}, this.props.feature);
     modifiedFeature.properties[key] = value;
