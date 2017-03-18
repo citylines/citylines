@@ -32,7 +32,7 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !['/', 'auth'].includes(this.props.location.pathname);
+    return !['/', '/auth', '/terms'].includes(this.props.location.pathname);
   }
 
   togglePanel() {
@@ -75,6 +75,9 @@ class Main extends Component {
               { this.state.username ?
               <span className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</span>  :
               <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> <Translate content="main.log_in" /></Link> }
+              <Link to="/terms" className="c-nav__item c-nav__item--right">
+                <Translate content="terms.title" />
+              </Link>
           </nav>
           <div className="o-grid o-panel o-panel--nav-top">
             {this.props.children}

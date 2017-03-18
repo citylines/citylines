@@ -83,5 +83,8 @@ export default {
       yes: 'Yes',
       no: 'No'
     }
+  },
+  terms: {
+    title: 'Terms of use'
   }
 }
