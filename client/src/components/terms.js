@@ -31,7 +31,13 @@ class Terms extends Component {
             <p><Translate content="terms.license.p2" unsafe/></p>
 
             <Translate component="h3" className="c-heading" content="terms.contributor.title" id="contributor" ref="contributor"/>
-              
+            <p>
+              <ol>
+              <li><Translate content="terms.contributor.p1" /></li>
+              <li><Translate content="terms.contributor.p2" /></li>
+              <li><Translate content="terms.contributor.p3" /></li>
+              </ol>
+            </p>
 
             <Translate component="h3" className="c-heading" content="cookie_notice.text.title" id="cookies" ref="cookies"/>
             <p><Translate content="cookie_notice.text.p1" /></p>

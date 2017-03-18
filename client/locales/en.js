@@ -88,11 +88,14 @@ export default {
     title: 'Terms of use',
     license: {
       title: 'License',
-      p1: "Citylines.co is <i>open data</i> licensed under the <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL). Any rights in individual contents of the database are licensed under the <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a>.",
+      p1: "Citylines.co is <i>open data</i> licensed under the <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL). Any rights in individual contents of the database are licensed under the <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a> (DbCL).",
       p2: "You can find a summary of the ODbL license <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' className='c-link'>here</a>."
     },
     contributor: {
-      title: 'Contributor terms'
+      title: 'Contributor terms',
+      p1: 'Your contribution should not infringe the intellectual property rights of anyone else. When you contribute any content you are authorizing Citylines.co to use and distribute it under our current license terms.',
+      p2: 'You hereby grant to Citylines.co a worldwide, royalty-free, non-exclusive, perpetual, irrevocable licence to do any act that is restricted by copyright, database right or any related right over anything within the contents you contributed.',
+      p3: 'Citylines.co agrees that it may only use or sub-license the content you contributed as part of a database and only under the terms of the ODbL 1.0 license for the database and DbCL 1.0 license for the individual contents of the database.'
     }
   }
 }
