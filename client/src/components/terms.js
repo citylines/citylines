@@ -25,11 +25,13 @@ class Terms extends Component {
         <div className="o-container o-container--small">
           <div className="u-letter-box--large">
             <Translate component="h1" className="c-heading" content="terms.title" />
-            <Translate component="h3" className="c-heading" content="cookie_notice.text.title" />
-            <p><Translate content="cookie_notice.text.p1" /></p>
-            <p><Translate content="cookie_notice.text.p2" /></p>
-            <p><Translate content="cookie_notice.text.p3" /></p>
-            <p><Translate content="cookie_notice.text.p4" unsafe /></p>
+
+            <Translate component="h3" className="c-heading" content="terms.license.title"/>
+            <p><Translate content="terms.license.p1" unsafe/></p>
+            <p><Translate content="terms.license.p2" unsafe/></p>
+
+            <Translate component="h3" className="c-heading" content="terms.contributor.title" id="contributor" ref="contributor"/>
+              
 
             <Translate component="h3" className="c-heading" content="cookie_notice.text.title" id="cookies" ref="cookies"/>
             <p><Translate content="cookie_notice.text.p1" /></p>

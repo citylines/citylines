@@ -85,6 +85,14 @@ export default {
     }
   },
   terms: {
-    title: 'Terms of use'
+    title: 'Terms of use',
+    license: {
+      title: 'License',
+      p1: "Citylines.co is <i>open data</i> licensed under the <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL). Any rights in individual contents of the database are licensed under the <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a>.",
+      p2: "You can find a summary of the ODbL license <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' className='c-link'>here</a>."
+    },
+    contributor: {
+      title: 'Contributor terms'
+    }
   }
 }
