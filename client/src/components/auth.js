@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import MainStore from '../stores/main-store';
 import {browserHistory} from 'react-router';
 import GoogleLogin from 'react-google-login';
@@ -49,6 +50,9 @@ class Auth extends Component {
                 autoLoad={true}
                 onSuccess={this.onGoogleResponse} />
             }
+          </div>
+          <div className="o-form-element">
+            <Translate content="auth.disclaimer"/> <Translate component={Link} className="c-link" content="auth.disclaimer_link" to="/terms#contributor"/>.
           </div>
         </div>
     )

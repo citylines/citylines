@@ -11,7 +11,9 @@ export default {
     },
     auth: {
       log_in: 'Iniciar sesión',
-      log_in_with_google: 'Iniciar sesión con Google'
+      log_in_with_google: 'Iniciar sesión con Google',
+      disclaimer: 'Al iniciar sesión usted acepta los',
+      disclaimer_link:'términos del colaborador'
     },
     cookie_notice: {
       notice: 'Este sitio web usa cookies. Al navegarlo usted acepta el uso que hacemos de ellas.',
@@ -82,6 +84,20 @@ export default {
       are_you_sure: '¿Estás seguro?',
       yes: 'Sí',
       no: 'No'
+    }
+  },
+  terms: {
+    title: 'Términos de uso',
+    license: {
+      title:'Licencia',
+      p1: "Citylines.co es <i>open data</i> con licencia <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'>Open Database License</a> (ODbL). Cualquier derecho sobre contenidos individuales de la base de datos es regido por la licencia <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a> (DbCL).",
+      p2: "Usted puede encontrar un resumen de la licencia ODbL <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' className='c-link'>aquí</a>."
+    },
+    contributor: {
+      title: 'Términos del colaborador',
+      p1: 'Su contribución no debe infringir derechos de propiedad de nadie más. Cuando contribuye, usted está autorizando a Citylines.co a usar y distribuir el contenido contribuido por Ud. bajo los términos legales vigentes.',
+      p2: 'Usted da a Citylines.co derecho mundial, libre de regalías, no exclusivo, perpetuo e irrevocable a hacer uso del contenido por Ud. contribuido dentro de los límites de la licencia aquí establecida',
+     p3: 'Citylines.co se compromete a usar o sub-licenciar el contenido que Ud. contribuyó como parte de una base de datos y sólo bajo los términos de las licencias ODbL 1.0 para la base de datos y DbCL 1.0 para los contenidos individuales de la base de datos.'
     }
   }
 }
