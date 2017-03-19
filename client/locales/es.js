@@ -11,7 +11,9 @@ export default {
     },
     auth: {
       log_in: 'Iniciar sesión',
-      log_in_with_google: 'Iniciar sesión con Google'
+      log_in_with_google: 'Iniciar sesión con Google',
+      disclaimer: 'Al iniciar sesión usted acepta los',
+      disclaimer_link:'términos del colaborador'
     },
     cookie_notice: {
       notice: 'Este sitio web usa cookies. Al navegarlo usted acepta el uso que hacemos de ellas.',

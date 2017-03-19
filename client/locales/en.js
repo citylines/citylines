@@ -11,7 +11,9 @@ export default {
     },
     auth: {
       log_in: 'Log in',
-      log_in_with_google: 'Log in with Google'
+      log_in_with_google: 'Log in with Google',
+      disclaimer: 'By signing in you are agreeing to the',
+      disclaimer_link: 'contributor terms'
     },
     cookie_notice: {
       notice: 'This website uses cookies. If you continue to use this website you accept our cookies policy.',

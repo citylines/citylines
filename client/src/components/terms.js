@@ -5,18 +5,22 @@ import Translate from 'react-translate-component';
 
 class Terms extends Component {
   componentDidMount() {
-    this.checkCookiesHash();
+    this.checkHash();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.hash != prevProps.location.hash) {
-      this.checkCookiesHash();
+      this.checkHash();
     }
   }
 
-  checkCookiesHash() {
+  checkHash() {
     if (this.props.location.hash.includes('cookies')) {
       ReactDOM.findDOMNode(this.refs.cookies).scrollIntoView();
+    }
+
+    if (this.props.location.hash.includes('contributor')) {
+      ReactDOM.findDOMNode(this.refs.contributor).scrollIntoView();
     }
   }
 
@@ -30,16 +34,14 @@ class Terms extends Component {
             <p><Translate content="terms.license.p1" unsafe/></p>
             <p><Translate content="terms.license.p2" unsafe/></p>
 
-            <Translate component="h3" className="c-heading" content="terms.contributor.title" id="contributor" ref="contributor"/>
-            <p>
-              <ol>
+            <Translate component="h3" className="c-heading" content="terms.contributor.title" ref="contributor"/>
+            <ol>
               <li><Translate content="terms.contributor.p1" /></li>
               <li><Translate content="terms.contributor.p2" /></li>
               <li><Translate content="terms.contributor.p3" /></li>
-              </ol>
-            </p>
+            </ol>
 
-            <Translate component="h3" className="c-heading" content="cookie_notice.text.title" id="cookies" ref="cookies"/>
+            <Translate component="h3" className="c-heading" content="cookie_notice.text.title" ref="cookies"/>
             <p><Translate content="cookie_notice.text.p1" /></p>
             <p><Translate content="cookie_notice.text.p2" /></p>
             <p><Translate content="cookie_notice.text.p3" /></p>
