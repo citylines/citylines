@@ -95,9 +95,9 @@ export default {
     },
     contributor: {
       title: 'Términos del colaborador',
-      p1: 'Su contribución no debe infringir derechos de propiedad de nadie más. Cuando contribuye, usted está autorizando a Citylines.co a usar y distribuir el contenido contribuido por Ud. bajo los términos legales vigentes.',
-      p2: 'Usted da a Citylines.co derecho mundial, libre de regalías, no exclusivo, perpetuo e irrevocable a hacer uso del contenido por Ud. contribuido dentro de los límites de la licencia aquí establecida',
-     p3: 'Citylines.co se compromete a usar o sub-licenciar el contenido que Ud. contribuyó como parte de una base de datos y sólo bajo los términos de las licencias ODbL 1.0 para la base de datos y DbCL 1.0 para los contenidos individuales de la base de datos.'
+      p1: 'Su contribución no debe infringir derechos de propiedad de nadie más. Al contribuir usted está indicando que tiene derecho a autorizar a Citylines.co a usar y distribuir el contenido aportado por usted bajo nuestros términos legales.',
+      p2: 'Usted autoriza a Citylines.co a hacer cualquier uso del contenido por usted aportado dentro de los límites de la licencia que aquí se establece.',
+      p3: 'Citylines.co se compromete a usar y distribuir el contenido que usted aportó en fórma de base de datos y sólo bajo los términos de las licencias ODbL 1.0 para la base de datos y DbCL 1.0 para los contenidos individuales de la base de datos.'
     }
   }
 }

@@ -95,8 +95,8 @@ export default {
     },
     contributor: {
       title: 'Contributor terms',
-      p1: 'Your contribution should not infringe the intellectual property rights of anyone else. When you contribute any content you are authorizing Citylines.co to use and distribute it under our current license terms.',
-      p2: 'You hereby grant to Citylines.co a worldwide, royalty-free, non-exclusive, perpetual, irrevocable licence to do any act that is restricted by copyright, database right or any related right over anything within the contents you contributed.',
+      p1: 'Your contribution should not infringe the intellectual property rights of anyone else. When you contribute any content you are indicating that you have the right to authorize Citylines.co to use and distribute it under our current license terms.',
+      p2: 'You hereby grant to Citylines.co a licence to do any act that is restricted by copyright, database right or any related right over anything within the contents you contributed.',
       p3: 'Citylines.co agrees that it may only use or sub-license the content you contributed as part of a database and only under the terms of the ODbL 1.0 license for the database and DbCL 1.0 license for the individual contents of the database.'
     }
   }
