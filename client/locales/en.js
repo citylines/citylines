@@ -12,7 +12,7 @@ export default {
     auth: {
       log_in: 'Log in',
       log_in_with_google: 'Log in with Google',
-      disclaimer: 'By signing in you are agreeing to the',
+      disclaimer: 'By logging in you are agreeing to the',
       disclaimer_link: 'contributor terms'
     },
     cookie_notice: {
