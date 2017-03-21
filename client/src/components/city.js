@@ -45,6 +45,7 @@ class City extends PureComponent {
   }
 
   componentDidMount() {
+    MainStore.setLoading();
     CityStore.load(this.urlName, this.params());
   }
 

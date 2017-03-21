@@ -52,7 +52,10 @@ class Editor extends PureComponent {
   }
 
   componentDidMount() {
-    EditorStore.load(this.urlName);
+    MainStore.setLoading();
+    EditorStore.load(this.urlName).then(() => {
+      MainStore.unsetLoading();
+    });
   }
 
   params() {

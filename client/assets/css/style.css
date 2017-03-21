@@ -70,63 +70,9 @@
     font-size:14px;
 }
 
-
 /* To fix a Blace css */
 #main-container {
-    margin-top: -2px;
-}
-
-/*
-Spinner
--------
-
-Taken from http://stephanwagner.me/only-css-loading-spinner
-*/
-
-@keyframes spinner {
-    to {transform: rotate(360deg);}
-}
-
-@-webkit-keyframes spinner {
-    to {-webkit-transform: rotate(360deg);}
-}
-
-.spinner {
-    min-width: 24px;
-    min-height: 24px;
-}
-
-.spinner:before {
-    content: 'Loading…';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50px;
-    height: 50px;
-    margin-top: -25px;
-    margin-left: -25px;
-}
-
-.spinner:not(:required):before {
-    content: '';
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, .3);
-    border-top-color: rgba(0, 0, 0, .6);
-    animation: spinner .6s linear infinite;
-    -webkit-animation: spinner .6s linear infinite;
-}
-
-/* -- - --*/
-
-.spinner-container {
-    width: 100%;
-    height:100%;
-    background-color: #F2F2F2;
-    opacity:1;
-    position:absolute;
-    top:0;
-    left:0;
-    z-index:100000;
+    margin-top: -1px;
 }
 
 .line-label {
@@ -241,3 +187,53 @@ Taken from http://stephanwagner.me/only-css-loading-spinner
 .modified-features-list-subitem {
   margin-right:5px;
 }
+
+.loading {
+  background-color:white;
+  opacity:0.5;
+}
+
+/* spinner */
+/* taken from https://projects.lukehaas.me/css-loaders/ */
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(44, 62, 80, 0.2);
+  border-right: 1.1em solid rgba(44, 62, 80, 0.2);
+  border-bottom: 1.1em solid rgba(44, 62, 80, 0.2);
+  border-left: 1.1em solid #2c3e50;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* --- */

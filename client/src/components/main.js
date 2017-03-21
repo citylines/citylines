@@ -79,8 +79,11 @@ class Main extends Component {
                 <Translate content="terms.title" />
               </Link>
           </nav>
-          <div className="o-grid o-panel o-panel--nav-top">
+          <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
             {this.props.children}
+          </div>
+          <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
+            <div className="loader"></div>
           </div>
           {this.state.showCookieAdvice && <CookieNotice
             onAccept={this.onAcceptCookie}

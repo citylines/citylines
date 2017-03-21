@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Diacritics from 'diacritics';
-import CitiesStore from '../stores/cities-store'
+import CitiesStore from '../stores/cities-store';
+import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
 
 class CityItem extends Component {

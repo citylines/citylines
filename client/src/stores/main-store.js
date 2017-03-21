@@ -4,7 +4,8 @@ const MainStore = Object.assign({}, Store, {
 
   state: {
     displayPanel: true,
-    panelFullWidth: false
+    panelFullWidth: false,
+    loading: false
   },
 
   getState() {
@@ -51,6 +52,16 @@ const MainStore = Object.assign({}, Store, {
 
   userLoggedIn() {
     return !!this.state.username;
+  },
+
+  setLoading() {
+    this.state.loading = true;
+    this.emitChangeEvent();
+  },
+
+  unsetLoading() {
+    this.state.loading = false;
+    this.emitChangeEvent();
   }
 });
 

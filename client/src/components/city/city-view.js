@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import CityViewStore from '../../stores/city-view-store';
+import MainStore from '../../stores/main-store';
 
 import {PanelHeader, PanelBody} from '../panel';
 import LinesTree from './lines-tree';
@@ -31,7 +32,10 @@ class CityView extends PureComponent {
   }
 
   componentDidMount() {
-    CityViewStore.load(this.urlName, this.params())
+    MainStore.setLoading();
+    CityViewStore.load(this.urlName, this.params()).then(() => {
+      MainStore.unsetLoading();
+    });
   }
 
   componentWillUnmount() {
