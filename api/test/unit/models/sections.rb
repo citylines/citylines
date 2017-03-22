@@ -81,7 +81,7 @@ describe Section do
       assert_equal expected_properties, feature[:properties]
     end
 
-    it "should use future values if opening or closure are nil" do
+    it "should use FUTURE values if opening or closure are nil" do
       @section.opening = nil
       @section.closure = nil
       @section.save
