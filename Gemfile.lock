@@ -14,8 +14,11 @@ GEM
       jwt
       multi_json
     jwt (1.5.6)
+    metaclass (0.0.4)
     method_source (0.8.2)
     minitest (5.8.3)
+    mocha (1.2.1)
+      metaclass (~> 0.0.1)
     multi_json (1.12.1)
     naturally (2.1.0)
     pg (0.19.0)
@@ -59,6 +62,7 @@ DEPENDENCIES
   google-id-token
   jwt
   minitest
+  mocha
   naturally
   pg
   pry

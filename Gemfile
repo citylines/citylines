@@ -15,6 +15,7 @@ gem 'naturally'
 gem 'pry', require: false
 
 group :test do
+  gem 'mocha'
   gem 'rack-test'
   gem 'minitest'
   gem 'database_cleaner'

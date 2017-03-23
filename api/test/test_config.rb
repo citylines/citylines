@@ -1,6 +1,7 @@
 require "rack/test"
 require "minitest/autorun"
 require "database_cleaner"
+require "mocha/mini_test"
 
 APP_ENV = 'test'
 
