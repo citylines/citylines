@@ -97,7 +97,7 @@ class Cities extends Component {
           </div>
 
           <div className="u-letter-box--large">
-            <div className="o-field o-field--icon-right" style={{padding:"5px"}}>
+            <div className="o-field o-field--icon-right">
               <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
               <i className="fa fa-fw fa-search c-icon"></i>
             </div>
