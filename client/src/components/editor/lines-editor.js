@@ -40,7 +40,7 @@ class LinesEditor extends PureComponent {
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
-          <System name="Lines">
+          <System>
           {
             this.props.lines.map((line) => {
               return (

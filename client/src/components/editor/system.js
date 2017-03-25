@@ -19,7 +19,7 @@ class System extends Component {
        <div className="c-card u-high lines-editor-container">
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
-          <input className="c-field system-name" type="text" value={this.props.name}></input>
+          <input className="c-field system-name" type="text" value={this.props.name} placeholder="The name of the system"></input>
           <button className="c-button c-button--info save-system">Save</button>
         </div>
         {this.state.display ? this.props.children : null}
