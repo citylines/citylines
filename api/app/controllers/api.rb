@@ -84,13 +84,11 @@ class Api < App
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
-    @line.backup!
-    @line.name = args[:name]
-    @line.save
-
-    @city.style["line"]["opening"][line_url_name]["color"] = args[:color]
-    @city.save
+    line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    line.backup!
+    line.color = args[:color]
+    line.name = args[:name]
+    line.save
 
     city_lines(@city).to_json
   end
@@ -101,13 +99,10 @@ class Api < App
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.new(city_id: @city.id, name: args[:name])
+    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color])
     line.save
     line.reload.generate_url_name
     line.save
-
-    @city.style["line"]["opening"][line.url_name] = {"color": args[:color]}
-    @city.save
 
     city_lines(@city).to_json
   end
@@ -117,12 +112,9 @@ class Api < App
 
     @city = City[url_name: url_name]
 
-    @line = Line.where(city_id: @city.id, url_name: line_url_name).first
-    @line.backup!
-    @line.delete
-
-    @city.style["line"]["opening"].delete(line_url_name)
-    @city.save
+    line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    line.backup!
+    line.delete
 
     city_lines(@city).to_json
   end
