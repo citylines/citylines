@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {SketchPicker} from 'react-color';
 import Translate from 'react-translate-component';
+import System from './system';
 
 class LinesEditor extends PureComponent {
   constructor(props, context) {
@@ -39,7 +40,7 @@ class LinesEditor extends PureComponent {
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
-        <div className="c-card c-card--highest lines-editor-container">
+          <System name="Lines" editable={false}>
           {
             this.props.lines.map((line) => {
               return (
@@ -65,7 +66,8 @@ class LinesEditor extends PureComponent {
             displayColorPicker={this.state.displayColorPicker["the-new-one"]}
             onClick={this.bindedOnItemClick}
           />
-        </div>
+          </System>
+          <System name="overground" editable={true}/>
       </div>
     )
   }
@@ -166,7 +168,7 @@ class LinesEditorItem extends PureComponent {
       </span>;
 
     return (
-      <div className="c-card__item" onClick={this.bindedOnClick}>
+      <div className="c-card__item" onClick={this.bindedOnClick} draggable={true}>
         <div className="c-input-group">
           <div className="o-field">
             <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>
