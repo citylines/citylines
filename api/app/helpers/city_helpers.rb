@@ -5,7 +5,7 @@ module CityHelpers
     lines = city.lines.map { |line|
       { name: line.name,
         url_name: line.url_name,
-        style: line.style,
+        color: line.color,
         deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
     }
 

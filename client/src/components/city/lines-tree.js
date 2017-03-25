@@ -37,7 +37,7 @@ class LinesTree extends PureComponent {
                 key={line.url_name}
                 urlName={line.url_name}
                 name={line.name}
-                color={line.style.color}
+                color={line.color}
                 show={this.props.linesShown.includes(line.url_name)}
                 onToggle={this.bindedOnItemToggle}
               />
