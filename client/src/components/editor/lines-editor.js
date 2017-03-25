@@ -48,7 +48,7 @@ class LinesEditor extends PureComponent {
                     url_name={line.url_name}
                     name={line.name}
                     deletable={line.deletable}
-                    color={line.style.color}
+                    color={line.color}
                     onSave={this.bindedOnSave}
                     onDelete={this.bindedOnDelete}
                     displayColorPicker={this.state.displayColorPicker[line.url_name]}

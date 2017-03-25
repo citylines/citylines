@@ -1,6 +1,34 @@
 class Style {
-  constructor(styles) {
-    this.styles = styles;
+  constructor(lines) {
+    this.lines = {};
+
+    lines.map((line) => {
+      this.lines[line.url_name] = line.color;
+    });
+
+    this.typeStyles = {
+      'sections': {
+        'line-width': 7
+      },
+      'stations': {
+        'circle-radius': 7
+      }
+    }
+
+    this.operationStyles = {
+      'hover': {
+        'color': '#000',
+        'opacity': 0.4
+      },
+      'opening': {
+      },
+      'buildstart': {
+        'color': '#A4A4A4'
+      },
+      'inner': {
+        'color': '#e6e6e6'
+      }
+    }
   }
 
   get(layerName) {
@@ -8,38 +36,26 @@ class Style {
     const type = parts[0];
     let operation = parts[1];
 
-    // Plans use the lines style
-    if (operation.indexOf('plan') !== -1) {
-      operation = 'opening';
-    }
-
-    if (operation === 'hover') {
-      return this.hover(type);
-    }
-
     return this.calculate(type, operation);
   }
 
   calculate(type, operation) {
-    let style;
-
     const colorCategory = type === 'sections' ? 'line-color' : 'circle-color';
-    const styleCategory = type === 'sections' ? 'line' : 'station';
+
+    let style = Object.assign({}, this.typeStyles[type], this.operationStyles[operation]);
+
+    if (style['color']) {
+      style[colorCategory] = style["color"];
+      delete style["color"];
+    }
 
     if (operation == 'opening'){
-      style = Object.assign({}, this.styles[styleCategory][operation]);
-
-      if (type === 'sections') {
-        style = Object.assign(style, this.styles[styleCategory][operation].default);
-      }
-
       const stops = [];
 
-      Object.keys(this.styles.line[operation]).map((l) => {
-        delete style[l];
-        if (l !== 'default'){
-          stops.push([l, this.lineColor(l)]);
-        }
+      Object.entries(this.lines).map((entry) => {
+        const line = entry[0];
+        const color = entry[1];
+          stops.push([line, color]);
       });
 
       style[colorCategory] = {
@@ -47,46 +63,24 @@ class Style {
         property : "line_url_name",
         stops : stops
       }
-    } else if (operation === 'buildstart'){
-      style = Object.assign({},this.styles[styleCategory][operation]);
-      style[colorCategory] = style["color"];
+    } else if (operation === 'hover') {
+      const opacityCategory = type === 'sections' ? 'line-opacity' : 'circle-opacity';
+      style[opacityCategory] = style['opacity'];
+      delete style['opacity'];
     } else if (operation === 'inner') {
-      style = Object.assign({}, this.styles[styleCategory]['buildstart']);
-      style["circle-color"] = style["fillColor"];
       style["circle-radius"] = style["circle-radius"] - 3;
     }
-
-    if (type !== 'sections') {
-      delete style["line-width"];
-    }
-
-    delete style["labelFontColor"];
-    delete style["fillColor"];
-    delete style["color"];
 
     return style;
   }
 
-  hover(type) {
-    const strType = (type == 'stations') ? 'station' : 'line';
-    return this.styles[strType]["hover"];
-  }
-
   lineColor(lineUrlName) {
-    return this.lineStyle(lineUrlName).color;
+    return this.lines[lineUrlName];
   }
 
   lineLabelFontColor(lineUrlName){
     const lineColor = this.lineColor(lineUrlName).substr(1);
     return `#${this.contrastingColor(lineColor)}`;
-  }
-
-  lineStyle(lineUrlName) {
-    return this.styles.line.opening[lineUrlName];
-  }
-
-  lineDefaultStyle() {
-    return this.styles.line.opening.default;
   }
 
   contrastingColor(color) {

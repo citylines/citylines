@@ -20,17 +20,7 @@ CSV.foreach(filename, headers:true, header_converters: :symbol) do |row|
                       country_state: state,
                       country: country,
                       system_name: '',
-                      start_year: 2017,
-                      style: {"line"=>
-                                {"hover"=>{"line-color"=>"#000", "line-width"=>7, "line-opacity"=>0.4},
-                                    "buildstart"=>{"color"=>"#A4A4A4", "line-width"=>7},
-                                       "opening"=> {"default"=>{"line-width"=>7}}},
-                                 "station"=>
-                                  {"hover"=>{"circle-radius"=>7, "circle-color"=>"#000", "circle-opacity"=>0.4},
-                                      "buildstart"=>{"circle-radius"=>7, "color"=>"#A4A4A4", "fillColor"=>"#E6E6E6"},
-                                         "opening"=>{"circle-radius"=>7, "fillColor"=>"#E6E6E6"},
-                                            "project"=>{"circle-radius"=>7, "fillColor"=>"#E6E6E6"}}}
-                     )
+                      start_year: 2017)
 
   new_city.set_coords(lat,lon)
   new_city.generate_url_name
