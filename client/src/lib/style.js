@@ -34,7 +34,7 @@ class Style {
   get(layerName) {
     const parts = layerName.split('_');
     const type = parts[0];
-    let operation = parts[1];
+    const operation = parts[1];
 
     return this.calculate(type, operation);
   }
