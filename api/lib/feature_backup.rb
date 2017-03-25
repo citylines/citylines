@@ -9,10 +9,5 @@ module FeatureBackup
     values[:original_id] = values.delete(:id)
 
     backup = klass.create(values)
-
-    if backup.is_a?(LineBackup)
-      backup.color = color
-      backup.save
-    end
   end
 end
