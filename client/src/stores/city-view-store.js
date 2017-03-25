@@ -28,7 +28,7 @@ const CityViewStore = Object.assign({}, Store, {
       cityData = this.updateWithQuery(cityData, queryParams);
     }
 
-    const style = new Style(cityData.style);
+    const style = new Style(cityData.lines);
 
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
