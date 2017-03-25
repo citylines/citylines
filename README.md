@@ -1,16 +1,16 @@
 Citylines
 =========
 
-This is the source code of [Citylines.co](http://www.citylines.co). It has a React frontend and a Sinatra API.
+This is the source code of [Citylines.co](http://www.citylines.co). This repo includes the client (built with React JS) and the API (A Sinatra app).
 
 Development
 ===========
 Database
 --------
 - Install Postgres 9.5
-- Create the database, user and password listed in `api/config/databases.yml.sample` under de `development` category
+- Create the database, user and password listed in `api/config/databases.yml.sample` under the `development` category
 - Install the Postgis extension in the database created: `create extension postgis` from the psql command line
-- Copy de file `/api/config/database.yml.sample`to `/api/config/database.yml`
+- Copy the file `/api/config/database.yml.sample`to `/api/config/database.yml`
 
 Mapbox
 ------
