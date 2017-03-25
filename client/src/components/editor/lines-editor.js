@@ -40,7 +40,7 @@ class LinesEditor extends PureComponent {
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
-          <System name="Lines" editable={false}>
+          <System name="Lines">
           {
             this.props.lines.map((line) => {
               return (
@@ -67,7 +67,7 @@ class LinesEditor extends PureComponent {
             onClick={this.bindedOnItemClick}
           />
           </System>
-          <System name="overground" editable={true}/>
+          <System name="overground"/>
       </div>
     )
   }
