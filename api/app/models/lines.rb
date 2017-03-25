@@ -19,6 +19,6 @@ class Line < Sequel::Model(:lines)
   end
 
   def generate_url_name
-    self.url_name = "#{self.id}-#{self.name.accentless.gsub(' ','-').downcase}"
+    self.url_name = "#{self.id}-#{self.name.strip.accentless.gsub(/\s|\//,'-').downcase}"
   end
 end

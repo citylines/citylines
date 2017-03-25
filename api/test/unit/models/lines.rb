@@ -27,11 +27,11 @@ describe Line do
   it "should set the right url_name" do
     assert_equal 'test-line', @line.url_name
 
-    @line.name = "A New Name"
+    @line.name = " A New Name / Blah "
     @line.save
     @line.generate_url_name
 
-    assert_equal "#{@line.id}-a-new-name", @line.url_name
+    assert_equal "#{@line.id}-a-new-name---blah", @line.url_name
   end
 
   it "should return the right values" do
