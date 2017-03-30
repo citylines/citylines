@@ -81,6 +81,7 @@ const EditorStore = Object.assign({}, Store, {
     return {
       features: cityData.features,
       lines: cityData.lines,
+      systems: cityData.systems,
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,

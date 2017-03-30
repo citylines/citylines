@@ -6,7 +6,8 @@ module CityHelpers
       { name: line.name,
         url_name: line.url_name,
         color: line.color,
-        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
+        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
+        system_id: line.system_id}
     }
 
     Naturally.sort_by(lines){|line| line[:name]}

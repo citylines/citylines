@@ -40,34 +40,35 @@ class LinesEditor extends PureComponent {
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
-          <System>
-          {
-            this.props.lines.map((line) => {
-              return (
-                  <LinesEditorItem
-                    key={line.url_name}
-                    url_name={line.url_name}
-                    name={line.name}
-                    deletable={line.deletable}
-                    color={line.color}
-                    onSave={this.bindedOnSave}
-                    onDelete={this.bindedOnDelete}
-                    displayColorPicker={this.state.displayColorPicker[line.url_name]}
-                    onClick={this.bindedOnItemClick}
-                  />
-                )
-            })
-          }
-          <LinesEditorNew
-            color="#000"
-            name=""
-            onSave={this.bindedOnCreate}
-            url_name={"the-new-one"}
-            displayColorPicker={this.state.displayColorPicker["the-new-one"]}
-            onClick={this.bindedOnItemClick}
-          />
-          </System>
-          <System name="overground"/>
+        { this.props.systems.map((system) => {
+          return (
+            <System key={system.id} name={system.name}>
+            { this.props.lines.filter(line => line.system_id == system.id).map((line) => {
+                return (
+                    <LinesEditorItem
+                      key={line.url_name}
+                      url_name={line.url_name}
+                      name={line.name}
+                      deletable={line.deletable}
+                      color={line.color}
+                      onSave={this.bindedOnSave}
+                      onDelete={this.bindedOnDelete}
+                      displayColorPicker={this.state.displayColorPicker[line.url_name]}
+                      onClick={this.bindedOnItemClick}
+                    />
+                  )
+              })
+            }
+            <LinesEditorNew
+              color="#000"
+              name=""
+              onSave={this.bindedOnCreate}
+              url_name={"the-new-one"}
+              displayColorPicker={this.state.displayColorPicker["the-new-one"]}
+              onClick={this.bindedOnItemClick}
+            />
+            </System>
+          )})}
       </div>
     )
   }

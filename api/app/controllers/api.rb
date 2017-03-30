@@ -49,7 +49,8 @@ class Api < App
     @city = City[url_name: url_name]
 
     { features: all_features_collection(@city),
-      lines: city_lines(@city)}.to_json
+      lines: city_lines(@city),
+      systems: @city.systems.map{|system| {id: system.id, name: system.name}} }.to_json
   end
 
   get '/:url_name/source/:type' do |url_name, type|

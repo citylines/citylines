@@ -150,6 +150,7 @@ class Editor extends PureComponent {
             </div>
             :
             <LinesEditor lines={this.state.lines}
+                         systems={this.state.systems}
                          onSave={this.bindedOnLineSave}
                          onDelete={this.bindedOnLineDelete}
                          onCreate={this.bindedOnLineCreate}/>
