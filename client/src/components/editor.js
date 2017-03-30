@@ -137,6 +137,7 @@ class Editor extends PureComponent {
             <div className="editor-cards-container">
               <FeatureViewer
                 lines={this.state.lines}
+                systems={this.state.systems}
                 feature={this.state.selectedFeature}
                 onFeatureChange={this.bindedOnFeaturePropsChange}
                 />
