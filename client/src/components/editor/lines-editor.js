@@ -51,6 +51,7 @@ class LinesEditor extends PureComponent {
                       name={line.name}
                       deletable={line.deletable}
                       color={line.color}
+                      system_id={system.id}
                       onSave={this.bindedOnSave}
                       onDelete={this.bindedOnDelete}
                       displayColorPicker={this.state.displayColorPicker[line.url_name]}
@@ -62,6 +63,7 @@ class LinesEditor extends PureComponent {
             <LinesEditorNew
               color="#000"
               name=""
+              system_id={system.id}
               onSave={this.bindedOnCreate}
               url_name={"the-new-one"}
               displayColorPicker={this.state.displayColorPicker["the-new-one"]}
@@ -80,10 +82,12 @@ class LinesEditorItem extends PureComponent {
 
     this.color = this.props.color;
     this.name = this.props.name;
+    this.system_id = this.props.system_id;
 
     this.state = {
       color: this.color,
-      name: this.name
+      name: this.name,
+      system_id: this.system_id
     }
 
     this.displaySaveButton = false;
@@ -132,7 +136,8 @@ class LinesEditorItem extends PureComponent {
 
     this.setState({
       color: this.color,
-      name: this.name
+      name: this.name,
+      system_id: this.system_id
     });
   }
 
@@ -203,6 +208,7 @@ class LinesEditorNew extends LinesEditorItem {
   resetState() {
     this.name = this.props.name;
     this.color = this.props.color;
+    this.system_id = this.props.system_id;
 
     this.updateState();
   }

@@ -89,6 +89,7 @@ class Api < App
     line.backup!
     line.color = args[:color]
     line.name = args[:name]
+    line.system_id = args[:system_id]
     line.save
 
     city_lines(@city).to_json
@@ -100,7 +101,7 @@ class Api < App
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color])
+    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id])
     line.save
     line.reload.generate_url_name
     line.save
