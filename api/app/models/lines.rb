@@ -7,6 +7,7 @@ class Line < Sequel::Model(:lines)
   include FeatureBackup
 
   many_to_one :city
+  many_to_one :system
   one_to_many :sections
   one_to_many :stations
 
