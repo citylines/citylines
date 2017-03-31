@@ -65,7 +65,7 @@ class ModifiedFeaturesViewer extends PureComponent {
         : null;
 
     return (
-      <ul className={`c-card u-high ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
+      <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
       <li className="c-card__item c-card__item--brand"><Translate content="editor.modified_features.title" /></li>
         { content }
         { buttons }

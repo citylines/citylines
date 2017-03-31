@@ -41,7 +41,7 @@ class System extends Component {
 
   render() {
     return (
-       <div className="c-card u-high lines-editor-container">
+       <div className="c-card lines-editor-container">
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
           <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="The name of the system"></input>
