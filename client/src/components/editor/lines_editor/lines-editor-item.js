@@ -84,7 +84,7 @@ class LinesEditorItem extends Component {
 
   onSave() {
     this.displaySaveButton = false;
-    const args = Object.assign({},this.state, {urlName: this.props.url_name});
+    const args = Object.assign({}, this.state, {line_url_name: this.props.url_name});
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
   }
 
@@ -146,7 +146,7 @@ class LinesEditorNew extends LinesEditorItem {
   onSave() {
     if (this.state.name == '') return;
     this.displaySaveButton = false;
-    const args = Object.assign({},this.state, {urlName: this.props.url_name});
+    const args = Object.assign({}, this.state);
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
 
     this.resetState();

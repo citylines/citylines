@@ -43,6 +43,11 @@ class Api < App
     }.to_json
   end
 
+  get '/:url_name/source/:type' do |url_name, type|
+    @city = City[url_name: url_name]
+    lines_features_collection(@city, type).to_json
+  end
+
   get '/editor/:url_name/data' do |url_name|
     protect
 
@@ -51,11 +56,6 @@ class Api < App
     { features: all_features_collection(@city),
       lines: city_lines(@city),
       systems: city_systems(@city) }.to_json
-  end
-
-  get '/:url_name/source/:type' do |url_name, type|
-    @city = City[url_name: url_name]
-    lines_features_collection(@city, type).to_json
   end
 
   get '/editor/:url_name/features' do |url_name|
@@ -79,13 +79,16 @@ class Api < App
     all_features_collection(@city).to_json
   end
 
-  put '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+  put '/editor/:url_name/line' do |url_name|
     protect
 
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    line = Line.where(url_name: args[:line_url_name]).first
+
+    halt if line.city_id != @city.id
+
     line.backup!
     line.color = args[:color]
     line.name = args[:name]
@@ -109,12 +112,16 @@ class Api < App
     city_lines(@city).to_json
   end
 
-  delete '/editor/:url_name/line/:line_url_name' do |url_name, line_url_name|
+  delete '/editor/:url_name/line' do |url_name|
     protect
 
     @city = City[url_name: url_name]
+    args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.where(city_id: @city.id, url_name: line_url_name).first
+    line = Line.where(url_name: args[:line_url_name]).first
+
+    halt if line.city_id != @city.id
+
     line.backup!
     line.delete
 
