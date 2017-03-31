@@ -38,11 +38,12 @@ class LinesEditor extends Component {
     }
   }
 
-  onLineDragged(line_url_name, system_id) {
-    const targetLine = this.props.lines.find(line => line.url_name == line_url_name);
-    if (targetLine.system_id == system_id) return;
+  onLineDragged(lineUrlName, systemId) {
+    const targetLine = this.props.lines.find(line => line.url_name == lineUrlName);
+    if (targetLine.system_id == systemId) return;
 
-    console.log(`${line_url_name}'s system_id should be set to ${system_id}`);
+    var args = {urlName: lineUrlName, color: targetLine.color, name: targetLine.name, system_id: systemId}
+    this.onSave(args);
   }
 
   render() {
