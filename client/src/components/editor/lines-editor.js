@@ -1,9 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {SketchPicker} from 'react-color';
 import Translate from 'react-translate-component';
 import System from './system';
 
-class LinesEditor extends PureComponent {
+class LinesEditor extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -37,12 +37,19 @@ class LinesEditor extends PureComponent {
     }
   }
 
+  onLineDragged(line_url_name, system_id) {
+    const targetLine = this.props.lines.find(line => line.url_name == line_url_name);
+    if (targetLine.system_id == system_id) return;
+
+    console.log(`${line_url_name}'s system_id should be set to ${system_id}`);
+  }
+
   render() {
     return (
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
         { this.props.systems.map((system) => {
           return (
-            <System key={system.id} name={system.name}>
+            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineDragged.bind(this)}>
             { this.props.lines.filter(line => line.system_id == system.id).map((line) => {
                 return (
                     <LinesEditorItem
@@ -76,7 +83,7 @@ class LinesEditor extends PureComponent {
   }
 }
 
-class LinesEditorItem extends PureComponent {
+class LinesEditorItem extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -166,6 +173,10 @@ class LinesEditorItem extends PureComponent {
     if (typeof this.props.onClick) this.props.onClick(e, this.props.url_name);
   }
 
+  onDragStart(e) {
+    e.dataTransfer.setData('text', this.props.url_name);
+  }
+
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
         <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
@@ -174,7 +185,7 @@ class LinesEditorItem extends PureComponent {
       </span>;
 
     return (
-      <div className="c-card__item" onClick={this.bindedOnClick} draggable={true}>
+      <div onDragStart={this.onDragStart.bind(this)} className="c-card__item" onClick={this.bindedOnClick} draggable={true}>
         <div className="c-input-group">
           <div className="o-field">
             <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>

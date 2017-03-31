@@ -254,3 +254,8 @@ input.system-name {
 button.save-system {
   float: right;
 }
+
+.system-lines-drop {
+  height: 80px;
+  line-height: 60px;
+}
