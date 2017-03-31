@@ -98,8 +98,8 @@ class FeatureViewer extends PureComponent {
           </table> : <Translate content="editor.feature_viewer.no_feature_selected" />;
 
     return (
-      <div className="c-card">
-        <li className="c-card__item c-card__item--divider"><Translate content="editor.feature_viewer.selected_feature" /></li>
+      <div className="c-card u-high">
+        <li className="c-card__item c-card__item--brand"><Translate content="editor.feature_viewer.selected_feature" /></li>
         <div className="c-card__item">
         { content }
         </div>
