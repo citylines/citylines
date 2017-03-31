@@ -78,8 +78,8 @@ class LinesEditor extends Component {
               name=""
               system_id={system.id}
               onSave={this.bindedOnCreate}
-              url_name={"the-new-one"}
-              displayColorPicker={this.state.displayColorPicker["the-new-one"]}
+              url_name={`${system.id}-the-new-one`}
+              displayColorPicker={this.state.displayColorPicker[`${system.id}-the-new-one`]}
               onClick={this.bindedOnItemClick}
             />
             </System>
