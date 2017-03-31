@@ -50,7 +50,7 @@ class Api < App
 
     { features: all_features_collection(@city),
       lines: city_lines(@city),
-      systems: @city.systems.map{|system| {id: system.id, name: system.name}} }.to_json
+      systems: city_systems(@city) }.to_json
   end
 
   get '/:url_name/source/:type' do |url_name, type|
@@ -119,5 +119,23 @@ class Api < App
     line.delete
 
     city_lines(@city).to_json
+  end
+
+  put '/editor/:url_name/system' do |url_name|
+    protect
+
+    @city = City[url_name: url_name]
+
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    system = System[args[:id]]
+
+    halt if system.city_id != @city.id
+
+    system.backup!
+    system.name = args[:name]
+    system.save
+
+    city_systems(@city).to_json
   end
 end

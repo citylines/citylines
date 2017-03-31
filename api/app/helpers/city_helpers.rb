@@ -13,6 +13,11 @@ module CityHelpers
     Naturally.sort_by(lines){|line| line[:name]}
   end
 
+  def city_systems(city)
+    systems = @city.systems.map{|system| {id: system.id, name: system.name}}
+    Naturally.sort_by(systems){|system| system[:name]}
+  end
+
   def lines_length_by_year(city)
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)

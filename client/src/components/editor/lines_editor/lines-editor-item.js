@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {SketchPicker} from 'react-color';
 import Translate from 'react-translate-component';
 
 class LinesEditorItem extends Component {

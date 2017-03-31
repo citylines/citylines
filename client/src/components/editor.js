@@ -35,6 +35,7 @@ class Editor extends PureComponent {
     this.bindedOnLineSave = this.onLineSave.bind(this);
     this.bindedOnLineDelete = this.onLineDelete.bind(this);
     this.bindedOnLineCreate = this.onLineCreate.bind(this);
+    this.bindedOnSystemSave = this.onSystemSave.bind(this);
   }
 
   componentWillMount() {
@@ -118,6 +119,10 @@ class Editor extends PureComponent {
     EditorStore.createLine(this.urlName, args);
   }
 
+  onSystemSave(args) {
+    EditorStore.updateSystem(this.urlName, args);
+  }
+
   render() {
     return (
           <PanelBody>
@@ -154,7 +159,8 @@ class Editor extends PureComponent {
                          systems={this.state.systems}
                          onSave={this.bindedOnLineSave}
                          onDelete={this.bindedOnLineDelete}
-                         onCreate={this.bindedOnLineCreate}/>
+                         onCreate={this.bindedOnLineCreate}
+                         onSystemSave={this.bindedOnSystemSave}/>
             }
           </PanelBody>
     )

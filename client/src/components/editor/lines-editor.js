@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {SketchPicker} from 'react-color';
 import Translate from 'react-translate-component';
 import System from './lines_editor/system';
 import {LinesEditorItem, LinesEditorNew} from './lines_editor/lines-editor-item';
@@ -14,6 +13,7 @@ class LinesEditor extends Component {
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnCreate = this.onCreate.bind(this);
     this.bindedOnItemClick = this.onItemClick.bind(this);
+    this.bindedOnSystemSave = this.onSystemSave.bind(this);
   }
 
   onSave(args) {
@@ -26,6 +26,10 @@ class LinesEditor extends Component {
 
   onCreate(args) {
     if (typeof this.props.onCreate === 'function') this.props.onCreate(args);
+  }
+
+  onSystemSave(args) {
+    if (typeof this.props.onSystemSave === 'function') this.props.onSystemSave(args);
   }
 
   onItemClick(e, lineUrlName) {
@@ -51,7 +55,7 @@ class LinesEditor extends Component {
       <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
         { this.props.systems.map((system) => {
           return (
-            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineDragged.bind(this)}>
+            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineDragged.bind(this)} onSave={this.bindedOnSystemSave}>
             { this.props.lines.filter(line => line.system_id == system.id).map((line) => {
                 return (
                     <LinesEditorItem

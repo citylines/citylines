@@ -63,6 +63,17 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async updateSystem(urlName, args) {
+    const url = `/api/editor/${urlName}/system`;
+    const body = JSON.stringify(args);
+    const response = await fetch(url, {method: 'PUT', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.systems = json;
+
+    this.emitChangeEvent();
+  },
 /* ------------ */
 
   async load(urlName) {
