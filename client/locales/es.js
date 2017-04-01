@@ -35,7 +35,7 @@ export default {
     km_under_construction: 'En construcción: %(km)s km',
     popup: {
       station: 'Estación %(name)s',
-      track: 'Tramo de la línea',
+      track: 'Información del tramo',
       buildstart: 'Comienzo de construcción: %(year)s',
       opening: 'Inauguración: %(year)s',
       closure: 'Cierre: %(year)s',
@@ -79,6 +79,8 @@ export default {
     lines_editor: {
       create: 'Crear',
       new_line_placeholder: 'Nueva línea',
+      new_system_placeholder: 'Nuevo sistema',
+      unnamed_system: 'Sistema sin nombre',
       save: 'Guardar',
       delete: 'Borrar',
       are_you_sure: '¿Estás seguro?',

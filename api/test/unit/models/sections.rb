@@ -11,7 +11,9 @@ describe Section do
     @city.coords = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @city.save
 
-    @line = Line.create(city_id: @city.id, name: 'Test line')
+    @system = System.create(city_id: @city.id, name: 'A system')
+
+    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
 
     @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
@@ -73,6 +75,7 @@ describe Section do
                              length: 1001,
                              line: @section.line.name,
                              line_url_name: @section.line.url_name,
+                             system: @system.name,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
@@ -93,6 +96,7 @@ describe Section do
                              length: 1001,
                              line: @section.line.name,
                              line_url_name: @section.line.url_name,
+                             system: @system.name,
                              opening: Section::FUTURE,
                              buildstart: @section.buildstart,
                              buildstart_end: Section::FUTURE,
@@ -112,12 +116,22 @@ describe Section do
                              length: 1001,
                              line: @section.line.name,
                              line_url_name: @section.line.url_name,
+                             system: @system.name,
                              opening: @section.opening,
                              buildstart: @section.opening,
                              buildstart_end: @section.opening,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]
+    end
+
+    it "should set system name to an empty string if it is null" do
+      system = System.create(city_id: @city.id)
+
+      @line.system_id = system.id
+      @line.save
+
+      assert_equal '', @section.reload.feature[:properties][:system]
     end
   end
 end

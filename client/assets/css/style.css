@@ -35,6 +35,14 @@
     margin-top:5px;
 }
 
+.station-popup {
+  text-decoration: underline;
+}
+
+.section-popup {
+  font-style: italic;
+}
+
 .panel-header {
 
 }
@@ -145,6 +153,7 @@
 .color-picker-container {
   position:absolute;
   z-index:100000;
+  cursor: default;
 }
 
 .editor-delete-warning-text {
@@ -168,6 +177,16 @@
 
 .lines-editor-container {
   overflow: initial;
+  margin-bottom: 20px !important;
+}
+
+.lines-editor-container .c-card__item--brand {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.lines-editor-container.new-system .c-card__item--brand {
+  border-radius: 4px;
 }
 
 .cookie-notice-container {
@@ -237,3 +256,38 @@
   }
 }
 /* --- */
+
+.system-toggle {
+  cursor: pointer;
+  padding-left:8px;
+  padding-right:15px;
+}
+
+input.system-name {
+  color: white;
+  background: transparent;
+  width: 200px;
+  display: inline-block;
+}
+
+button.save-system {
+  float: right;
+}
+
+.not-dragging-line .draggable-line {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.dragging-line {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.line-system-select {
+  border-left-width: 1px !important;
+  max-width: 200px
+}

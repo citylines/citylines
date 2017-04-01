@@ -35,6 +35,9 @@ class Editor extends PureComponent {
     this.bindedOnLineSave = this.onLineSave.bind(this);
     this.bindedOnLineDelete = this.onLineDelete.bind(this);
     this.bindedOnLineCreate = this.onLineCreate.bind(this);
+    this.bindedOnSystemSave = this.onSystemSave.bind(this);
+    this.bindedOnCreateSystem = this.onCreateSystem.bind(this);
+    this.bindedOnSystemDelete = this.onSystemDelete.bind(this);
   }
 
   componentWillMount() {
@@ -118,6 +121,18 @@ class Editor extends PureComponent {
     EditorStore.createLine(this.urlName, args);
   }
 
+  onSystemSave(args) {
+    EditorStore.updateSystem(this.urlName, args);
+  }
+
+  onSystemDelete(systemId) {
+    EditorStore.deleteSystem(this.urlName, systemId);
+  }
+
+  onCreateSystem(systemName) {
+    EditorStore.createSystem(this.urlName, systemName);
+  }
+
   render() {
     return (
           <PanelBody>
@@ -137,6 +152,7 @@ class Editor extends PureComponent {
             <div className="editor-cards-container">
               <FeatureViewer
                 lines={this.state.lines}
+                systems={this.state.systems}
                 feature={this.state.selectedFeature}
                 onFeatureChange={this.bindedOnFeaturePropsChange}
                 />
@@ -150,9 +166,13 @@ class Editor extends PureComponent {
             </div>
             :
             <LinesEditor lines={this.state.lines}
+                         systems={this.state.systems}
                          onSave={this.bindedOnLineSave}
                          onDelete={this.bindedOnLineDelete}
-                         onCreate={this.bindedOnLineCreate}/>
+                         onCreate={this.bindedOnLineCreate}
+                         onSystemSave={this.bindedOnSystemSave}
+                         onCreateSystem={this.bindedOnCreateSystem}
+                         onSystemDelete={this.bindedOnSystemDelete}/>
             }
           </PanelBody>
     )

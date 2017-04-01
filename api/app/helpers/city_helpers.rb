@@ -6,10 +6,16 @@ module CityHelpers
       { name: line.name,
         url_name: line.url_name,
         color: line.color,
-        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0}
+        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
+        system_id: line.system_id}
     }
 
     Naturally.sort_by(lines){|line| line[:name]}
+  end
+
+  def city_systems(city)
+    systems = @city.systems.map{|system| {id: system.id, name: system.name}}
+    Naturally.sort_by(systems){|system| system[:name]}
   end
 
   def lines_length_by_year(city)

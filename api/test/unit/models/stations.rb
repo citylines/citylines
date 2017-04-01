@@ -11,7 +11,9 @@ describe Station do
     @city.coords = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @city.save
 
-    @line = Line.create(city_id: @city.id, name: 'Test line')
+    @system = System.create(city_id: @city.id, name: 'A system')
+
+    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
 
     @station = Station.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, name: 'Some station')
     @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
@@ -64,6 +66,7 @@ describe Station do
                              klass: "Station",
                              line: @station.line.name,
                              line_url_name: @station.line.url_name,
+                             system: @system.name,
                              name: @station.name,
                              opening: @station.opening,
                              buildstart: @station.buildstart,
@@ -84,6 +87,7 @@ describe Station do
                              klass: "Station",
                              line: @station.line.name,
                              line_url_name: @station.line.url_name,
+                             system: @system.name,
                              name: @station.name,
                              opening: Section::FUTURE,
                              buildstart: @station.buildstart,
@@ -103,6 +107,7 @@ describe Station do
                              klass: "Station",
                              line: @station.line.name,
                              line_url_name: @station.line.url_name,
+                             system: @system.name,
                              name: @station.name,
                              opening: @station.opening,
                              buildstart: @station.opening,
@@ -110,6 +115,15 @@ describe Station do
                              closure: @station.closure}
 
       assert_equal expected_properties, feature[:properties]
+    end
+
+    it "should set system name to an empty string if it is null" do
+      system = System.create(city_id: @city.id)
+
+      @line.system_id = system.id
+      @line.save
+
+      assert_equal '', @station.reload.feature[:properties][:system]
     end
   end
 end

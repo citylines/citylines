@@ -69,11 +69,14 @@ class FeatureViewer extends PureComponent {
                 <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
                 <td className="c-table__cell">
                   <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
-                    {this.props.lines.map((line) => {
-                      return (
-                        <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{line.name}</option>
-                      )
-                     })}
+                    {this.props.systems.map((system) => {
+                      return this.props.lines.filter(line => line.system_id == system.id).map((line) => {
+                        const label = system.name ? `${system.name} - ${line.name}` : line.name;
+                        return (
+                          <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{label}</option>
+                        )
+                       })
+                    })}
                   </select>
                 </td>
               </tr>
@@ -92,7 +95,7 @@ class FeatureViewer extends PureComponent {
 
     return (
       <div className="c-card">
-        <li className="c-card__item c-card__item--divider"><Translate content="editor.feature_viewer.selected_feature" /></li>
+        <li className="c-card__item c-card__item--brand"><Translate content="editor.feature_viewer.selected_feature" /></li>
         <div className="c-card__item">
         { content }
         </div>

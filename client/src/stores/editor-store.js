@@ -29,7 +29,7 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   async updateLine(urlName, args) {
-    const url = `/api/editor/${urlName}/line/${args.urlName}`;
+    const url = `/api/editor/${urlName}/line`;
     const body = JSON.stringify(args);
     const response = await fetch(url, {method: 'PUT', body: body, credentials: 'same-origin'});
     const json = await response.json();
@@ -53,12 +53,49 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   async deleteLine(urlName, lineUrlName) {
-    const url = `/api/editor/${urlName}/line/${lineUrlName}`;
-    const response = await fetch(url, {method: 'DELETE', credentials: 'same-origin'});
+    const url = `/api/editor/${urlName}/line`;
+    const body = JSON.stringify({line_url_name: lineUrlName});
+    const response = await fetch(url, {method: 'DELETE', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
     const cityData = this.cityData[urlName];
     cityData.lines = json;
+
+    this.emitChangeEvent();
+  },
+
+  async updateSystem(urlName, args) {
+    const url = `/api/editor/${urlName}/system`;
+    const body = JSON.stringify(args);
+    const response = await fetch(url, {method: 'PUT', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.systems = json;
+
+    this.emitChangeEvent();
+  },
+
+  async createSystem(urlName, systemName) {
+    const url = `/api/editor/${urlName}/system`;
+    const body = JSON.stringify({name: systemName});
+    const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.systems = json;
+
+    this.emitChangeEvent();
+  },
+
+  async deleteSystem(urlName, systemId) {
+    const url = `/api/editor/${urlName}/system`;
+    const body = JSON.stringify({id: systemId});
+    const response = await fetch(url, {method: 'DELETE', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.systems = json;
 
     this.emitChangeEvent();
   },
@@ -81,6 +118,7 @@ const EditorStore = Object.assign({}, Store, {
     return {
       features: cityData.features,
       lines: cityData.lines,
+      systems: cityData.systems,
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,

@@ -5,7 +5,7 @@ class City < Sequel::Model(:cities)
     using Accentless
 
     one_to_many :lines
-    one_to_many :plans
+    one_to_many :systems
 
     plugin :geometry
 

@@ -19,6 +19,7 @@ class Station < Sequel::Model(:stations)
 
     h[:properties].merge!({line:self.line.name,
                            line_url_name: self.line.url_name,
+                           system: self.line.system.name || '',
                            name: self.name,
                            opening: self.opening || Section::FUTURE,
                            buildstart: self.buildstart || self.opening,

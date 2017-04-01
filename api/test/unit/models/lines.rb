@@ -11,7 +11,9 @@ describe Line do
     @city.coords = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @city.save
 
-    @line = Line.create(city_id: @city.id, name: 'Test line', url_name: 'test-line', color: '#e6e6e6')
+    @system = System.create(city_id: @city.id)
+
+    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name: 'test-line', color: '#e6e6e6')
   end
 
   it "should set the right url_name" do
@@ -41,5 +43,6 @@ describe Line do
     assert_equal @line.name, backup.name
     assert_equal @line.url_name, backup.url_name
     assert_equal @line.color, backup.color
+    assert_equal @line.system_id, backup.system_id
   end
 end
