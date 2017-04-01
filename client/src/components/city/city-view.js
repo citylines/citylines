@@ -9,8 +9,6 @@ import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 
-import Translate from 'react-translate-component';
-
 class CityView extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -92,15 +90,18 @@ class CityView extends PureComponent {
               kmUnderConstruction={this.state.kmUnderConstruction}
             />
           </div>
-          <Translate
-            component={LinesTree}
-            attributes={{name: "city.lines"}}
-            defaultExpanded={true}
-            lines={this.state.lines}
-            linesShown={this.state.linesShown}
-            onLineToggle={this.bindedOnLineToggle}
-            onLinesShownChange={this.bindedOnLinesShownChange}
-          />
+          { this.state.systems.map((system) => {
+            const systemLines = this.state.lines.filter(line => line.system_id == system.id);
+            return systemLines.length ?
+            <LinesTree
+              name={system.name}
+              defaultExpanded={true}
+              lines={systemLines}
+              linesShown={this.state.linesShown}
+              onLineToggle={this.bindedOnLineToggle}
+              onLinesShownChange={this.bindedOnLinesShownChange}
+            /> : null })
+          }
         </PanelBody>
     )
   }

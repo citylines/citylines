@@ -76,6 +76,7 @@ const CityViewStore = Object.assign({}, Store, {
 
     return {
       lines: cityData.lines,
+      systems: cityData.systems,
       sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],

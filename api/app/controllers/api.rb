@@ -34,6 +34,7 @@ class Api < App
     @city = City[url_name: url_name]
 
     { lines: city_lines(@city),
+      systems: city_systems(@city),
       lines_length_by_year: lines_length_by_year(@city),
       years: { start: @city.start_year,
                end: Date.today.year,

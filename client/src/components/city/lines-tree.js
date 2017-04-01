@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import Translate from 'react-translate-component';
 
 class LinesTree extends PureComponent {
   constructor(props, context) {
@@ -30,7 +31,7 @@ class LinesTree extends PureComponent {
     return (
       <ul style={{marginLeft: "1em"}} className="c-tree">
         <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
-          <span className="c-link"> {this.props.name} </span>
+          <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
             { lines.map((line) => {
               return <LinesTreeItem
