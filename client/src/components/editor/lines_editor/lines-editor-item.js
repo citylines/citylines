@@ -124,13 +124,13 @@ class LinesEditorItem extends Component {
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
-          {this.props.systems.length > 1 &&
           <div className="o-field">
+            {this.props.systems.length > 1 &&
             <select className="c-field line-system-select" value={this.props.system_id} onChange={this.onSystemSelectChange.bind(this)}>
               {this.props.systems.map(system => <option key={system.id} value={system.id}>{system.name || 'Sistema sin nombre'}</option>)}
             </select>
+            }
           </div>
-          }
           <div className="o-field">
             { this.displayDeleteWarning ?
               deleteWarningControl :
@@ -187,6 +187,8 @@ class LinesEditorNew extends LinesEditorItem {
             {this.props.displayColorPicker ?
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
+          </div>
+          <div className="o-field">
           </div>
           <div className="o-field">
             <span className="c-input-group" style={{float:'right'}}>
