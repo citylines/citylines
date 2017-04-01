@@ -58,11 +58,6 @@ class FeatureViewer extends PureComponent {
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, 'line_url_name', newLineUrlName);
   }
 
-  systemName(line) {
-    const system = this.props.systems.find(system => system.id == line.system_id);
-    return system ? system.name : null;
-  }
-
   render() {
     const properties = this.props.feature ? this.props.feature.properties : null;
 
@@ -74,13 +69,14 @@ class FeatureViewer extends PureComponent {
                 <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
                 <td className="c-table__cell">
                   <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
-                    {this.props.lines.map((line) => {
-                      const systemName = this.systemName(line);
-                      const label = systemName ? `${systemName} - ${line.name}` : line.name;
-                      return (
-                        <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{label}</option>
-                      )
-                     })}
+                    {this.props.systems.map((system) => {
+                      return this.props.lines.filter(line => line.system_id == system.id).map((line) => {
+                        const label = system.name ? `${system.name} - ${line.name}` : line.name;
+                        return (
+                          <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{label}</option>
+                        )
+                       })
+                    })}
                   </select>
                 </td>
               </tr>
