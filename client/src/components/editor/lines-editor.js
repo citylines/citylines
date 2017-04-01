@@ -44,7 +44,7 @@ class LinesEditor extends Component {
     }
   }
 
-  onLineDragged(lineUrlName, systemId) {
+  onLineSystemChange(lineUrlName, systemId) {
     const targetLine = this.props.lines.find(line => line.url_name == lineUrlName);
     if (targetLine.system_id == systemId) return;
 
@@ -65,7 +65,7 @@ class LinesEditor extends Component {
       <div className={`u-letter-box--small u-pillar-box--medium ${this.state.dragging ? 'dragging-line' : 'not-dragging-line'}`} style={{maxWidth:"1000px"}}>
         { this.props.systems.map((system) => {
           return (
-            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineDragged.bind(this)} onSave={this.bindedOnSystemSave}>
+            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineSystemChange.bind(this)} onSave={this.bindedOnSystemSave}>
             { this.props.lines.filter(line => line.system_id == system.id).map((line) => {
                 return (
                     <LinesEditorItem
@@ -81,6 +81,8 @@ class LinesEditor extends Component {
                       onClick={this.bindedOnItemClick}
                       onDragStart={this.bindedOnDragStart}
                       onDragEnd={this.bindedOnDragEnd}
+                      systems={this.props.systems}
+                      onSystemSelectChange={this.onLineSystemChange.bind(this)}
                     />
                   )
               })

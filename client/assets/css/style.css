@@ -268,3 +268,8 @@ button.save-system {
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
 }
+
+.line-system-select {
+  border-left-width: 1px !important;
+  max-width: 200px
+}

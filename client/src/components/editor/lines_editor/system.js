@@ -49,7 +49,7 @@ class System extends Component {
 
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
-          <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="The name of the system"></input>
+          <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Sistema sin nombre"></input>
           { this.state.modified &&
           <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>Save</button> }
         </div>

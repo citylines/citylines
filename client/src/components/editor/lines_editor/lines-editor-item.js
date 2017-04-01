@@ -101,6 +101,10 @@ class LinesEditorItem extends Component {
     this.props.onDragEnd();
   }
 
+  onSystemSelectChange(e) {
+    this.props.onSystemSelectChange(this.props.url_name, e.target.value);
+  }
+
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
         <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
@@ -120,6 +124,13 @@ class LinesEditorItem extends Component {
             <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
+          {this.props.systems.length > 1 &&
+          <div className="o-field">
+            <select className="c-field line-system-select" value={this.props.system_id} onChange={this.onSystemSelectChange.bind(this)}>
+              {this.props.systems.map(system => <option key={system.id} value={system.id}>{system.name || 'Sistema sin nombre'}</option>)}
+            </select>
+          </div>
+          }
           <div className="o-field">
             { this.displayDeleteWarning ?
               deleteWarningControl :
