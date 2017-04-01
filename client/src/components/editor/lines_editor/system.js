@@ -82,7 +82,7 @@ class NewSystem extends Component {
 
   render() {
     return (
-      <div ref="container" className="c-card lines-editor-container">
+      <div ref="container" className="c-card lines-editor-container new-system">
         <div className="c-card__item c-card__item--brand">
           <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Nuevo sistema"></input>
 
