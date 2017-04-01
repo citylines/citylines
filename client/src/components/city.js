@@ -173,13 +173,15 @@ class City extends PureComponent {
               {
                 this.state.clickedFeatures.features.map((feature) => {
                   const fProps = feature.properties;
-                  const lineStyle = {color: fProps.lineLabelColor, backgroundColor: fProps.lineColor, marginLeft:5, boxShadow: (fProps.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
+                  const lineStyle = {color: fProps.lineLabelColor, backgroundColor: fProps.lineColor, marginLeft: (fProps.system ? 5 : 0), boxShadow: (fProps.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
                   return (
                     <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
                       <ul className="c-list c-list--unstyled">
                         <li className="c-list__item">
-                          <strong>{fProps.name ? <Translate content="city.popup.station" with={{name: fProps.name}} /> : <Translate content="city.popup.track" />}</strong>
-                          <span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
+                          <strong>{fProps.system}</strong><span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
+                        </li>
+                        <li className="c-list__item">
+                          {fProps.klass === 'Station' ? <Translate className="station-popup" content="city.popup.station" with={{name: fProps.name}} /> : <Translate className="section-popup" content="city.popup.track" />}
                         </li>
                         { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
                         { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}

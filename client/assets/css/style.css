@@ -35,6 +35,14 @@
     margin-top:5px;
 }
 
+.station-popup {
+  text-decoration: underline;
+}
+
+.section-popup {
+  font-style: italic;
+}
+
 .panel-header {
 
 }

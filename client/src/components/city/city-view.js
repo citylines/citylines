@@ -94,6 +94,7 @@ class CityView extends PureComponent {
             const systemLines = this.state.lines.filter(line => line.system_id == system.id);
             return systemLines.length ?
             <LinesTree
+              key={system.id}
               name={system.name}
               defaultExpanded={true}
               lines={systemLines}
