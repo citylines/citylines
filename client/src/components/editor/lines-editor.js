@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
-import System from './lines_editor/system';
+import {System, NewSystem} from './lines_editor/system';
 import {LinesEditorItem, LinesEditorNew} from './lines_editor/lines-editor-item';
 
 class LinesEditor extends Component {
@@ -98,6 +98,7 @@ class LinesEditor extends Component {
             />
             </System>
           )})}
+          <NewSystem onCreate={this.props.onCreateSystem}/>
       </div>
     )
   }

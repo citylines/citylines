@@ -169,6 +169,7 @@
 
 .lines-editor-container {
   overflow: initial;
+  margin-bottom: 20px !important;
 }
 
 .cookie-notice-container {

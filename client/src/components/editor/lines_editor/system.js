@@ -59,4 +59,39 @@ class System extends Component {
   }
 }
 
-export default System
+
+class NewSystem extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {name: ''};
+  }
+
+  onChange(e) {
+    this.setState({name: e.target.value});
+  }
+
+  onSave() {
+    this.props.onCreate(this.state.name);
+    this.reset();
+  }
+
+  reset() {
+    this.setState({name: ''});
+  }
+
+  render() {
+    return (
+      <div ref="container" className="c-card lines-editor-container">
+        <div className="c-card__item c-card__item--brand">
+          <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Nuevo sistema"></input>
+
+          { this.state.name &&
+          <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>Crear</button> }
+        </div>
+      </div>
+    )
+  }
+}
+
+export {System, NewSystem}
