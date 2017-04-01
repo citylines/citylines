@@ -46,7 +46,7 @@ class LinesEditor extends Component {
     const targetLine = this.props.lines.find(line => line.url_name == lineUrlName);
     if (targetLine.system_id == systemId) return;
 
-    var args = {urlName: lineUrlName, color: targetLine.color, name: targetLine.name, system_id: systemId}
+    var args = {line_url_name: lineUrlName, color: targetLine.color, name: targetLine.name, system_id: systemId}
     this.onSave(args);
   }
 

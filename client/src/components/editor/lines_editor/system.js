@@ -41,7 +41,12 @@ class System extends Component {
 
   render() {
     return (
-       <div className="c-card lines-editor-container">
+       <div ref="container" className="c-card lines-editor-container"
+        onDragEnter={this.onDragEnter.bind(this)}
+        onDragOver={this.onDragOver.bind(this)}
+        onDragLeave={this.onDragLeave.bind(this)}
+        onDrop={this.onDrop.bind(this)} >
+
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
           <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="The name of the system"></input>
@@ -49,14 +54,6 @@ class System extends Component {
           <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>Save</button> }
         </div>
         {this.state.display ? this.props.children : null}
-        <div className="c-card__item system-lines-drop"
-             onDragEnter={this.onDragEnter.bind(this)}
-             onDragOver={this.onDragOver.bind(this)}
-             onDragLeave={this.onDragLeave.bind(this)}
-             onDrop={this.onDrop.bind(this)}
-             style={{display: this.state.display ? 'block' : 'none'}}>
-             Drop lines here
-        </div>
        </div>
       )
   }
