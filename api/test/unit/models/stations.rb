@@ -116,5 +116,14 @@ describe Station do
 
       assert_equal expected_properties, feature[:properties]
     end
+
+    it "should set system name to an empty string if it is null" do
+      system = System.create(city_id: @city.id)
+
+      @line.system_id = system.id
+      @line.save
+
+      assert_equal '', @station.reload.feature[:properties][:system]
+    end
   end
 end
