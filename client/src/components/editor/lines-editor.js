@@ -14,6 +14,7 @@ class LinesEditor extends Component {
     this.bindedOnCreate = this.onCreate.bind(this);
     this.bindedOnItemClick = this.onItemClick.bind(this);
     this.bindedOnSystemSave = this.onSystemSave.bind(this);
+    this.bindedOnSystemDelete = this.onSystemDelete.bind(this);
     this.bindedOnDragStart = this.onDragStart.bind(this);
     this.bindedOnDragEnd = this.onDragEnd.bind(this);
   }
@@ -32,6 +33,10 @@ class LinesEditor extends Component {
 
   onSystemSave(args) {
     if (typeof this.props.onSystemSave === 'function') this.props.onSystemSave(args);
+  }
+
+  onSystemDelete(args) {
+    if (typeof this.props.onSystemDelete === 'function') this.props.onSystemDelete(args);
   }
 
   onItemClick(e, lineUrlName) {
@@ -65,7 +70,13 @@ class LinesEditor extends Component {
       <div className={`u-letter-box--small u-pillar-box--medium ${this.state.dragging ? 'dragging-line' : 'not-dragging-line'}`} style={{maxWidth:"1000px"}}>
         { this.props.systems.map((system) => {
           return (
-            <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineSystemChange.bind(this)} onSave={this.bindedOnSystemSave}>
+            <System
+              key={system.id}
+              id={system.id}
+              name={system.name}
+              onLineDragged={this.onLineSystemChange.bind(this)}
+              onSave={this.bindedOnSystemSave}
+              onDelete={this.bindedOnSystemDelete}>
             { this.props.lines.filter(line => line.system_id == system.id).map((line) => {
                 return (
                     <LinesEditorItem

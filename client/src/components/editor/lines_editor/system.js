@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
+import Translate from 'react-translate-component';
 
 class System extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {display: true, modified: false, name: props.name || ''};
+    this.state = {
+      display: true,
+      modified: false,
+      name: props.name || '',
+      displayDeleteWarning: false
+    };
 
     this.bindedToggleDisplay = this.toggleDisplay.bind(this);
   }
@@ -39,7 +45,25 @@ class System extends Component {
     this.props.onSave({id: this.props.id, name: this.state.name});
   }
 
+  onDelete() {
+    this.setState(Object.assign({}, this.state, {displayDeleteWarning: true}));
+  }
+
+  onCancelDelete() {
+    this.setState(Object.assign({}, this.state, {displayDeleteWarning: false}));
+  }
+
+  onActualDelete() {
+    this.props.onDelete(this.props.id);
+  }
+
   render() {
+    const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
+        <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
+        <button className="c-button" onClick={this.onActualDelete.bind(this)} ><Translate content="editor.lines_editor.yes" /></button>
+        <button className="c-button" onClick={this.onCancelDelete.bind(this)}><Translate content="editor.lines_editor.no" /></button>
+      </span>;
+
     return (
        <div ref="container" className="c-card lines-editor-container"
         onDragEnter={this.onDragEnter.bind(this)}
@@ -50,8 +74,15 @@ class System extends Component {
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
           <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Sistema sin nombre"></input>
-          { this.state.modified &&
-          <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>Save</button> }
+          { this.state.displayDeleteWarning ? deleteWarningControl : null }
+          { this.state.modified && !this.state.displayDeleteWarning &&
+            <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
+              <Translate content="editor.lines_editor.save" />
+            </button> }
+          { !this.props.children[0].length && !this.state.displayDeleteWarning &&
+            <button style={{float: 'right'}} className="c-button" onClick={this.onDelete.bind(this)}>
+              <Translate content="editor.lines_editor.delete" />
+            </button> }
         </div>
         {this.state.display ? this.props.children : null}
        </div>
@@ -87,7 +118,9 @@ class NewSystem extends Component {
           <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Nuevo sistema"></input>
 
           { this.state.name &&
-          <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>Crear</button> }
+          <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
+            <Translate content="editor.lines_editor.create" />
+          </button> }
         </div>
       </div>
     )

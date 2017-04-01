@@ -88,6 +88,18 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async deleteSystem(urlName, systemId) {
+    const url = `/api/editor/${urlName}/system`;
+    const body = JSON.stringify({id: systemId});
+    const response = await fetch(url, {method: 'DELETE', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+
+    const cityData = this.cityData[urlName];
+    cityData.systems = json;
+
+    this.emitChangeEvent();
+  },
+
 /* ------------ */
 
   async load(urlName) {

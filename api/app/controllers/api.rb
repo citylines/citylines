@@ -158,4 +158,21 @@ class Api < App
 
     city_systems(@city).to_json
   end
+
+  delete '/editor/:url_name/system' do |url_name|
+    protect
+
+    @city = City[url_name: url_name]
+
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    system = System[args[:id]]
+
+    halt if system.city_id != @city.id
+
+    system.backup!
+    system.delete
+
+    city_systems(@city).to_json
+  end
 end
