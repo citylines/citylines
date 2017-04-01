@@ -127,7 +127,7 @@ class LinesEditorItem extends Component {
           <div className="o-field">
             {this.props.systems.length > 1 &&
             <select className="c-field line-system-select" value={this.props.system_id} onChange={this.onSystemSelectChange.bind(this)}>
-              {this.props.systems.map(system => <option key={system.id} value={system.id}>{system.name || 'Sistema sin nombre'}</option>)}
+              {this.props.systems.map(system => system.name ? <option key={system.id} value={system.id}>{system.name}</option> : <Translate component="option" key={system.id} value={system.id} content="editor.lines_editor.unnamed_system" />)}
             </select>
             }
           </div>

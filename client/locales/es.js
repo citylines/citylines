@@ -79,6 +79,8 @@ export default {
     lines_editor: {
       create: 'Crear',
       new_line_placeholder: 'Nueva línea',
+      new_system_placeholder: 'Nuevo sistema',
+      unnamed_system: 'Sistema sin nombre',
       save: 'Guardar',
       delete: 'Borrar',
       are_you_sure: '¿Estás seguro?',

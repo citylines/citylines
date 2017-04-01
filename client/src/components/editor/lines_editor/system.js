@@ -73,7 +73,14 @@ class System extends Component {
 
         <div className="c-card__item c-card__item--brand">
           <span className={`system-toggle fa ${this.state.display ? 'fa-angle-left' : 'fa-angle-down'}`} onClick={this.bindedToggleDisplay}></span>
-          <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Sistema sin nombre"></input>
+          <Translate
+            component="input"
+            className="c-field system-name"
+            type="text"
+            onChange={this.onChange.bind(this)}
+            value={this.state.name}
+            attributes={{placeholder: "editor.lines_editor.unnamed_system"}} />
+
           { this.state.displayDeleteWarning ? deleteWarningControl : null }
           { this.state.modified && !this.state.displayDeleteWarning &&
             <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
@@ -115,7 +122,13 @@ class NewSystem extends Component {
     return (
       <div ref="container" className="c-card lines-editor-container new-system">
         <div className="c-card__item c-card__item--brand">
-          <input className="c-field system-name" type="text" onChange={this.onChange.bind(this)} value={this.state.name} placeholder="Nuevo sistema"></input>
+          <Translate
+            component="input"
+            className="c-field system-name"
+            type="text"
+            onChange={this.onChange.bind(this)}
+            value={this.state.name}
+            attributes={{placeholder:"editor.lines_editor.new_system_placeholder"}} />
 
           { this.state.name &&
           <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
