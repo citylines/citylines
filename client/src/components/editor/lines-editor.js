@@ -7,13 +7,15 @@ class LinesEditor extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {displayColorPicker: {}};
+    this.state = {displayColorPicker: {}, dragging: false};
 
     this.bindedOnSave = this.onSave.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
     this.bindedOnCreate = this.onCreate.bind(this);
     this.bindedOnItemClick = this.onItemClick.bind(this);
     this.bindedOnSystemSave = this.onSystemSave.bind(this);
+    this.bindedOnDragStart = this.onDragStart.bind(this);
+    this.bindedOnDragEnd = this.onDragEnd.bind(this);
   }
 
   onSave(args) {
@@ -34,11 +36,11 @@ class LinesEditor extends Component {
 
   onItemClick(e, lineUrlName) {
     if (e.target.className != 'color') {
-      this.setState({displayColorPicker: {}});
+      this.setState(Object.assign({}, this.state, {displayColorPicker: {}}));
     } else {
       const displayColorPicker = {};
       displayColorPicker[lineUrlName] = !this.state.displayColorPicker[lineUrlName];
-      this.setState({displayColorPicker: displayColorPicker});
+      this.setState(Object.assign({}, this.state, {displayColorPicker: displayColorPicker}));
     }
   }
 
@@ -50,9 +52,17 @@ class LinesEditor extends Component {
     this.onSave(args);
   }
 
+  onDragStart() {
+    this.setState(Object.assign({}, this.state, {dragging: true}));
+  }
+
+  onDragEnd() {
+    this.setState(Object.assign({}, this.state, {dragging: false}));
+  }
+
   render() {
     return (
-      <div className="u-letter-box--small u-pillar-box--medium" style={{maxWidth:"1000px"}}>
+      <div className={`u-letter-box--small u-pillar-box--medium ${this.state.dragging ? 'dragging-line' : 'not-dragging-line'}`} style={{maxWidth:"1000px"}}>
         { this.props.systems.map((system) => {
           return (
             <System key={system.id} id={system.id} name={system.name} onLineDragged={this.onLineDragged.bind(this)} onSave={this.bindedOnSystemSave}>
@@ -69,6 +79,8 @@ class LinesEditor extends Component {
                       onDelete={this.bindedOnDelete}
                       displayColorPicker={this.state.displayColorPicker[line.url_name]}
                       onClick={this.bindedOnItemClick}
+                      onDragStart={this.bindedOnDragStart}
+                      onDragEnd={this.bindedOnDragEnd}
                     />
                   )
               })

@@ -145,6 +145,7 @@
 .color-picker-container {
   position:absolute;
   z-index:100000;
+  cursor: default;
 }
 
 .editor-delete-warning-text {
@@ -253,4 +254,17 @@ input.system-name {
 
 button.save-system {
   float: right;
+}
+
+.not-dragging-line .draggable-line {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.dragging-line {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }

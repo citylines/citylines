@@ -94,6 +94,11 @@ class LinesEditorItem extends Component {
 
   onDragStart(e) {
     e.dataTransfer.setData('text', this.props.url_name);
+    this.props.onDragStart();
+  }
+
+  onDragEnd(e) {
+    this.props.onDragEnd();
   }
 
   render() {
@@ -104,7 +109,7 @@ class LinesEditorItem extends Component {
       </span>;
 
     return (
-      <div onDragStart={this.onDragStart.bind(this)} className="c-card__item" onClick={this.bindedOnClick} draggable={true}>
+      <div onDragStart={this.onDragStart.bind(this)} onDragEnd={this.onDragEnd.bind(this)} className="c-card__item draggable-line" onClick={this.bindedOnClick} draggable={true}>
         <div className="c-input-group">
           <div className="o-field">
             <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>
