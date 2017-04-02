@@ -105,7 +105,7 @@ export default {
     },
     privacy: {
       title: 'Privacy policy',
-      p1: 'Citylines.co collects your name, surname and email, which are retrieved from the Google authentication system when you Log in using Google.',
+      p1: 'Citylines.co collects your name, surname and email, which are retrieved from the Google authentication system when you log in using Google.',
       p2: 'Citylines.co stores this data in a secured private database.',
       p3: 'Citylines.co uses your information only for authentication purposes or to send you emails occasionally.',
       p4: 'Citylines.co won’t share your information with no one else.',
