@@ -13,7 +13,9 @@ export default {
       log_in: 'Log in',
       log_in_with_google: 'Log in with Google',
       disclaimer: 'By logging in you are agreeing to the',
-      disclaimer_link: 'contributor terms'
+      disclaimer_link: 'contributor terms',
+      privacy_disclaimer: 'and the',
+      privacy_disclaimer_link: 'privacy policy'
     },
     cookie_notice: {
       notice: 'This website uses cookies. If you continue to use this website you accept our cookies policy.',
@@ -100,6 +102,14 @@ export default {
       p1: 'Your contribution should not infringe the intellectual property rights of anyone else. When you contribute any content you are indicating that you have the right to authorize Citylines.co to use and distribute it under our current license terms.',
       p2: 'You hereby grant to Citylines.co a licence to do any act that is restricted by copyright, database right or any related right over anything within the contents you contributed.',
       p3: 'Citylines.co agrees that it may only use or sub-license the content you contributed as part of a database and only under the terms of the ODbL 1.0 license for the database and DbCL 1.0 license for the individual contents of the database.'
+    },
+    privacy: {
+      title: 'Privacy policy',
+      p1: 'Citylines.co collects your name, surname and email, which are retrieved from the Google authentication system when you Log in using Google.',
+      p2: 'Citylines.co stores this data in a secured private database.',
+      p3: 'Citylines.co uses your information only for authentication purposes or to send you emails occasionally.',
+      p4: 'Citylines.co won’t share your information with no one else.',
+      p5: 'You can ask Citylines.co, at any time, to delete your personal information from it’s database.'
     }
   }
 }

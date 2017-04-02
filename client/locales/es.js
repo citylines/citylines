@@ -13,7 +13,9 @@ export default {
       log_in: 'Iniciar sesión',
       log_in_with_google: 'Iniciar sesión con Google',
       disclaimer: 'Al iniciar sesión usted acepta los',
-      disclaimer_link:'términos del colaborador'
+      disclaimer_link:'términos del colaborador',
+      privacy_disclaimer: 'y la',
+      privacy_disclaimer_link: 'política de privacidad'
     },
     cookie_notice: {
       notice: 'Este sitio web usa cookies. Al navegarlo usted acepta el uso que hacemos de ellas.',
@@ -100,6 +102,14 @@ export default {
       p1: 'Su contribución no debe infringir derechos de propiedad de nadie más. Al contribuir usted está indicando que tiene derecho a autorizar a Citylines.co a usar y distribuir el contenido aportado por usted bajo nuestros términos legales.',
       p2: 'Usted autoriza a Citylines.co a hacer cualquier uso del contenido por usted aportado dentro de los límites de la licencia que aquí se establece.',
       p3: 'Citylines.co se compromete a usar y distribuir el contenido que usted aportó en fórma de base de datos y sólo bajo los términos de las licencias ODbL 1.0 para la base de datos y DbCL 1.0 para los contenidos individuales de la base de datos.'
+    },
+    privacy: {
+      title: 'Política de privacidad',
+      p1: 'Citylines.co recoge su nombre, apellido y correo electrónico del servicio de autenticación de Google cuando Usted inicia sesión usando Google.',
+      p2: 'Citylines.co guarda esta información en una base de datos privada protegida.',
+      p3: 'Citylines.co usa esta información con fines sólo relacionados a su autenticación y/o para enviarle correos electrónicos ocasionalmente.',
+      p4: 'Citylines.co no va a compartir su información con nadie más.',
+      p5: 'Usted puede pedir a Citylines.co, en cualquier momento, que borre su información personal de la base de datos.'
     }
   }
 }
