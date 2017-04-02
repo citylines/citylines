@@ -9,13 +9,23 @@ class CityItem extends Component {
   render() {
     return (
       <div className="c-card">
-      <header className="c-card__header">
+        <header className="c-card__header">
           <h3 className="c-heading">
-          <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
-          <div className="c-heading__sub"><Translate content="cities.city_item" with={{lines: this.props.lines_count, contributors: this.props.contributors_count}} /></div>
+            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            <div className="c-heading__sub">{this.props.systems.join(', ')}</div>
           </h3>
-          </header>
-          <div className="c-card__body"></div>
+        </header>
+        <div className="c-card__body">
+          { this.props.length ? <span className="c-badge c-badge--success">{this.props.length} km</span> : ''}
+          { this.props.contributors_count ?
+            <Translate
+              component="span"
+              className="c-badge"
+              style={{marginLeft: 5}}
+              content={`cities.contributors.${this.props.contributors_count == 1 ? 'one' : 'other'}`}
+              with={{contributors: this.props.contributors_count}} />
+              : ''}
+        </div>
       </div>
     )
   }
@@ -64,7 +74,7 @@ class Cities extends Component {
   }
 
   cityIndex(city) {
-    return (city.contributors_count + city.lines_count) / 2
+    return city.length;
   }
 
   sortCities(a,b) {
@@ -79,7 +89,8 @@ class Cities extends Component {
           name={city.name}
           state={city.state}
           country={city.country}
-          lines_count={city.lines_count}
+          length={city.length}
+          systems={city.systems}
           contributors_count={city.contributors_count}
           url={city.url}
         />

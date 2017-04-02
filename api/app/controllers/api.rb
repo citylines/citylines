@@ -5,12 +5,14 @@ class Api < App
 
   get '/cities' do
     contributors_by_city = contributors
+    city_length = lengths
 
     cities = City.map do |city|
       {name: city.name,
        state: city.country_state,
        country: city.country,
-       lines_count: city.lines.count,
+       length: city_length[city.id] || 0,
+       systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
        contributors_count: contributors_by_city[city.id] || 0,
        url: city.url}
     end

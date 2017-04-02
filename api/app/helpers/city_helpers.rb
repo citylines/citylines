@@ -139,4 +139,21 @@ module CityHelpers
 
     cities
   end
+
+  def lengths
+    query = %{
+      select sum(length), city_id from
+        (select length, city_id from sections left join lines on sections.line_id = lines.id where
+          (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
+        ) as sections_cities
+      group by city_id}
+
+    cities = {}
+
+    DB.fetch(query).each do |register|
+      cities[register[:city_id]] = (register[:sum] / 1000).to_i
+    end
+
+    cities
+  end
 end
