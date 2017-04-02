@@ -52,7 +52,8 @@ class Auth extends Component {
             }
           </div>
           <div className="o-form-element">
-            <Translate content="auth.disclaimer"/> <Translate component={Link} className="c-link" content="auth.disclaimer_link" to="/terms#contributor"/>.
+            <Translate content="auth.disclaimer"/> <Translate component={Link} className="c-link" content="auth.disclaimer_link" to="/terms#contributor"/><br />
+            <Translate content="auth.privacy_disclaimer"/> <Translate component={Link} className="c-link" content="auth.privacy_disclaimer_link" to="/terms#privacy"/>.
           </div>
         </div>
     )

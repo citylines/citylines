@@ -22,6 +22,10 @@ class Terms extends Component {
     if (this.props.location.hash.includes('contributor')) {
       ReactDOM.findDOMNode(this.refs.contributor).scrollIntoView();
     }
+
+    if (this.props.location.hash.includes('privacy')) {
+      ReactDOM.findDOMNode(this.refs.privacy).scrollIntoView();
+    }
   }
 
   render() {
@@ -39,6 +43,15 @@ class Terms extends Component {
               <li><Translate content="terms.contributor.p1" /></li>
               <li><Translate content="terms.contributor.p2" /></li>
               <li><Translate content="terms.contributor.p3" /></li>
+            </ol>
+
+            <Translate component="h3" className="c-heading" content="terms.privacy.title" ref="privacy"/>
+            <ol>
+              <li><Translate content="terms.privacy.p1" /></li>
+              <li><Translate content="terms.privacy.p2" /></li>
+              <li><Translate content="terms.privacy.p3" /></li>
+              <li><Translate content="terms.privacy.p4" /></li>
+              <li><Translate content="terms.privacy.p5" /></li>
             </ol>
 
             <Translate component="h3" className="c-heading" content="cookie_notice.text.title" ref="cookies"/>
