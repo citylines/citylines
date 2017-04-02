@@ -1,7 +1,7 @@
 Citylines
 =========
 
-This is the source code of [Citylines.co](http://www.citylines.co). This repo includes the client (built with React JS) and the API (A Sinatra app).
+This is the source code of [Citylines.co](http://www.citylines.co). The repo includes the client (built with React JS) and the API (a Sinatra app).
 
 Development
 ===========
