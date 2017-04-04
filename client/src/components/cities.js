@@ -99,14 +99,12 @@ class Cities extends Component {
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
-        <div className="o-container o-container--small">
-
-          <div className="u-letter-box--xlarge">
-            <h1 className="c-heading c-heading--medium">
-              <Translate content="cities.title" unsafe/>
-            </h1>
+        <div className="o-container o-container--medium" style={{maxWidth:'40em'}}>
+          <div className="u-letter-box--super">
+            <Translate component="h1" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe />
           </div>
-
+        </div>
+        <div className="o-container o-container--small">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
               <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
