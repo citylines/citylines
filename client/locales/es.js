@@ -3,8 +3,8 @@ export default {
       title: 'En <b>citylines.co</b> queremos reconstruir los sistemas de transporte de las ciudades del mundo',
       search: 'Ingresa una ciudad o un país',
       contributors: { one: '%(contributors)s colaborador', other: '%(contributors)s colaboradores'},
-      contact: 'Contacto',
-      contact_link: 'Entrá al <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco">Grupo de Google</a>, contactanos en <a className="c-link c-link--secondary" href="https://twitter.com/citylines_co" target="_blank">@citylines_co</a>, o visitá el <a className="c-link c-link--secondary" href="https://github.com/BrunoSalerno/citylines" target="_blank">repositorio de Github</a>.'
+      support: 'Soporte en nuestro',
+      google_group: 'grupo de Google'
     },
     main: {
       log_in: 'Ingresar'

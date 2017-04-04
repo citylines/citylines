@@ -101,7 +101,7 @@ class Cities extends Component {
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--small">
 
-          <div className="u-letter-box--large">
+          <div className="u-letter-box--xlarge">
             <h1 className="c-heading c-heading--medium">
               <Translate content="cities.title" unsafe/>
             </h1>
@@ -119,14 +119,16 @@ class Cities extends Component {
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="u-letter-box--large">
-            <h3 className="c-heading c-heading--medium">
-              <Translate content="cities.contact" />
-            </h3>
+        <div className="o-container o-container--medium" style={{textAlign: 'center', marginTop:30}}>
+          <div className="u-letter-box--super">
             <p className="c-paragragh">
-              <Translate content="cities.contact_link" unsafe/>
+              <span className="contact-icon"><span className="fa fa-twitter" /><a className="c-link" target="_blank" href="https://twitter.com/citylines_co">Twitter</a></span>
+              <span className="contact-icon"><span className="fa fa-envelope"/><a className="c-link" target="_blank" href="mailto:info@citylines.co">Email</a></span>
+              <span className="contact-icon"><span className="fa fa-github" /><a className="c-link"  target="_blank" href="https://github.com/BrunoSalerno/citylines">Github</a></span>
             </p>
+            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco"><Translate content="cities.google_group" /></a>.</p>
           </div>
         </div>
       </div>
