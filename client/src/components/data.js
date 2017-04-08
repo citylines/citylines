@@ -18,6 +18,12 @@ class Data extends Component {
     return ['xls', 'csv']
   }
 
+  sendGAEvent(e) {
+    const name = e.target.attributes.name.value;
+
+    ga('send', 'event', 'data', 'download', name);
+  }
+
   render() {
     return (
         <div className="o-container o-container--small">
@@ -29,7 +35,7 @@ class Data extends Component {
             { Object.entries(this.datasets()).map(entry => {
               const label = entry[0];
               const url = entry[1];
-              return <p key={label}><Translate content={`data.${label}`} />: {this.formats().map(format => <a key={`${label}-${format}`} className="data-link c-link" href={`${url}.${format}`}>{format}</a>)} </p>;
+              return <p key={label}><Translate content={`data.${label}`} />: {this.formats().map(format => <a key={`${label}-${format}`} name={`${label}-${format}`} className="data-link c-link" href={`${url}.${format}`} onClick={this.sendGAEvent}>{format}</a>)} </p>;
             })}
             </div>
         </div>
