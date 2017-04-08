@@ -26,7 +26,7 @@ export default {
         p1: 'Cookies are small pieces of information that are stored in your web browser and that can be accessed by one or several websites.',
         p2: 'Citylines.co uses own and third-party cookies with the purpose of improving the user experience. We use own cookies to remember which user has logged in and to know whether the user has pressed or not the Accept button in the cookies banner. Regarding the third-party cookies, Google uses cookies in this website to store information related to the Google Login and to Google Analytics. All these cookies are persistent and are used only with the described scope.',
         p3: 'You can disable the cookies in this website, but this could affect certain features of Citilines.co.',
-        p4: 'You can find more information about cookies at <a target="_blank" className="c-link" href="http://www.aboutcookies.org">aboutcookies.org</a>, including guides on how to see which cookies are installed in your browser, or how to uninstall them.'
+        p4: 'You can find more information about cookies at <a target="_blank" class="c-link" href="http://www.aboutcookies.org">aboutcookies.org</a>, including guides on how to see which cookies are installed in your browser, or how to uninstall them.'
     }
   },
   city: {
@@ -94,8 +94,8 @@ export default {
     title: 'Terms of use',
     license: {
       title: 'License',
-      p1: "Citylines.co is <i>open data</i> licensed under the <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL). Any rights in individual contents of the database are licensed under the <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a> (DbCL).",
-      p2: "You can find a summary of the ODbL license <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' className='c-link'>here</a>."
+      p1: "Citylines.co is <i>open data</i> licensed under the <a class='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL). Any rights in individual contents of the database are licensed under the <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' class='c-link'>Database Contents License</a> (DbCL).",
+      p2: "You can find a summary of the ODbL license <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' class='c-link'>here</a>."
     },
     contributor: {
       title: 'Contributor terms',
@@ -111,5 +111,18 @@ export default {
       p4: 'Citylines.co won’t share your information with no one else.',
       p5: 'You can ask Citylines.co, at any time, to delete your personal information from it’s database.'
     }
+  },
+  data: {
+    short_title: 'Data',
+    title: "Our data is open",
+    download: "Download",
+    license: "The information stored in the <b>citylines.co</b> database is under the <a class='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL)",
+    see_terms_1: "See the",
+    see_terms_2: "terms of use",
+    cities: 'Cities',
+    systems: 'Systems',
+    lines: 'Lines',
+    features: 'Tracks',
+    stations: 'Stations'
   }
 }

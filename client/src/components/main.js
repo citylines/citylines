@@ -78,6 +78,9 @@ class Main extends Component {
               <Link to="/terms" className="c-nav__item c-nav__item--right">
                 <Translate content="terms.title" />
               </Link>
+              <Link to="/data" className="c-nav__item c-nav__item--right">
+                <Translate content="data.short_title" />
+              </Link>
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
             {this.props.children}
