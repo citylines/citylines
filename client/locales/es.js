@@ -26,7 +26,7 @@ export default {
         p1: 'Las cookies son pequeños pedazos de información que se almacenan en su navegador y que pueden ser consultados por uno o varios sitios web.',
         p2: 'Citylines.co usa cookies propias y de terceros para facilitar la navegación personalizada del usuario. Cookies propias: las utilizamos para recordar qué usuario ha iniciado sesión y para no mostrar el aviso sobre el uso de cookies si el usuario ha clickeado en el botón Aceptar. Cookies de terceros: Google utiliza cookies en este sitio vinculadas al servicio de inicio de sesión con Google, para recordar información referente a la sesión del usuario. Google también utiliza cookies de Google Analytics, para recabar información no personal vinculada al uso de Citylines.co. Todas estas cookies son persistentes y se utilizan solamente para los fines expuestos.',
         p3: 'Usted puede deshabilitar el uso de cookies mediante su navegador de internet, pero esto puede reducir la funcionalidad de algunos aspectos de Citylines.co.',
-        p4: 'Puede consultar más información sobre cookies en <a target="_blank" className="c-link" href="http://www.aboutcookies.org">aboutcookies.org</a>, incluyendo cómo ver las que tiene instaladas y cómo eliminarlas.'
+        p4: 'Puede consultar más información sobre cookies en <a target="_blank" class="c-link" href="http://www.aboutcookies.org">aboutcookies.org</a>, incluyendo cómo ver las que tiene instaladas y cómo eliminarlas.'
     }
   },
   city: {
@@ -94,8 +94,8 @@ export default {
     title: 'Términos de uso',
     license: {
       title:'Licencia',
-      p1: "Citylines.co es <i>open data</i> con licencia <a className='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'>Open Database License</a> (ODbL). Cualquier derecho sobre contenidos individuales de la base de datos es regido por la licencia <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' className='c-link'>Database Contents License</a> (DbCL).",
-      p2: "Usted puede encontrar un resumen de la licencia ODbL <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' className='c-link'>aquí</a>."
+      p1: "Citylines.co es <i>open data</i> con licencia <a class='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'>Open Database License</a> (ODbL). Cualquier derecho sobre contenidos individuales de la base de datos es regido por la licencia <a href='http://opendatacommons.org/licenses/dbcl/1.0/' target='_blank' class='c-link'>Database Contents License</a> (DbCL).",
+      p2: "Usted puede encontrar un resumen de la licencia ODbL <a href='https://opendatacommons.org/licenses/odbl/summary/' target='_blank' class='c-link'>aquí</a>."
     },
     contributor: {
       title: 'Términos del colaborador',
@@ -111,5 +111,18 @@ export default {
       p4: 'Citylines.co no va a compartir su información con nadie más.',
       p5: 'Usted puede pedir a Citylines.co, en cualquier momento, que borre su información personal de la base de datos.'
     }
+  },
+  data: {
+    short_title: 'Datos',
+    title: "Nuestros datos son abiertos",
+    download: "Descarga",
+    license: "La información guardada en la base de datos de <b>citylines.co</b> está disponible bajo la licencia <a class='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL)",
+    see_terms_1: "Ver los",
+    see_terms_2: "términos de uso",
+    cities: 'Ciudades',
+    systems: 'Sistemas',
+    lines: 'Líneas',
+    features: 'Tramos',
+    stations: 'Estaciones'
   }
 }
