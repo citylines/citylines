@@ -8,8 +8,16 @@ Development
 Database
 --------
 - Install Postgres 9.5
-- Create the database, user and password listed in `api/config/databases.yml.sample` under the `development` category
-- Install the Postgis extension in the database created: `create extension postgis` from the psql command line
+- Create the database, user and password listed in `api/config/databases.yml.sample` under the `development` category;
+  - `create database <db_name>;`
+  - `create user <user_name>;`
+  - `alter user <user_name> with password '<password>';`
+- You have also to create a schema and grant the right privileges:
+  - `\c <db_name>`;
+  - `grant  CREATE,CONNECT on database <db_name> to <user_name>;`
+  - `create schema <a_schema_name>;`
+  - `grant SELECT,INSERT,UPDATE on all tables in schema <a_schema_name> to <user_name>;`
+- Install the Postgis extension in the database created: `create extension postgis`;`
 - Copy the file `/api/config/database.yml.sample`to `/api/config/database.yml`
 
 Mapbox
