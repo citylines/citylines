@@ -8,7 +8,7 @@ Development
 Database
 --------
 - Install Postgres 9.5
-- Create the database, user and password listed in `api/config/databases.yml.sample` under the `development` category;
+- Create the database, user and password listed in `api/config/databases.yml.sample` under the `development` category:
   - `create database <db_name>;`
   - `create user <user_name>;`
   - `alter user <user_name> with password '<password>';`
