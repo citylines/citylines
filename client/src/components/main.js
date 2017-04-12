@@ -32,7 +32,7 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !['/', '/auth', '/terms'].includes(this.props.location.pathname);
+    return !['/', '/auth', '/data', '/terms'].includes(this.props.location.pathname);
   }
 
   togglePanel() {
