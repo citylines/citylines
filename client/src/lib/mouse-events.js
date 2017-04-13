@@ -1,4 +1,4 @@
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import mapboxgl from 'mapbox-gl';
 
 class MouseEvents {
   constructor(style, mappers) {

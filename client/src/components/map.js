@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import mapboxgl from 'mapbox-gl';
 import MapboxDraw from 'mapbox-gl-draw/dist/mapbox-gl-draw';
 
 class Map extends Component {
