@@ -30,6 +30,15 @@ const requireAuth = () => {
   }
 }
 
+let previousPathname = null;
+
+browserHistory.listen( loc =>  {
+  if (loc.pathname != previousPathname) {
+    previousPathname = loc.pathname;
+    ga("send", "pageview", loc.pathname);
+  }
+});
+
 render(
     <Router history={browserHistory}>
       <Route path="/" component={Main}>
