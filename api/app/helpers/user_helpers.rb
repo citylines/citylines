@@ -30,9 +30,22 @@ module UserHelpers
       end
     end
 
+    modified_features_query = %{
+      select city_id, feature_class, count(distinct feature_id) from (
+        select * from modified_features_geo where user_id = #{user_id} union select * from modified_features_props where user_id = #{user_id}) as modified_features
+        group by city_id, feature_class
+    }
+
+    DB.fetch(modified_features_query).each do |modified_feature|
+      city_id = modified_feature[:city_id]
+      h[city_id] ||= {}
+      h[city_id][:modified_features] ||= {section_count: 0, station_count: 0}
+
+      key = "#{modified_feature[:feature_class].downcase}_count".to_sym
+      h[city_id][:modified_features][key] = modified_feature[:count]
+    end
+
     # TODO:
-    # - ModifiedFeaturesGeo
-    # - ModifiedFeatureProps
     # - Removed Features
 
     h
