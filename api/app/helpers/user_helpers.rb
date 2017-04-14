@@ -45,6 +45,27 @@ module UserHelpers
       h[city_id][:deleted_features][key] = group[:count]
     end
 
-    h
+    sorted_cities = h.sort_by do |k, v|
+      length = (v[:created_features] || {})[:section_length]
+      section_count = 0
+      station_count = 0
+
+      [:created_features, :modified_features, :deleted_features].each do |category|
+        section_count += v[category][:section_count] if v[category] && v[category][:section_count]
+        station_count += v[category][:station_count] if v[category] && v[category][:station_count]
+      end
+
+      length = length == 0 ? nil : length
+      section_count = section_count == 0 ? nil : section_count
+      station_count = station_count == 0 ? nil : station_count
+
+      length || section_count || station_count
+    end.reverse
+
+    sorted_cities.map do |id, features|
+      city = City[id]
+      features[:city] = {name: city.name, url_name: city.url_name}
+      features
+    end
   end
 end
