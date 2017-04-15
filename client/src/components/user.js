@@ -47,12 +47,11 @@ class User extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="o-container o-container--small">
         <div className="u-letter-box--large">
           <h1 className="c-heading">{this.state.name}</h1>
-          <h2 className="c-heading">Ciudades editadas</h2>
+          <h2 className="c-heading">{`Ciudades de ${this.state.name}`}</h2>
 
           <table className="c-table c-table--striped">
             <thead className="c-table__head">
