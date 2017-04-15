@@ -33,7 +33,7 @@ class Auth extends Component {
 
     MainStore.setUser(json);
 
-    browserHistory.push('/');
+    browserHistory.push(`/user/${json.userid}`);
   }
 
   render() {
