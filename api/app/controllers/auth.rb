@@ -30,15 +30,18 @@ class Auth < App
                         httponly: true)
 
     {username: user.name,
+     userid: user.id,
      msg: "Login succesful"}.to_json
   end
 
   get '/check' do
     payload, header = protect
 
-    user = payload['user']
+    user_id = payload['user']['user_id']
+    user = User[user_id]
 
-    {username: User[user['user_id']].name,
+    {username: user.name,
+     userid: user.id,
      msg: "User fetched succesfully"}.to_json
   end
 

@@ -31,7 +31,7 @@ class Auth extends Component {
     const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
-    MainStore.setUser(json.username);
+    MainStore.setUser(json);
 
     browserHistory.push('/');
   }
