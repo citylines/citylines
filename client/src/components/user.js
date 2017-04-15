@@ -92,7 +92,7 @@ class User extends Component {
                 </tr>
               )}
             </tbody>
-            <caption className="c-table__caption">Ciudades ordenadas por kms creados y por número de elementos modificados</caption>
+            <caption className="c-table__caption">Ciudades ordenadas según kms creados y número de elementos modificados</caption>
           </table> }
 
           { !this.anyCity() &&
