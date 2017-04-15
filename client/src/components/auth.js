@@ -39,8 +39,7 @@ class Auth extends Component {
   render() {
     return (
         <div className="u-center-block__content">
-          <Translate component="h3" className="c-heading" content="auth.log_in" />
-          <div className="o-form-element">
+          <div className="o-form-element" style={{textAlign: 'center'}}>
             {this.state.google_client_id &&
               <Translate
                 component={GoogleLogin}

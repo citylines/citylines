@@ -46,9 +46,18 @@ class User extends Component {
     return total > 0 ? total : null
   }
 
+  countryAndStateNames(city) {
+    let names = ''
+
+    if (city.city.country_state) names += `, ${city.city.country_state}`;
+    names += `, ${city.city.country}`;
+
+    return names;
+  }
+
   render() {
     return (
-      <div className="o-container o-container--small">
+      <div className="o-container o-container--medium">
         <div className="u-letter-box--large">
           <h1 className="c-heading">{this.state.name}</h1>
           <h2 className="c-heading">{`Ciudades de ${this.state.name}`}</h2>
@@ -64,7 +73,7 @@ class User extends Component {
             <tbody className="c-table__body">
               {this.state.cities && this.state.cities.map(city =>
                 <tr key={city.city.name} className="c-table__row">
-                  <td className="c-table__cell"><Link to={`/${city.city.url_name}`} className="c-link">{city.city.name}</Link></td>
+                  <td className="c-table__cell"><Link to={`/${city.city.url_name}`} className="c-link">{city.city.name}</Link>{this.countryAndStateNames(city)}</td>
                   <td className="c-table__cell">{this.km(city)}</td>
                   <td className="c-table__cell">{this.modifiedFeaturesCount(city)}</td>
                 </tr>

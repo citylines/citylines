@@ -10,7 +10,6 @@ export default {
       log_in: 'Ingresar'
     },
     auth: {
-      log_in: 'Iniciar sesión',
       log_in_with_google: 'Iniciar sesión con Google',
       disclaimer: 'Al iniciar sesión usted acepta los',
       disclaimer_link:'términos del colaborador',

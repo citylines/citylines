@@ -30,7 +30,7 @@ class Terms extends Component {
 
   render() {
     return (
-        <div className="o-container o-container--small">
+        <div className="o-container o-container--medium">
           <div className="u-letter-box--large">
             <Translate component="h1" className="c-heading" content="terms.title" />
 
