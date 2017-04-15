@@ -46,20 +46,18 @@ module UserHelpers
     end
 
     sorted_cities = h.sort_by do |k, v|
-      length = (v[:created_features] || {})[:section_length]
-      section_count = 0
-      station_count = 0
+      created_features_length = (v[:created_features] || {})[:section_length]
+      modified_or_deleted_features = 0
 
-      [:created_features, :modified_features, :deleted_features].each do |category|
-        section_count += v[category][:section_count] if v[category] && v[category][:section_count]
-        station_count += v[category][:station_count] if v[category] && v[category][:station_count]
+      [:modified_features, :deleted_features].each do |category|
+        modified_or_deleted_features += v[category][:section_count] if v[category] && v[category][:section_count]
+        modified_or_deleted_features += v[category][:station_count] if v[category] && v[category][:station_count]
       end
 
-      length = length == 0 ? nil : length
-      section_count = section_count == 0 ? nil : section_count
-      station_count = station_count == 0 ? nil : station_count
-
-      length || section_count || station_count
+      # We sort the cities by:
+      # 1) the total length of created features
+      # 2) the total number of modified and deleted features
+      created_features_length && created_features_length > 0 ? created_features_length * 1000 :  modified_or_deleted_features
     end.reverse
 
     sorted_cities.map do |id, features|
