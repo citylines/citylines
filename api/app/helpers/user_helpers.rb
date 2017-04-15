@@ -62,7 +62,7 @@ module UserHelpers
 
     sorted_cities.map do |id, features|
       city = City[id]
-      features[:city] = {name: city.name, url_name: city.url_name}
+      features[:city] = {name: city.name, country_state: city.country_state, country: city.country, url_name: city.url_name}
       features
     end
   end
