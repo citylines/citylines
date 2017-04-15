@@ -60,13 +60,21 @@ class User extends Component {
     return parseInt(this.userId) === MainStore.getUser().id;
   }
 
+  anyCity() {
+    return this.state.cities && this.state.cities.length > 0;
+  }
+
   render() {
     return (
       <div className="o-container o-container--medium">
         <div className="u-letter-box--large">
           <h1 className="c-heading">{this.state.name}</h1>
-          <h2 className="c-heading">{ this.myProfile() ? 'Mis ciudades' : `Ciudades de ${this.state.name}`}</h2>
 
+          { this.anyCity() &&
+          <h2 className="c-heading">{ this.myProfile() ? 'Mis ciudades' : `Ciudades de ${this.state.name}`}</h2>
+          }
+
+          { this.anyCity() &&
           <table className="c-table c-table--striped">
             <thead className="c-table__head">
               <tr className="c-table__row c-table__row--heading">
@@ -76,7 +84,7 @@ class User extends Component {
               </tr>
             </thead>
             <tbody className="c-table__body">
-              {this.state.cities && this.state.cities.map(city =>
+              {this.state.cities.map(city =>
                 <tr key={city.city.name} className="c-table__row">
                   <td className="c-table__cell"><Link to={`/${city.city.url_name}`} className="c-link">{city.city.name}</Link>{this.countryAndStateNames(city)}</td>
                   <td className="c-table__cell">{this.km(city)}</td>
@@ -84,9 +92,15 @@ class User extends Component {
                 </tr>
               )}
             </tbody>
-
             <caption className="c-table__caption">Ciudades ordenadas por kms creados y por número de elementos modificados</caption>
-          </table>
+          </table> }
+
+          { !this.anyCity() &&
+            <h2 className="c-heading">{this.myProfile() ?
+              <span>¡Todavía no contribuiste a ninguna ciudad! <Link to="/" className="c-link">Ver ciudades</Link></span>
+                :
+              `${this.state.name} todavía no contribuyó en ninguna ciudad`}</h2>
+          }
 
         </div>
       </div>
