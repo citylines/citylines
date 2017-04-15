@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
 
+import MainStore from '../stores/main-store';
 import UserStore from '../stores/user-store';
 
 class User extends Component {
@@ -55,12 +56,16 @@ class User extends Component {
     return names;
   }
 
+  myProfile() {
+    return parseInt(this.userId) === MainStore.getUser().id;
+  }
+
   render() {
     return (
       <div className="o-container o-container--medium">
         <div className="u-letter-box--large">
           <h1 className="c-heading">{this.state.name}</h1>
-          <h2 className="c-heading">{`Ciudades de ${this.state.name}`}</h2>
+          <h2 className="c-heading">{ this.myProfile() ? 'Mis ciudades' : `Ciudades de ${this.state.name}`}</h2>
 
           <table className="c-table c-table--striped">
             <thead className="c-table__head">

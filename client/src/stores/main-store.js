@@ -41,6 +41,13 @@ const MainStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  getUser() {
+    return {
+      name: this.state.username,
+      id: this.state.userid
+    }
+  },
+
   showCookieAdvice() {
     this.state.showCookieAdvice = true;
     this.emitChangeEvent();
