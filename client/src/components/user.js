@@ -10,7 +10,7 @@ class User extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {};
+    this.state = null;
 
     this.userId = this.props.params.user_id;
 
@@ -30,13 +30,16 @@ class User extends Component {
   }
 
   componentDidMount() {
-    UserStore.load(this.userId);
+    MainStore.setLoading();
+    UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params == this.props.params) return;
+    if (nextProps.params.user_id == this.props.params.user_id) return;
+
+    MainStore.setLoading();
     this.userId = nextProps.params.user_id;
-    UserStore.load(this.userId);
+    UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
   km(city) {
@@ -71,6 +74,8 @@ class User extends Component {
   }
 
   render() {
+    if (!this.state) return null;
+
     return (
       <div className="o-container o-container--medium">
         <div className="u-letter-box--large">
