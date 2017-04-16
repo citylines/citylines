@@ -123,5 +123,18 @@ export default {
     lines: 'Líneas',
     features: 'Tramos',
     stations: 'Estaciones'
+  },
+  user: {
+    my_cities: 'Mis ciudades',
+    cities_of_user: 'Ciudades de %(name)s',
+    table: {
+      city: 'Ciudad',
+      created_km: 'Km creados',
+      modified_or_deleted_elements: 'Elementos modificados o borrados',
+      caption: 'Ciudades ordenadas según kms creados y número de elementos modificados'
+    },
+    you_never_contributed: '¡Todavía no haz contribuido a ninguna ciudad!',
+    user_never_contributed: '%(name)s todavía no contribuyó a ninguna ciudad',
+    see_cities: 'Ver ciudades'
   }
 }

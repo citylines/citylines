@@ -71,16 +71,16 @@ class User extends Component {
           <h1 className="c-heading">{this.state.name}</h1>
 
           { this.anyCity() &&
-          <h2 className="c-heading">{ this.myProfile() ? 'Mis ciudades' : `Ciudades de ${this.state.name}`}</h2>
+          <h2 className="c-heading">{ this.myProfile() ? <Translate content="user.my_cities" /> : <Translate content="user.cities_of_user" with={{name: this.state.name}} />}</h2>
           }
 
           { this.anyCity() &&
           <table className="c-table c-table--striped">
             <thead className="c-table__head">
               <tr className="c-table__row c-table__row--heading">
-                <th className="c-table__cell">Ciudad</th>
-                <th className="c-table__cell">Km creados</th>
-                <th className="c-table__cell">Elementos modificados o borrados</th>
+                <Translate component="th" className="c-table__cell" content="user.table.city" />
+                <Translate component="th" className="c-table__cell" content="user.table.created_km" />
+                <Translate component="th" className="c-table__cell" content="user.table.modified_or_deleted_elements" />
               </tr>
             </thead>
             <tbody className="c-table__body">
@@ -92,14 +92,14 @@ class User extends Component {
                 </tr>
               )}
             </tbody>
-            <caption className="c-table__caption">Ciudades ordenadas según kms creados y número de elementos modificados</caption>
+            <Translate component="caption" className="c-table__caption" content="user.table.caption" />
           </table> }
 
           { !this.anyCity() &&
             <h2 className="c-heading">{this.myProfile() ?
-              <span>¡Todavía no contribuiste a ninguna ciudad! <Link to="/" className="c-link">Ver ciudades</Link></span>
+              <span><Translate content="user.you_never_contributed" /> <Translate component={Link} to="/" className="c-link" content="user.see_cities" /></span>
                 :
-              `${this.state.name} todavía no contribuyó en ninguna ciudad`}</h2>
+              <Translate content="user.user_never_contributed" with={{name: this.state.name}} />}</h2>
           }
 
         </div>
