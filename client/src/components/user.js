@@ -10,7 +10,7 @@ class User extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {}
+    this.state = {};
 
     this.userId = this.props.params.user_id;
 
@@ -30,6 +30,12 @@ class User extends Component {
   }
 
   componentDidMount() {
+    UserStore.load(this.userId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params == this.props.params) return;
+    this.userId = nextProps.params.user_id;
     UserStore.load(this.userId);
   }
 
