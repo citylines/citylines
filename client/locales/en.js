@@ -10,7 +10,6 @@ export default {
       log_in: 'Log in'
     },
     auth: {
-      log_in: 'Log in',
       log_in_with_google: 'Log in with Google',
       disclaimer: 'By logging in you are agreeing to the',
       disclaimer_link: 'contributor terms',
@@ -124,5 +123,18 @@ export default {
     lines: 'Lines',
     features: 'Tracks',
     stations: 'Stations'
+  },
+  user: {
+    my_cities: 'My cities',
+    cities_of_user: 'Cities of %(name)s',
+    table: {
+      city: 'City',
+      created_km: 'Created km',
+      modified_or_deleted_elements: 'Modified or deleted elements',
+      caption: 'Cities are ordered by created km and number of modified features'
+    },
+    you_never_contributed: "You haven't contributed to any city yet!",
+    user_never_contributed: "%(name)s hasn't contributed to any city yet",
+    see_cities: 'See cities'
   }
 }

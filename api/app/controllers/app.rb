@@ -7,8 +7,6 @@ class App < Sinatra::Base
 
   register Sinatra::AssetPipeline
 
-  helpers CityHelpers
-
   get '/*' do
     erb :index
   end

@@ -31,16 +31,15 @@ class Auth extends Component {
     const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
-    MainStore.setUser(json.username);
+    MainStore.setUser(json);
 
-    browserHistory.push('/');
+    browserHistory.push(`/user/${json.userid}`);
   }
 
   render() {
     return (
         <div className="u-center-block__content">
-          <Translate component="h3" className="c-heading" content="auth.log_in" />
-          <div className="o-form-element">
+          <div className="o-form-element" style={{textAlign: 'center'}}>
             {this.state.google_client_id &&
               <Translate
                 component={GoogleLogin}

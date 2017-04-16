@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
 
@@ -26,12 +25,13 @@ class Data extends Component {
 
   render() {
     return (
-        <div className="o-container o-container--small">
+        <div className="o-container o-container--medium">
           <div className="u-letter-box--large">
             <Translate component="h1" className="c-heading" content="data.title" />
 
-            <Translate component="h3" className="c-heading" content="data.download"/>
             <p><Translate content="data.license" unsafe />. <Translate content="data.see_terms_1" /> <Translate component={Link} className="c-link" to="/terms" content="data.see_terms_2" />.</p>
+
+            <Translate component="h3" className="c-heading" content="data.download"/>
             { Object.entries(this.datasets()).map(entry => {
               const label = entry[0];
               const url = entry[1];

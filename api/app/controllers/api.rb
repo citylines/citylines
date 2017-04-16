@@ -3,6 +3,9 @@ class Api < App
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
 
+  helpers CityHelpers
+  helpers UserHelpers
+
   get '/cities' do
     contributors_by_city = contributors
     city_length = lengths
@@ -177,5 +180,15 @@ class Api < App
     system.delete
 
     city_systems(@city).to_json
+  end
+
+  get '/user' do
+    user_id = params[:user_id]
+    user = User[user_id]
+
+    {
+      name: user.name.split(" ")[0],
+      cities: user_cities(user_id)
+    }.to_json
   end
 end

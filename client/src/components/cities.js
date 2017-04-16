@@ -99,7 +99,7 @@ class Cities extends Component {
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
-        <div className="o-container o-container--medium" style={{maxWidth:'40em'}}>
+        <div className="o-container o-container--medium">
           <div className="u-letter-box--super">
             <Translate component="h1" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe />
           </div>

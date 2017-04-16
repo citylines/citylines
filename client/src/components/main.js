@@ -32,7 +32,7 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !['/', '/auth', '/data', '/terms'].includes(this.props.location.pathname);
+    return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms/);
   }
 
   togglePanel() {
@@ -46,7 +46,7 @@ class Main extends Component {
     const json = await response.json();
 
     if (json.username) {
-      MainStore.setUser(json.username);
+      MainStore.setUser(json);
     }
   }
 
@@ -73,7 +73,7 @@ class Main extends Component {
                   {" citylines.co "}
               </Link>
               { this.state.username ?
-              <span className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</span>  :
+              <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</Link>  :
               <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> <Translate content="main.log_in" /></Link> }
               <Link to="/terms" className="c-nav__item c-nav__item--right">
                 <Translate content="terms.title" />
