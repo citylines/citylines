@@ -66,4 +66,29 @@ module UserHelpers
       features
     end
   end
+
+  def top_contributors(current_month: false)
+    dataset = CreatedFeature.left_join(:sections,
+                                       :created_features__feature_id => :sections__id,
+                                       :created_features__feature_class => 'Section')
+                            .left_join(:users,
+                                       :created_features__user_id => :users__id)
+                            .exclude(length: nil)
+              .select_group(:user_id, :users__name).select_append{sum(:length).as(sum)}
+              .order(Sequel.desc(:sum))
+
+    if current_month
+      month = Date.today.month
+      year = Date.today.year
+      range = (Date.new(year, month, 1)...Date.today)
+      dataset = dataset.where(created_features__created_at: range)
+    end
+
+    dataset.limit(10).map do |row|
+      h = row.values
+      h[:name] = h[:name].split(' ').first
+      h[:sum] = h[:sum] / 1000
+      h
+    end
+  end
 end
