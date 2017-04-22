@@ -104,6 +104,7 @@ class Cities extends Component {
             <Translate component="h1" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe />
           </div>
         </div>
+
         <div className="o-container o-container--small">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
@@ -115,6 +116,30 @@ class Cities extends Component {
               <div>
               { cities }
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="o-container o-container--small">
+          <div className="u-letter-box--large">
+            <h2 className="c-heading">Top contributors</h2>
+
+            <div className="contributors-list">
+              <h3 className="c-heading"> Total </h3>
+              <ol className="c-list c-list--ordered">
+                {this.state.topContributors.map(contributor =>
+                    <li className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
+                  )}
+              </ol>
+            </div>
+
+            <div className="contributors-list">
+              <h3 className="c-heading"> This month </h3>
+              <ol className="c-list c-list--ordered">
+                {this.state.monthTopContributors.map(contributor =>
+                    <li className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
+                  )}
+              </ol>
             </div>
           </div>
         </div>

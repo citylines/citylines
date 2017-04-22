@@ -305,3 +305,13 @@ button.save-system {
 .data-link {
   margin-left: 10px;
 }
+
+.contributors-list {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.contributors-list li {
+  padding-bottom: 5px;
+}
