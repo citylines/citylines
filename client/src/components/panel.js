@@ -20,12 +20,20 @@ class PanelHeader extends PureComponent {
 }
 
 class PanelBody extends Component {
-  componentDidMount() {
+  updateHeight() {
     const panel = this.refs.node.parentNode;
     const headerHeight = panel.children[0].clientHeight;
     const panelHeight = panel.clientHeight;
     const height = panelHeight - headerHeight;
     this.refs.node.style.setProperty('height', `${height}px`);
+  }
+
+  componentDidMount() {
+    this.updateHeight();
+  }
+
+  componentDidUpdate() {
+    this.updateHeight();
   }
 
   render() {

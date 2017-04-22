@@ -1,9 +1,8 @@
 import Store from './store';
 
 const MainStore = Object.assign({}, Store, {
-
   state: {
-    displayPanel: true,
+    displayPanel: !(window.innerWidth < 600),
     panelFullWidth: false,
     loading: false
   },

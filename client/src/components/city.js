@@ -116,7 +116,7 @@ class City extends PureComponent {
   /* ------------- */
 
   panelStyle() {
-    const style = {display: this.state.main.displayPanel ? 'block' : 'none'};
+    const style = {visibility: this.state.main.displayPanel ? 'visible' : 'hidden'};
     if (this.state.main.panelFullWidth) style.width = '100%';
     return style;
   }
