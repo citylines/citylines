@@ -128,7 +128,7 @@ class Cities extends Component {
               <h3 className="c-heading"> Total </h3>
               <ol className="c-list c-list--ordered">
                 {this.state.topContributors.map(contributor =>
-                    <li className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
+                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
                   )}
               </ol>
             </div>
@@ -137,7 +137,7 @@ class Cities extends Component {
               <h3 className="c-heading"> This month </h3>
               <ol className="c-list c-list--ordered">
                 {this.state.monthTopContributors.map(contributor =>
-                    <li className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
+                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
                   )}
               </ol>
             </div>
