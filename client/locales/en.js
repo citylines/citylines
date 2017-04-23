@@ -2,14 +2,17 @@ export default {
     cities: {
       title: "In <b>citylines.co</b> we want to build the transport systems of the World's cities",
       search: 'Enter a city or a country',
-      contributors: { one: '%(contributors)s contributor', other: '%(contributors)s contributors'},
-      support: 'Support in our',
-      google_group: 'Google group',
       contributors: {
-        title: 'Top contributors',
-        total: 'Ever',
-        this_month: 'This month'
-      }
+        one: '%(contributors)s contributor',
+        other: '%(contributors)s contributors',
+        list: {
+          title: 'Top contributors',
+          total: 'Ever',
+          this_month: 'This month'
+        }
+      },
+      support: 'Support in our',
+      google_group: 'Google group'
     },
     main: {
       log_in: 'Log in'

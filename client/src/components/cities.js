@@ -122,10 +122,10 @@ class Cities extends Component {
 
         <div className="o-container o-container--small">
           <div className="u-letter-box--large">
-            <Translate component="h2" className="c-heading" content="cities.contributors.title" />
+            <Translate component="h2" className="c-heading" content="cities.contributors.list.title" />
 
             <div className="contributors-list">
-              <Translate component="h3" className="c-heading" content="cities.contributors.total" />
+              <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />
               <ol className="c-list c-list--ordered">
                 {this.state.topContributors.map(contributor =>
                     <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
@@ -134,7 +134,7 @@ class Cities extends Component {
             </div>
 
             <div className="contributors-list">
-              <Translate component="h3" className="c-heading" content="cities.contributors.this_month" />
+              <Translate component="h3" className="c-heading" content="cities.contributors.list.this_month" />
               <ol className="c-list c-list--ordered">
                 {this.state.monthTopContributors.map(contributor =>
                     <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>
