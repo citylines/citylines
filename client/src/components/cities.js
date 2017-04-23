@@ -122,9 +122,9 @@ class Cities extends Component {
         <div className="o-container o-container--medium" style={{textAlign: 'center', marginTop:30}}>
           <div className="u-letter-box--super">
             <p className="c-paragragh">
-              <span className="contact-icon"><span className="fa fa-twitter" /><a className="c-link" target="_blank" href="https://twitter.com/citylines_co">Twitter</a></span>
-              <span className="contact-icon"><span className="fa fa-envelope"/><a className="c-link" target="_blank" href="mailto:info@citylines.co">Email</a></span>
-              <span className="contact-icon"><span className="fa fa-github" /><a className="c-link"  target="_blank" href="https://github.com/BrunoSalerno/citylines">Github</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="https://twitter.com/citylines_co"><span className="fa fa-twitter" /> Twitter</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/> Email</a></span>
+              <span className="contact-icon"><a className="c-link"  target="_blank" href="https://github.com/BrunoSalerno/citylines"><span className="fa fa-github" /> Github</a></span>
             </p>
             <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://groups.google.com/forum/#!forum/citylinesco"><Translate content="cities.google_group" /></a>.</p>
           </div>
