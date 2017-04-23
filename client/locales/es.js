@@ -4,7 +4,12 @@ export default {
       search: 'Ingresa una ciudad o un país',
       contributors: { one: '%(contributors)s colaborador', other: '%(contributors)s colaboradores'},
       support: 'Soporte en nuestro',
-      google_group: 'grupo de Google'
+      google_group: 'grupo de Google',
+      contributors: {
+        title: 'Mayores colaboradores',
+        total: 'Histórico',
+        this_month: 'Este mes'
+      }
     },
     main: {
       log_in: 'Ingresar'

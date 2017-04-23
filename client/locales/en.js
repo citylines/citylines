@@ -4,7 +4,12 @@ export default {
       search: 'Enter a city or a country',
       contributors: { one: '%(contributors)s contributor', other: '%(contributors)s contributors'},
       support: 'Support in our',
-      google_group: 'Google group'
+      google_group: 'Google group',
+      contributors: {
+        title: 'Top contributors',
+        total: 'Ever',
+        this_month: 'This month'
+      }
     },
     main: {
       log_in: 'Log in'
