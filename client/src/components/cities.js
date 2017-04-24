@@ -121,7 +121,7 @@ class Cities extends Component {
         </div>
 
         <div className="o-container o-container--small">
-          <div className="u-letter-box--large">
+          <div className="u-letter-box--large" style={{textAlign: 'center'}}>
             <Translate component="h2" className="c-heading" content="cities.contributors.list.title" />
 
             <div className="contributors-list">
