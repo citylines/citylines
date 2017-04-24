@@ -2,7 +2,15 @@ export default {
     cities: {
       title: 'En <b>citylines.co</b> queremos reconstruir los sistemas de transporte de las ciudades del mundo',
       search: 'Ingresa una ciudad o un país',
-      contributors: { one: '%(contributors)s colaborador', other: '%(contributors)s colaboradores'},
+      contributors: {
+        one: '%(contributors)s colaborador',
+        other: '%(contributors)s colaboradores',
+        list: {
+          title: 'Mayores colaboradores',
+          total: 'Histórico',
+          this_month: 'Este mes'
+        }
+      },
       support: 'Soporte en nuestro',
       google_group: 'grupo de Google'
     },
