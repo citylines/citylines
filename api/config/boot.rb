@@ -11,6 +11,7 @@ require 'sinatra/asset_pipeline'
 require_relative 'database'
 require_relative 'mapbox'
 require_relative 'auth'
+require_relative 'cache'
 
 Dir[File.join(APP_ROOT, "lib", "**/*.rb")].each {|file| require file}
 Dir[File.join(APP_ROOT, "app", "helpers", "*.rb")].each {|file| require file}
