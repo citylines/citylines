@@ -120,7 +120,6 @@ class Cities extends Component {
           </div>
         </div>
 
-        { this.state.topContributors.length ?
         <div className="o-container o-container--small">
           <div className="u-letter-box--large" style={{textAlign: 'center'}}>
             <Translate component="h2" className="c-heading" content="cities.contributors.list.title" />
@@ -143,7 +142,7 @@ class Cities extends Component {
               </ol>
             </div>
           </div>
-        </div> : '' }
+        </div>
 
         <div className="o-container o-container--medium" style={{textAlign: 'center', marginTop:30}}>
           <div className="u-letter-box--super">
