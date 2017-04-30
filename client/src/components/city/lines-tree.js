@@ -29,7 +29,7 @@ class LinesTree extends PureComponent {
     const expandClass = this.state.expanded ? 'c-tree__item--expanded' : 'c-tree__item--expandable';
 
     return (
-      <ul style={{marginLeft: "1em"}} className="c-tree">
+      <ul style={{marginLeft: "1em", paddingRight: "1em"}} className="c-tree">
         <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
           <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
