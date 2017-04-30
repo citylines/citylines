@@ -5,8 +5,16 @@ class Api < App
 
   helpers CityHelpers
   helpers UserHelpers
+  helpers CacheHelpers
+
+  use Rack::Cache,
+    :verbose     => true,
+    :metastore   => CACHE_CLIENT,
+    :entitystore => CACHE_CLIENT
 
   get '/cities' do
+    last_modified last_modified_city_date
+
     contributors_by_city = contributors
     city_length = lengths
 

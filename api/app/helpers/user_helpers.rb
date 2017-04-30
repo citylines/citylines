@@ -80,7 +80,7 @@ module UserHelpers
     if current_month
       month = Date.today.month
       year = Date.today.year
-      range = (Date.new(year, month, 1)..Date.today)
+      range = (Date.new(year, month, 1)..Date.today + 1)
       dataset = dataset.where(created_features__created_at: range)
     end
 

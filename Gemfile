@@ -11,6 +11,8 @@ gem 'accentless'
 gem 'jwt'
 gem 'google-id-token'
 gem 'naturally'
+gem 'rack-cache'
+gem 'dalli'
 
 gem 'pry', require: false
 
@@ -19,4 +21,5 @@ group :test do
   gem 'rack-test'
   gem 'minitest'
   gem 'database_cleaner'
+  gem 'timecop'
 end
