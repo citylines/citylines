@@ -14,6 +14,7 @@ CACHE_CLIENT = Dalli::Client.new((server || "").split(","),
                            :username => username,
                            :password => password,
                            :failover => true,
+                           :compress => true,
                            :socket_timeout => 1.5,
                            :socket_failure_delay => 0.2,
                            :value_max_bytes => 1048576 * 50)
