@@ -10,7 +10,12 @@ class Api < App
   use Rack::Cache,
     :verbose     => true,
     :metastore   => CACHE_CLIENT,
-    :entitystore => CACHE_CLIENT
+    :entitystore => CACHE_CLIENT,
+    :private_headers => []
+
+  before do
+    cache_control :no_cache
+  end
 
   get '/cities' do
     last_modified last_modified_city_date
@@ -61,6 +66,9 @@ class Api < App
 
   get '/:url_name/source/:type' do |url_name, type|
     @city = City[url_name: url_name]
+
+    last_modified last_modified_source_feature(@city, type)
+
     lines_features_collection(@city, type).to_json
   end
 
