@@ -40,15 +40,14 @@ module CityHelpers
     lengths
   end
 
-  def lines_features_collection(city, type)
+  def features_query(city, type)
+    klass = type == 'sections' ? Section : Station
     city_lines_ids = city.lines.map(&:id)
-    query = {line_id: city_lines_ids}
+    klass.where(line_id: city_lines_ids)
+  end
 
-    features = if type == 'sections'
-                 Section.where(query).map(&:feature)
-               else
-                 Station.where(query).map(&:feature)
-               end
+  def lines_features_collection(city, type)
+    features = features_query(city, type).map(&:feature)
 
     {type: "FeatureCollection",
      features: features}
