@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import {Helmet} from "react-helmet";
 
 import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
@@ -121,11 +122,28 @@ class City extends PureComponent {
     return style;
   }
 
+  head() {
+    const title = `${this.state.name} - citylines.co`;
+    const description = `Explore and improve the transport systems of ${this.state.name}`;
+
+    return (
+        <Helmet>
+          <title>{ title }</title>
+          <meta property="og:title" content={ title } />
+          <meta name="description" content={ description } />
+          <meta property="og:description" content={ description } />
+        </Helmet>
+        )
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <div className="o-grid o-panel">
+
+          { this.head() }
+
           <div id="panel" style={this.panelStyle()}>
             <PanelHeader
               name={this.state.name}
