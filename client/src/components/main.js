@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
+import {Helmet} from "react-helmet";
+
 import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
@@ -62,8 +64,18 @@ class Main extends Component {
   }
 
   render() {
+    const title = "citylines.co"
+    const description = "In citylines.co we want to build the transport systems of the World's cities"
+
     return (
         <div>
+          <Helmet>
+            <title>{ title }</title>
+            <meta property="og:title" content={ title } />
+            <meta name="description" content={ description } />
+            <meta property="og:description" content={ description } />
+          </Helmet>
+
           <nav className="c-nav c-nav--inline">
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
