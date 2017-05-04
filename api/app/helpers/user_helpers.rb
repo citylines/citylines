@@ -67,7 +67,7 @@ module UserHelpers
     end
   end
 
-  def top_contributors(current_month: false)
+  def top_contributors(last_month: false)
     dataset = CreatedFeature.left_join(:sections,
                                        :created_features__feature_id => :sections__id,
                                        :created_features__feature_class => 'Section')
@@ -77,10 +77,8 @@ module UserHelpers
               .select_group(:user_id, :users__name).select_append{sum(:length).as(sum)}
               .order(Sequel.desc(:sum))
 
-    if current_month
-      month = Date.today.month
-      year = Date.today.year
-      range = (Date.new(year, month, 1)..Date.today + 1)
+    if last_month
+      range = (Date.today - 30..Date.today + 1)
       dataset = dataset.where(created_features__created_at: range)
     end
 

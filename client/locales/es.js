@@ -8,7 +8,7 @@ export default {
         list: {
           title: 'Mayores colaboradores',
           total: 'Histórico',
-          this_month: 'Este mes'
+          last_month: 'Último mes'
         }
       },
       support: 'Soporte en nuestro',

@@ -35,7 +35,7 @@ class Api < App
 
     {cities: cities,
      top_contributors: top_contributors,
-     month_top_contributors: top_contributors(current_month: true)}.to_json
+     month_top_contributors: top_contributors(last_month: true)}.to_json
   end
 
   get '/:url_name/config' do |url_name|

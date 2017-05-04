@@ -8,7 +8,7 @@ export default {
         list: {
           title: 'Top contributors',
           total: 'Ever',
-          this_month: 'This month'
+          last_month: 'Last month'
         }
       },
       support: 'Support in our',

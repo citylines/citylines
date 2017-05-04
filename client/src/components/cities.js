@@ -134,7 +134,7 @@ class Cities extends Component {
             </div>
 
             <div className="contributors-list">
-              <Translate component="h3" className="c-heading" content="cities.contributors.list.this_month" />
+              <Translate component="h3" className="c-heading" content="cities.contributors.list.last_month" />
               <ol className="c-list c-list--ordered">
                 {this.state.monthTopContributors.map(contributor =>
                     <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum} km</li>

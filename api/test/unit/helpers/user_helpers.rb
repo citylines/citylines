@@ -105,7 +105,7 @@ describe UserHelpers do
     end
 
     it "should return top contributors of the current month" do
-      contributors = top_contributors(current_month: true)
+      contributors = top_contributors(last_month: true)
 
       [
         {user_id: @pepe.id, name: 'Pepe', sum: 4},
