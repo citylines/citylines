@@ -1,7 +1,15 @@
 Citylines
 =========
 
-This is the source code of [Citylines.co](http://www.citylines.co). The repo includes the client (built with React JS) and the API (a Sinatra app).
+This is the source code of [Citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
+
+General view
+![](https://cloud.githubusercontent.com/assets/6061036/25874821/bcae4a42-34ea-11e7-83d0-4e59dff88db2.png)
+
+Editor
+![](https://cloud.githubusercontent.com/assets/6061036/25874827/c45b2120-34ea-11e7-8e8a-8e069d56c9a4.png)
+
+The repo includes the client (built with React JS) and the API (a Sinatra app).
 
 Development
 ===========
@@ -58,3 +66,7 @@ API
 ```
 rake test
 ```
+
+License
+=======
+MIT
