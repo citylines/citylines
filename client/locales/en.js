@@ -11,8 +11,8 @@ export default {
           last_month: 'Last month'
         }
       },
-      support: 'Support in our',
-      google_group: 'Google group'
+      support: 'Join our',
+      support_link: 'live chat room at Gitter'
     },
     main: {
       log_in: 'Log in'

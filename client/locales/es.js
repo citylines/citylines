@@ -11,8 +11,8 @@ export default {
           last_month: 'Último mes'
         }
       },
-      support: 'Soporte en nuestro',
-      google_group: 'grupo de Google'
+      support: 'Únete a nuestra',
+      support_link: 'sala de chat en Gitter'
     },
     main: {
       log_in: 'Ingresar'
