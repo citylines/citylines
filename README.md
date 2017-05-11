@@ -75,7 +75,7 @@ rake test
 Contact
 =======
 
-Chat with the community at [Gitter](https://gitter.im/citylines/Lobby), send an email to info at citylines.co or tweet at @citylines_co. Of course, you can also contact *me*.
+Chat with the community at [Gitter](https://gitter.im/citylines/Lobby), send an email to info at citylines.co or tweet at [@citylines_co](https://twitter.com/citylines_co). Of course, you can also contact *me*.
 
 License
 =======
