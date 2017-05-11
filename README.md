@@ -1,7 +1,7 @@
 Citylines
 =========
 
-This is the source code of [Citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
+This is the source code of [citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
 
 General view
 ![](https://cloud.githubusercontent.com/assets/6061036/25874821/bcae4a42-34ea-11e7-83d0-4e59dff88db2.png)
@@ -9,10 +9,15 @@ General view
 Editor
 ![](https://cloud.githubusercontent.com/assets/6061036/25874827/c45b2120-34ea-11e7-8e8a-8e069d56c9a4.png)
 
-The repo includes the client (built with React JS) and the API (a Sinatra app).
-
 Development
 ===========
+
+This repo contains the client and the API, which are built with the following technologies:
+- Client: ReactJS + Mapbox GL's data-driven magic.
+- API: Sinatra + Postgres/Postgis
+
+In order to setup the development enviroment, the following steps are required.
+
 Database
 --------
 - Install Postgres 9.5
@@ -66,6 +71,11 @@ API
 ```
 rake test
 ```
+
+Contact
+=======
+
+Chat with the community at [Gitter](https://gitter.im/citylines/Lobby), send an email to info at citylines.co or tweet at @citylines_co. Of course, you can also contact *me*.
 
 License
 =======
