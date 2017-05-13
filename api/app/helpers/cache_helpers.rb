@@ -1,6 +1,6 @@
 module CacheHelpers
   def last_modified_city_date
-    [Section.max(:updated_at), DeletedFeature.where(feature_class: 'Section').max(:created_at), System.max(:updated_at)].compact.max
+    [Section.max(:updated_at), DeletedFeature.where(feature_class: 'Section').max(:created_at), System.max(:updated_at), City.max(:updated_at)].compact.max
   end
 
   def last_modified_source_feature(city, type)

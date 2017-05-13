@@ -7,6 +7,7 @@ class City < Sequel::Model(:cities)
     one_to_many :lines
     one_to_many :systems
 
+    plugin :timestamps, :update_on_create => true
     plugin :geometry
 
     def set_coords(lat,lon)

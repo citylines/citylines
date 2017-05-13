@@ -59,6 +59,24 @@ describe CacheHelpers do
 
       assert_equal deleted_feature.created_at, last_modified_city_date
     end
+
+    it "should return the updated_city" do
+      section1 = Timecop.freeze(Date.today - 4) do
+        Section.create(line_id: 222)
+      end
+
+      system1 = Timecop.freeze(Date.today - 3) do
+        System.create(city_id: 33)
+      end
+
+      section2 = Timecop.freeze(Date.today - 2) do
+        Section.create(line_id: 222)
+      end
+
+      city = City.create(name: 'Fake City', system_name: '', country: 'Fake Country', url_name: 'fake-city')
+
+      assert_equal city.updated_at, last_modified_city_date
+    end
   end
 
   describe "last_modified_source_feature" do
