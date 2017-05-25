@@ -15,7 +15,7 @@
   "author": "Bruno Salerno",
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mapbox-gl-draw": "^0.17.3",
+    "@mapbox/mapbox-gl-draw": "^0.18.1",
     "babel": "^6.5.2",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
