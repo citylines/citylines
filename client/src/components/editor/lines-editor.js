@@ -40,6 +40,8 @@ class LinesEditor extends Component {
   }
 
   onItemClick(e, lineUrlName) {
+    if (e.target.matches(".color-picker-container *")) return;
+
     if (e.target.className != 'color') {
       this.setState(Object.assign({}, this.state, {displayColorPicker: {}}));
     } else {
