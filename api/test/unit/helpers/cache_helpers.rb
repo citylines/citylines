@@ -164,4 +164,44 @@ describe CacheHelpers do
       end
     end
   end
+
+  describe "last_modified_system_or_line" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    it "should return the system date" do
+      line = Timecop.freeze(Date.today - 3) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today - 1) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      # system of another city
+      System.create(city_id: 567, name: "Subte")
+
+      last_modified = last_modified_system_or_line(@city)
+
+      assert_equal system.created_at, last_modified
+    end
+
+    it "should return the line date" do
+      system = Timecop.freeze(Date.today - 3) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      line = Timecop.freeze(Date.today - 1) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      # line of another city
+      Line.create(city_id: 567, name: "H")
+
+      last_modified = last_modified_system_or_line(@city)
+
+      assert_equal line.created_at, last_modified
+    end
+  end
 end

@@ -67,7 +67,7 @@ class Api < App
   get '/:url_name/source/:type' do |url_name, type|
     @city = City[url_name: url_name]
 
-    last_modified last_modified_source_feature(@city, type)
+    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
 
     lines_features_collection(@city, type).to_json
   end

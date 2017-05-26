@@ -8,4 +8,8 @@ module CacheHelpers
 
     [features_query(city, type).max(:updated_at), DeletedFeature.where(feature_class: klass_name, city_id: city.id).max(:created_at)].compact.max
   end
+
+  def last_modified_system_or_line(city)
+    [System.where(city_id: city.id).max(:updated_at), Line.where(city_id: city.id).max(:updated_at)].compact.max
+  end
 end
