@@ -48,4 +48,24 @@ class Auth < App
   get '/google_client_id' do
     {google_client_id: GOOGLE_CLIENT_ID}.to_json
   end
+
+  namespace '/twitter' do
+    get do
+      require "oauth"
+
+      callback_url = "http://f4382152.ngrok.io/api/auth/twitter/callback/"
+
+      consumer = OAuth::Consumer.new(TWITTER_API_KEY, TWITTER_API_SECRET, {site: "https://api.twitter.com", scheme: :header })
+
+      request_token = consumer.get_request_token(oauth_callback: callback_url)
+
+      redirect request_token.authorize_url(oauth_callback: callback_url)
+    end
+
+    get "/callback" do
+      require "pry"; binding.pry
+
+      puts "bye"
+    end
+  end
 end

@@ -7,6 +7,7 @@ class App < Sinatra::Base
   set :assets_host, "cdn.citylines.co"
 
   register Sinatra::AssetPipeline
+  register Sinatra::Namespace
 
   get '/*' do
     erb :index

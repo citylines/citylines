@@ -4,6 +4,7 @@ ruby '2.3.0'
 
 gem "rake"
 gem "sinatra"
+gem "sinatra-contrib"
 gem 'sinatra-asset-pipeline', '>= 1.0.2'
 gem 'sequel'
 gem 'pg'
@@ -13,6 +14,7 @@ gem 'google-id-token'
 gem 'naturally'
 gem 'rack-cache'
 gem 'dalli'
+gem 'oauth'
 
 gem 'pry', require: false
 

@@ -1,2 +1,5 @@
 secret:
 google_client_id:
+twitter:
+  api_key:
+  api_secret:

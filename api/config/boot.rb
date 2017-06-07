@@ -7,6 +7,7 @@ APP_ROOT = File.expand_path('../..', __FILE__)
 require 'sequel'
 require 'sinatra'
 require 'sinatra/asset_pipeline'
+require "sinatra/namespace"
 
 require_relative 'database'
 require_relative 'mapbox'
