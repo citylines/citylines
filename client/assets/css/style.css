@@ -315,3 +315,35 @@ button.save-system {
 .contributors-list li {
   padding-bottom: 5px;
 }
+
+ul.auth {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.auth li {
+  margin-bottom:5px;
+}
+
+ul.auth a.twitter {
+  display: inline-block;
+  background-color: #00aced;
+  color: rgb(255, 255, 255);
+  width: 190px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Roboto;
+  background-position: initial initial;
+  background-repeat: initial initial;
+  line-height: 19px;
+  text-decoration: none;
+  cursor: default;
+}

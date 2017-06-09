@@ -40,15 +40,18 @@ class Auth extends Component {
     return (
         <div className="u-center-block__content">
           <div className="o-form-element" style={{textAlign: 'center'}}>
+          <ul className="auth">
             {this.state.google_client_id &&
-              <Translate
+              <li><Translate
                 component={GoogleLogin}
                 clientId={this.state.google_client_id}
                 attributes={{buttonText: "auth.log_in_with_google"}}
                 fetchBasicProfile={true}
                 autoLoad={true}
-                onSuccess={this.onGoogleResponse} />
+                onSuccess={this.onGoogleResponse} /></li>
             }
+            <li><Translate content="auth.log_in_with_twitter" component="a" href="/api/auth/twitter" className="twitter"/></li>
+            </ul>
           </div>
           <div className="o-form-element">
             <Translate content="auth.disclaimer"/> <Translate component={Link} className="c-link" content="auth.disclaimer_link" to="/terms#contributor"/><br />
