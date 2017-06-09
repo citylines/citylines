@@ -1,6 +1,9 @@
 require 'google-id-token'
+require "sinatra/namespace"
 
 class Auth < App
+  register Sinatra::Namespace
+
   post '/' do
     body = JSON.parse request.body.read
 
@@ -47,5 +50,55 @@ class Auth < App
 
   get '/google_client_id' do
     {google_client_id: GOOGLE_CLIENT_ID}.to_json
+  end
+
+  namespace '/twitter' do
+    before do
+      require "oauth"
+
+      @consumer = OAuth::Consumer.new(TWITTER_API_KEY, TWITTER_API_SECRET, {site: "https://api.twitter.com", scheme: :header })
+    end
+
+    get do
+      callback_url = "http://www.citylines.co/api/auth/twitter/callback"
+
+      request_token = @consumer.get_request_token(oauth_callback: callback_url)
+
+      redirect request_token.authorize_url(oauth_callback: callback_url)
+    end
+
+    get "/callback" do
+      hash = {oauth_token: params[:oauth_token], oauth_token_secret: params[:oauth_verifier]}
+
+      request_token = OAuth::RequestToken.from_hash(@consumer, hash)
+      access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
+
+      res = access_token.get("https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true")
+      payload = JSON.parse(res.body, symbolize_names: true)
+
+      name = payload[:name]
+      email = payload[:email]
+      twitter = payload[:screen_name]
+
+      user = User[email: email]
+
+      if user && !user.twitter
+        user.twitter = twitter
+        user.save
+      end
+
+      unless user
+        user = User.new(name: name, email: email, twitter: twitter)
+        user.save
+      end
+
+      response.set_cookie(token_cookie_name,
+                          value: token(user.id),
+                          path: '/',
+                          expires: Time.at(expiration_time),
+                          httponly: true)
+
+      redirect "/user/#{user.id}"
+    end
   end
 end

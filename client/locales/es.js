@@ -19,6 +19,7 @@ export default {
     },
     auth: {
       log_in_with_google: 'Iniciar sesión con Google',
+      log_in_with_twitter: 'Iniciar sesión con Twitter',
       disclaimer: 'Al iniciar sesión usted acepta los',
       disclaimer_link:'términos del colaborador',
       privacy_disclaimer: 'y la',

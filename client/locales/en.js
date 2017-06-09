@@ -19,6 +19,7 @@ export default {
     },
     auth: {
       log_in_with_google: 'Log in with Google',
+      log_in_with_twitter: 'Log in with Twitter',
       disclaimer: 'By logging in you are agreeing to the',
       disclaimer_link: 'contributor terms',
       privacy_disclaimer: 'and the',
