@@ -13,6 +13,12 @@ module OSMHelpers
      features: features}
   end
 
+  def rejectable_member(member)
+    member[:type] == "way" && member[:tags] &&
+    (member[:tags][:area] == "yes" ||
+     member[:tags][:public_transport] == "platform")
+  end
+
   def fetch_osm_relations(route,s,n,w,e)
     require 'overpass_api_ruby'
 
@@ -45,7 +51,7 @@ module OSMHelpers
       relation[:members] = relation[:members].map do |member|
         type = member[:type]
         data[type.to_sym].find{|e| e[:id] == member[:ref]}
-      end
+      end.reject {|member| rejectable_member(member)}
 
       relation
     }
