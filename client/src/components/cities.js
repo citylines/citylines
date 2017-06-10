@@ -149,7 +149,8 @@ class Cities extends Component {
             <p className="c-paragragh">
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://twitter.com/citylines_co"><span className="fa fa-twitter" /> Twitter</a></span>
               <span className="contact-icon"><a className="c-link" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/> Email</a></span>
-              <span className="contact-icon"><a className="c-link"  target="_blank" href="https://github.com/BrunoSalerno/citylines"><span className="fa fa-github" /> Github</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="https://github.com/BrunoSalerno/citylines"><span className="fa fa-github" /> Github</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="https://www.kaggle.com/citylines/city-lines">kaggle</a></span>
             </p>
             <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /></a>.</p>
           </div>
