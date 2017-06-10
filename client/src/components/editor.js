@@ -143,7 +143,6 @@ class Editor extends PureComponent {
       e: geo.bounds[1][0],
       n: geo.bounds[1][1]
     }
-    console.log(bounds);
     EditorStore.importFromOSM(this.urlName, bounds);
   }
 
