@@ -38,6 +38,7 @@ class Editor extends PureComponent {
     this.bindedOnSystemSave = this.onSystemSave.bind(this);
     this.bindedOnCreateSystem = this.onCreateSystem.bind(this);
     this.bindedOnSystemDelete = this.onSystemDelete.bind(this);
+    this.bindedOnImportFromOSMClick = this.onImportFromOSMClick.bind(this);
   }
 
   componentWillMount() {
@@ -133,6 +134,10 @@ class Editor extends PureComponent {
     EditorStore.createSystem(this.urlName, systemName);
   }
 
+  onImportFromOSMClick() {
+    EditorStore.importFromOSM(this.urlName);
+  }
+
   render() {
     return (
           <PanelBody>
@@ -163,6 +168,9 @@ class Editor extends PureComponent {
                 onDiscard={this.bindedOnDiscardChanges}
                 onSave={this.bindedOnSaveChanges}
               />
+              <div className="c-card">
+                <button onClick={this.bindedOnImportFromOSMClick} className="c-button">Import from OSM</button>
+              </div>
             </div>
             :
             <LinesEditor lines={this.state.lines}

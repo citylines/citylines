@@ -11,8 +11,16 @@ class FeatureViewer extends PureComponent {
     this.buildState(props);
   }
 
+  numericField(field) {
+    return ['opening', 'buildstart', 'closure'].includes(field);
+  }
+
+  visibleFields() {
+    return ['opening', 'buildstart', 'closure', 'name', 'osm_id', 'osm_tags'];
+  }
+
   editableFields() {
-    return ['opening', 'buildstart', 'closure', 'name']
+    return ['opening', 'buildstart', 'closure', 'name'];
   }
 
   componentWillReceiveProps(props) {
@@ -30,7 +38,7 @@ class FeatureViewer extends PureComponent {
       const key = entry[0];
       const value = entry[1];
 
-      if (!this.editableFields().includes(key)) return;
+      if (!this.visibleFields().includes(key)) return;
 
       this.state.fields[key] = value;
     });
@@ -85,7 +93,15 @@ class FeatureViewer extends PureComponent {
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
                     <td className="c-table__cell">
-                      <input className="c-field" type={key != 'name' ? 'number' : 'text'} name={key} onChange={this.bindedOnValueChange} value={this.state.fields[key]} />
+                      { this.editableFields().includes(key) ?
+                      <input className="c-field"
+                             type={this.numericField(key) ? 'number' : 'text'}
+                             name={key}
+                             onChange={this.bindedOnValueChange}
+                             value={this.state.fields[key]}/>
+                        :
+                        this.state.fields[key]
+                      }
                     </td>
                   </tr>
                 )

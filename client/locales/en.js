@@ -67,7 +67,9 @@ export default {
         name: 'Name',
         opening: 'Opening',
         buildstart: 'Beginning of construction',
-        closure: 'Closure'
+        closure: 'Closure',
+        osm_id: 'OSM Id',
+        osm_tags: 'OSM Tags'
       }
     },
     modified_features: {

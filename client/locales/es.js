@@ -67,7 +67,9 @@ export default {
         name: 'Nombre',
         opening: 'Inauguración',
         buildstart: 'Comienzo de construcción',
-        closure: 'Cierre'
+        closure: 'Cierre',
+        osm_id: 'Id de OSM',
+        osm_tags: 'Tags de OSM'
       }
     },
     modified_features: {

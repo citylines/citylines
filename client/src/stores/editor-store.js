@@ -100,6 +100,13 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async fetchFeaturesFromOSM(urlName) {
+    const params = 'route=subway&s=-34.705448&n=-34.526562&w=-58.531471&e=-58.335159'
+    const url = `/api/editor/${urlName}/osm?${params}`;
+    const response = await fetch(url, {credentials: 'same-origin'});
+    const json = await response.json();
+    return json;
+  },
 /* ------------ */
 
   async load(urlName) {
@@ -233,7 +240,7 @@ const EditorStore = Object.assign({}, Store, {
       feature.properties.buildstart = 0;
       feature.properties.closure = 999999;
       feature.properties.line_url_name = cityData.lines[0] ? cityData.lines[0].url_name : null;
-      if (klass == 'Station') feature.properties.name = '';
+      if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
       this.pushFeatureToFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
@@ -293,6 +300,14 @@ const EditorStore = Object.assign({}, Store, {
 
     cityData.savingData = false;
     this.emitChangeEvent();
+  },
+
+  async importFromOSM(urlName) {
+    const data = await this.fetchFeaturesFromOSM(urlName);
+    this.setFeatureCreated(urlName, data.features.map(f => {
+      f.id = `osm_${f.properties.osm_id}`;
+      return f;
+    }));
   }
 });
 
