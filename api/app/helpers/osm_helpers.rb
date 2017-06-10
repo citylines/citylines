@@ -50,8 +50,11 @@ module OSMHelpers
     relations.map {|relation|
       relation[:members] = relation[:members].map do |member|
         type = member[:type]
+
+        next if type == "relation"
+
         data[type.to_sym].find{|e| e[:id] == member[:ref]}
-      end.reject {|member| rejectable_member(member)}
+      end.compact.reject {|member| rejectable_member(member)}
 
       relation
     }
