@@ -58,13 +58,18 @@ module OSMHelpers
                              else
                                element[:nodes].map {|node| [node[:lon], node[:lat]]}
                              end
+    properties = {
+      osm_id: element[:id],
+      osm_tags: element[:tags].to_json
+    }
+
+    if type == "node" && element[:tags] && element[:tags][:name]
+      properties[:name] = element[:tags][:name]
+    end
+
     {
      type: "Feature",
-     properties: {
-      osm_id: element[:id],
-      osm_tags: element[:tags].to_json,
-      name: type == "node" && element[:tags] && element[:tags][:name]
-     },
+     properties: properties,
      geometry: geometry
     }
   end

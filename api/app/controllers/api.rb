@@ -6,6 +6,7 @@ class Api < App
   helpers CityHelpers
   helpers UserHelpers
   helpers CacheHelpers
+  helpers OSMHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -205,13 +206,11 @@ class Api < App
 
     #TODO: use @city to find colliding features by osm_id
 
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    route = args[:route]
-    s = args[:s]
-    n = args[:n]
-    w = args[:w]
-    e = args[:e]
+    route = params[:route]
+    s = params[:s]
+    n = params[:n]
+    w = params[:w]
+    e = params[:e]
 
     halt unless (route && s && n && w && e)
 
