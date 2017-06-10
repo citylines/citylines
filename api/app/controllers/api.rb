@@ -200,6 +200,24 @@ class Api < App
     city_systems(@city).to_json
   end
 
+  get '/editor/:url_name/osm' do |url_name|
+    protect
+
+    #TODO: use @city to find colliding features by osm_id
+
+    args = JSON.parse(request.body.read, symbolize_names: true)
+
+    route = args[:route]
+    s = args[:s]
+    n = args[:n]
+    w = args[:w]
+    e = args[:e]
+
+    halt unless (route && s && n && w && e)
+
+    get_osm_features_collection(route, s, n, w, e).to_json
+  end
+
   get '/user' do
     user_id = params[:user_id]
     user = User[user_id]
