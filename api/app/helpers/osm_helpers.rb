@@ -32,7 +32,9 @@ module OSMHelpers
     data = {
       node: nodes,
       way: response[:elements].select{|e| e[:type] == "way"}.map {|way|
-        way[:nodes] = nodes.select {|node| way[:nodes].include?(node[:id])}
+        way[:nodes] = way[:nodes].map {|node_id|
+          nodes.find{|n| n[:id] == node_id}
+        }
         way
       }
     }
