@@ -1,6 +1,7 @@
 import Store from './store';
 
 import 'whatwg-fetch';
+import {v1 as uuid } from 'uuid';
 
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
@@ -234,7 +235,7 @@ const EditorStore = Object.assign({}, Store, {
 
     features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      feature.properties.id = Date.now();
+      feature.properties.id = uuid();
       feature.properties.klass = klass;
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;
