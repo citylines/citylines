@@ -9,6 +9,7 @@ import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
 
+import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
 
@@ -135,7 +136,15 @@ class Editor extends PureComponent {
   }
 
   onImportFromOSMClick() {
-    EditorStore.importFromOSM(this.urlName);
+    const geo = CityStore.fetchGeoData(this.urlName);
+    const bounds = {
+      w: geo.bounds[0][0],
+      s: geo.bounds[0][1],
+      e: geo.bounds[1][0],
+      n: geo.bounds[1][1]
+    }
+    console.log(bounds);
+    EditorStore.importFromOSM(this.urlName, bounds);
   }
 
   render() {

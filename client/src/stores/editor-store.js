@@ -101,8 +101,8 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  async fetchFeaturesFromOSM(urlName) {
-    const params = 'route=subway&s=-34.705448&n=-34.526562&w=-58.531471&e=-58.335159'
+  async fetchFeaturesFromOSM(urlName, bounds) {
+    const params = `route=subway&s=${bounds.s}&n=${bounds.n}&w=${bounds.w}&e=${bounds.e}`;
     const url = `/api/editor/${urlName}/osm?${params}`;
     const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
@@ -303,8 +303,8 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  async importFromOSM(urlName) {
-    const data = await this.fetchFeaturesFromOSM(urlName);
+  async importFromOSM(urlName, bounds) {
+    const data = await this.fetchFeaturesFromOSM(urlName, bounds);
     this.setFeatureCreated(urlName, data.features.map(f => {
       f.id = `osm_${f.properties.osm_id}`;
       return f;
