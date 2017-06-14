@@ -4,13 +4,24 @@ import Translate from 'react-translate-component';
 class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
+
+    this.showAll = this.props.lines.filter(line => this.props.linesShown.includes(line.url_name)).length == 0 ? false : true;
+
     this.state = {expanded: this.props.defaultExpanded || true};
     this.bindedOnItemToggle = this.onItemToggle.bind(this);
+    this.bindedOnAllLinesItemToggle = this.onAllLinesItemToggle.bind(this);
   }
 
   onItemToggle(urlName) {
     if (typeof this.props.onLineToggle === 'function') {
       this.props.onLineToggle(urlName);
+    }
+  }
+
+  onAllLinesItemToggle(e) {
+    this.showAll = !this.showAll;
+    if (typeof this.props.onAllLinesToggle === 'function') {
+      this.props.onAllLinesToggle(this.props.systemId, this.showAll);
     }
   }
 
@@ -33,6 +44,10 @@ class LinesTree extends PureComponent {
         <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
           <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
+            <AllLinesItem
+              checked={this.showAll}
+              onToggle={this.bindedOnAllLinesItemToggle}
+              />
             { lines.map((line) => {
               return <LinesTreeItem
                 key={line.url_name}
@@ -67,6 +82,20 @@ class LinesTreeItem extends PureComponent {
             <div className="c-toggle__handle"></div>
           </div>
           {this.props.name}
+        </label>
+    )
+  }
+}
+
+class AllLinesItem extends PureComponent {
+  render() {
+    return (
+        <label className="c-toggle">
+          <input onChange={this.props.onToggle} type="checkbox" checked={this.props.checked}/>
+          <div className="c-toggle__track">
+            <div className="c-toggle__handle"></div>
+          </div>
+         Todas las líneas
         </label>
     )
   }

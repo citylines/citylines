@@ -19,6 +19,7 @@ class CityView extends PureComponent {
     this.bindedOnYearChange = this.onYearChange.bind(this);
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
     this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
+    this.bindedOnAllLinesToggle = this.onAllLinesToggle.bind(this);
   }
 
   onChange() {
@@ -66,6 +67,10 @@ class CityView extends PureComponent {
     CityViewStore.toggleLine(this.urlName, lineUrlName);
   }
 
+  onAllLinesToggle(system_id, all) {
+    CityViewStore.toggleAllLines(this.urlName, system_id, all);
+  }
+
   onLinesShownChange() {
     const linesShown = this.state.linesShown.join(',');
     this.updateParams({lines: linesShown});
@@ -95,12 +100,14 @@ class CityView extends PureComponent {
             return systemLines.length ?
             <LinesTree
               key={system.id}
+              systemId={system.id}
               name={system.name}
               defaultExpanded={true}
               lines={systemLines}
               linesShown={this.state.linesShown}
               onLineToggle={this.bindedOnLineToggle}
               onLinesShownChange={this.bindedOnLinesShownChange}
+              onAllLinesToggle={this.bindedOnAllLinesToggle}
             /> : null })
           }
         </PanelBody>
