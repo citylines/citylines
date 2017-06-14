@@ -86,7 +86,8 @@ export default {
         station: 'Station'
       },
       save: 'Save',
-      discard: 'Discard'
+      discard: 'Discard',
+      too_many_elements: "To many elements! You can't save more than 20 elements at the same time"
     },
     lines_editor: {
       create: 'Create',
