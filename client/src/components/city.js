@@ -68,18 +68,17 @@ class City extends PureComponent {
   }
 
   onMapLoad(map) {
-    const geo = this.getGeoFromMap(map);
-    CityStore.storeGeoData(this.urlName, geo)
-
     this.mapLoaded = true;
-    this.forceUpdate();
+
+    const geo = this.getGeoFromMap(map);
+    CityStore.setGeoData(this.urlName, geo);
   }
 
   onMapMove(map) {
     if (this.state.playing) return;
 
     const geo = this.getGeoFromMap(map);
-    CityStore.storeGeoData(this.urlName, geo);
+    CityStore.setGeoData(this.urlName, geo);
 
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});

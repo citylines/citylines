@@ -51,25 +51,15 @@ const CityStore = Object.assign({}, Store, {
     };
   },
 
-  storeGeoData(urlName, geo) {
+  setGeoData(urlName, geo) {
     const cityData = this.cityData[urlName];
     cityData.coords = [geo.lon, geo.lat];
     cityData.bounds = geo.bounds;
     cityData.zoom = geo.zoom;
     cityData.bearing = geo.bearing;
     cityData.pitch = geo.pitch;
-  },
 
-  fetchGeoData(urlName) {
-    const cityData = this.cityData[urlName];
-    return {
-      lat: cityData.coords[1],
-      lon: cityData.coords[0],
-      bounds: cityData.bounds,
-      zoom: cityData.zoom,
-      bearing: cityData.bearing,
-      pitch: cityData.pitch
-    }
+    this.emitChangeEvent()
   }
 });
 

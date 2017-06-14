@@ -98,6 +98,10 @@ export default {
       are_you_sure: '¿Estás seguro?',
       yes: 'Sí',
       no: 'No'
+    },
+    osm: {
+      zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',
+      import_button: 'Importar'
     }
   },
   terms: {

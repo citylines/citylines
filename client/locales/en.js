@@ -98,6 +98,10 @@ export default {
       are_you_sure: 'Are you sure?',
       yes: 'Yes',
       no: 'No'
+    },
+    osm: {
+      zoom: 'Import is only allowd in zoom levels bigger than 13',
+      import_button: 'Import'
     }
   },
   terms: {

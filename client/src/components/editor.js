@@ -8,6 +8,7 @@ import {PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
+import OSMImporter from './editor/osm-importer';
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -44,16 +45,22 @@ class Editor extends PureComponent {
 
   componentWillMount() {
     EditorStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     MainStore.unsetPanelFullWidth();
     EditorStore.unload(this.urlName);
     EditorStore.removeChangeListener(this.bindedOnChange);
+    CityStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
-    this.setState(EditorStore.getState(this.urlName));
+    const cityState = CityStore.getState(this.urlName);
+
+    this.setState({...EditorStore.getState(this.urlName),
+                   zoom: cityState.zoom,
+                   bounds: cityState.bounds});
   }
 
   componentDidMount() {
@@ -136,12 +143,11 @@ class Editor extends PureComponent {
   }
 
   onImportFromOSMClick() {
-    const geo = CityStore.fetchGeoData(this.urlName);
     const bounds = {
-      w: geo.bounds[0][0],
-      s: geo.bounds[0][1],
-      e: geo.bounds[1][0],
-      n: geo.bounds[1][1]
+      w: this.state.bounds[0][0],
+      s: this.state.bounds[0][1],
+      e: this.state.bounds[1][0],
+      n: this.state.bounds[1][1]
     }
     EditorStore.importFromOSM(this.urlName, bounds);
   }
@@ -176,9 +182,10 @@ class Editor extends PureComponent {
                 onDiscard={this.bindedOnDiscardChanges}
                 onSave={this.bindedOnSaveChanges}
               />
-              <div className="c-card">
-                <button onClick={this.bindedOnImportFromOSMClick} className="c-button">Import from OSM</button>
-              </div>
+              <OSMImporter
+                zoom={this.state.zoom}
+                onImport={this.bindedOnImportFromOSMClick}
+              />
             </div>
             :
             <LinesEditor lines={this.state.lines}
