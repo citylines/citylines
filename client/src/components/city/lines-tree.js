@@ -5,7 +5,7 @@ class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.showAll = this.props.lines.filter(line => this.props.linesShown.includes(line.url_name)).length == 0 ? false : true;
+    this.showAll = this.allLinesHidden(props) ? false : true;
 
     this.state = {expanded: this.props.defaultExpanded || true};
     this.bindedOnItemToggle = this.onItemToggle.bind(this);
@@ -25,8 +25,26 @@ class LinesTree extends PureComponent {
     }
   }
 
+  allLinesHidden(props) {
+    return props.lines.filter(line => props.linesShown.includes(line.url_name)).length == 0;
+  }
+
+  allLinesShown(props) {
+    return props.lines.length === props.lines.filter(line => props.linesShown.includes(line.url_name)).length;
+  }
+
   toggleExpanded() {
     this.setState({expanded: !this.state.expanded})
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.allLinesHidden(nextProps)) {
+      this.showAll = false;
+    }
+
+    if (this.allLinesShown(nextProps)) {
+      this.showAll = true;
+    }
   }
 
   componentDidUpdate() {
