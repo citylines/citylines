@@ -4,7 +4,6 @@ import Translate from 'react-translate-component';
 class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
-
     this.state = {expanded: this.props.defaultExpanded || true};
     this.bindedOnItemToggle = this.onItemToggle.bind(this);
     this.bindedOnAllLinesItemToggle = this.onAllLinesItemToggle.bind(this);

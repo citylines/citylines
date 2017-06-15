@@ -125,14 +125,14 @@ const CityViewStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  toggleAllLines(urlName, systemId, all) {
+  toggleAllLines(urlName, systemId, checked) {
     const cityData = this.cityData[urlName];
 
     const systemLines = cityData.lines.filter((line) => line.system_id == systemId).map(line => line.url_name);
 
     cityData.linesMapper.linesShown = cityData.linesMapper.linesShown.filter(line => !systemLines.includes(line));
 
-    if (all) {
+    if (checked) {
       cityData.linesMapper.linesShown = cityData.linesMapper.linesShown.concat(systemLines);
     }
 

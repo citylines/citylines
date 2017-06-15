@@ -67,8 +67,8 @@ class CityView extends PureComponent {
     CityViewStore.toggleLine(this.urlName, lineUrlName);
   }
 
-  onAllLinesToggle(system_id, all) {
-    CityViewStore.toggleAllLines(this.urlName, system_id, all);
+  onAllLinesToggle(system_id, checked) {
+    CityViewStore.toggleAllLines(this.urlName, system_id, checked);
   }
 
   onLinesShownChange() {
