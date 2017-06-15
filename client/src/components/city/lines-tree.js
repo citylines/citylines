@@ -44,10 +44,11 @@ class LinesTree extends PureComponent {
         <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
           <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
+            { lines.length > 1 ?
             <AllLinesItem
               checked={this.showAll}
               onToggle={this.bindedOnAllLinesItemToggle}
-              />
+              /> : "" }
             { lines.map((line) => {
               return <LinesTreeItem
                 key={line.url_name}
@@ -90,12 +91,12 @@ class LinesTreeItem extends PureComponent {
 class AllLinesItem extends PureComponent {
   render() {
     return (
-        <label className="c-toggle">
+        <label className="c-toggle" style={{fontStyle:"italic"}}>
           <input onChange={this.props.onToggle} type="checkbox" checked={this.props.checked}/>
           <div className="c-toggle__track">
             <div className="c-toggle__handle"></div>
           </div>
-         Todas las líneas
+         <Translate content="city.all_lines" />
         </label>
     )
   }
