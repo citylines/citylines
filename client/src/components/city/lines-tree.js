@@ -91,7 +91,7 @@ class LinesTreeItem extends PureComponent {
 class AllLinesItem extends PureComponent {
   render() {
     return (
-        <label className="c-toggle" style={{fontStyle:"italic"}}>
+        <label className="c-toggle">
           <input onChange={this.props.onToggle} type="checkbox" checked={this.props.checked}/>
           <div className="c-toggle__track">
             <div className="c-toggle__handle"></div>
