@@ -5,8 +5,6 @@ class LinesTree extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.showAll = this.allLinesHidden(props) ? false : true;
-
     this.state = {expanded: this.props.defaultExpanded || true};
     this.bindedOnItemToggle = this.onItemToggle.bind(this);
     this.bindedOnAllLinesItemToggle = this.onAllLinesItemToggle.bind(this);
@@ -18,33 +16,14 @@ class LinesTree extends PureComponent {
     }
   }
 
-  onAllLinesItemToggle(e) {
-    this.showAll = !this.showAll;
+  onAllLinesItemToggle(checked) {
     if (typeof this.props.onAllLinesToggle === 'function') {
-      this.props.onAllLinesToggle(this.props.systemId, this.showAll);
+      this.props.onAllLinesToggle(this.props.systemId, checked);
     }
-  }
-
-  allLinesHidden(props) {
-    return props.lines.filter(line => props.linesShown.includes(line.url_name)).length == 0;
-  }
-
-  allLinesShown(props) {
-    return props.lines.length === props.lines.filter(line => props.linesShown.includes(line.url_name)).length;
   }
 
   toggleExpanded() {
     this.setState({expanded: !this.state.expanded})
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.allLinesHidden(nextProps)) {
-      this.showAll = false;
-    }
-
-    if (this.allLinesShown(nextProps)) {
-      this.showAll = true;
-    }
   }
 
   componentDidUpdate() {
@@ -64,7 +43,8 @@ class LinesTree extends PureComponent {
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
             { lines.length > 1 ?
             <AllLinesItem
-              checked={this.showAll}
+              lines={this.props.lines}
+              linesShown={this.props.linesShown}
               onToggle={this.bindedOnAllLinesItemToggle}
               /> : "" }
             { lines.map((line) => {
@@ -107,10 +87,41 @@ class LinesTreeItem extends PureComponent {
 }
 
 class AllLinesItem extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {checked: this.allLinesHidden(props) ? false : true};
+
+    this.bindedOnToggle = this.onToggle.bind(this);
+  }
+
+  allLinesHidden(props) {
+    return props.lines.filter(line => props.linesShown.includes(line.url_name)).length == 0;
+  }
+
+  allLinesShown(props) {
+    return props.lines.length === props.lines.filter(line => props.linesShown.includes(line.url_name)).length;
+  }
+
+  onToggle() {
+    this.props.onToggle(!this.state.checked);
+    this.setState({checked: !this.state.checked});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.allLinesHidden(nextProps)) {
+      this.setState({checked: false});
+    }
+
+    if (this.allLinesShown(nextProps)) {
+      this.setState({checked: true});
+    }
+  }
+
   render() {
     return (
         <label className="c-toggle">
-          <input onChange={this.props.onToggle} type="checkbox" checked={this.props.checked}/>
+          <input onChange={this.bindedOnToggle} type="checkbox" checked={this.state.checked}/>
           <div className="c-toggle__track">
             <div className="c-toggle__handle"></div>
           </div>
