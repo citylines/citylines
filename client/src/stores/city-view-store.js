@@ -125,6 +125,23 @@ const CityViewStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  toggleAllLines(urlName, systemId, checked) {
+    const cityData = this.cityData[urlName];
+
+    const systemLines = cityData.lines.filter((line) => line.system_id == systemId).map(line => line.url_name);
+
+    cityData.linesMapper.linesShown = cityData.linesMapper.linesShown.filter(line => !systemLines.includes(line));
+
+    if (checked) {
+      cityData.linesMapper.linesShown = cityData.linesMapper.linesShown.concat(systemLines);
+    }
+
+    cityData.linesMapper.updateLayers();
+    cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
+
+    this.emitChangeEvent();
+  },
+
   hover(urlName, features) {
     const cityData = this.cityData[urlName];
     if (!cityData || !cityData.mouseEvents) return;

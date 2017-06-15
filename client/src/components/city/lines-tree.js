@@ -6,11 +6,18 @@ class LinesTree extends PureComponent {
     super(props, context);
     this.state = {expanded: this.props.defaultExpanded || true};
     this.bindedOnItemToggle = this.onItemToggle.bind(this);
+    this.bindedOnAllLinesItemToggle = this.onAllLinesItemToggle.bind(this);
   }
 
   onItemToggle(urlName) {
     if (typeof this.props.onLineToggle === 'function') {
       this.props.onLineToggle(urlName);
+    }
+  }
+
+  onAllLinesItemToggle(checked) {
+    if (typeof this.props.onAllLinesToggle === 'function') {
+      this.props.onAllLinesToggle(this.props.systemId, checked);
     }
   }
 
@@ -33,6 +40,12 @@ class LinesTree extends PureComponent {
         <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
           <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
+            { lines.length > 1 ?
+            <AllLinesItem
+              lines={this.props.lines}
+              linesShown={this.props.linesShown}
+              onToggle={this.bindedOnAllLinesItemToggle}
+              /> : "" }
             { lines.map((line) => {
               return <LinesTreeItem
                 key={line.url_name}
@@ -67,6 +80,51 @@ class LinesTreeItem extends PureComponent {
             <div className="c-toggle__handle"></div>
           </div>
           {this.props.name}
+        </label>
+    )
+  }
+}
+
+class AllLinesItem extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {checked: this.allLinesHidden(props) ? false : true};
+
+    this.bindedOnToggle = this.onToggle.bind(this);
+  }
+
+  allLinesHidden(props) {
+    return props.lines.filter(line => props.linesShown.includes(line.url_name)).length == 0;
+  }
+
+  allLinesShown(props) {
+    return props.lines.length === props.lines.filter(line => props.linesShown.includes(line.url_name)).length;
+  }
+
+  onToggle() {
+    this.props.onToggle(!this.state.checked);
+    this.setState({checked: !this.state.checked});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.allLinesHidden(nextProps)) {
+      this.setState({checked: false});
+    }
+
+    if (this.allLinesShown(nextProps)) {
+      this.setState({checked: true});
+    }
+  }
+
+  render() {
+    return (
+        <label className="c-toggle">
+          <input onChange={this.bindedOnToggle} type="checkbox" checked={this.state.checked}/>
+          <div className="c-toggle__track">
+            <div className="c-toggle__handle"></div>
+          </div>
+         <Translate content="city.all_lines" />
         </label>
     )
   }

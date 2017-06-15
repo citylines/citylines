@@ -43,6 +43,7 @@ export default {
     lines: 'Líneas',
     km_operative: 'Operativos: %(km)s km',
     km_under_construction: 'En construcción: %(km)s km',
+    all_lines: 'Todas las líneas',
     popup: {
       station: 'Estación %(name)s',
       track: 'Información del tramo',
