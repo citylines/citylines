@@ -103,7 +103,8 @@ export default {
     osm: {
       zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',
       import_button: 'Importar'
-    }
+    },
+    no_lines_alert: 'No hay líneas creadas. Los elementos deben tener asignados una línea para poder ser guardados'
   },
   terms: {
     title: 'Términos de uso',

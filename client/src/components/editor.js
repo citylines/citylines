@@ -9,6 +9,7 @@ import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
 import OSMImporter from './editor/osm-importer';
+import NoLinesAlert from './editor/no-lines-alert';
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -169,6 +170,7 @@ class Editor extends PureComponent {
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
+              { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
               <FeatureViewer
                 lines={this.state.lines}
                 systems={this.state.systems}

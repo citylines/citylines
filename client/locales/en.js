@@ -103,7 +103,8 @@ export default {
     osm: {
       zoom: 'Import is only allowd in zoom levels bigger than 13',
       import_button: 'Import'
-    }
+    },
+    no_lines_alert: 'There are no lines. Features must be assigned a line before they can be saved'
   },
   terms: {
     title: 'Terms of use',
