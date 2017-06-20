@@ -185,6 +185,7 @@ class Editor extends PureComponent {
               <OSMImporter
                 zoom={this.state.zoom}
                 onImport={this.bindedOnImportFromOSMClick}
+                savingData={this.state.savingData}
               />
             </div>
             :

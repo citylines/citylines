@@ -10,7 +10,11 @@ class OSMImporter extends PureComponent {
           {this.props.zoom < 13 ?
             <Translate component="p" content="editor.osm.zoom" />
               : "" }
-            <Translate component="button" content="editor.osm.import_button" onClick={this.props.onImport} className="c-button" disabled={this.props.zoom < 13} />
+            <Translate component="button"
+                       content="editor.osm.import_button"
+                       onClick={this.props.onImport}
+                       className="c-button"
+                       disabled={this.props.savingData || this.props.zoom < 13} />
           </li>
         </ul>
         )

@@ -304,7 +304,14 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   async importFromOSM(urlName, bounds) {
+    const cityData = this.cityData[urlName];
+    cityData.savingData = true;
+    this.emitChangeEvent();
+
     const data = await this.fetchFeaturesFromOSM(urlName, bounds);
+
+    cityData.savingData = false;
+
     this.setFeatureCreated(urlName, data.features.map(f => {
       f.id = `osm_${f.properties.osm_id}`;
       return f;
