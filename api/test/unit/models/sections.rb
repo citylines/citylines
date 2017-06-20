@@ -15,7 +15,7 @@ describe Section do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
 
-    @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001)
+    @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags")
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 
@@ -37,6 +37,8 @@ describe Section do
     assert_equal @section.opening, backup.opening
     assert_equal @section.closure, backup.closure
     assert_equal @section.length, backup.length
+    assert_equal @section.osm_id, backup.osm_id
+    assert_equal @section.osm_tags, backup.osm_tags
   end
 
   it "should set the city's start_year if it opened or it's building started before the city's start_year" do
@@ -79,6 +81,8 @@ describe Section do
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]
@@ -100,6 +104,8 @@ describe Section do
                              opening: Section::FUTURE,
                              buildstart: @section.buildstart,
                              buildstart_end: Section::FUTURE,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
                              closure: Section::FUTURE}
 
       assert_equal expected_properties, feature[:properties]
@@ -120,6 +126,8 @@ describe Section do
                              opening: @section.opening,
                              buildstart: @section.opening,
                              buildstart_end: @section.opening,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]

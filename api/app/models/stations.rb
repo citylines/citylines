@@ -24,6 +24,8 @@ class Station < Sequel::Model(:stations)
                            opening: self.opening || Section::FUTURE,
                            buildstart: self.buildstart || self.opening,
                            buildstart_end: self.opening || closure,
+                           osm_id: self.osm_id,
+                           osm_tags: self.osm_tags,
                            closure: closure })
     h
   end

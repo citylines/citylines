@@ -66,6 +66,11 @@ module CityHelpers
     feature.opening = properties[:opening]
     feature.closure = properties[:closure]
     feature.name = properties[:name] if feature.is_a?(Station)
+
+    # osm properties
+    feature.osm_tags = properties[:osm_tags]
+    feature.osm_id = properties[:osm_id]
+
     feature.save
   end
 

@@ -15,7 +15,7 @@ describe Station do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
 
-    @station = Station.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, name: 'Some station')
+    @station = Station.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, name: 'Some station', osm_id: 456, osm_tags: 'tags')
     @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @station.save
 
@@ -37,6 +37,8 @@ describe Station do
     assert_equal @station.opening, backup.opening
     assert_equal @station.closure, backup.closure
     assert_equal @station.name, backup.name
+    assert_equal @station.osm_id, backup.osm_id
+    assert_equal @station.osm_tags, backup.osm_tags
   end
 
   it "should set the city's start_year if the station opened or it's building started before the city's start_year" do
@@ -71,6 +73,8 @@ describe Station do
                              opening: @station.opening,
                              buildstart: @station.buildstart,
                              buildstart_end: @station.opening,
+                             osm_id: @station.osm_id,
+                             osm_tags: @station.osm_tags,
                              closure: @station.closure}
 
       assert_equal expected_properties, feature[:properties]
@@ -92,6 +96,8 @@ describe Station do
                              opening: Section::FUTURE,
                              buildstart: @station.buildstart,
                              buildstart_end: Section::FUTURE,
+                             osm_id: @station.osm_id,
+                             osm_tags: @station.osm_tags,
                              closure: Section::FUTURE}
 
       assert_equal expected_properties, feature[:properties]
@@ -112,6 +118,8 @@ describe Station do
                              opening: @station.opening,
                              buildstart: @station.opening,
                              buildstart_end: @station.opening,
+                             osm_id: @station.osm_id,
+                             osm_tags: @station.osm_tags,
                              closure: @station.closure}
 
       assert_equal expected_properties, feature[:properties]
