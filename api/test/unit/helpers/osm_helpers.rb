@@ -117,7 +117,7 @@ describe OSMHelpers do
       assert_equal expected_members, relation[:members]
     end
 
-    it "shouldn't ignore nested relations" do
+    it "should ignore nested relations" do
       response = {
         elements: [
           {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
@@ -196,23 +196,134 @@ describe OSMHelpers do
   end
 
   it "should build the right features collection" do
-    self.stubs(:build_osm_feature).with('feature_1').returns("built_feature_1")
-    self.stubs(:build_osm_feature).with('feature_2').returns("built_feature_2")
-    self.stubs(:build_osm_feature).with('feature_3').returns("built_feature_3")
+    city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
 
-    rel1 = {members: ['feature_1']}
-    rel2 = {members: ['feature_2']}
-    rel3 = {members: ['feature_3']}
+    response = {
+      elements: [
+        {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+        {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+        {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
+        {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
+        {type: "relation", id: "77777777", members: [
+          {type: "node", ref: 81551275, role: "stop"},
+          {type: "way",  ref: 26192812, role:""}
+        ], tags: {name: "Test Line 1"}}
+      ]
+    }
 
-    self.stubs(:fetch_osm_relations).returns([rel1, rel2, rel3])
+    OverpassAPI::QL.any_instance.stubs(:query).returns(response)
 
-    feature_collection = get_osm_features_collection("subway", 1, 2, 3, 4)
+    feature_collection = get_osm_features_collection(city, "subway", 1, 2, 3, 4)
+
+    expected_features = [
+      {
+        type: "Feature",
+        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station"},
+        geometry: {
+          type: "Point",
+          coordinates: [-58.4059239, -34.6065585]
+        }
+      },
+      {
+        type: "Feature",
+        properties: {osm_id: 26192812, osm_tags: "null"},
+        geometry: {
+          type: "LineString",
+          coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
+        }
+      }
+    ]
 
     expected_feature_collection = {
       type: "FeatureCollection",
-      features: %w{built_feature_1 built_feature_2 built_feature_3}
+      features: expected_features
     }
 
     assert_equal expected_feature_collection, feature_collection
+  end
+
+  describe "filter_out_existing_features" do
+    before do
+      @city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
+      @line = Line.create(name: 'Test Line 1', city_id: @city.id)
+    end
+
+    it "should filter out any existing station" do
+      Station.create(line_id: @line.id, osm_id: 81551275)
+
+      response = {
+        elements: [
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
+          {type: "relation", id: "77777777", members: [
+            {type: "node", ref: 81551275, role: "stop"},
+            {type: "way",  ref: 26192812, role:""}
+          ], tags: {name: "Test Line 1"}}
+        ]
+      }
+
+      OverpassAPI::QL.any_instance.stubs(:query).returns(response)
+
+      feature_collection = get_osm_features_collection(@city, "subway", 1, 2, 3, 4)
+
+      expected_features = [
+        {
+          type: "Feature",
+          properties: {osm_id: 26192812, osm_tags: "null"},
+          geometry: {
+            type: "LineString",
+            coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
+          }
+        }
+      ]
+
+      expected_feature_collection = {
+        type: "FeatureCollection",
+        features: expected_features
+      }
+
+      assert_equal expected_feature_collection, feature_collection
+    end
+
+    it "should filter out any existing section" do
+      Section.create(line_id: @line.id, osm_id: 26192812)
+
+      response = {
+        elements: [
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
+          {type: "relation", id: "77777777", members: [
+            {type: "node", ref: 81551275, role: "stop"},
+            {type: "way",  ref: 26192812, role:""}
+          ], tags: {name: "Test Line 1"}}
+        ]
+      }
+
+      OverpassAPI::QL.any_instance.stubs(:query).returns(response)
+
+      feature_collection = get_osm_features_collection(@city, "subway", 1, 2, 3, 4)
+
+      expected_features = [
+        {
+          type: "Feature",
+          properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station"},
+          geometry: {
+            type: "Point",
+            coordinates: [-58.4059239, -34.6065585]
+          }
+        }
+      ]
+
+      expected_feature_collection = {
+        type: "FeatureCollection",
+        features: expected_features
+      }
+
+      assert_equal expected_feature_collection, feature_collection
+    end
   end
 end

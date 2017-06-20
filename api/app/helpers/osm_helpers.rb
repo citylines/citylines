@@ -1,5 +1,5 @@
 module OSMHelpers
-  def get_osm_features_collection(route,s,n,w,e)
+  def get_osm_features_collection(city,route,s,n,w,e)
     relations = fetch_osm_relations(route,s,n,w,e)
 
     features = relations.map do |relation|
@@ -8,6 +8,8 @@ module OSMHelpers
         build_osm_feature(e)
       }
     end.flatten
+
+    features = filter_out_existing_features(city, features)
 
     {type: "FeatureCollection",
      features: features}
@@ -82,6 +84,19 @@ module OSMHelpers
      type: "Feature",
      properties: properties,
      geometry: geometry
+    }
+  end
+
+  def filter_out_existing_features(city, features)
+    sections_osm_ids = Line.where(city_id: city.id).right_join(:sections, :sections__line_id => :lines__id).exclude(osm_id: nil).select_map(:sections__osm_id)
+    stations_osm_ids = Line.where(city_id: city.id).right_join(:stations, :stations__line_id => :lines__id).exclude(osm_id: nil).select_map(:stations__osm_id)
+
+    features.reject {|feature|
+      type = feature[:geometry][:type]
+      osm_id = feature[:properties][:osm_id]
+
+      (type == 'Point' && stations_osm_ids.include?(osm_id)) ||
+        (type == 'LineString' && sections_osm_ids.include?(osm_id))
     }
   end
 end

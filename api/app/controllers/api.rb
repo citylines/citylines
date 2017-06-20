@@ -204,7 +204,7 @@ class Api < App
   get '/editor/:url_name/osm' do |url_name|
     protect
 
-    #TODO: use @city to find colliding features by osm_id
+    @city = City[url_name: url_name]
 
     route = params[:route]
     s = params[:s]
@@ -214,7 +214,7 @@ class Api < App
 
     halt unless (route && s && n && w && e)
 
-    get_osm_features_collection(route, s, n, w, e).to_json
+    get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
 
   get '/user' do
