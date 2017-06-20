@@ -143,14 +143,14 @@ class Editor extends PureComponent {
     EditorStore.createSystem(this.urlName, systemName);
   }
 
-  onImportFromOSMClick() {
+  onImportFromOSMClick(route) {
     const bounds = {
       w: this.state.bounds[0][0],
       s: this.state.bounds[0][1],
       e: this.state.bounds[1][0],
       n: this.state.bounds[1][1]
     }
-    EditorStore.importFromOSM(this.urlName, bounds);
+    EditorStore.importFromOSM(this.urlName, route, bounds);
   }
 
   render() {
