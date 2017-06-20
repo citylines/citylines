@@ -38,8 +38,12 @@ class ModifiedFeaturesViewer extends PureComponent {
     if (typeof this.props.onSave === 'function') this.props.onSave();
   }
 
+  elementsNumber() {
+    return Object.entries(this.props.modifiedFeatures).length;
+  }
+
   tooManyElements() {
-    return this.props.modifiedFeatures && Object.entries(this.props.modifiedFeatures).length > 20;
+    return this.props.modifiedFeatures && this.elementsNumber() > 20;
   }
 
   render() {
@@ -73,7 +77,7 @@ class ModifiedFeaturesViewer extends PureComponent {
       <li className="c-card__item c-card__item--brand"><Translate content="editor.modified_features.title" /></li>
         { content }
         {  this.tooManyElements() ?
-          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" />
+          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" with={{elements: this.elementsNumber()}}/>
           : ""}
         { buttons }
       </ul>
