@@ -74,10 +74,13 @@ class ModifiedFeaturesViewer extends PureComponent {
 
     return (
       <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
-      <li className="c-card__item c-card__item--brand"><Translate content="editor.modified_features.title" /></li>
+      <li className="c-card__item c-card__item--brand">
+        <Translate content="editor.modified_features.title" />
+        { this.props.modifiedFeatures ? ` (${this.elementsNumber()})` : '' }
+      </li>
         { content }
         {  this.tooManyElements() ?
-          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" with={{elements: this.elementsNumber()}}/>
+          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" />
           : ""}
         { buttons }
       </ul>

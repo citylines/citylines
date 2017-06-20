@@ -87,7 +87,7 @@ export default {
       },
       save: 'Save',
       discard: 'Discard',
-      too_many_elements: "To many elements (%(elements)s)! You can't save more than 20 elements at the same time"
+      too_many_elements: "Too many elements! You can't save more than 20 elements at the same time"
     },
     lines_editor: {
       create: 'Create',
