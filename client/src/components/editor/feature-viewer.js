@@ -89,6 +89,9 @@ class FeatureViewer extends PureComponent {
                 </td>
               </tr>
               { Object.keys(this.state.fields).map((key) => {
+                // We don't show the field at all if it's not editable and has no value
+                if (!this.editableFields().includes(key) && !this.state.fields[key]) return;
+
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
