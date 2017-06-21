@@ -31,11 +31,19 @@ class OSMImporter extends PureComponent {
             <Translate component="span" content="editor.osm.zoom" className="osm-container" />
               :
             <span className="osm-container">
+              <span className="preample">relation</span>
               <span className="c-code">
                 route =
                 <select ref="route" className="c-field osm-route">
                   {this.ROUTES.map(route => <option key={route}>{route}</option>)}
                 </select>
+              </span>
+              <span className="members">
+              members:
+              <ul className="c-list">
+                <li className="c-list__item">ways</li>
+                <li className="c-list__item">nodes with <span className="c-code">public_transport=stop_position</span></li>
+              </ul>
               </span>
             </span>
           }

@@ -358,3 +358,11 @@ select.osm-route {
   border: none;
   width: auto;
 }
+
+.osm-container .preample {
+  margin-right: 10px;
+}
+.osm-container .members {
+  display: block;
+  font-size:0.8em;
+}

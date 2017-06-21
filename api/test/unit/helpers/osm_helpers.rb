@@ -5,19 +5,25 @@ describe OSMHelpers do
   include OSMHelpers
 
   describe "rejectable member" do
-    it "shouldn't reject the member by default" do
-      refute rejectable_member({type: "node"})
-
-      refute rejectable_member({type: "way"})
+    it "should reject the node by default" do
+      assert rejectable_member?(type: "node")
     end
 
-    it "should reject the member if it's a way and is an area or a plarform" do
-      assert rejectable_member({type: "way", tags: {area: "yes"}})
-      assert rejectable_member({type: "way", tags: {public_transport: "platform"}})
+    it "shouldn't reject the node only if it is a stop" do
+      assert rejectable_member?(type: "node", tags: {transport_public: "stop_position"})
+    end
+
+    it "shouldn't reject the way by default" do
+      refute rejectable_member?(type: "way")
+    end
+
+    it "should reject a way and if it's an area or a plarform" do
+      assert rejectable_member?(type: "way", tags: {area: "yes"})
+      assert rejectable_member?(type: "way", tags: {public_transport: "platform"})
     end
   end
 
-  describe "fetch_osm_relations" do
+  describe "fetch_osm_elements" do
     it "should call the OverpassAPI" do
       s = 1
       n = 2
@@ -39,120 +45,78 @@ describe OSMHelpers do
         .with(options)
         .returns(instance)
 
+      bbox2=[s,w,n,e].join(',');
+      query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out body;"
+
       instance
         .expects(:query)
-        .with("rel['route'='#{route}'];(._;>;);out body;")
+        .with(query)
         .returns(response)
 
-      fetch_osm_relations(route, s, n, w, e)
+      fetch_osm_elements(route, s, n, w, e)
     end
 
-    it "should set the geometries in the relations array" do
+    it "should set the geometries in the ways" do
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
-          {type: "relation", id: "77777777", members: [
-            {type: "node", ref: 81551275, role: "stop"},
-            {type: "way",  ref: 26192812, role:""}
-          ], tags: {name: "Test Line 1"}}
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
         ]
       }
 
       OverpassAPI::QL.any_instance.stubs(:query).returns(response)
 
-      relations = fetch_osm_relations("subway", 1, 2, 3, 4)
+      elements = fetch_osm_elements("subway", 1, 2, 3, 4)
 
-      assert_equal 1, relations.count
-      relation = relations.first
+      assert_equal 2, elements.count
 
-      assert_equal "77777777", relation[:id]
+      # check nodes
+      assert_equal 1, elements.select{|element| element[:type] === "node"}.count
 
-      expected_tags = {name: "Test Line 1"}
-      assert_equal expected_tags, relation[:tags]
+      # check way
+      way = elements.last
+      assert_equal "way", way[:type]
 
-      expected_members = [
-        {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
-        {type: "way", id: 26192812, nodes: [
-          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
-          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-        ]}
+      expected_nodes = [
+        {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+        {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776}
       ]
 
-      assert_equal expected_members, relation[:members]
+      assert_equal expected_nodes, way[:nodes]
     end
 
     it "shouldn't include the rejectable members" do
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
-          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
-          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946], tags:{"area":"yes"}},
-          {type: "relation", id: "77777777", members: [
-            {type: "node", ref: 81551275, role: "stop"},
-            {type: "way",  ref: 26192812, role:""}
-          ], tags: {name: "Test Line 1"}}
-        ]
-      }
-
-      OverpassAPI::QL.any_instance.stubs(:query).returns(response)
-
-      relations = fetch_osm_relations("subway", 1, 2, 3, 4)
-
-      assert_equal 1, relations.count
-      relation = relations.first
-
-      assert_equal "77777777", relation[:id]
-
-      expected_tags = {name: "Test Line 1"}
-      assert_equal expected_tags, relation[:tags]
-
-      expected_members = [
-        {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}}
-      ]
-
-      assert_equal expected_members, relation[:members]
-    end
-
-    it "should ignore nested relations" do
-      response = {
-        elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
           {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
-          {type: "relation", id: "77777777", members: [
-            {type: "relation", ref: 12345678, role: ""},
-            {type: "node", ref: 81551275, role: "stop"},
-            {type: "way",  ref: 26192812, role:""}
-          ], tags: {name: "Test Line 1"}}
+          {type: "way", id: 4444444, nodes: [], tags: {area: "yes"}}
         ]
       }
 
       OverpassAPI::QL.any_instance.stubs(:query).returns(response)
 
-      relations = fetch_osm_relations("subway", 1, 2, 3, 4)
+      elements = fetch_osm_elements("subway", 1, 2, 3, 4)
 
-      assert_equal 1, relations.count
-      relation = relations.first
+      assert_equal 2, elements.count
 
-      assert_equal "77777777", relation[:id]
+      # check nodes
+      assert_equal 1, elements.select{|element| element[:type] === "node"}.count
 
-      expected_tags = {name: "Test Line 1"}
-      assert_equal expected_tags, relation[:tags]
+      # check way
+      way = elements.last
+      assert_equal "way", way[:type]
 
-      expected_members = [
-        {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
-        {type: "way", id: 26192812, nodes: [
-          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
-          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-        ]}
+      expected_nodes = [
+        {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+        {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776}
       ]
 
-      assert_equal expected_members, relation[:members]
+      assert_equal expected_nodes, way[:nodes]
     end
   end
 
@@ -198,18 +162,14 @@ describe OSMHelpers do
   it "should build the right features collection" do
     city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
 
-    response = {
-      elements: [
-        {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
-        {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
-        {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-        {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
-        {type: "relation", id: "77777777", members: [
-          {type: "node", ref: 81551275, role: "stop"},
-          {type: "way",  ref: 26192812, role:""}
-        ], tags: {name: "Test Line 1"}}
-      ]
-    }
+      response = {
+        elements: [
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
+          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+          {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
+        ]
+      }
 
     OverpassAPI::QL.any_instance.stubs(:query).returns(response)
 
@@ -218,7 +178,7 @@ describe OSMHelpers do
     expected_features = [
       {
         type: "Feature",
-        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station"},
+        properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station"},
         geometry: {
           type: "Point",
           coordinates: [-58.4059239, -34.6065585]
@@ -253,14 +213,10 @@ describe OSMHelpers do
 
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
-          {type: "relation", id: "77777777", members: [
-            {type: "node", ref: 81551275, role: "stop"},
-            {type: "way",  ref: 26192812, role:""}
-          ], tags: {name: "Test Line 1"}}
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
         ]
       }
 
@@ -292,14 +248,10 @@ describe OSMHelpers do
 
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946]},
-          {type: "relation", id: "77777777", members: [
-            {type: "node", ref: 81551275, role: "stop"},
-            {type: "way",  ref: 26192812, role:""}
-          ], tags: {name: "Test Line 1"}}
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
         ]
       }
 
@@ -310,7 +262,7 @@ describe OSMHelpers do
       expected_features = [
         {
           type: "Feature",
-          properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station"},
+          properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station"},
           geometry: {
             type: "Point",
             coordinates: [-58.4059239, -34.6065585]

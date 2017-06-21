@@ -1,13 +1,10 @@
 module OSMHelpers
   def get_osm_features_collection(city,route,s,n,w,e)
-    relations = fetch_osm_relations(route,s,n,w,e)
+    elements = fetch_osm_elements(route,s,n,w,e)
 
-    features = relations.map do |relation|
-      relation[:members].map{|e|
-        # TODO: add information about the relation to set the line
-        build_osm_feature(e)
-      }
-    end.flatten
+    features = elements.map do |element|
+        build_osm_feature(element)
+    end
 
     features = filter_out_existing_features(city, features)
 
@@ -15,51 +12,39 @@ module OSMHelpers
      features: features}
   end
 
-  def rejectable_member(member)
-    member[:type] == "way" && member[:tags] &&
+  def rejectable_member?(member)
+    (member[:type] == "node" && (!member[:tags] || (member[:tags] && member[:tags][:public_transport]!= "stop_position"))) ||
+    (member[:type] == "way" && member[:tags] &&
     (member[:tags][:area] == "yes" ||
-     member[:tags][:public_transport] == "platform")
+     member[:tags][:public_transport] == "platform"))
   end
 
-  def fetch_osm_relations(route,s,n,w,e)
+  def fetch_osm_elements(route,s,n,w,e)
     require 'overpass_api_ruby'
 
-    options={:bbox => {s: s, n: n,
-                       w: w, e: e},
-                       :timeout => 900,
-                       :maxsize => 1073741824}
+    bbox = {s: s, n: n, w: w, e: e}
+
+    options={bbox: bbox,
+             timeout: 900,
+             maxsize: 1073741824}
 
     overpass = OverpassAPI::QL.new(options)
 
-    query = "rel['route'='#{route}'];(._;>;);out body;"
+    bbox2=[bbox[:s], bbox[:w], bbox[:n], bbox[:e]].join(',');
+    query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out body;"
 
     response = overpass.query(query)
 
     nodes = response[:elements].select{|e| e[:type] == "node"}
 
-    data = {
-      node: nodes,
-      way: response[:elements].select{|e| e[:type] == "way"}.map {|way|
-        way[:nodes] = way[:nodes].map {|node_id|
-          nodes.find{|n| n[:id] == node_id}
-        }
-        way
+    ways = response[:elements].select{|e| e[:type] == "way"}.map {|way|
+      way[:nodes] = way[:nodes].map {|node_id|
+        nodes.find{|n| n[:id] == node_id}
       }
+      way
     }
 
-    relations = response[:elements].select{|e| e[:type] == "relation"}
-
-    relations.map {|relation|
-      relation[:members] = relation[:members].map do |member|
-        type = member[:type]
-
-        next if type == "relation"
-
-        data[type.to_sym].find{|e| e[:id] == member[:ref]}
-      end.compact.reject {|member| rejectable_member(member)}
-
-      relation
-    }
+    (nodes + ways).reject {|e| rejectable_member?(e)}
   end
 
   def build_osm_feature(element)
