@@ -42,7 +42,7 @@ module CityHelpers
 
   def features_query(city, type)
     klass = type == 'sections' ? Section : Station
-    city_lines_ids = city.lines.map(&:id)
+    city_lines_ids = Line.where(city_id: city.id).select(:id)
     klass.where(line_id: city_lines_ids)
   end
 
