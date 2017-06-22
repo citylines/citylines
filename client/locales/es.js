@@ -102,7 +102,11 @@ export default {
     },
     osm: {
       zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',
-      import_button: 'Importar'
+      import_button: 'Importar',
+      relation: 'Relación',
+      members: 'Miembros:',
+      ways: 'vías',
+      nodes: 'nodos con'
     },
     no_lines_alert: 'No hay líneas creadas. Los elementos deben tener asignados una línea para poder ser guardados'
   },

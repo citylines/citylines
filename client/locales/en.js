@@ -101,8 +101,12 @@ export default {
       no: 'No'
     },
     osm: {
-      zoom: 'Import is only allowd in zoom levels bigger than 13',
-      import_button: 'Import'
+      zoom: 'Import is only allowed in zoom levels bigger than 13',
+      import_button: 'Import',
+      relation: 'Relation',
+      members: 'Members:',
+      ways: 'ways',
+      nodes: 'nodes with'
     },
     no_lines_alert: 'There are no lines. Features must be assigned a line before they can be saved'
   },
