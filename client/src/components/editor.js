@@ -8,7 +8,10 @@ import {PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
+import OSMImporter from './editor/osm-importer';
+import NoLinesAlert from './editor/no-lines-alert';
 
+import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
 
@@ -38,20 +41,27 @@ class Editor extends PureComponent {
     this.bindedOnSystemSave = this.onSystemSave.bind(this);
     this.bindedOnCreateSystem = this.onCreateSystem.bind(this);
     this.bindedOnSystemDelete = this.onSystemDelete.bind(this);
+    this.bindedOnImportFromOSMClick = this.onImportFromOSMClick.bind(this);
   }
 
   componentWillMount() {
     EditorStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     MainStore.unsetPanelFullWidth();
     EditorStore.unload(this.urlName);
     EditorStore.removeChangeListener(this.bindedOnChange);
+    CityStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
-    this.setState(EditorStore.getState(this.urlName));
+    const cityState = CityStore.getState(this.urlName);
+
+    this.setState({...EditorStore.getState(this.urlName),
+                   zoom: cityState.zoom,
+                   bounds: cityState.bounds});
   }
 
   componentDidMount() {
@@ -133,6 +143,16 @@ class Editor extends PureComponent {
     EditorStore.createSystem(this.urlName, systemName);
   }
 
+  onImportFromOSMClick(route) {
+    const bounds = {
+      w: this.state.bounds[0][0],
+      s: this.state.bounds[0][1],
+      e: this.state.bounds[1][0],
+      n: this.state.bounds[1][1]
+    }
+    EditorStore.importFromOSM(this.urlName, route, bounds);
+  }
+
   render() {
     return (
           <PanelBody>
@@ -150,6 +170,7 @@ class Editor extends PureComponent {
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
+              { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
               <FeatureViewer
                 lines={this.state.lines}
                 systems={this.state.systems}
@@ -162,6 +183,11 @@ class Editor extends PureComponent {
                 onClick={this.bindedOnModifiedFeatureClick}
                 onDiscard={this.bindedOnDiscardChanges}
                 onSave={this.bindedOnSaveChanges}
+              />
+              <OSMImporter
+                zoom={this.state.zoom}
+                onImport={this.bindedOnImportFromOSMClick}
+                savingData={this.state.savingData}
               />
             </div>
             :

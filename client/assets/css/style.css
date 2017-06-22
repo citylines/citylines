@@ -347,3 +347,22 @@ ul.auth a.twitter {
   text-decoration: none;
   cursor: default;
 }
+
+span.osm-container {
+  display: block;
+  margin-bottom: 10px;
+}
+
+select.osm-route {
+  display: inline-block;
+  border: none;
+  width: auto;
+}
+
+.osm-container .preamble {
+  margin-right: 10px;
+}
+.osm-container .members {
+  display: block;
+  font-size:0.8em;
+}

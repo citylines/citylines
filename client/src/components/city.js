@@ -67,16 +67,34 @@ class City extends PureComponent {
     this.setState(CityStore.getState(this.urlName));
   }
 
-  onMapLoad() {
+  onMapLoad(map) {
     this.mapLoaded = true;
-    this.forceUpdate();
+
+    const geo = this.getGeoFromMap(map);
+    CityStore.setGeoData(this.urlName, geo);
   }
 
-  onMapMove(geo) {
+  onMapMove(map) {
     if (this.state.playing) return;
+
+    const geo = this.getGeoFromMap(map);
+    CityStore.setGeoData(this.urlName, geo);
+
     const newGeo = `${geo.lat},${geo.lon},${geo.zoom},${geo.bearing},${geo.pitch}`;
     this.updateParams({geo: newGeo});
-    CityStore.storeGeoData(this.urlName, geo)
+  }
+
+  getGeoFromMap(map) {
+    const center = map.getCenter();
+
+    return {
+      lat: center.lat.toFixed(6),
+      lon: center.lng.toFixed(6),
+      bounds: map.getBounds().toArray(),
+      zoom: map.getZoom().toFixed(2),
+      bearing: map.getBearing().toFixed(2),
+      pitch: map.getPitch().toFixed(2)
+    }
   }
 
   validFeatureValue(value) {

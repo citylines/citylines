@@ -6,6 +6,7 @@ class Api < App
   helpers CityHelpers
   helpers UserHelpers
   helpers CacheHelpers
+  helpers OSMHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -198,6 +199,22 @@ class Api < App
     system.delete
 
     city_systems(@city).to_json
+  end
+
+  get '/editor/:url_name/osm' do |url_name|
+    protect
+
+    @city = City[url_name: url_name]
+
+    route = params[:route]
+    s = params[:s]
+    n = params[:n]
+    w = params[:w]
+    e = params[:e]
+
+    halt unless (route && s && n && w && e)
+
+    get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
 
   get '/user' do

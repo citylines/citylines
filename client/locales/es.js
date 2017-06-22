@@ -68,7 +68,9 @@ export default {
         name: 'Nombre',
         opening: 'Inauguración',
         buildstart: 'Comienzo de construcción',
-        closure: 'Cierre'
+        closure: 'Cierre',
+        osm_id: 'Id de OSM',
+        osm_tags: 'Tags de OSM'
       }
     },
     modified_features: {
@@ -85,7 +87,8 @@ export default {
         station: 'Estación'
       },
       save: 'Guardar',
-      discard: 'Descartar'
+      discard: 'Descartar',
+      too_many_elements: "¡Demasiados elementos! No se pueden guardar más de 20 elementos al mismo tiempo"
     },
     lines_editor: {
       create: 'Crear',
@@ -97,7 +100,16 @@ export default {
       are_you_sure: '¿Estás seguro?',
       yes: 'Sí',
       no: 'No'
-    }
+    },
+    osm: {
+      zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',
+      import_button: 'Importar',
+      relation: 'Relación',
+      members: 'Miembros:',
+      ways: 'vías',
+      nodes: 'nodos con'
+    },
+    no_lines_alert: 'No hay líneas creadas. Los elementos deben tener asignados una línea para poder ser guardados'
   },
   terms: {
     title: 'Términos de uso',

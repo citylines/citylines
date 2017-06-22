@@ -1,6 +1,7 @@
 import Store from './store';
 
 import 'whatwg-fetch';
+import {v1 as uuid } from 'uuid';
 
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
@@ -100,6 +101,13 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async fetchFeaturesFromOSM(urlName, route, bounds) {
+    const params = `route=${route}&s=${bounds.s}&n=${bounds.n}&w=${bounds.w}&e=${bounds.e}`;
+    const url = `/api/editor/${urlName}/osm?${params}`;
+    const response = await fetch(url, {credentials: 'same-origin'});
+    const json = await response.json();
+    return json;
+  },
 /* ------------ */
 
   async load(urlName) {
@@ -227,13 +235,13 @@ const EditorStore = Object.assign({}, Store, {
 
     features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      feature.properties.id = Date.now();
+      feature.properties.id = uuid();
       feature.properties.klass = klass;
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;
       feature.properties.closure = 999999;
       feature.properties.line_url_name = cityData.lines[0] ? cityData.lines[0].url_name : null;
-      if (klass == 'Station') feature.properties.name = '';
+      if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
       this.pushFeatureToFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
@@ -293,6 +301,21 @@ const EditorStore = Object.assign({}, Store, {
 
     cityData.savingData = false;
     this.emitChangeEvent();
+  },
+
+  async importFromOSM(urlName, route, bounds) {
+    const cityData = this.cityData[urlName];
+    cityData.savingData = true;
+    this.emitChangeEvent();
+
+    const data = await this.fetchFeaturesFromOSM(urlName, route, bounds);
+
+    cityData.savingData = false;
+
+    this.setFeatureCreated(urlName, data.features.map(f => {
+      f.id = `osm_${f.properties.osm_id}`;
+      return f;
+    }));
   }
 });
 

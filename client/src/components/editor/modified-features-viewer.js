@@ -38,6 +38,14 @@ class ModifiedFeaturesViewer extends PureComponent {
     if (typeof this.props.onSave === 'function') this.props.onSave();
   }
 
+  elementsNumber() {
+    return Object.entries(this.props.modifiedFeatures).length;
+  }
+
+  tooManyElements() {
+    return this.props.modifiedFeatures && this.elementsNumber() > 20;
+  }
+
   render() {
     const content = this.props.modifiedFeatures ?
       Object.entries(this.props.modifiedFeatures).map((entry) => {
@@ -59,15 +67,21 @@ class ModifiedFeaturesViewer extends PureComponent {
         <div className="c-card__item">
           <span className="c-input-group">
             <button onClick={this.bindedOnDiscard} className="c-button c-button--block"><Translate content="editor.modified_features.discard" /></button>
-            <button onClick={this.bindedOnSave} disabled={this.props.savingData} className="c-button c-button--block c-button--info"><Translate content="editor.modified_features.save" /></button>
+            <button onClick={this.bindedOnSave} disabled={this.props.savingData || this.tooManyElements()} className="c-button c-button--block c-button--info"><Translate content="editor.modified_features.save" /></button>
           </span>
         </div>
         : null;
 
     return (
       <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
-      <li className="c-card__item c-card__item--brand"><Translate content="editor.modified_features.title" /></li>
+      <li className="c-card__item c-card__item--brand">
+        <Translate content="editor.modified_features.title" />
+        { this.props.modifiedFeatures ? ` (${this.elementsNumber()})` : '' }
+      </li>
         { content }
+        {  this.tooManyElements() ?
+          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" />
+          : ""}
         { buttons }
       </ul>
     )

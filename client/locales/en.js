@@ -68,7 +68,9 @@ export default {
         name: 'Name',
         opening: 'Opening',
         buildstart: 'Beginning of construction',
-        closure: 'Closure'
+        closure: 'Closure',
+        osm_id: 'OSM Id',
+        osm_tags: 'OSM Tags'
       }
     },
     modified_features: {
@@ -85,7 +87,8 @@ export default {
         station: 'Station'
       },
       save: 'Save',
-      discard: 'Discard'
+      discard: 'Discard',
+      too_many_elements: "Too many elements! You can't save more than 20 elements at the same time"
     },
     lines_editor: {
       create: 'Create',
@@ -97,7 +100,16 @@ export default {
       are_you_sure: 'Are you sure?',
       yes: 'Yes',
       no: 'No'
-    }
+    },
+    osm: {
+      zoom: 'Import is only allowed in zoom levels bigger than 13',
+      import_button: 'Import',
+      relation: 'Relation',
+      members: 'Members:',
+      ways: 'ways',
+      nodes: 'nodes with'
+    },
+    no_lines_alert: 'There are no lines. Features must be assigned a line before they can be saved'
   },
   terms: {
     title: 'Terms of use',
