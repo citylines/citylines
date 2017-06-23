@@ -39,6 +39,7 @@ describe Station do
     assert_equal @station.name, backup.name
     assert_equal @station.osm_id, backup.osm_id
     assert_equal @station.osm_tags, backup.osm_tags
+    assert_equal @station.city_id, backup.city_id
   end
 
   it "should set the city's start_year if the station opened or it's building started before the city's start_year" do
