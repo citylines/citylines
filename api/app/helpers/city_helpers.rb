@@ -21,11 +21,15 @@ module CityHelpers
   def lines_length_by_year(city)
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
-    line_ids = Line.where(city_id: city.id).select_map(:id)
-    Section.where(line_id: line_ids).each do |section|
+
+    line_url_names = Hash.new do |h, k|
+      h[k] = Line[k].url_name
+    end
+
+    Section.where(city_id: city.id).each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
-        line = section.line.url_name
+        line = line_url_names[section.line_id]
         if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
           lengths[year][line] ||= {}
           lengths[year][line][:under_construction] ||= 0
@@ -145,10 +149,8 @@ module CityHelpers
 
   def lengths
     query = %{
-      select sum(length), city_id from
-        (select length, city_id from sections where
-          (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
-        ) as sections_cities
+      select sum(length), city_id from sections where
+        (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
       group by city_id}
 
     cities = {}
