@@ -86,11 +86,11 @@ module CityHelpers
     feature.save
   end
 
-  def update_create_or_delete_feature(user, change)
+  def update_create_or_delete_feature(city, user, change)
     klass = Object.const_get(change[:klass])
 
     if change[:created]
-      new_feature = klass.new
+      new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature.reload, change[:feature][:geometry])
       CreatedFeature.push(user, new_feature.reload)
@@ -146,7 +146,7 @@ module CityHelpers
   def lengths
     query = %{
       select sum(length), city_id from
-        (select length, city_id from sections left join lines on sections.line_id = lines.id where
+        (select length, city_id from sections where
           (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
         ) as sections_cities
       group by city_id}

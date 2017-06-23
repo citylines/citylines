@@ -15,7 +15,7 @@ describe "modified features models" do
 
     @line = Line.create(city_id: @city.id, name: 'L1')
 
-    @feature = Section.create(line_id: @line.id)
+    @feature = Section.create(line_id: @line.id, city_id: @city.id)
   end
 
   it "should should try to create a models instance" do

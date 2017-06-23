@@ -98,7 +98,7 @@ class Api < App
     changes = JSON.parse(request.body.read, symbolize_names: true)
 
     changes.each do |change|
-      update_create_or_delete_feature(user, change);
+      update_create_or_delete_feature(@city, user, change);
     end
 
     all_features_collection(@city).to_json

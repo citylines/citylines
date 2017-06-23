@@ -3,9 +3,9 @@ module UserHelpers
     h = {}
 
     created_features_query = %{
-      select city_id, feature_class, sum(sections.length), count(distinct feature_id) from created_features left join
+      select created_features.city_id, feature_class, sum(sections.length), count(distinct feature_id) from created_features left join
         sections on (feature_class = 'Section' and created_features.feature_id = sections.id)
-        where user_id = #{user_id} group by city_id, feature_class
+        where user_id = #{user_id} group by created_features.city_id, feature_class
     }
 
     DB.fetch(created_features_query).each do |group|

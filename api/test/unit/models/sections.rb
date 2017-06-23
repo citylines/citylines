@@ -15,7 +15,7 @@ describe Section do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
 
-    @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags")
+    @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags", city_id: @city.id)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 

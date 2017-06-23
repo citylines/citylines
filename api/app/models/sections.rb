@@ -6,14 +6,11 @@ class Section < Sequel::Model(:sections)
   include FeatureBackup
 
   many_to_one :line
+  many_to_one :city
 
   plugin :geometry
 
   FUTURE = 999999
-
-  def city
-    self.line.city
-  end
 
   def feature
     h = super

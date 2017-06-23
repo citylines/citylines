@@ -95,32 +95,32 @@ describe CacheHelpers do
         end
 
         section1 = Timecop.freeze(Date.today - 2) do
-          Section.create(line_id: @line.id)
+          Section.create(line_id: @line.id, city_id: @city.id)
         end
 
         section2 = Timecop.freeze(Date.today - 1 ) do
-          Section.create(line_id: @line.id)
+          Section.create(line_id: @line.id, city_id: @city.id)
         end
 
-        section_of_another_city = Section.create(line_id: @line2.id)
+        section_of_another_city = Section.create(line_id: @line2.id, city_id: @city2.id)
 
         assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections')
       end
 
       it "should return the last deleted_feature created_at" do
         section1 = Timecop.freeze(Date.today - 3) do
-          Section.create(line_id: @line.id)
+          Section.create(line_id: @line.id, city_id: @city.id)
         end
 
         section2 = Timecop.freeze(Date.today - 2) do
-          Section.create(line_id: @line.id)
+          Section.create(line_id: @line.id, city_id: @city.id)
         end
 
         deleted_feature = Timecop.freeze(Date.today - 1) do
           DeletedFeature.create(city_id: @city.id, feature_class: 'Section')
         end
 
-        section_of_another_city = Section.create(line_id: @line2.id)
+        section_of_another_city = Section.create(line_id: @line2.id, city_id: @city2.id)
 
         assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'sections')
       end
@@ -133,32 +133,32 @@ describe CacheHelpers do
         end
 
         station1 = Timecop.freeze(Date.today - 2) do
-          Station.create(line_id: @line.id)
+          Station.create(line_id: @line.id, city_id: @city.id)
         end
 
         station2 = Timecop.freeze(Date.today - 1 ) do
-          Station.create(line_id: @line.id)
+          Station.create(line_id: @line.id, city_id: @city.id)
         end
 
-        station_of_another_city = Station.create(line_id: @line2.id)
+        station_of_another_city = Station.create(line_id: @line2.id, city_id: @city2.id)
 
         assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations')
       end
 
       it "should return the last deleted_feature created_at" do
         station1 = Timecop.freeze(Date.today - 3) do
-          Station.create(line_id: @line.id)
+          Station.create(line_id: @line.id, city_id: @city.id)
         end
 
         station2 = Timecop.freeze(Date.today - 2) do
-          Station.create(line_id: @line.id)
+          Station.create(line_id: @line.id, city_id: @city.id)
         end
 
         deleted_feature = Timecop.freeze(Date.today - 1) do
           DeletedFeature.create(city_id: @city.id, feature_class: 'Station')
         end
 
-        station_of_another_city = Station.create(line_id: @line2.id)
+        station_of_another_city = Station.create(line_id: @line2.id, city_id: @city2.id)
 
         assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'stations')
       end
