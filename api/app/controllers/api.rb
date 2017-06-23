@@ -54,6 +54,8 @@ class Api < App
   get '/:url_name/view_data' do |url_name|
     @city = City[url_name: url_name]
 
+    last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), last_modified_system_or_line(@city)].compact.max
+
     { lines: city_lines(@city),
       systems: city_systems(@city),
       lines_length_by_year: lines_length_by_year(@city),
