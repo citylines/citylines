@@ -209,7 +209,7 @@ describe OSMHelpers do
     end
 
     it "should filter out any existing station" do
-      Station.create(line_id: @line.id, osm_id: 81551275)
+      Station.create(line_id: @line.id, osm_id: 81551275, city_id: @city.id)
 
       response = {
         elements: [
@@ -244,7 +244,7 @@ describe OSMHelpers do
     end
 
     it "should filter out any existing section" do
-      Section.create(line_id: @line.id, osm_id: 26192812)
+      Section.create(line_id: @line.id, osm_id: 26192812, city_id: @city.id)
 
       response = {
         elements: [

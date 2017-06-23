@@ -5,12 +5,9 @@ class Station < Sequel::Model(:stations)
   include FeatureBackup
 
   many_to_one :line
+  many_to_one :city
 
   plugin :geometry
-
-  def city
-    self.line.city
-  end
 
   def feature
     h = super

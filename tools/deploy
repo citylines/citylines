@@ -1,0 +1,3 @@
+#!/bin/bash
+
+git push heroku master && heroku run RACK_ENV=production bundle exec rake db:migrate && heroku restart

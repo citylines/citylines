@@ -73,8 +73,8 @@ module OSMHelpers
   end
 
   def filter_out_existing_features(city, features)
-    sections_osm_ids = Line.where(city_id: city.id).right_join(:sections, :sections__line_id => :lines__id).exclude(osm_id: nil).select_map(:sections__osm_id)
-    stations_osm_ids = Line.where(city_id: city.id).right_join(:stations, :stations__line_id => :lines__id).exclude(osm_id: nil).select_map(:stations__osm_id)
+    sections_osm_ids = Section.where(city_id: city.id).exclude(osm_id: nil).select_map(:osm_id)
+    stations_osm_ids = Station.where(city_id: city.id).exclude(osm_id: nil).select_map(:osm_id)
 
     features.reject {|feature|
       type = feature[:geometry][:type]

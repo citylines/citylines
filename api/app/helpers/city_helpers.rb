@@ -21,11 +21,15 @@ module CityHelpers
   def lines_length_by_year(city)
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
-    line_ids = Line.where(city_id: city.id).select_map(:id)
-    Section.where(line_id: line_ids).each do |section|
+
+    line_url_names = Hash.new do |h, k|
+      h[k] = Line[k].url_name
+    end
+
+    Section.where(city_id: city.id).each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
-        line = section.line.url_name
+        line = line_url_names[section.line_id]
         if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
           lengths[year][line] ||= {}
           lengths[year][line][:under_construction] ||= 0
@@ -42,8 +46,7 @@ module CityHelpers
 
   def features_query(city, type)
     klass = type == 'sections' ? Section : Station
-    city_lines_ids = city.lines.map(&:id)
-    klass.where(line_id: city_lines_ids)
+    klass.where(city_id: city.id)
   end
 
   def lines_features_collection(city, type)
@@ -87,11 +90,11 @@ module CityHelpers
     feature.save
   end
 
-  def update_create_or_delete_feature(user, change)
+  def update_create_or_delete_feature(city, user, change)
     klass = Object.const_get(change[:klass])
 
     if change[:created]
-      new_feature = klass.new
+      new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature.reload, change[:feature][:geometry])
       CreatedFeature.push(user, new_feature.reload)
@@ -146,10 +149,8 @@ module CityHelpers
 
   def lengths
     query = %{
-      select sum(length), city_id from
-        (select length, city_id from sections left join lines on sections.line_id = lines.id where
-          (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
-        ) as sections_cities
+      select sum(length), city_id from sections where
+        (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
       group by city_id}
 
     cities = {}
