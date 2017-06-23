@@ -8,7 +8,7 @@ describe CacheHelpers do
   describe "last_modified_city_date" do
     it "should return the last section updated_at" do
       section1 = Timecop.freeze(Date.today - 4) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       system1 = Timecop.freeze(Date.today - 3) do
@@ -19,14 +19,14 @@ describe CacheHelpers do
         System.create(city_id: 33)
       end
 
-      section2  = Section.create(line_id: 222)
+      section2  = Section.create(city_id: 33, line_id: 222)
 
       assert_equal section2.updated_at, last_modified_city_date
     end
 
     it "should return the last system updated_at" do
       section1 = Timecop.freeze(Date.today - 4) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       system1 = Timecop.freeze(Date.today - 3) do
@@ -34,7 +34,7 @@ describe CacheHelpers do
       end
 
       section2 = Timecop.freeze(Date.today - 2) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       system2 = System.create(city_id: 33)
@@ -44,7 +44,7 @@ describe CacheHelpers do
 
     it "should return the last DeletedFeature created_at" do
       section1 = Timecop.freeze(Date.today - 4) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       system1 = Timecop.freeze(Date.today - 3) do
@@ -52,7 +52,7 @@ describe CacheHelpers do
       end
 
       section2 = Timecop.freeze(Date.today - 2) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       deleted_feature = DeletedFeature.create(feature_class: 'Section', city_id: 33)
@@ -62,7 +62,7 @@ describe CacheHelpers do
 
     it "should return the updated_city" do
       section1 = Timecop.freeze(Date.today - 4) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       system1 = Timecop.freeze(Date.today - 3) do
@@ -70,7 +70,7 @@ describe CacheHelpers do
       end
 
       section2 = Timecop.freeze(Date.today - 2) do
-        Section.create(line_id: 222)
+        Section.create(city_id: 33, line_id: 222)
       end
 
       city = City.create(name: 'Fake City', system_name: '', country: 'Fake Country', url_name: 'fake-city')
