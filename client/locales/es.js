@@ -126,7 +126,7 @@ export default {
     },
     privacy: {
       title: 'Política de privacidad',
-      p1: 'Citylines.co recoge su nombre, apellido y correo electrónico del servicio de autenticación de Google cuando Usted inicia sesión usando Google.',
+      p1: 'Citylines.co recoge su nombre, apellido, correo electrónico y nombre de pantalla (en el caso de Twitter) cuando Usted inicia sesión usando Google o Twitter.',
       p2: 'Citylines.co guarda esta información en una base de datos privada protegida.',
       p3: 'Citylines.co usa esta información con fines sólo relacionados a su autenticación y/o para enviarle correos electrónicos ocasionalmente.',
       p4: 'Citylines.co no va a compartir su información con nadie más.',
