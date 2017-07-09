@@ -73,6 +73,10 @@ class User extends Component {
     return this.state.cities && this.state.cities.length > 0;
   }
 
+  stationsCreated(city) {
+    return city.created_features && city.created_features.station_count || null
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -90,16 +94,18 @@ class User extends Component {
             <thead className="c-table__head">
               <tr className="c-table__row c-table__row--heading">
                 <Translate component="th" className="c-table__cell" content="user.table.city" />
-                <Translate component="th" className="c-table__cell" content="user.table.created_km" />
-                <Translate component="th" className="c-table__cell" content="user.table.modified_or_deleted_elements" />
+                <Translate component="th" className="c-table__cell narrow" content="user.table.created_km" />
+                <Translate component="th" className="c-table__cell narrow" content="user.table.created_stations" />
+                <Translate component="th" className="c-table__cell narrow" content="user.table.modified_or_deleted_elements" />
               </tr>
             </thead>
             <tbody className="c-table__body">
               {this.state.cities.map(city =>
                 <tr key={city.city.name} className="c-table__row">
                   <td className="c-table__cell"><Link to={`/${city.city.url_name}`} className="c-link">{city.city.name}</Link>{this.countryAndStateNames(city)}</td>
-                  <td className="c-table__cell">{this.km(city)}</td>
-                  <td className="c-table__cell">{this.modifiedFeaturesCount(city)}</td>
+                  <td className="c-table__cell narrow">{this.km(city)}</td>
+                  <td className="c-table__cell narrow">{this.stationsCreated(city)}</td>
+                  <td className="c-table__cell narrow">{this.modifiedFeaturesCount(city)}</td>
                 </tr>
               )}
             </tbody>

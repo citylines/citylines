@@ -366,3 +366,7 @@ select.osm-route {
   display: block;
   font-size:0.8em;
 }
+
+table .narrow {
+  max-width: 150px;
+}

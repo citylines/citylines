@@ -152,6 +152,7 @@ export default {
     table: {
       city: 'Ciudad',
       created_km: 'Km creados',
+      created_stations: 'Estaciones creadas',
       modified_or_deleted_elements: 'Elementos modificados o borrados',
       caption: 'Ciudades ordenadas según kms creados y número de elementos modificados'
     },

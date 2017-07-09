@@ -151,7 +151,8 @@ export default {
     cities_of_user: 'Cities of %(name)s',
     table: {
       city: 'City',
-      created_km: 'Created km',
+      created_km: 'Km created',
+      created_stations: 'Stations created',
       modified_or_deleted_elements: 'Modified or deleted elements',
       caption: 'Cities are ordered by created km and number of modified features'
     },
