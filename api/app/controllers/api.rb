@@ -103,7 +103,7 @@ class Api < App
       update_create_or_delete_feature(@city, user, change);
     end
 
-    all_features_collection(@city).to_json
+    status 200
   end
 
   put '/editor/:url_name/line' do |url_name|

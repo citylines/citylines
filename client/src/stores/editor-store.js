@@ -25,8 +25,7 @@ const EditorStore = Object.assign({}, Store, {
   async updateFeatures(urlName, body) {
     const url = `/api/editor/${urlName}/features`;
     const response = await fetch(url, {method:'PUT', body: body, credentials: 'same-origin'});
-    const json = await response.json();
-    return json;
+    return response;
   },
 
   async updateLine(urlName, args) {
@@ -293,14 +292,8 @@ const EditorStore = Object.assign({}, Store, {
       return entry[1];
     });
 
-    const updatedFeatures = await this.updateFeatures(urlName, JSON.stringify(changes));
-
-    cityData.features = Object.assign({}, updatedFeatures);
-    delete cityData.modifiedFeatures;
-    delete cityData.selectedFeature;
-
-    cityData.savingData = false;
-    this.emitChangeEvent();
+    await this.updateFeatures(urlName, JSON.stringify(changes));
+    await this.load(urlName);
   },
 
   async importFromOSM(urlName, route, bounds) {
