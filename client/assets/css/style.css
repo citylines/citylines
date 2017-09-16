@@ -402,3 +402,8 @@ select.osm-route {
 table .narrow {
   max-width: 150px;
 }
+
+.navbar-logo {
+  width: 138px;
+  vertical-align: middle;
+}

@@ -69,7 +69,7 @@ class Main extends Component {
                   <span className="fa fa-bars"></span>
               </span>
               <Link to="/" className="c-nav__item c-text--loud">
-                <img src="/img/citylines-navbar.svg" style={{width:140,verticalAlign:'middle'}}/>
+                <img src="/img/citylines-navbar.svg" className="navbar-logo" />
               </Link>
               { this.state.username ?
               <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</Link>  :
