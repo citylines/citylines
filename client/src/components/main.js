@@ -73,7 +73,7 @@ class Main extends Component {
               </Link>
               { this.state.username ?
               <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> {this.state.username}</Link>  :
-              <Link to="/auth" className="c-nav__item c-nav__item--right"><i className="fa fa-user-circle-o"></i> <Translate content="main.log_in" /></Link> }
+              <Link to="/auth" className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
               <Link to="/terms" className="c-nav__item c-nav__item--right">
                 <Translate content="terms.title" />
               </Link>
