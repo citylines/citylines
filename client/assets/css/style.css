@@ -300,6 +300,38 @@ button.save-system {
 
 .landing-title {
   text-align: center;
+  color: #555;
+  padding-left:10%;
+  padding-right:10%;
+}
+
+.landing-image {
+  display: block;
+  margin: 0 auto;
+  width:426px;
+  padding:20px;
+  padding-bottom:0;
+}
+
+.landing-image img {
+  margin-left:-40px;
+}
+
+@media (max-width: 426px){
+    .landing-image {
+      width: 100%;
+    }
+    .landing-image img {
+      width: 100%;
+      margin-left:0;
+    }
+    .landing-title {
+      display:none;
+    }
+}
+
+.cities-search-container {
+  padding-top:0;
 }
 
 .data-link {
@@ -369,4 +401,9 @@ select.osm-route {
 
 table .narrow {
   max-width: 150px;
+}
+
+.navbar-logo {
+  width: 138px;
+  vertical-align: middle;
 }

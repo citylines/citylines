@@ -101,11 +101,12 @@ class Cities extends Component {
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--medium">
           <div className="u-letter-box--super">
-            <Translate component="h1" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe />
+            <div className="landing-image"><img src="/img/citylines-main.svg"/></div>
+            <Translate component="h2" content="cities.title" className="c-heading c-heading--medium landing-title"/>
           </div>
         </div>
 
-        <div className="o-container o-container--small">
+        <div className="o-container o-container--small cities-search-container">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
               <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
@@ -150,9 +151,9 @@ class Cities extends Component {
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://twitter.com/citylines_co"><span className="fa fa-twitter" /> Twitter</a></span>
               <span className="contact-icon"><a className="c-link" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/> Email</a></span>
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://github.com/BrunoSalerno/citylines"><span className="fa fa-github" /> Github</a></span>
-              <span className="contact-icon"><a className="c-link" target="_blank" href="https://www.kaggle.com/citylines/city-lines">kaggle</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><b>K</b> Kaggle</a></span>
             </p>
-            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /></a>.</p>
+            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /></a></p>
           </div>
         </div>
       </div>
