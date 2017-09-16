@@ -4,10 +4,10 @@ Citylines
 This is the source code of [citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
 
 General view
-![](https://cloud.githubusercontent.com/assets/6061036/25874821/bcae4a42-34ea-11e7-83d0-4e59dff88db2.png)
+![](https://user-images.githubusercontent.com/6061036/30515123-a11cb1c8-9af8-11e7-8fd1-587bcaea8733.png)
 
 Editor
-![](https://cloud.githubusercontent.com/assets/6061036/25874827/c45b2120-34ea-11e7-8e8a-8e069d56c9a4.png)
+![](https://user-images.githubusercontent.com/6061036/30515122-a11b420c-9af8-11e7-9751-6af8630d6842.png)
 
 Development
 ===========
