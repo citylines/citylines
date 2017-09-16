@@ -1,6 +1,6 @@
 export default {
     cities: {
-      title: 'En <b>citylines.co</b> queremos reconstruir los sistemas de transporte de las ciudades del mundo',
+      title: 'Queremos reconstruir los sistemas de transporte de las ciudades del mundo',
       search: 'Ingresa una ciudad o un país',
       contributors: {
         one: '%(contributors)s colaborador',

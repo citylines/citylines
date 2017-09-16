@@ -101,11 +101,12 @@ class Cities extends Component {
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--medium">
           <div className="u-letter-box--super">
-            <Translate component="h1" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe />
+            <div className="landing-image"><img src="/img/citylines-main.svg"/></div>
+            <Translate component="h2" content="cities.title" className="c-heading c-heading--medium landing-title"/>
           </div>
         </div>
 
-        <div className="o-container o-container--small">
+        <div className="o-container o-container--small cities-search-container">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
               <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
