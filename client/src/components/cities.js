@@ -4,6 +4,7 @@ import Diacritics from 'diacritics';
 import CitiesStore from '../stores/cities-store';
 import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
+import assets from '../lib/assets-provider';
 
 class CityItem extends Component {
   render() {
@@ -101,7 +102,7 @@ class Cities extends Component {
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--medium">
           <div className="u-letter-box--super">
-            <div className="landing-image"><img src="/img/citylines-main.svg"/></div>
+            <div className="landing-image"><img src={assets.path('img/citylines-main.svg')}/></div>
             <Translate component="h2" content="cities.title" className="c-heading c-heading--medium landing-title"/>
           </div>
         </div>

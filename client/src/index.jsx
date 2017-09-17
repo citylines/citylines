@@ -26,6 +26,9 @@ Counterpart.registerTranslations('es', ES);
 Counterpart.setFallbackLocale('en')
 Counterpart.setLocale(browserLocale);
 
+import assets from './lib/assets-provider';
+assets.loadPaths(window.assetsPaths);
+
 const requireAuth = () => {
   if (!MainStore.userLoggedIn()) {
     browserHistory.push('/auth');

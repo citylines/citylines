@@ -4,6 +4,7 @@ import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
+import assets from '../lib/assets-provider';
 
 class Main extends Component {
   constructor(props, context) {
@@ -69,7 +70,7 @@ class Main extends Component {
                   <span className="fa fa-bars"></span>
               </span>
               <Link to="/" className="c-nav__item c-text--loud">
-                <img src="/img/citylines-navbar.svg" className="navbar-logo" />
+                <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
               { this.state.username ?
               <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right">{this.state.username}</Link>  :

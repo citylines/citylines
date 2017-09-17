@@ -44,7 +44,9 @@
     <body class="c-text">
       <div id="container">
       </div>
-
+      <script>
+        window.assetsPaths = <%= (Sprockets::Helpers.manifest ? Sprockets::Helpers.manifest.assets : {}).to_json %>
+      </script>
       <script src="<%= asset_path('bundle.js') %>"></script>
     </body>
 </html>
