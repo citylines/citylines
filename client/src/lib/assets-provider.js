@@ -1,16 +1,15 @@
 class AssetsProvider {
   paths = {}
 
+  // Sets Sprocket's manifest paths map
   loadPaths(paths) {
     this.paths = paths;
   }
 
+  // Returns the manifest paths (production) or the default ones (development)
   path(key) {
-    if (this.paths[key]) {
-      return this.paths[key];
-    } else {
-      return `/assets/${key}`;
-    }
+    const target = this.paths[key] || key;
+    return `/assets/${target}`;
   }
 }
 
