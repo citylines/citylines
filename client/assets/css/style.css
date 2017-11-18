@@ -31,11 +31,18 @@
 }
 
 .popup-feature-info {
-    margin-top:5px;
+  margin-top:5px;
+  padding-top:10px;
+  padding-bottom:5px;
+}
+
+.popup-feature-info + .popup-feature-info {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .station-popup {
-  text-decoration: underline;
+  padding-top:0px;
+  font-weight:bold;
 }
 
 .section-popup {
@@ -90,6 +97,13 @@
   height:20px;
   line-height:12px;
   vertical-align:top;
+}
+
+.system-label {
+  height: 20px !important;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 12px;
 }
 
 .edit-city-link {

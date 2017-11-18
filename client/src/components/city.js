@@ -195,11 +195,15 @@ class City extends PureComponent {
                   return (
                     <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
                       <ul className="c-list c-list--unstyled">
+                        {fProps.klass === 'Station' ?
                         <li className="c-list__item">
-                          <strong>{fProps.system}</strong><span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
+                          <Translate component="h3" className="station-popup c-heading" content="city.popup.station" with={{name: fProps.name}} />
+                        </li> : null}
+                        <li className="c-list__item">
+                          <strong className="system-label">{fProps.system}</strong><span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
                         </li>
                         <li className="c-list__item">
-                          {fProps.klass === 'Station' ? <Translate className="station-popup" content="city.popup.station" with={{name: fProps.name}} /> : <Translate className="section-popup" content="city.popup.track" />}
+                           <Translate className="section-popup" content={`city.popup.${fProps.klass.toLowerCase()}_info`} />
                         </li>
                         { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
                         { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}

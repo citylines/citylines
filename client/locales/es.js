@@ -46,7 +46,8 @@ export default {
     all_lines: 'Todas las líneas',
     popup: {
       station: 'Estación %(name)s',
-      track: 'Información del tramo',
+      section_info: 'Información del tramo',
+      station_info: 'Información de la estación',
       buildstart: 'Comienzo de construcción: %(year)s',
       opening: 'Inauguración: %(year)s',
       closure: 'Cierre: %(year)s',
