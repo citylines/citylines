@@ -49,6 +49,13 @@ class Style {
       delete style["color"];
     }
 
+    if (type === 'sections') {
+      style['line-offset'] = {
+        type: "identity",
+        property: "offset"
+      };
+    }
+
     if (operation == 'opening'){
       const stops = [];
 
