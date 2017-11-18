@@ -53,10 +53,9 @@ API
 
 Client
 ------
-- Install Node 7
-- Install npm
-- Install dependencies: `npm install`
-- Build: `npm run build`
+- Install node and yarn
+- Install dependencies: `yarn install`
+- Build: `yarn build`
 
 Go to localhost:9292 and you should have Citylines running in your machine.
 
