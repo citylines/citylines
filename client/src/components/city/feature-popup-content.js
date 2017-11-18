@@ -39,10 +39,10 @@ class FeaturePopupContent extends Component {
             <li className="c-list__item">
             <Translate className="station-popup" content="city.popup.station" with={{name: fProps.name}} />
             </li>
-            {Object.entries(this.groupedSystems(fProps.lines)).map((e) => {
+            {Object.entries(this.groupedSystems(fProps.lines)).map((e, index) => {
                 const s = e[1];
-                return <li className="c-list__item">
-                  {s.lines.map((l) => <span className="c-text--highlight line-label" style={this.lineStyle(l)}>{l.line}</span>)}
+                return <li key={index} className="c-list__item">
+                  {s.lines.map((l, index2) => <span key={`l-${index2}`} className="c-text--highlight line-label" style={this.lineStyle(l)}>{l.line}</span>)}
                   <strong>{s.name}</strong>
                 </li>
               }
