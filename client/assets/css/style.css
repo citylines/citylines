@@ -35,7 +35,10 @@
 }
 
 .station-popup {
-  text-decoration: underline;
+  display: block;
+  margin-bottom:7px;
+  font-size:1.15em;
+  border-bottom: 1px dotted #888;
 }
 
 .section-popup {

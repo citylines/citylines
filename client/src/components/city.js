@@ -5,6 +5,7 @@ import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
 import Translate from 'react-translate-component';
+import FeaturePopupContent from './city/feature-popup-content';
 
 import MainStore from '../stores/main-store';
 import CityStore from '../stores/city-store';
@@ -97,10 +98,6 @@ class City extends PureComponent {
     }
   }
 
-  validFeatureValue(value) {
-    return (value !== null && value !== 999999)
-  }
-
   onMouseMove(point, features) {
     CityViewStore.hover(this.urlName, features);
   }
@@ -189,26 +186,10 @@ class City extends PureComponent {
               onClose={this.bindedOnPopupClose}>
               <div>
               {
-                this.state.clickedFeatures.features.map((feature) => {
-                  const fProps = feature.properties;
-                  const lineStyle = {color: fProps.lineLabelColor, backgroundColor: fProps.lineColor, marginLeft: (fProps.system ? 5 : 0), boxShadow: (fProps.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
-                  return (
-                    <div key={`${fProps.klass}_${fProps.id}`} className="c-text popup-feature-info">
-                      <ul className="c-list c-list--unstyled">
-                        <li className="c-list__item">
-                          <strong>{fProps.system}</strong><span className="c-text--highlight line-label" style={lineStyle}>{fProps.line}</span>
-                        </li>
-                        <li className="c-list__item">
-                          {fProps.klass === 'Station' ? <Translate className="station-popup" content="city.popup.station" with={{name: fProps.name}} /> : <Translate className="section-popup" content="city.popup.track" />}
-                        </li>
-                        { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
-                        { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
-                        { this.validFeatureValue(fProps.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: fProps.closure}} /></li> : ''}
-                        { fProps.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(fProps.length)/1000).toFixed(2)}} /></li> : ''}
-                      </ul>
-                    </div>
-                  )
-                })
+                this.state.clickedFeatures.features.map((f) =>
+                    <FeaturePopupContent
+                      key={`${f.properties.klass}-${f.properties.id}-${f.properties.line_url_name}`}
+                      feature={f} />)
               }
               </div>
               </Popup>) }

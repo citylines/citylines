@@ -44,8 +44,16 @@ class MouseEvents {
     this.clickedFeatures = {
       point: point,
       features: features.map((f) => {
-        f.properties.lineColor = this.style.lineColor(f.properties.line_url_name);
-        f.properties.lineLabelColor = this.style.lineLabelFontColor(f.properties.line_url_name);
+        if (f.properties.lines) {
+          f.properties.lines = JSON.parse(f.properties.lines);
+          f.properties.lines.map((l) => {
+            l.lineColor = this.style.lineColor(l.line_url_name);
+            l.lineLabelColor = this.style.lineLabelFontColor(l.line_url_name);
+          });
+        } else {
+          f.properties.lineColor = this.style.lineColor(f.properties.line_url_name);
+          f.properties.lineLabelColor = this.style.lineLabelFontColor(f.properties.line_url_name);
+        }
         return f;
       })
     }
