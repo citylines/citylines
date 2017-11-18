@@ -72,7 +72,7 @@ class Api < App
 
     last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
 
-    lines_features_collection(@city, type).to_json
+    formatted_lines_features_collection(@city, type).to_json
   end
 
   get '/editor/:url_name/data' do |url_name|

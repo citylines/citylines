@@ -26,4 +26,12 @@ class Station < Sequel::Model(:stations)
                            closure: closure })
     h
   end
+
+  def raw_feature
+    feature
+  end
+
+  def formatted_feature
+    feature
+  end
 end

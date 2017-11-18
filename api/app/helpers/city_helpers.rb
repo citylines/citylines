@@ -49,8 +49,15 @@ module CityHelpers
     klass.where(city_id: city.id)
   end
 
+  def formatted_lines_features_collection(city, type)
+    features = features_query(city, type).map(&:formatted_feature).flatten
+
+    {type: "FeatureCollection",
+     features: features}
+  end
+
   def lines_features_collection(city, type)
-    features = features_query(city, type).map(&:feature).flatten
+    features = features_query(city, type).map(&:raw_feature)
 
     {type: "FeatureCollection",
      features: features}

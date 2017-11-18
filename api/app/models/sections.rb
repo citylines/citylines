@@ -56,13 +56,15 @@ class Section < Sequel::Model(:sections)
     end
   end
 
-  def feature
-    feature_hash = super
+  def raw_feature
+    build_feature(feature, line)
+  end
 
+  def formatted_feature
     if other_line_ids
-      multiple_features(feature_hash)
+      multiple_features(feature)
     else
-      build_feature(feature_hash, line)
+      raw_feature
     end
   end
 end
