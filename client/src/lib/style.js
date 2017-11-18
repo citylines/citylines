@@ -1,6 +1,6 @@
 class Style {
   constructor(lines) {
-    this.lines = {};
+    this.lines = {'shared-station': '#000000'};
 
     lines.map((line) => {
       this.lines[line.url_name] = line.color;

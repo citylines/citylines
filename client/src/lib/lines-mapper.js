@@ -53,7 +53,7 @@ class LinesMapper extends Mapper {
       ];
     }
 
-    const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown);
+    const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown.concat("shared-station"));
     filter.push(linesShownFilter);
 
     return filter;

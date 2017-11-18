@@ -6,7 +6,7 @@ module CityHelpers
       { name: line.name,
         url_name: line.url_name,
         color: line.color,
-        deletable: SectionLine.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
+        deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
         system_id: line.system_id}
     }
 
