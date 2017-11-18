@@ -31,6 +31,7 @@ class Section < Sequel::Model(:sections)
 
     if line
       h[:properties].merge!(
+        id: "#{id}-#{line.url_name}",
         line: line.name,
         line_url_name: line.url_name,
         system: line.system.name || '',
