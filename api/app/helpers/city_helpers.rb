@@ -6,7 +6,7 @@ module CityHelpers
       { name: line.name,
         url_name: line.url_name,
         color: line.color,
-        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
+        deletable: SectionLine.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
         system_id: line.system_id}
     }
 
@@ -22,22 +22,22 @@ module CityHelpers
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
 
-    line_url_names = Hash.new do |h, k|
-      h[k] = Line[k].url_name
-    end
-
+    # FIXME:
+    # These calcs are duplicating kms if the lines share a track
     Section.where(city_id: city.id).each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
-        line = line_url_names[section.line_id]
-        if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
-          lengths[year][line] ||= {}
-          lengths[year][line][:under_construction] ||= 0
-          lengths[year][line][:under_construction] += section.length
-        elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
-          lengths[year][line] ||= {}
-          lengths[year][line][:operative] ||= 0
-          lengths[year][line][:operative] += section.length
+        section.lines.map do |l|
+          line = l.url_name
+          if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
+            lengths[year][line] ||= {}
+            lengths[year][line][:under_construction] ||= 0
+            lengths[year][line][:under_construction] += section.length
+          elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
+            lengths[year][line] ||= {}
+            lengths[year][line][:operative] ||= 0
+            lengths[year][line][:operative] += section.length
+          end
         end
       end
     end

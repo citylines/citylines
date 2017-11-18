@@ -5,42 +5,61 @@ class Section < Sequel::Model(:sections)
   include StartYear
   include FeatureBackup
 
-  many_to_one :line
+  one_to_many :section_lines
   many_to_one :city
 
   plugin :geometry
 
   FUTURE = 999999
 
+  def lines
+    @lines ||= section_lines.map(&:line)
+  end
+
   def build_feature(h, line, opts={})
     closure = self.closure || FUTURE
 
-    h[:properties].merge!({length: self.length,
-                           line: line.name,
-                           line_url_name: line.url_name,
-                           system: line.system.name || '',
-                           opening: self.opening || FUTURE,
-                           buildstart: self.buildstart || self.opening,
-                           buildstart_end: self.opening || closure,
-                           osm_id: self.osm_id,
-                           osm_tags: self.osm_tags,
-                           closure: closure })
+    h[:properties].merge!(
+      length: self.length,
+      opening: self.opening || FUTURE,
+      buildstart: self.buildstart || self.opening,
+      buildstart_end: self.opening || closure,
+      osm_id: self.osm_id,
+      osm_tags: self.osm_tags,
+      closure: closure
+    )
+
+    if line
+      h[:properties].merge!(
+        line: line.name,
+        line_url_name: line.url_name,
+        system: line.system.name || '',
+      )
+    else
+      h[:properties][:lines] = lines.map do |l|
+        {
+          line: l.name,
+          line_url_name: l.url_name,
+          system: l.system.name || ''
+        }
+      end
+    end
 
     h[:properties].merge!(opts)
 
     h
   end
 
-  def ranges(lines)
+  def ranges(lines_count)
     width = 7
-    ranges = lines/2
+    ranges = lines_count/2
     arr = (-ranges..ranges).to_a
-    if lines.even?
+    if lines_count.even?
       arr = arr[0..-2]
     end
     arr.map{ |a|
       f = a * width
-      if lines.even?
+      if lines_count.even?
         f = f + width.to_f / 2
       end
       f
@@ -48,7 +67,6 @@ class Section < Sequel::Model(:sections)
   end
 
   def multiple_features(feature_hash)
-    lines = other_line_ids.split(',').map{|lid| Line[lid]} + [line]
     offsets = ranges(lines.count)
     lines.each_with_index.map do |l, index|
       hash_clone = Marshal.load(Marshal.dump(feature_hash))
@@ -57,14 +75,10 @@ class Section < Sequel::Model(:sections)
   end
 
   def raw_feature
-    build_feature(feature, line)
+    build_feature(feature, nil)
   end
 
   def formatted_feature
-    if other_line_ids
-      multiple_features(feature)
-    else
-      raw_feature
-    end
+    multiple_features(feature)
   end
 end
