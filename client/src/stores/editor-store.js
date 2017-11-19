@@ -239,7 +239,8 @@ const EditorStore = Object.assign({}, Store, {
       feature.properties.opening = 0;
       feature.properties.buildstart = 0;
       feature.properties.closure = 999999;
-      feature.properties.line_url_name = cityData.lines[0] ? cityData.lines[0].url_name : null;
+      feature.properties.lines = [];
+
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
       this.pushFeatureToFeatureCollection(urlName, feature);
