@@ -10,7 +10,7 @@ class FeatureViewer extends PureComponent {
     this.bindedOnValueChange = this.onValueChange.bind(this);
     this.bindedOnLineChange = this.onLineChange.bind(this);
 
-    this.buildState(props);
+    this.state = this.buildState(props);
   }
 
   numericField(field) {
@@ -26,15 +26,15 @@ class FeatureViewer extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    this.buildState(props);
+    this.setState(this.buildState(props));
   }
 
   buildState(props) {
-    this.state = {fields: {}};
+    const opts = {fields: {}};
 
     const properties = props.feature ? props.feature.properties : null;
 
-    if (!properties) return;
+    if (!properties) return {};
 
     Object.entries(properties).map(entry => {
       const key = entry[0];
@@ -42,8 +42,16 @@ class FeatureViewer extends PureComponent {
 
       if (!this.visibleFields().includes(key)) return;
 
-      this.state.fields[key] = value;
+      opts.fields[key] = value;
     });
+
+    return opts;
+  }
+
+  updateField(key, value) {
+    const newState = {...this.state};
+    newState.fields[key] = value;
+    this.setState(newState);
   }
 
   onValueChange(e) {
@@ -55,8 +63,7 @@ class FeatureViewer extends PureComponent {
 
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, key, value);
 
-    this.state.fields[key] = value;
-    this.forceUpdate;
+    this.updateField(key, value);
   }
 
   onLineChange(e) {
