@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
+import FeatureLinesEditor from './feature-viewer/feature-lines-editor';
+
 class FeatureViewer extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -74,18 +76,13 @@ class FeatureViewer extends PureComponent {
             <caption className="c-table__caption"><Translate content={`editor.feature_viewer.fields.klasses_id.${properties.klass.toLowerCase()}`} with={{id: properties.id}} /></caption>
             <tbody className="c-table__body">
               <tr className="c-table__row">
-                <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
-                <td className="c-table__cell">
-                  <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
-                    {this.props.systems.map((system) => {
-                      return this.props.lines.filter(line => line.system_id == system.id).map((line) => {
-                        const label = system.name ? `${system.name} - ${line.name}` : line.name;
-                        return (
-                          <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{label}</option>
-                        )
-                       })
-                    })}
-                  </select>
+                <td className="c-table__cell" colSpan="2">
+                  <FeatureLinesEditor
+                    featureLines={this.props.feature.properties.lines}
+                    lines={this.props.lines}
+                    systems={this.props.systems}
+                    onAddLine={this.onLineChange}
+                  />
                 </td>
               </tr>
               { Object.keys(this.state.fields).map((key) => {

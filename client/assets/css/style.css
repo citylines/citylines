@@ -158,6 +158,22 @@
   left:3px;
 }
 
+.editor-features-lines-item {
+  padding: 2px 0;
+}
+
+.editor-features-lines-item .fa-close {
+  position: absolute;
+  right: 30px;
+  margin-top:3px;
+  color: #888;
+}
+
+.editor-features-lines-item .fa-close:hover {
+  color: #000;
+  cursor: pointer;
+}
+
 .color-picker-container {
   position:absolute;
   z-index:100000;
