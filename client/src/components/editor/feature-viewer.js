@@ -48,12 +48,6 @@ class FeatureViewer extends PureComponent {
     return opts;
   }
 
-  updateField(key, value) {
-    const newState = {...this.state};
-    newState.fields[key] = value;
-    this.setState(newState);
-  }
-
   onValueChange(e) {
     const key = e.target.attributes.name.value;
     const value = e.target.value;
@@ -62,8 +56,6 @@ class FeatureViewer extends PureComponent {
     modifiedFeature.properties[key] = value;
 
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, key, value);
-
-    this.updateField(key, value);
   }
 
   onLineChange(e) {
