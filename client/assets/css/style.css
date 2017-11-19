@@ -31,14 +31,20 @@
 }
 
 .popup-feature-info {
-    margin-top:5px;
+  display: block;
+  margin-top:5px;
+}
+
+.popup-feature-adjacent {
+  border-top: 1px dashed #c0c0c0;
+  padding-top: 7px;
+  margin-top: 5px;
 }
 
 .station-popup {
   display: block;
-  margin-bottom:7px;
+  margin-bottom:5px;
   font-size:1.15em;
-  border-bottom: 1px dotted #888;
 }
 
 .section-popup {

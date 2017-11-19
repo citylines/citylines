@@ -186,10 +186,11 @@ class City extends PureComponent {
               onClose={this.bindedOnPopupClose}>
               <div>
               {
-                this.state.clickedFeatures.features.map((f) =>
+                this.state.clickedFeatures.features.map((f,i) =>
                     <FeaturePopupContent
                       key={`${f.properties.klass}-${f.properties.id}-${f.properties.line_url_name}`}
-                      feature={f} />)
+                      feature={f}
+                      index={i} />)
               }
               </div>
               </Popup>) }
