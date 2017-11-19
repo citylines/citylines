@@ -89,7 +89,7 @@ class Editor extends PureComponent {
     EditorStore.changeSelection(this.urlName, features);
   }
 
-  onFeaturePropsChange(feature, modifiedKey, newValue) {
+  onFeaturePropsChange(feature) {
     EditorStore.setFeaturePropsChange(this.urlName, feature);
   }
 

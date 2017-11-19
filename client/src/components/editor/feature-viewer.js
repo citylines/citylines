@@ -7,9 +7,6 @@ class FeatureViewer extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.bindedOnValueChange = this.onValueChange.bind(this);
-    this.bindedOnLineChange = this.onLineChange.bind(this);
-
     this.state = this.buildState(props);
   }
 
@@ -58,13 +55,20 @@ class FeatureViewer extends PureComponent {
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, key, value);
   }
 
-  onLineChange(e) {
-    const newLineUrlName = e.target.value;
-
+  onAddLine(newLine) {
     const modifiedFeature = Object.assign({}, this.props.feature);
-    modifiedFeature.properties['line_url_name'] = newLineUrlName;
+    modifiedFeature.properties.lines.push(newLine);
 
-    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, 'line_url_name', newLineUrlName);
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature);
+  }
+
+  onRemoveLine(urlName) {
+    const modifiedFeature = Object.assign({}, this.props.feature);
+
+    const lineIndex = modifiedFeature.properties.lines.findIndex(l => l.line_url_name == urlName);
+    modifiedFeature.properties.lines.splice(lineIndex, 1);
+
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature);
   }
 
   render() {
@@ -80,7 +84,8 @@ class FeatureViewer extends PureComponent {
                     featureLines={this.props.feature.properties.lines}
                     lines={this.props.lines}
                     systems={this.props.systems}
-                    onAddLine={this.onLineChange}
+                    onAddLine={this.onAddLine.bind(this)}
+                    onRemoveLine={this.onRemoveLine.bind(this)}
                   />
                 </td>
               </tr>
@@ -96,7 +101,7 @@ class FeatureViewer extends PureComponent {
                       <input className="c-field"
                              type={this.numericField(key) ? 'number' : 'text'}
                              name={key}
-                             onChange={this.bindedOnValueChange}
+                             onChange={this.onValueChange.bind(this)}
                              value={this.state.fields[key]}/>
                         :
                         this.state.fields[key]
