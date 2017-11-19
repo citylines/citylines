@@ -205,11 +205,10 @@ describe OSMHelpers do
   describe "filter_out_existing_features" do
     before do
       @city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
-      @line = Line.create(name: 'Test Line 1', city_id: @city.id)
     end
 
     it "should filter out any existing station" do
-      Station.create(line_id: @line.id, osm_id: 81551275, city_id: @city.id)
+      Station.create(osm_id: 81551275, city_id: @city.id)
 
       response = {
         elements: [
@@ -244,7 +243,7 @@ describe OSMHelpers do
     end
 
     it "should filter out any existing section" do
-      Section.create(line_id: @line.id, osm_id: 26192812, city_id: @city.id)
+      Section.create(osm_id: 26192812, city_id: @city.id)
 
       response = {
         elements: [

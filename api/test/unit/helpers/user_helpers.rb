@@ -13,7 +13,7 @@ describe UserHelpers do
       @city3 = City.create(name: 'Berazategui', url_name: 'berazategui', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
       @city4 = City.create(name: 'Chivilcoy', url_name: 'chivilcoy', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
 
-      section = Section.create(city_id: @city.id, line_id: 666, length: 3450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section = Section.create(city_id: @city.id, length: 3450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
 
       # Created features in city 1
       CreatedFeature.create(feature_class: 'Section', feature_id: section.id, user_id: @user_id, city_id: @city.id)
@@ -83,9 +83,9 @@ describe UserHelpers do
       @pepe = User.create(name: "Pepe Martínez", email: 'pepe@test.com')
       @jorge = User.create(name: "Jorge Rodríguez", email: 'jorge@test.com')
 
-      section = Section.create(city_id: 22, line_id: 666, length: 3450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
-      section2 = Section.create(city_id: 22, line_id: 666, length: 4450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
-      section3 = Section.create(city_id: 22, line_id: 666, length: 5450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section = Section.create(city_id: 22, length: 3450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section2 = Section.create(city_id: 22, length: 4450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section3 = Section.create(city_id: 22, length: 5450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
 
       CreatedFeature.create(user_id: @juan.id, feature_class: 'Section', feature_id: section.id, created_at: Date.today)
       CreatedFeature.create(user_id: @pepe.id, feature_class: 'Section', feature_id: section2.id, created_at: Date.today)
