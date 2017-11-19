@@ -44,6 +44,11 @@ module CityHelpers
     lengths
   end
 
+  def feature_lines_query(city, type)
+    klass = type == 'sections' ? SectionLine : StationLine
+    klass.where(city_id: city.id)
+  end
+
   def features_query(city, type)
     klass = type == 'sections' ? Section : Station
     klass.where(city_id: city.id)

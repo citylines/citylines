@@ -104,6 +104,28 @@ describe CacheHelpers do
         assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections')
       end
 
+      it "should return the last modified section_line updated_at" do
+        deleted_feature = Timecop.freeze(Date.today - 3) do
+          DeletedFeature.create(city_id: @city.id, feature_class: 'Section')
+        end
+
+        section1 = Timecop.freeze(Date.today - 2) do
+          Section.create(city_id: @city.id)
+        end
+
+        section_line1 = Timecop.freeze(Date.today - 1 ) do
+          SectionLine.create(section_id: 99, line_id: 99, city_id: @city.id)
+        end
+
+        section_line2 = Timecop.freeze(Date.today) do
+          SectionLine.create(section_id: 99, line_id: 99, city_id: @city.id)
+        end
+
+        section_of_another_city = Section.create(city_id: @city2.id)
+
+        assert_equal section_line2.updated_at, last_modified_source_feature(@city, 'sections')
+      end
+
       it "should return the last deleted_feature created_at" do
         section1 = Timecop.freeze(Date.today - 3) do
           Section.create(city_id: @city.id)
@@ -140,6 +162,28 @@ describe CacheHelpers do
         station_of_another_city = Station.create(city_id: @city2.id)
 
         assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations')
+      end
+
+      it "should return the last modified section_line updated_at" do
+        deleted_feature = Timecop.freeze(Date.today - 3) do
+          DeletedFeature.create(city_id: @city.id, feature_class: 'Station')
+        end
+
+        station1 = Timecop.freeze(Date.today - 2) do
+          Station.create(city_id: @city.id)
+        end
+
+        station_line1 = Timecop.freeze(Date.today - 1 ) do
+          StationLine.create(station_id: 99, line_id: 99, city_id: @city.id)
+        end
+
+        station_line2 = Timecop.freeze(Date.today) do
+          StationLine.create(station_id: 99, line_id: 99, city_id: @city.id)
+        end
+
+        station_of_another_city = Station.create(city_id: @city2.id)
+
+        assert_equal station_line2.updated_at, last_modified_source_feature(@city, 'stations')
       end
 
       it "should return the last deleted_feature created_at" do
