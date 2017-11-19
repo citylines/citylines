@@ -21,7 +21,7 @@ class Station < Sequel::Model(:stations)
     lines.map do |l|
       {line: l.name,
        line_url_name: l.url_name,
-       system: l.system.name}
+       system: l.system.name || ''}
     end
   end
 
