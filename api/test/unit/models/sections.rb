@@ -13,11 +13,13 @@ describe Section do
 
     @system = System.create(city_id: @city.id, name: 'A system')
 
-    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
+    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name:'test-line')
 
-    @section = Section.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags", city_id: @city.id)
+    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags", city_id: @city.id)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
+
+    SectionLine.create(section_id: @section.id, line_id: @line.id, city_id: @city.id)
 
     @city.reload
   end
@@ -31,7 +33,6 @@ describe Section do
     backup = SectionBackup.first
 
     assert_equal @section.id, backup.original_id
-    assert_equal @section.line_id, backup.line_id
     assert_equal @section.geometry, backup.geometry
     assert_equal @section.buildstart, backup.buildstart
     assert_equal @section.opening, backup.opening
@@ -66,19 +67,27 @@ describe Section do
     assert_equal @city, @section.city
   end
 
-  describe "feature" do
+  it "should return the lines" do
+    assert_equal [@line], @section.lines
+  end
+
+  describe "raw_feature" do
     it "should return the right feature" do
-      feature = @section.feature
+      feature = @section.raw_feature
 
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
 
+      expected_lines = [{
+          line: @line.name,
+          line_url_name: @line.url_name,
+          system: @system.name,
+      }]
+
       expected_properties = {id: @section.id,
                              klass: "Section",
                              length: 1001,
-                             line: @section.line.name,
-                             line_url_name: @section.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
@@ -94,14 +103,18 @@ describe Section do
       @section.closure = nil
       @section.save
 
-      feature = @section.feature
+      feature = @section.raw_feature
+
+      expected_lines = [{
+          line: @line.name,
+          line_url_name: @line.url_name,
+          system: @system.name,
+      }]
 
       expected_properties = {id: @section.id,
                              klass: "Section",
                              length: 1001,
-                             line: @section.line.name,
-                             line_url_name: @section.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
                              opening: Section::FUTURE,
                              buildstart: @section.buildstart,
                              buildstart_end: Section::FUTURE,
@@ -116,14 +129,18 @@ describe Section do
       @section.buildstart = nil
       @section.save
 
-      feature = @section.feature
+      feature = @section.raw_feature
+
+      expected_lines = [{
+          line: @line.name,
+          line_url_name: @line.url_name,
+          system: @system.name,
+      }]
 
       expected_properties = {id: @section.id,
                              klass: "Section",
                              length: 1001,
-                             line: @section.line.name,
-                             line_url_name: @section.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.opening,
                              buildstart_end: @section.opening,
@@ -140,7 +157,82 @@ describe Section do
       @line.system_id = system.id
       @line.save
 
-      assert_equal '', @section.reload.feature[:properties][:system]
+      assert_equal '', @section.reload.raw_feature[:properties][:lines].first[:system]
+    end
+  end
+
+  describe "formatted_feature" do
+    it "should handle one line" do
+      features = @section.formatted_feature
+
+      assert 1, features.count
+      feature = features.first
+
+      assert_equal 'Feature', feature[:type]
+      assert feature[:geometry]
+
+      expected_properties = {id: "#{@section.id}-#{@line.url_name}",
+                             klass: "Section",
+                             length: 1001,
+                             line: @line.name,
+                             line_url_name: @line.url_name,
+                             system: @system.name,
+                             offset: 0,
+                             opening: @section.opening,
+                             buildstart: @section.buildstart,
+                             buildstart_end: @section.opening,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
+                             closure: @section.closure}
+
+      assert_equal expected_properties, feature[:properties]
+    end
+
+    it "should handle multiple lines" do
+      @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
+      SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
+
+      features = @section.formatted_feature
+
+      assert 2, features.count
+
+      assert_equal 'Feature', features.first[:type]
+      assert features.first[:geometry]
+
+      assert_equal 'Feature', features.last[:type]
+      assert features.last[:geometry]
+
+      expected_properties1 = {id: "#{@section.id}-#{@line.url_name}",
+                             klass: "Section",
+                             length: 1001,
+                             line: @line.name,
+                             line_url_name: @line.url_name,
+                             system: @system.name,
+                             offset: -3.5,
+                             opening: @section.opening,
+                             buildstart: @section.buildstart,
+                             buildstart_end: @section.opening,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
+                             closure: @section.closure}
+
+      assert_equal expected_properties1, features.first[:properties]
+
+      expected_properties2 = {id: "#{@section.id}-#{@line2.url_name}",
+                             klass: "Section",
+                             length: 1001,
+                             line: @line2.name,
+                             line_url_name: @line2.url_name,
+                             system: @system.name,
+                             offset: 3.5,
+                             opening: @section.opening,
+                             buildstart: @section.buildstart,
+                             buildstart_end: @section.opening,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
+                             closure: @section.closure}
+
+      assert_equal expected_properties2, features.last[:properties]
     end
   end
 end
