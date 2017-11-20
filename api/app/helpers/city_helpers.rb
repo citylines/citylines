@@ -114,14 +114,11 @@ module CityHelpers
   def update_feature_geometry(feature, geometry)
     feature.set_geometry_from_geojson(geometry)
     feature.save
-    # Some logging
-    puts "Update feature geometry log:"
-    puts feature
-    puts "feature class #{feature.class}"
-    #
-    feature.reload
-    feature.set_length if feature.is_a?(Section)
-    feature.save
+
+    if feature.is_a?(Section)
+      feature.set_length
+      feature.save
+    end
   end
 
   def update_create_or_delete_feature(city, user, change)
