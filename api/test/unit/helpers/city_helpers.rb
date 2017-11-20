@@ -13,31 +13,55 @@ describe CityHelpers do
     it "should return the right length by line by year" do
       s1 = Section.create(city_id: @city.id, length:20, buildstart: 1920, opening: 1925, closure: 1930)
       s2 = Section.create(city_id: @city.id, length:10, buildstart: 1920, opening: 1925)
+      s3 = Section.create(city_id: @city.id, length:5, buildstart: 1920, opening: 1925)
 
       SectionLine.create(section_id: s1.id, line_id: @lineA.id, city_id: @city.id)
       SectionLine.create(section_id: s2.id, line_id: @lineB.id, city_id: @city.id)
+
+      SectionLine.create(section_id: s3.id, line_id: @lineA.id, city_id: @city.id)
+      SectionLine.create(section_id: s3.id, line_id: @lineB.id, city_id: @city.id)
 
       result = lines_length_by_year(@city)
 
       (1920..2000).each do |year|
         if (1920..1924).include?(year)
-          refute result[year]['a'][:operative]
-          refute result[year]['b'][:operative]
-          assert_equal 20, result[year]['a'][:under_construction]
-          assert_equal 10, result[year]['b'][:under_construction]
+          assert_equal %w(a), result[year][s1.id][:lines]
+          assert_equal %w(b), result[year][s2.id][:lines]
+          assert_equal %w(a b), result[year][s3.id][:lines]
+
+          refute result[year][s1.id][:operative]
+          refute result[year][s2.id][:operative]
+          refute result[year][s3.id][:operative]
+
+          assert_equal 20, result[year][s1.id][:under_construction]
+          assert_equal 10, result[year][s2.id][:under_construction]
+          assert_equal 5, result[year][s3.id][:under_construction]
         end
 
         if (1925..1929).include?(year)
-          assert_equal 20, result[year]['a'][:operative]
-          assert_equal 10, result[year]['b'][:operative]
-          refute result[year]['a'][:under_construction]
-          refute result[year]['b'][:under_construction]
+          assert_equal %w(a), result[year][s1.id][:lines]
+          assert_equal %w(b), result[year][s2.id][:lines]
+          assert_equal %w(a b), result[year][s3.id][:lines]
+
+          assert_equal 20, result[year][s1.id][:operative]
+          assert_equal 10, result[year][s2.id][:operative]
+          assert_equal 5, result[year][s3.id][:operative]
+
+          refute result[year][s1.id][:under_construction]
+          refute result[year][s2.id][:under_construction]
+          refute result[year][s3.id][:under_construction]
         end
 
         if year >= 1930
-          refute result[year]['a']
-          assert_equal 10, result[year]['b'][:operative]
-          refute result[year]['b'][:under_construction]
+          refute result[year][s1.id]
+          assert_equal %w(b), result[year][s2.id][:lines]
+          assert_equal %w(a b), result[year][s3.id][:lines]
+
+          assert_equal 10, result[year][s2.id][:operative]
+          assert_equal 5, result[year][s3.id][:operative]
+
+          refute result[year][s2.id][:under_construction]
+          refute result[year][s3.id][:under_construction]
         end
       end
     end

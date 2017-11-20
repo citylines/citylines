@@ -22,22 +22,19 @@ module CityHelpers
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
 
-    # FIXME:
-    # These calcs are duplicating kms if the lines share a track
     Section.where(city_id: city.id).each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
-        section.lines.map do |l|
-          line = l.url_name
-          if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
-            lengths[year][line] ||= {}
-            lengths[year][line][:under_construction] ||= 0
-            lengths[year][line][:under_construction] += section.length
-          elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
-            lengths[year][line] ||= {}
-            lengths[year][line][:operative] ||= 0
-            lengths[year][line][:operative] += section.length
-          end
+        if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
+          lengths[year][section.id] ||= {
+            lines: section.lines.map(&:url_name)
+          }
+          lengths[year][section.id][:under_construction] = section.length
+        elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
+          lengths[year][section.id] ||= {
+            lines: section.lines.map(&:url_name)
+          }
+          lengths[year][section.id][:operative] = section.length
         end
       end
     end
