@@ -60,7 +60,6 @@ class LinesMapper extends Mapper {
     const linesShownFilter = [
       "any",
       ["in", "line_url_name"].concat(this.linesShown),
-
       ["in", "line_url_name_1"].concat(this.linesShown),
       ["in", "line_url_name_2"].concat(this.linesShown),
       ["in", "line_url_name_3"].concat(this.linesShown),
