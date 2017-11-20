@@ -18,27 +18,34 @@ class FeatureLinesEditor extends PureComponent {
     this.props.onRemoveLine(urlName);
   }
 
+  remainingLines() {
+    const lines = [];
+
+    this.props.systems.map((system) => {
+      this.props.lines.filter(line => line.system_id == system.id).map((line) => {
+        if (this.props.featureLines.find(l => l.line_url_name == line.url_name)) return;
+
+        const label = system.name ? `${system.name} - ${line.name}` : line.name;
+
+        lines.push({line: line, system: system, label: label});
+      })
+    });
+
+    return lines;
+  }
+
   render() {
     return (
       <ul className="c-list c-list--unstyled">
-        {this.props.featureLines.map((l) =>
+        {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
           <li key={`own-${l.line_url_name}`}className="c-list__item editor-features-lines-item">{`${l.line} - ${l.system}`}<span className="fa fa-close" onClick={() => this.onRemove(l.line_url_name)}></span></li>
           )}
         <li className="c-list__item editor-features-lines-item">
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
             <option>Add line</option>
-            {this.props.systems.map((system) => {
-              return this.props.lines.filter(line => line.system_id == system.id).map((line) => {
-                const label = system.name ? `${system.name} - ${line.name}` : line.name;
-                if (this.props.featureLines.find(l => l.line_url_name == line.url_name)) {
-                  return;
-                }
-
-                return (
-                  <option key={line.url_name} value={`${line.name},${line.url_name},${system.name}`}>{label}</option>
-                )
-               })
-            })}
+            {this.remainingLines().map(l =>
+              <option key={l.line.url_name} value={`${l.line.name},${l.line.url_name},${l.system.name}`}>{l.label}</option>
+            )}
           </select>
         </li>
       </ul>
