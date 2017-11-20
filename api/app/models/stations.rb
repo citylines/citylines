@@ -20,7 +20,11 @@ class Station < Sequel::Model(:stations)
   end
 
   def line_url_name
-    shared_station? ? SHARED_STATION_LINE_URL_NAME : lines.first.url_name
+    if shared_station?
+      SHARED_STATION_LINE_URL_NAME
+    elsif lines.first
+      lines.first.url_name
+    end
   end
 
   def lines_data

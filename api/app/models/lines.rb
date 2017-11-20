@@ -12,4 +12,18 @@ class Line < Sequel::Model(:lines)
   def generate_url_name
     self.url_name = "#{self.id}-#{self.name.strip.accentless.gsub(/\s|\//,'-').downcase}"
   end
+
+  def remove_from_feature(feature)
+    klass = feature.is_a?(Section) ? SectionLine : StationLine
+    attr = feature.is_a?(Section) ? :section_id : :station_id
+
+    klass.where(attr => feature.id, :line_id => id).first.delete
+  end
+
+  def add_to_feature(feature)
+    klass = feature.is_a?(Section) ? SectionLine : StationLine
+    attr = feature.is_a?(Section) ? :section_id : :station_id
+
+    klass.create(attr => feature.id, :line_id => id, city_id: city.id)
+  end
 end

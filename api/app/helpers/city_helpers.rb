@@ -74,9 +74,31 @@ module CityHelpers
     features_collection
   end
 
+  def update_feature_lines(feature, properties)
+    current_lines = feature.lines.map(&:url_name)
+    updated_lines = properties[:lines].map{|l| l[:line_url_name]}
+
+    lines_to_remove = current_lines - updated_lines
+    lines_to_add = updated_lines - current_lines
+
+    unless feature.id
+      feature.save
+    end
+
+    # Remove
+    lines_to_remove.map do |url_name|
+      Line[url_name: url_name].remove_from_feature(feature)
+    end
+
+    # Add
+    lines_to_add.map do |url_name|
+      Line[url_name: url_name].add_to_feature(feature)
+    end
+  end
+
   def update_feature_properties(feature, properties)
-    line_id = Line[url_name: properties[:line_url_name]].id
-    feature.line_id = line_id
+    update_feature_lines(feature, properties)
+
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
     feature.closure = properties[:closure]
