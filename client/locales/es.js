@@ -59,12 +59,12 @@ export default {
     feature_viewer: {
       selected_feature: 'Elemento seleccionado',
       no_feature_selected: 'Ningún elemento seleccionado',
+      add_line: 'Agregar línea',
       fields: {
         klasses_id: {
           section_id: 'Tramo Id:%(id)s',
           station_id: 'Estación Id:%(id)s'
         },
-        line: 'Línea',
         name: 'Nombre',
         opening: 'Inauguración',
         buildstart: 'Comienzo de construcción',

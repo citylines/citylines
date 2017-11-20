@@ -59,12 +59,12 @@ export default {
     feature_viewer: {
       selected_feature: 'Selected feature',
       no_feature_selected: 'No feature selected',
+      add_line: 'Add line',
       fields: {
         klasses_id: {
           section: 'Track Id:%(id)s',
           station: 'Station Id:%(id)s'
         },
-        line: 'Line',
         name: 'Name',
         opening: 'Opening',
         buildstart: 'Beginning of construction',

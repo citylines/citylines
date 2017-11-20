@@ -42,7 +42,7 @@ class FeatureLinesEditor extends PureComponent {
           )}
         <li className="c-list__item editor-features-lines-item">
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
-            <option>Add line</option>
+            <Translate component="option" content="editor.feature_viewer.add_line"/>
             {this.remainingLines().map(l =>
               <option key={l.line.url_name} value={`${l.line.name},${l.line.url_name},${l.system.name}`}>{l.label}</option>
             )}
