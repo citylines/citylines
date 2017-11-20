@@ -161,14 +161,17 @@ describe Station do
       assert_equal '', @station.reload.feature[:properties][:lines].first[:system]
     end
 
-    it "should return the 'shared station' url_name if it has more than 1 line" do
+    it "should return the 'shared station' url_name, and the extra url_nam attrs, if it has more than 1 line" do
       second_line = Line.create(name:'Other line', city_id: @city.id, url_name:'other-line-url-name', system_id: @system.id)
 
       StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
 
+      feature_props = @station.feature[:properties]
+
       assert_equal 2, @station.lines.count
-      assert_equal 'shared-station', @station.line_url_name
-      #TODO
+      assert_equal Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
+      assert_equal 'a-url-name', feature_props[:line_url_name_1]
+      assert_equal 'other-line-url-name', feature_props[:line_url_name_2]
     end
   end
 end

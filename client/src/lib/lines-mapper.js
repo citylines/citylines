@@ -53,7 +53,21 @@ class LinesMapper extends Mapper {
       ];
     }
 
-    const linesShownFilter = ["in", "line_url_name"].concat(this.linesShown.concat("shared-station"));
+    // The first line_url_name attr is present in all features.
+    // But in shared stations, it's used only for styling purposes.
+    // That's why shared stations have also extra line_url_name attrs: so
+    // they can be filtered by the lines that use that station.
+    const linesShownFilter = [
+      "any",
+      ["in", "line_url_name"].concat(this.linesShown),
+
+      ["in", "line_url_name_1"].concat(this.linesShown),
+      ["in", "line_url_name_2"].concat(this.linesShown),
+      ["in", "line_url_name_3"].concat(this.linesShown),
+      ["in", "line_url_name_4"].concat(this.linesShown),
+      ["in", "line_url_name_5"].concat(this.linesShown)
+    ]
+
     filter.push(linesShownFilter);
 
     return filter;
