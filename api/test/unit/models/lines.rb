@@ -45,4 +45,30 @@ describe Line do
     assert_equal @line.color, backup.color
     assert_equal @line.system_id, backup.system_id
   end
+
+  describe "add/remove to/from features" do
+    before do
+      @feature = Section.create(city_id: @city.id)
+    end
+
+    it "should be added to the feature" do
+      assert 0, @feature.lines.count
+
+      @line.add_to_feature(@feature)
+
+      assert 1, @feature.lines.count
+
+      assert @line, @feature.lines.first
+    end
+
+    it "should be removed from the feature" do
+      @line.add_to_feature(@feature)
+
+      assert 1, @feature.lines.count
+
+      @line.remove_from_feature(@feature)
+
+      assert 0, @feature.lines.count
+    end
+  end
 end

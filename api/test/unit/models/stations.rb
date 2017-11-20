@@ -13,11 +13,13 @@ describe Station do
 
     @system = System.create(city_id: @city.id, name: 'A system')
 
-    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line')
+    @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name: 'a-url-name')
 
-    @station = Station.new(line_id: @line.id, buildstart: 1980, opening:1985, closure: 1999, name: 'Some station', osm_id: 456, osm_tags: 'tags', city_id: @city.id)
+    @station = Station.new(buildstart: 1980, opening:1985, closure: 1999, name: 'Some station', osm_id: 456, osm_tags: 'tags', city_id: @city.id)
     @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @station.save
+
+    StationLine.create(station_id: @station.id, line_id: @line.id, city_id: @city.id)
 
     @city.reload
   end
@@ -31,7 +33,6 @@ describe Station do
     backup = StationBackup.first
 
     assert_equal @station.id, backup.original_id
-    assert_equal @station.line_id, backup.line_id
     assert_equal @station.geometry, backup.geometry
     assert_equal @station.buildstart, backup.buildstart
     assert_equal @station.opening, backup.opening
@@ -58,18 +59,33 @@ describe Station do
     assert_equal @city, @station.city
   end
 
+  it "should return the lines" do
+    assert_equal [@line], @station.lines
+  end
+
   describe "feature" do
+    it "should be equal to raw_feature and formatted_feature" do
+      feature = @station.feature
+      assert_equal feature, @station.raw_feature
+      assert_equal feature, @station.formatted_feature
+    end
+
     it "should return the right feature" do
       feature = @station.feature
 
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
 
+      expected_lines = [{
+        line: @line.name,
+        line_url_name: @line.url_name,
+        system: @system.name
+      }]
+
       expected_properties = {id: @station.id,
                              klass: "Station",
-                             line: @station.line.name,
-                             line_url_name: @station.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
+                             line_url_name: @station.lines.first.url_name,
                              name: @station.name,
                              opening: @station.opening,
                              buildstart: @station.buildstart,
@@ -88,11 +104,16 @@ describe Station do
 
       feature = @station.feature
 
+      expected_lines = [{
+        line: @line.name,
+        line_url_name: @line.url_name,
+        system: @system.name
+      }]
+
       expected_properties = {id: @station.id,
                              klass: "Station",
-                             line: @station.line.name,
-                             line_url_name: @station.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
+                             line_url_name: @station.lines.first.url_name,
                              name: @station.name,
                              opening: Section::FUTURE,
                              buildstart: @station.buildstart,
@@ -110,11 +131,16 @@ describe Station do
 
       feature = @station.feature
 
+      expected_lines = [{
+        line: @line.name,
+        line_url_name: @line.url_name,
+        system: @system.name
+      }]
+
       expected_properties = {id: @station.id,
                              klass: "Station",
-                             line: @station.line.name,
-                             line_url_name: @station.line.url_name,
-                             system: @system.name,
+                             lines: expected_lines,
+                             line_url_name: @station.lines.first.url_name,
                              name: @station.name,
                              opening: @station.opening,
                              buildstart: @station.opening,
@@ -132,7 +158,20 @@ describe Station do
       @line.system_id = system.id
       @line.save
 
-      assert_equal '', @station.reload.feature[:properties][:system]
+      assert_equal '', @station.reload.feature[:properties][:lines].first[:system]
+    end
+
+    it "should return the 'shared station' url_name, and the extra url_nam attrs, if it has more than 1 line" do
+      second_line = Line.create(name:'Other line', city_id: @city.id, url_name:'other-line-url-name', system_id: @system.id)
+
+      StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
+
+      feature_props = @station.feature[:properties]
+
+      assert_equal 2, @station.lines.count
+      assert_equal Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
+      assert_equal 'a-url-name', feature_props[:line_url_name_1]
+      assert_equal 'other-line-url-name', feature_props[:line_url_name_2]
     end
   end
 end

@@ -6,7 +6,7 @@ module CityHelpers
       { name: line.name,
         url_name: line.url_name,
         color: line.color,
-        deletable: Section.where(line_id: line.id).count == 0 && Station.where(line_id: line.id).count == 0,
+        deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
         system_id: line.system_id}
     }
 
@@ -22,26 +22,28 @@ module CityHelpers
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
 
-    line_url_names = Hash.new do |h, k|
-      h[k] = Line[k].url_name
-    end
-
     Section.where(city_id: city.id).each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
-        line = line_url_names[section.line_id]
         if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
-          lengths[year][line] ||= {}
-          lengths[year][line][:under_construction] ||= 0
-          lengths[year][line][:under_construction] += section.length
+          lengths[year][section.id] ||= {
+            lines: section.lines.map(&:url_name)
+          }
+          lengths[year][section.id][:under_construction] = section.length
         elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
-          lengths[year][line] ||= {}
-          lengths[year][line][:operative] ||= 0
-          lengths[year][line][:operative] += section.length
+          lengths[year][section.id] ||= {
+            lines: section.lines.map(&:url_name)
+          }
+          lengths[year][section.id][:operative] = section.length
         end
       end
     end
     lengths
+  end
+
+  def feature_lines_query(city, type)
+    klass = type == 'sections' ? SectionLine : StationLine
+    klass.where(city_id: city.id)
   end
 
   def features_query(city, type)
@@ -49,8 +51,15 @@ module CityHelpers
     klass.where(city_id: city.id)
   end
 
+  def formatted_lines_features_collection(city, type)
+    features = features_query(city, type).map(&:formatted_feature).flatten
+
+    {type: "FeatureCollection",
+     features: features}
+  end
+
   def lines_features_collection(city, type)
-    features = features_query(city, type).map(&:feature)
+    features = features_query(city, type).map(&:raw_feature)
 
     {type: "FeatureCollection",
      features: features}
@@ -62,9 +71,31 @@ module CityHelpers
     features_collection
   end
 
+  def update_feature_lines(feature, properties)
+    current_lines = feature.lines.map(&:url_name)
+    updated_lines = properties[:lines].map{|l| l[:line_url_name]}
+
+    lines_to_remove = current_lines - updated_lines
+    lines_to_add = updated_lines - current_lines
+
+    unless feature.id
+      feature.save
+    end
+
+    # Remove
+    lines_to_remove.map do |url_name|
+      Line[url_name: url_name].remove_from_feature(feature)
+    end
+
+    # Add
+    lines_to_add.map do |url_name|
+      Line[url_name: url_name].add_to_feature(feature)
+    end
+  end
+
   def update_feature_properties(feature, properties)
-    line_id = Line[url_name: properties[:line_url_name]].id
-    feature.line_id = line_id
+    update_feature_lines(feature, properties)
+
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
     feature.closure = properties[:closure]
@@ -80,14 +111,11 @@ module CityHelpers
   def update_feature_geometry(feature, geometry)
     feature.set_geometry_from_geojson(geometry)
     feature.save
-    # Some logging
-    puts "Update feature geometry log:"
-    puts feature
-    puts "feature class #{feature.class}"
-    #
-    feature.reload
-    feature.set_length if feature.is_a?(Section)
-    feature.save
+
+    if feature.is_a?(Section)
+      feature.set_length
+      feature.save
+    end
   end
 
   def update_create_or_delete_feature(city, user, change)

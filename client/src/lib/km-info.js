@@ -16,17 +16,13 @@ class KmInfo {
 
     if (!yearInfo) return;
 
-    Object.values(this.lines).map((line) => {
-      if (!yearInfo[line]) return;
+    const sections = Object.values(yearInfo).filter(info => info.lines.some(l => this.lines.includes(l)))
 
-      if (yearInfo[line].operative) {
-        operative += yearInfo[line].operative;
-      }
+    const keys = ['operative', 'under_construction'];
 
-      if (yearInfo[line].under_construction) {
-        underConstruction += yearInfo[line].under_construction;
-      }
-    });
+    [operative, underConstruction] = keys.map(k =>
+      sections.filter(s => s[k] && s[k] > 0).map(s => s[k]).reduce((total, e) => total + e, 0)
+    )
 
     operative = parseInt(operative/1000);
     underConstruction = parseInt(underConstruction/1000);

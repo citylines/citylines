@@ -13,9 +13,7 @@ describe "modified features models" do
 
     @user = User.create(name: 'Test User', email: 'test@user.com')
 
-    @line = Line.create(city_id: @city.id, name: 'L1')
-
-    @feature = Section.create(line_id: @line.id, city_id: @city.id)
+    @feature = Section.create(city_id: @city.id)
   end
 
   it "should should try to create a models instance" do

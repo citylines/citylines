@@ -1,6 +1,6 @@
 class Style {
   constructor(lines) {
-    this.lines = {};
+    this.lines = {'shared-station': '#000000'};
 
     lines.map((line) => {
       this.lines[line.url_name] = line.color;
@@ -47,6 +47,13 @@ class Style {
     if (style['color']) {
       style[colorCategory] = style["color"];
       delete style["color"];
+    }
+
+    if (type === 'sections') {
+      style['line-offset'] = {
+        type: "identity",
+        property: "offset"
+      };
     }
 
     if (operation == 'opening'){

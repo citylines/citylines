@@ -1,14 +1,13 @@
 import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
+import FeatureLinesEditor from './feature-viewer/feature-lines-editor';
+
 class FeatureViewer extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.bindedOnValueChange = this.onValueChange.bind(this);
-    this.bindedOnLineChange = this.onLineChange.bind(this);
-
-    this.buildState(props);
+    this.state = this.buildState(props);
   }
 
   numericField(field) {
@@ -24,15 +23,15 @@ class FeatureViewer extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    this.buildState(props);
+    this.setState(this.buildState(props));
   }
 
   buildState(props) {
-    this.state = {fields: {}};
+    const opts = {fields: {}};
 
     const properties = props.feature ? props.feature.properties : null;
 
-    if (!properties) return;
+    if (!properties) return {};
 
     Object.entries(properties).map(entry => {
       const key = entry[0];
@@ -40,8 +39,10 @@ class FeatureViewer extends PureComponent {
 
       if (!this.visibleFields().includes(key)) return;
 
-      this.state.fields[key] = value;
+      opts.fields[key] = value;
     });
+
+    return opts;
   }
 
   onValueChange(e) {
@@ -52,18 +53,22 @@ class FeatureViewer extends PureComponent {
     modifiedFeature.properties[key] = value;
 
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, key, value);
-
-    this.state.fields[key] = value;
-    this.forceUpdate;
   }
 
-  onLineChange(e) {
-    const newLineUrlName = e.target.value;
-
+  onAddLine(newLine) {
     const modifiedFeature = Object.assign({}, this.props.feature);
-    modifiedFeature.properties['line_url_name'] = newLineUrlName;
+    modifiedFeature.properties.lines.push(newLine);
 
-    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature, 'line_url_name', newLineUrlName);
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature);
+  }
+
+  onRemoveLine(urlName) {
+    const modifiedFeature = Object.assign({}, this.props.feature);
+
+    const lineIndex = modifiedFeature.properties.lines.findIndex(l => l.line_url_name == urlName);
+    modifiedFeature.properties.lines.splice(lineIndex, 1);
+
+    if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature);
   }
 
   render() {
@@ -74,18 +79,14 @@ class FeatureViewer extends PureComponent {
             <caption className="c-table__caption"><Translate content={`editor.feature_viewer.fields.klasses_id.${properties.klass.toLowerCase()}`} with={{id: properties.id}} /></caption>
             <tbody className="c-table__body">
               <tr className="c-table__row">
-                <td className="c-table__cell"><Translate content="editor.feature_viewer.fields.line" /></td>
-                <td className="c-table__cell">
-                  <select className="c-field u-xsmall" value={this.props.feature.properties.line_url_name} onChange={this.bindedOnLineChange}>
-                    {this.props.systems.map((system) => {
-                      return this.props.lines.filter(line => line.system_id == system.id).map((line) => {
-                        const label = system.name ? `${system.name} - ${line.name}` : line.name;
-                        return (
-                          <option key={`${properties.klass}_${properties.id}_${line.url_name}`} value={line.url_name}>{label}</option>
-                        )
-                       })
-                    })}
-                  </select>
+                <td className="c-table__cell" colSpan="2">
+                  <FeatureLinesEditor
+                    featureLines={this.props.feature.properties.lines}
+                    lines={this.props.lines}
+                    systems={this.props.systems}
+                    onAddLine={this.onAddLine.bind(this)}
+                    onRemoveLine={this.onRemoveLine.bind(this)}
+                  />
                 </td>
               </tr>
               { Object.keys(this.state.fields).map((key) => {
@@ -100,7 +101,7 @@ class FeatureViewer extends PureComponent {
                       <input className="c-field"
                              type={this.numericField(key) ? 'number' : 'text'}
                              name={key}
-                             onChange={this.bindedOnValueChange}
+                             onChange={this.onValueChange.bind(this)}
                              value={this.state.fields[key]}/>
                         :
                         this.state.fields[key]

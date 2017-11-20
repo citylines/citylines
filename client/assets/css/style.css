@@ -31,11 +31,20 @@
 }
 
 .popup-feature-info {
-    margin-top:5px;
+  display: block;
+  margin-top:5px;
+}
+
+.popup-feature-adjacent {
+  border-top: 1px dashed #c0c0c0;
+  padding-top: 7px;
+  margin-top: 5px;
 }
 
 .station-popup {
-  text-decoration: underline;
+  display: block;
+  margin-bottom:5px;
+  font-size:1.15em;
 }
 
 .section-popup {
@@ -147,6 +156,22 @@
   position:absolute;
   top:3px;
   left:3px;
+}
+
+.editor-features-lines-item {
+  padding: 2px 0;
+}
+
+.editor-features-lines-item .fa-close {
+  position: absolute;
+  right: 30px;
+  margin-top:3px;
+  color: #888;
+}
+
+.editor-features-lines-item .fa-close:hover {
+  color: #000;
+  cursor: pointer;
 }
 
 .color-picker-container {
