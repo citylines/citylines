@@ -99,8 +99,10 @@ class Api < App
     @city = City[url_name: url_name]
     changes = JSON.parse(request.body.read, symbolize_names: true)
 
-    changes.each do |change|
-      update_create_or_delete_feature(@city, user, change);
+    DB.transaction do
+      changes.each do |change|
+        update_create_or_delete_feature(@city, user, change);
+      end
     end
 
     status 200
