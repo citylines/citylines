@@ -9,7 +9,9 @@ class Data extends Component {
       systems: 'https://dataclips.heroku.com/aprshsrwvsfdyfbwrkmuxznutfka-systems',
       lines: 'https://dataclips.heroku.com/yfwuchrcmbjnslnewiediitnfhup-lines',
       features: 'https://dataclips.heroku.com/gugsgunqfrrzftoxsyphiwkmhhae-features',
-      stations: 'https://dataclips.heroku.com/nsdgftlpvsnevtphlkuwbnzzglrt-stations'
+      section_lines: 'https://dataclips.heroku.com/xefureocdynlarxzelcpwlzjzmyn-section_lines',
+      stations: 'https://dataclips.heroku.com/nsdgftlpvsnevtphlkuwbnzzglrt-stations',
+      station_lines: 'https://dataclips.heroku.com/ooanimulqmfdefqsbcqqsdzsijet-station_lines'
     }
   }
 

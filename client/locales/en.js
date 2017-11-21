@@ -144,7 +144,9 @@ export default {
     systems: 'Systems',
     lines: 'Lines',
     features: 'Tracks',
-    stations: 'Stations'
+    stations: 'Stations',
+    section_lines: "Tracks' lines",
+    station_lines: "Stations' lines"
   },
   user: {
     my_cities: 'My cities',
