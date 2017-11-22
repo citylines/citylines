@@ -46,6 +46,7 @@ export default {
     all_lines: 'Todas las líneas',
     popup: {
       station: 'Estación %(name)s',
+      unnamed_station: 'Estación',
       track: 'Información del tramo',
       buildstart: 'Comienzo de construcción: %(year)s',
       opening: 'Inauguración: %(year)s',

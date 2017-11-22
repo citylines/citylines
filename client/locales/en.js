@@ -45,7 +45,8 @@ export default {
     km_under_construction: 'Under construction: %(km)s km',
     all_lines: "All the lines",
     popup: {
-      station: 'Station %(name)s',
+      station: '%(name)s station',
+      unnamed_station: 'Station',
       track: 'Track information',
       buildstart: 'Beginning of construction: %(year)s',
       opening: 'Opening: %(year)s',

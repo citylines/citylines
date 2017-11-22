@@ -37,7 +37,7 @@ class FeaturePopupContent extends Component {
           {fProps.klass === 'Station' ?
             <div>
               <li className="c-list__item">
-                <Translate className="station-popup" content="city.popup.station" with={{name: fProps.name}} />
+                <Translate className="station-popup" content={`city.popup.${fProps.name ? '' : 'unnamed_'}station`} with={{name: fProps.name}} />
               </li>
               {Object.entries(this.groupedSystems(fProps.lines)).map((e, index) => {
                   const s = e[1];
