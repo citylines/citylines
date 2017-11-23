@@ -93,6 +93,14 @@ module CityHelpers
     end
   end
 
+  def remove_lines_from_feature(feature)
+    if feature.is_a?(Section)
+      SectionLine.where(section_id: feature.id).map(&:delete)
+    else
+      StationLine.where(station_id: feature.id).map(&:delete)
+    end
+  end
+
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
 
@@ -138,6 +146,7 @@ module CityHelpers
     puts change.inspect
 
     if change[:removed]
+      remove_lines_from_feature(feature)
       DeletedFeature.push(user, feature)
       feature.delete
       return
