@@ -8,6 +8,8 @@ class Api < App
   helpers CacheHelpers
   helpers OSMHelpers
 
+  use Rack::Deflater
+
   use Rack::Cache,
     :verbose     => true,
     :metastore   => CACHE_CLIENT,
