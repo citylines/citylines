@@ -2,11 +2,31 @@
 # yarn lockfile v1
 
 
+"@mapbox/extent@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@mapbox/extent/-/extent-0.4.0.tgz#3e591f32e1f0c3981c864239f7b0ac06e610f8a9"
+
 "@mapbox/geojson-area@^0.2.1":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@mapbox/geojson-area/-/geojson-area-0.2.2.tgz#18d7814aa36bf23fbbcc379f8e26a22927debf10"
   dependencies:
     wgs84 "0.0.0"
+
+"@mapbox/geojson-coords@0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@mapbox/geojson-coords/-/geojson-coords-0.0.0.tgz#4847a5b96059666e527a2139e75e35d84fd58f50"
+  dependencies:
+    "@mapbox/geojson-normalize" "0.0.1"
+    geojson-flatten "~0.2.1"
+
+"@mapbox/geojson-extent@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@mapbox/geojson-extent/-/geojson-extent-0.3.2.tgz#a1bdb2015afd0e031c18c3f29f7eb229e4e1950f"
+  dependencies:
+    "@mapbox/extent" "0.4.0"
+    "@mapbox/geojson-coords" "0.0.0"
+    rw "~0.1.4"
+    traverse "~0.6.6"
 
 "@mapbox/geojson-normalize@0.0.1":
   version "0.0.1"
@@ -26,26 +46,40 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@mapbox/gl-matrix/-/gl-matrix-0.0.1.tgz#e5126aab4d64c36b81c7a97d0ae0dddde5773d2b"
 
-"@mapbox/mapbox-gl-draw@^0.18.1":
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-draw/-/mapbox-gl-draw-0.18.1.tgz#4f52a770225ba004dd71baf5fe264f5d1c9d0b6c"
+"@mapbox/mapbox-gl-draw@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-draw/-/mapbox-gl-draw-1.0.4.tgz#8a5ff8939e1a85a63ffe476fec68a05e7de414b2"
   dependencies:
     "@mapbox/geojson-area" "^0.2.1"
+    "@mapbox/geojson-extent" "^0.3.2"
     "@mapbox/geojson-normalize" "0.0.1"
     "@mapbox/geojsonhint" "^2.0.0"
-    geojson-extent "^0.3.2"
+    "@mapbox/point-geometry" "0.1.0"
     hat "0.0.3"
     lodash.isequal "^4.2.0"
-    point-geometry "0.1.0"
     xtend "^4.0.1"
 
-"@mapbox/shelf-pack@^3.0.0":
+"@mapbox/point-geometry@0.1.0", "@mapbox/point-geometry@^0.1.0", "@mapbox/point-geometry@~0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@mapbox/point-geometry/-/point-geometry-0.1.0.tgz#8a83f9335c7860effa2eeeca254332aa0aeed8f2"
+
+"@mapbox/shelf-pack@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@mapbox/shelf-pack/-/shelf-pack-3.1.0.tgz#1edea9c0bf6715b217171ba60646c201af520f6a"
+
+"@mapbox/tiny-sdf@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@mapbox/tiny-sdf/-/tiny-sdf-1.1.0.tgz#b0b8f5c22005e6ddb838f421ffd257c1f74f9a20"
 
 "@mapbox/unitbezier@^0.0.0":
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/@mapbox/unitbezier/-/unitbezier-0.0.0.tgz#15651bd553a67b8581fb398810c98ad86a34524e"
+
+"@mapbox/vector-tile@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@mapbox/vector-tile/-/vector-tile-1.3.0.tgz#c495f972525befccefcd838f45ffa37ef3b70fe8"
+  dependencies:
+    "@mapbox/point-geometry" "~0.1.0"
 
 "@mapbox/whoots-js@^3.0.0":
   version "3.0.0"
@@ -118,10 +152,6 @@ ansi-styles@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.0.0.tgz#cb102df1c56f5123eab8b67cd7b98027a0279178"
 
-ansicolors@~0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
-
 anymatch@^1.3.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
@@ -139,6 +169,12 @@ are-we-there-yet@~1.1.2:
   dependencies:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
+
+argparse@^1.0.7:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
+  dependencies:
+    sprintf-js "~1.0.2"
 
 arr-diff@^2.0.0:
   version "2.0.0"
@@ -976,13 +1012,6 @@ camelcase@^1.0.2:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-1.2.1.tgz#9bb5304d2e0b56698b2c758b08a3eaa9daa58a39"
 
-cardinal@~0.4.2:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/cardinal/-/cardinal-0.4.4.tgz#ca5bb68a5b511b90fe93b9acea49bdee5c32bfe2"
-  dependencies:
-    ansicolors "~0.2.1"
-    redeyed "~0.4.0"
-
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
@@ -1159,6 +1188,10 @@ crypto-browserify@3.3.0:
     ripemd160 "0.2.0"
     sha.js "2.2.6"
 
+csscolorparser@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/csscolorparser/-/csscolorparser-1.0.3.tgz#b34f391eea4da8f3e98231e2ccd8df9c041f171b"
+
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
@@ -1305,7 +1338,11 @@ esprima@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
-esprima@~1.0.2, esprima@~1.0.4:
+esprima@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+
+esprima@~1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-1.0.4.tgz#9f557e08fc3b4d26ece9dd34f8fbf476b62585ad"
 
@@ -1361,17 +1398,15 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expect.js@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/expect.js/-/expect.js-0.2.0.tgz#1028533d2c1c363f74a6796ff57ec0520ded2be1"
+extend-shallow@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-2.0.1.tgz#51af7d614ad9a9f610ea1bafbb989d6b1c56890f"
+  dependencies:
+    is-extendable "^0.1.0"
 
 extend@^3.0.0, extend@~3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
-
-extent@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/extent/-/extent-0.2.0.tgz#efad0869682d3628bdbeeb140c1f4d0023e6bec4"
 
 extglob@^0.3.1:
   version "0.3.2"
@@ -1531,37 +1566,16 @@ geojson-area@0.1.0:
   dependencies:
     wgs84 "0.0.0"
 
-geojson-coords@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/geojson-coords/-/geojson-coords-0.0.0.tgz#dcdba86612da6be6b9511f16f38e90fcccb6dd75"
-  dependencies:
-    geojson-flatten "~0.1.0"
-    geojson-normalize "0.0.0"
-
-geojson-extent@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/geojson-extent/-/geojson-extent-0.3.2.tgz#2ee5f3fabf0c7659c0509e05782910dfe1df27e8"
-  dependencies:
-    extent "0.2.0"
-    geojson-coords "0.0.0"
-    rw "~0.1.4"
-    traverse "~0.6.6"
-
-geojson-flatten@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/geojson-flatten/-/geojson-flatten-0.1.0.tgz#c1c6f96bbb5713114c9b14a0b4ba80f47e4622cb"
+geojson-flatten@~0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/geojson-flatten/-/geojson-flatten-0.2.1.tgz#476fc6b041e94d016983ec95400f8777bd60c45c"
   dependencies:
     concat-stream "~1.2.1"
     minimist "0.0.5"
-    sharkdown "~0.1.0"
 
-geojson-normalize@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/geojson-normalize/-/geojson-normalize-0.0.0.tgz#2dbc3678cd1b31b8179e876bda70cd120dde35c0"
-
-geojson-rewind@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/geojson-rewind/-/geojson-rewind-0.1.0.tgz#57022a054b196660d755354fe5d26684d90cd019"
+geojson-rewind@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/geojson-rewind/-/geojson-rewind-0.2.0.tgz#ea558e9e44ff03b8655d0a08b75078dc33a15e79"
   dependencies:
     concat-stream "~1.2.1"
     geojson-area "0.1.0"
@@ -1608,6 +1622,15 @@ globals@^9.18.0:
 graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+gray-matter@^3.0.8:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/gray-matter/-/gray-matter-3.1.1.tgz#101f80d9e69eeca6765cdce437705b18f40876ac"
+  dependencies:
+    extend-shallow "^2.0.1"
+    js-yaml "^3.10.0"
+    kind-of "^5.0.2"
+    strip-bom-string "^1.0.0"
 
 grid-index@^1.0.0:
   version "1.0.0"
@@ -1762,7 +1785,7 @@ is-equal-shallow@^0.1.3:
   dependencies:
     is-primitive "^2.0.0"
 
-is-extendable@^0.1.1:
+is-extendable@^0.1.0, is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
 
@@ -1845,6 +1868,13 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
+js-yaml@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -1883,6 +1913,13 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
+jsonlint-lines-primitives@~1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/jsonlint-lines-primitives/-/jsonlint-lines-primitives-1.6.0.tgz#bb89f60c8b9b612fd913ddaa236649b840d86611"
+  dependencies:
+    JSV ">= 4.0.x"
+    nomnom ">= 1.5.x"
+
 jsonlint-lines@1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/jsonlint-lines/-/jsonlint-lines-1.7.1.tgz#507de680d3fb8c4be1641cc57d6f679f29f178ff"
@@ -1915,6 +1952,10 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
+kind-of@^5.0.2:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-5.1.0.tgz#729c91e2d857b7a419a1f9aa65685c4c33f5845d"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
@@ -1935,9 +1976,52 @@ loader-utils@^0.2.11, loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
+lodash._baseisequal@^3.0.0:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/lodash._baseisequal/-/lodash._baseisequal-3.0.7.tgz#d8025f76339d29342767dcc887ce5cb95a5b51f1"
+  dependencies:
+    lodash.isarray "^3.0.0"
+    lodash.istypedarray "^3.0.0"
+    lodash.keys "^3.0.0"
+
+lodash._bindcallback@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash._bindcallback/-/lodash._bindcallback-3.0.1.tgz#e531c27644cf8b57a99e17ed95b35c748789392e"
+
+lodash._getnative@^3.0.0:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/lodash._getnative/-/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"
+
+lodash.isarguments@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
+
+lodash.isarray@^3.0.0:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
+
+lodash.isequal@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-3.0.4.tgz#1c35eb3b6ef0cd1ff51743e3ea3cf7fdffdacb64"
+  dependencies:
+    lodash._baseisequal "^3.0.0"
+    lodash._bindcallback "^3.0.0"
+
 lodash.isequal@^4.2.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+
+lodash.istypedarray@^3.0.0:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
+
+lodash.keys@^3.0.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
+  dependencies:
+    lodash._getnative "^3.0.0"
+    lodash.isarguments "^3.0.0"
+    lodash.isarray "^3.0.0"
 
 lodash@^4.0.1, lodash@^4.17.4:
   version "4.17.4"
@@ -1969,32 +2053,41 @@ mapbox-gl-supported@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl-supported/-/mapbox-gl-supported-1.2.0.tgz#cbd34df894206cadda9a33c8d9a4609f26bb1989"
 
-mapbox-gl@^0.36.0:
-  version "0.36.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-0.36.0.tgz#786ec912e47827117fde12012196a0b471845a74"
+mapbox-gl@^0.42.2:
+  version "0.42.2"
+  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-0.42.2.tgz#b349142d0b0a3c2f4225b30d301c9bf6c507a272"
   dependencies:
     "@mapbox/gl-matrix" "^0.0.1"
-    "@mapbox/shelf-pack" "^3.0.0"
+    "@mapbox/point-geometry" "^0.1.0"
+    "@mapbox/shelf-pack" "^3.1.0"
+    "@mapbox/tiny-sdf" "^1.1.0"
     "@mapbox/unitbezier" "^0.0.0"
+    "@mapbox/vector-tile" "^1.3.0"
     "@mapbox/whoots-js" "^3.0.0"
     brfs "^1.4.0"
     bubleify "^0.7.0"
+    csscolorparser "~1.0.2"
     earcut "^2.0.3"
-    geojson-rewind "^0.1.0"
+    geojson-rewind "^0.2.0"
     geojson-vt "^2.4.0"
+    gray-matter "^3.0.8"
     grid-index "^1.0.0"
+    jsonlint-lines-primitives "~1.6.0"
+    lodash.isequal "^3.0.4"
     mapbox-gl-supported "^1.2.0"
+    minimist "0.0.8"
     package-json-versionify "^1.0.2"
-    pbf "^1.3.2"
-    point-geometry "^0.0.0"
+    pbf "^3.0.5"
     quickselect "^1.0.0"
-    supercluster "^2.0.1"
+    rw "^1.3.3"
+    shuffle-seed "^1.1.6"
+    sort-object "^0.3.2"
+    supercluster "^2.3.0"
     through2 "^2.0.3"
     tinyqueue "^1.1.0"
     unassertify "^2.0.0"
     unflowify "^1.0.0"
-    vector-tile "^1.3.0"
-    vt-pbf "^2.0.2"
+    vt-pbf "^3.0.1"
     webworkify "^1.4.0"
 
 material-colors@^1.2.1:
@@ -2282,9 +2375,9 @@ path-parse@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
 
-pbf@^1.3.2:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/pbf/-/pbf-1.3.7.tgz#1e3d047ba3cbe8086ae854a25503ab4537d4335d"
+pbf@^3.0.5:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/pbf/-/pbf-3.1.0.tgz#f70004badcb281761eabb1e76c92f179f08189e9"
   dependencies:
     ieee754 "^1.1.6"
     resolve-protobuf-schema "^2.0.0"
@@ -2322,14 +2415,6 @@ plur@^2.0.0:
 pluralizers@^0.1.4:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/pluralizers/-/pluralizers-0.1.7.tgz#8d38dd0a1b660e739b10ab2eab10b684c9d50142"
-
-point-geometry@0.0.0, point-geometry@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/point-geometry/-/point-geometry-0.0.0.tgz#6fcbcad7a803b6418247dd6e49c2853c584daff7"
-
-point-geometry@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/point-geometry/-/point-geometry-0.1.0.tgz#a4cab526e2c2449961137892942338578af62c0e"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -2524,7 +2609,7 @@ readable-stream@~1.0.17, readable-stream@~1.0.27-1:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@~1.1.0, readable-stream@~1.1.9:
+readable-stream@~1.1.9:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   dependencies:
@@ -2552,12 +2637,6 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
-
-redeyed@~0.4.0:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-0.4.4.tgz#37e990a6f2b21b2a11c2e6a48fd4135698cba97f"
-  dependencies:
-    esprima "~1.0.4"
 
 regenerate@^1.2.1:
   version "1.3.3"
@@ -2680,6 +2759,10 @@ ripemd160@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-0.2.0.tgz#2bf198bde167cacfa51c0a928e84b68bbe171fce"
 
+rw@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+
 rw@~0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/rw/-/rw-0.1.4.tgz#4903cbd80248ae0ede685bf58fd236a7a9b29a3e"
@@ -2687,6 +2770,10 @@ rw@~0.1.4:
 safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+
+seedrandom@^2.4.2:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.3.tgz#2438504dad33917314bff18ac4d794f16d6aaecc"
 
 semver@^5.3.0:
   version "5.4.1"
@@ -2712,16 +2799,11 @@ shallow-copy@~0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/shallow-copy/-/shallow-copy-0.0.1.tgz#415f42702d73d810330292cc5ee86eae1a11a170"
 
-sharkdown@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/sharkdown/-/sharkdown-0.1.0.tgz#61d4fe529e75d02442127cc9234362265099214f"
+shuffle-seed@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/shuffle-seed/-/shuffle-seed-1.1.6.tgz#533c12683bab3b4fa3e8751fc4e562146744260b"
   dependencies:
-    cardinal "~0.4.2"
-    expect.js "~0.2.0"
-    minimist "0.0.5"
-    split "~0.2.10"
-    stream-spigot "~2.1.2"
-    through "~2.3.4"
+    seedrandom "^2.4.2"
 
 signal-exit@^3.0.0:
   version "3.0.2"
@@ -2736,6 +2818,21 @@ sntp@1.x.x:
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
   dependencies:
     hoek "2.x.x"
+
+sort-asc@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/sort-asc/-/sort-asc-0.1.0.tgz#ab799df61fc73ea0956c79c4b531ed1e9e7727e9"
+
+sort-desc@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/sort-desc/-/sort-desc-0.1.1.tgz#198b8c0cdeb095c463341861e3925d4ee359a9ee"
+
+sort-object@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/sort-object/-/sort-object-0.3.2.tgz#98e0d199ede40e07c61a84403c61d6c3b290f9e2"
+  dependencies:
+    sort-asc "^0.1.0"
+    sort-desc "^0.1.1"
 
 source-list-map@~0.1.7:
   version "0.1.8"
@@ -2767,15 +2864,13 @@ source-map@~0.4.1:
   dependencies:
     amdefine ">=0.0.4"
 
-split@~0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/split/-/split-0.2.10.tgz#67097c601d697ce1368f418f06cd201cf0521a57"
-  dependencies:
-    through "2"
-
 sprintf-js@^1.0.3:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.1.tgz#36be78320afe5801f6cea3ee78b6e5aab940ea0c"
+
+sprintf-js@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
 sshpk@^1.7.0:
   version "1.13.1"
@@ -2830,12 +2925,6 @@ stream-http@^2.3.1:
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
 
-stream-spigot@~2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/stream-spigot/-/stream-spigot-2.1.2.tgz#7de145e819f8dd0db45090d13dcf73a8ed3cc035"
-  dependencies:
-    readable-stream "~1.1.0"
-
 strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
@@ -2872,11 +2961,15 @@ strip-ansi@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-0.1.1.tgz#39e8a98d044d150660abe4a6808acf70bb7bc991"
 
+strip-bom-string@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/strip-bom-string/-/strip-bom-string-1.0.0.tgz#e5211e9224369fbb81d633a2f00044dc8cedad92"
+
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-supercluster@^2.0.1:
+supercluster@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-2.3.0.tgz#87ab56081bbea9a1d724df5351ee9e8c3af2f48b"
   dependencies:
@@ -2931,7 +3024,7 @@ through2@~0.4.1:
     readable-stream "~1.0.17"
     xtend "~2.1.1"
 
-through@2, through@^2.3.7, through@^2.3.8, through@~2.3.4:
+through@^2.3.7, through@^2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
@@ -3083,12 +3176,6 @@ uuid@^3.0.0, uuid@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
-vector-tile@^1.1.3, vector-tile@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/vector-tile/-/vector-tile-1.3.0.tgz#06d516a83b063f04c82ef539cf1bb1aebeb696b4"
-  dependencies:
-    point-geometry "0.0.0"
-
 verror@1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/verror/-/verror-1.10.0.tgz#3a105ca17053af55d6e270c1f8288682e18da400"
@@ -3130,13 +3217,13 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vt-pbf@^2.0.2:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/vt-pbf/-/vt-pbf-2.1.4.tgz#b5df7c3f9706156e0b9881a99dcb05635740b522"
+vt-pbf@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/vt-pbf/-/vt-pbf-3.1.0.tgz#d7e63f585b362cbff6b84fcd052c159112e0acc7"
   dependencies:
-    pbf "^1.3.2"
-    point-geometry "0.0.0"
-    vector-tile "^1.1.3"
+    "@mapbox/point-geometry" "0.1.0"
+    "@mapbox/vector-tile" "^1.3.0"
+    pbf "^3.0.5"
 
 warning@^3.0.0:
   version "3.0.0"
