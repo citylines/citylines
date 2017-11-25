@@ -79,7 +79,7 @@ const CityViewStore = Object.assign({}, Store, {
       systems: cityData.systems,
       sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       layers: cityData.linesMapper ? cityData.linesMapper.layers : [],
-      linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown : [],
+      linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown.slice() : [],
       years: cityData.years,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false,

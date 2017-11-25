@@ -25,12 +25,6 @@ class LinesTree extends PureComponent {
     this.setState({expanded: !this.state.expanded})
   }
 
-  componentDidUpdate() {
-    if (typeof this.props.onLinesShownChange === 'function') {
-      this.props.onLinesShownChange();
-    }
-  }
-
   render() {
     const lines = this.props.lines || [];
     const expandClass = this.state.expanded ? 'c-tree__item--expanded' : 'c-tree__item--expandable';

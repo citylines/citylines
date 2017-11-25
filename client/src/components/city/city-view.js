@@ -18,7 +18,6 @@ class CityView extends PureComponent {
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnYearChange = this.onYearChange.bind(this);
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
-    this.bindedOnLinesShownChange = this.onLinesShownChange.bind(this);
     this.bindedOnAllLinesToggle = this.onAllLinesToggle.bind(this);
   }
 
@@ -40,6 +39,14 @@ class CityView extends PureComponent {
   componentWillUnmount() {
     CityViewStore.unload(this.urlName);
     CityViewStore.removeChangeListener(this.bindedOnChange);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState) return;
+
+    if (prevState.linesShown.length != this.state.linesShown.length) {
+      this.onLinesShownChange();
+    }
   }
 
   params() {
@@ -106,7 +113,6 @@ class CityView extends PureComponent {
               lines={systemLines}
               linesShown={this.state.linesShown}
               onLineToggle={this.bindedOnLineToggle}
-              onLinesShownChange={this.bindedOnLinesShownChange}
               onAllLinesToggle={this.bindedOnAllLinesToggle}
             /> : null })
           }
