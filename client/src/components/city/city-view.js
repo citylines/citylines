@@ -56,6 +56,9 @@ class CityView extends PureComponent {
   updateParams(newParams) {
     const params = Object.assign({}, this.params(), newParams);
 
+    // We delete null params
+    Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
+
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
     if (JSON.stringify(params) === JSON.stringify(this.params())) return;
@@ -79,7 +82,14 @@ class CityView extends PureComponent {
   }
 
   onLinesShownChange() {
-    const linesShown = this.state.linesShown.join(',');
+    let linesShown;
+
+    if (this.state.linesShown.length == this.state.lines.length) {
+      linesShown = null;
+    } else {
+      linesShown = this.state.linesShown.join(',');
+    }
+
     this.updateParams({lines: linesShown});
   }
 
