@@ -1,7 +1,7 @@
 import Store from './store';
 
 import 'whatwg-fetch';
-import {v1 as uuid } from 'uuid';
+import {v4 as uuid } from 'uuid';
 
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
@@ -236,9 +236,9 @@ const EditorStore = Object.assign({}, Store, {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
       feature.properties.id = uuid();
       feature.properties.klass = klass;
-      feature.properties.opening = 0;
-      feature.properties.buildstart = 0;
-      feature.properties.closure = 999999;
+      feature.properties.opening = feature.properties.opening || 0;
+      feature.properties.buildstart = feature.properties.buildstart || 0;
+      feature.properties.closure = feature.properties.closure || 999999;
       feature.properties.lines = [];
 
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
