@@ -33,11 +33,11 @@ const CutLineMode = {
       return f;
     });
 
-    // FIXME: This event firing breaks the original feature removal
-    /*
-    this.map.fire('draw.create', {
-      features: newFeatures
-    });*/
+    setTimeout(() => {
+      this.map.fire('draw.create', {
+        features: newFeatures
+      });
+    }, 10)
 
     this.changeMode('simple_select');
   },

@@ -234,7 +234,9 @@ const EditorStore = Object.assign({}, Store, {
 
     features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      feature.properties.id = uuid();
+      const id = uuid();
+      feature.id = feature.id || id;
+      feature.properties.id = id;
       feature.properties.klass = klass;
       feature.properties.opening = feature.properties.opening || 0;
       feature.properties.buildstart = feature.properties.buildstart || 0;
