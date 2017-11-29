@@ -241,7 +241,7 @@ const EditorStore = Object.assign({}, Store, {
       feature.properties.opening = feature.properties.opening || 0;
       feature.properties.buildstart = feature.properties.buildstart || 0;
       feature.properties.closure = feature.properties.closure || 999999;
-      feature.properties.lines = [];
+      feature.properties.lines = feature.properties.lines || [];
 
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
