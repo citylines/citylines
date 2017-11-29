@@ -432,3 +432,13 @@ table .narrow {
   width: 132px;
   vertical-align: middle;
 }
+
+.cut-line {
+  position: absolute;
+  right: 10px;
+  top: 210px;
+}
+
+.cut-line button:active {
+  color: #111;
+}

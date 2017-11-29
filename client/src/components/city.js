@@ -205,6 +205,11 @@ class City extends PureComponent {
                 />
               }
           </Map>
+          { this.state.drawFeatures &&
+            <div className="mapboxgl-ctrl-group mapboxgl-ctrl cut-line">
+              <button className="mapbox-gl-draw_ctrl-draw-btn fa fa-scissors" />
+            </div>
+          }
         </div>
         );
   }
