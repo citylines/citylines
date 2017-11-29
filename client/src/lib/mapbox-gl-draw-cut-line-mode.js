@@ -46,6 +46,11 @@ const CutLineMode = {
     display(geojson);
   },
 
+  onMouseMove: function(state, e) {
+    const features = this.featuresAt(e);
+    this.map.getCanvas().style.cursor = features.length ? "crosshair" : "inherit";
+  },
+
   onKeyUp: function(state, e) {
     if (e.keyCode === 27) return this.changeMode('simple_select');
   },
