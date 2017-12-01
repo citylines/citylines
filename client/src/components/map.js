@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
-import CutLineMode from '../lib/mapbox-gl-draw-cut-line-mode';
+import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
 class Map extends Component {
   constructor(props, context) {
