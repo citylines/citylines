@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
+import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
+
 import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
@@ -202,6 +204,7 @@ class City extends PureComponent {
                   onFeatureCreate={this.bindedOnFeatureCreate}
                   onFeatureDelete={this.bindedOnFeatureDelete}
                   selectedFeatureById={this.state.drawSelectedFeatureById}
+                  customModes={{cut_line: CutLineMode}}
                 />
               }
           </Map>

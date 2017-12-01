@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
-import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
 class Map extends Component {
   constructor(props, context) {
@@ -242,18 +241,19 @@ class Draw extends Component {
   }
 
   load() {
-    const modes = MapboxDraw.modes;
-    modes.cut_line = CutLineMode;
-
-    var options = {
+    const options = {
       boxSelect: false,
       displayControlsDefault: false,
-      modes: modes,
       controls: {
         point: true,
         line_string: true,
         trash: true
       }
+    }
+
+    if (this.props.customModes) {
+      const modes = {...MapboxDraw.modes, ...this.props.customModes}
+      options.modes = modes;
     }
 
     this.draw = new MapboxDraw(options);
