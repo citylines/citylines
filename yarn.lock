@@ -3037,9 +3037,9 @@ magic-string@^0.14.0:
   dependencies:
     vlq "^0.2.1"
 
-mapbox-gl-draw-cut-line-mode@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mapbox-gl-draw-cut-line-mode/-/mapbox-gl-draw-cut-line-mode-1.0.1.tgz#d0768faa3feb235d202aace3161ac4b4feedb3a8"
+mapbox-gl-draw-cut-line-mode@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/mapbox-gl-draw-cut-line-mode/-/mapbox-gl-draw-cut-line-mode-1.0.2.tgz#77428012ef933857c8bc79fcb15c832eda0d8427"
   dependencies:
     "@turf/turf" "^5.0.4"
 
