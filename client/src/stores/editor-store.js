@@ -129,7 +129,8 @@ const EditorStore = Object.assign({}, Store, {
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,
-      savingData: cityData.savingData
+      savingData: cityData.savingData,
+      currentMode: cityData.currentMode
     }
   },
 
@@ -271,6 +272,12 @@ const EditorStore = Object.assign({}, Store, {
   setSelectedFeature(urlName, klass, id) {
     const feature = this.getFeatureByKlassAndId(urlName, klass, id);
     EditorStore.changeSelection(urlName, [feature]);
+  },
+
+  setMode(urlName, mode) {
+    const cityData = this.cityData[urlName];
+    cityData.currentMode = mode;
+    this.emitChangeEvent();
   },
 
   async discardChanges(urlName) {

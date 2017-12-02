@@ -47,7 +47,8 @@ const CityStore = Object.assign({}, Store, {
       mouseEventsLayerNames: cityViewState.mouseEventsLayerNames,
       clickedFeatures: cityViewState.clickedFeatures,
       drawFeatures: editorState.features,
-      drawSelectedFeatureById: editorState.selectedFeatureById
+      drawSelectedFeatureById: editorState.selectedFeatureById,
+      drawCurrentMode: editorState.currentMode
     };
   },
 
