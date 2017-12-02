@@ -1,7 +1,7 @@
 import Store from './store';
 
 import 'whatwg-fetch';
-import {v1 as uuid } from 'uuid';
+import {v4 as uuid } from 'uuid';
 
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
@@ -129,7 +129,8 @@ const EditorStore = Object.assign({}, Store, {
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,
-      savingData: cityData.savingData
+      savingData: cityData.savingData,
+      currentMode: cityData.currentMode
     }
   },
 
@@ -234,12 +235,14 @@ const EditorStore = Object.assign({}, Store, {
 
     features.map((feature) => {
       const klass = feature.geometry.type === 'Point' ? 'Station' : 'Section';
-      feature.properties.id = uuid();
+      const id = uuid();
+      feature.id = feature.id || id;
+      feature.properties.id = id;
       feature.properties.klass = klass;
-      feature.properties.opening = 0;
-      feature.properties.buildstart = 0;
-      feature.properties.closure = 999999;
-      feature.properties.lines = [];
+      feature.properties.opening = feature.properties.opening || 0;
+      feature.properties.buildstart = feature.properties.buildstart || 0;
+      feature.properties.closure = feature.properties.closure || 999999;
+      feature.properties.lines = feature.properties.lines || [];
 
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
@@ -269,6 +272,12 @@ const EditorStore = Object.assign({}, Store, {
   setSelectedFeature(urlName, klass, id) {
     const feature = this.getFeatureByKlassAndId(urlName, klass, id);
     EditorStore.changeSelection(urlName, [feature]);
+  },
+
+  setMode(urlName, mode) {
+    const cityData = this.cityData[urlName];
+    cityData.currentMode = mode;
+    this.emitChangeEvent();
   },
 
   async discardChanges(urlName) {

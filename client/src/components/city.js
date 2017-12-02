@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
+import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
+
 import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
@@ -29,6 +31,7 @@ class City extends PureComponent {
     this.bindedOnFeatureUpdate = this.onFeatureUpdate.bind(this);
     this.bindedOnFeatureCreate = this.onFeatureCreate.bind(this);
     this.bindedOnFeatureDelete = this.onFeatureDelete.bind(this);
+    this.bindedOnDrawModeChange = this.onDrawModeChange.bind(this);
   }
 
   componentWillMount() {
@@ -128,6 +131,10 @@ class City extends PureComponent {
     EditorStore.setFeatureDeleted(this.urlName, features);
   }
 
+  onDrawModeChange(mode) {
+    EditorStore.setMode(this.urlName, mode);
+  }
+
   /* ------------- */
 
   panelStyle() {
@@ -201,10 +208,20 @@ class City extends PureComponent {
                   onFeatureUpdate={this.bindedOnFeatureUpdate}
                   onFeatureCreate={this.bindedOnFeatureCreate}
                   onFeatureDelete={this.bindedOnFeatureDelete}
+                  onModeChange={this.bindedOnDrawModeChange}
                   selectedFeatureById={this.state.drawSelectedFeatureById}
+                  customModes={{cut_line: CutLineMode}}
+                  currentMode={this.state.drawCurrentMode}
                 />
               }
           </Map>
+          { this.state.drawFeatures &&
+            <div className="mapboxgl-ctrl-group mapboxgl-ctrl cut-line">
+              <button
+                className="mapbox-gl-draw_ctrl-draw-btn fa fa-scissors"
+                onClick={() => EditorStore.setMode(this.urlName, 'cut_line')} />
+            </div>
+          }
         </div>
         );
   }

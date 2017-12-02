@@ -212,6 +212,7 @@ class Draw extends Component {
     this.bindedOnUpdate = this.onUpdate.bind(this);
     this.bindedOnCreate = this.onCreate.bind(this);
     this.bindedOnDelete = this.onDelete.bind(this);
+    this.bindedOnModeChange = this.onModeChange.bind(this);
   }
 
   componentDidMount() {
@@ -228,6 +229,7 @@ class Draw extends Component {
     this.map.off('draw.update', this.bindedOnUpdate);
     this.map.off('draw.create', this.bindedOnCreate);
     this.map.off('draw.delete', this.bindedOnDelete);
+    this.map.off('draw.modechange', this.bindedOnModeChange);
 
     this.draw.deleteAll();
     this.map.removeControl(this.draw)
@@ -241,7 +243,7 @@ class Draw extends Component {
   }
 
   load() {
-    var options = {
+    const options = {
       boxSelect: false,
       displayControlsDefault: false,
       controls: {
@@ -251,6 +253,10 @@ class Draw extends Component {
       }
     }
 
+    if (this.props.customModes) {
+      options.modes = {...MapboxDraw.modes, ...this.props.customModes};
+    }
+
     this.draw = new MapboxDraw(options);
     this.map.addControl(this.draw);
 
@@ -258,6 +264,7 @@ class Draw extends Component {
     this.map.on('draw.update', this.bindedOnUpdate);
     this.map.on('draw.create', this.bindedOnCreate);
     this.map.on('draw.delete', this.bindedOnDelete);
+    this.map.on('draw.modechange', this.bindedOnModeChange);
 
     this.draw.add(this.props.features);
   }
@@ -286,6 +293,12 @@ class Draw extends Component {
     }
   }
 
+  onModeChange(modeChange) {
+    if (typeof this.props.onModeChange === 'function') {
+      this.props.onModeChange(modeChange.mode);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.features != this.props.features) {
       this.draw.set(nextProps.features);
@@ -293,6 +306,10 @@ class Draw extends Component {
 
     if (nextProps.selectedFeatureById != this.props.selectedFeatureById) {
       this.draw.changeMode('simple_select', {featureIds: [nextProps.selectedFeatureById]});
+    }
+
+    if (nextProps.currentMode && nextProps.currentMode != this.props.currentMode) {
+      this.draw.changeMode(nextProps.currentMode);
     }
   }
 
