@@ -252,8 +252,7 @@ class Draw extends Component {
     }
 
     if (this.props.customModes) {
-      const modes = {...MapboxDraw.modes, ...this.props.customModes}
-      options.modes = modes;
+      options.modes = {...MapboxDraw.modes, ...this.props.customModes};
     }
 
     this.draw = new MapboxDraw(options);
