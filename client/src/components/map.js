@@ -309,7 +309,9 @@ class Draw extends Component {
     }
 
     if (nextProps.currentMode && nextProps.currentMode != this.props.currentMode) {
-      this.draw.changeMode(nextProps.currentMode);
+      if (this.draw.getMode() != nextProps.currentMode) {
+        this.draw.changeMode(nextProps.currentMode);
+      }
     }
   }
 
