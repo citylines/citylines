@@ -221,10 +221,16 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   setFeatureGeoChange(urlName, features) {
+    const cityData = this.cityData[urlName];
+
     features.map((feature) => {
       this.updateFeatureInFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
       modifiedFeature.geo = true;
+
+      if (cityData.selectedFeature && cityData.selectedFeature.id == feature.id) {
+        cityData.selectedFeature = {...feature};
+      }
     });
 
     this.emitChangeEvent();
