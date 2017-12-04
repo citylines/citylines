@@ -162,11 +162,8 @@ const EditorStore = Object.assign({}, Store, {
       return (f.properties.klass == klass && f.properties.id == id)
     });
 
-    const updatedFeature = {...cityData.features.features[index], ...feature};
-    cityData.features.features[index] = updatedFeature;
-    cityData.features = {...cityData.features};
-
-    return updatedFeature;
+    cityData.features.features[index] = Object.assign({}, feature);
+    cityData.features = Object.assign({}, cityData.features);
   },
 
   pushFeatureToFeatureCollection(urlName, feature) {
@@ -213,22 +210,17 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   setFeaturePropsChange(urlName, feature) {
-    // We get the last version of the props, and the version of the geometry stored in the
-    // FeatureViewer (which may be old). That's why we remove the attr so we merge only the props.
-    delete feature.geometry;
-    const updatedFeature = this.updateFeatureInFeatureCollection(urlName, feature);
-    const modifiedFeature = this.setModifiedFeature(urlName, updatedFeature);
+    this.updateFeatureInFeatureCollection(urlName, feature);
+    const modifiedFeature = this.setModifiedFeature(urlName, feature);
     modifiedFeature.props = true;
 
     const cityData = this.cityData[urlName];
-    cityData.selectedFeature = {...updatedFeature};
+    cityData.selectedFeature = Object.assign({}, feature);
 
     this.emitChangeEvent();
   },
 
   setFeatureGeoChange(urlName, features) {
-    // We get the last version of the features (in geo and props), so we don't need to do
-    // anything else.
     features.map((feature) => {
       this.updateFeatureInFeatureCollection(urlName, feature);
       const modifiedFeature = this.setModifiedFeature(urlName, feature);
