@@ -11,3 +11,5 @@ end
 DB = Sequel.connect(connection)
 
 DB.extension :pg_json
+
+Sequel::Model.plugin :tactical_eager_loading
