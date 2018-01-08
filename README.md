@@ -48,7 +48,7 @@ API
 - Install `bundle` gem
 - Install dependencies: `bundle install`
 - Run migrations: `rake db:migrate`
-- Start the server: `rackup`
+- Start the server: `bundle exec unicorn -c api/config/unicorn.rb`
 
 Client
 ------
@@ -56,7 +56,7 @@ Client
 - Install dependencies: `yarn install`
 - Build: `yarn build`
 
-Go to localhost:9292 and you should have Citylines running in your machine.
+Go to localhost:8080 and you should have Citylines running in your machine.
 
 Test
 ====

@@ -16,6 +16,7 @@ gem 'rack-cache'
 gem 'dalli'
 gem 'oauth'
 gem 'overpass-api-ruby'
+gem 'unicorn'
 
 gem 'pry', require: false
 

@@ -19,6 +19,7 @@ GEM
       rack
       socksify
     jwt (1.5.6)
+    kgio (2.11.1)
     metaclass (0.0.4)
     method_source (0.8.2)
     minitest (5.8.3)
@@ -41,6 +42,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    raindrops (0.19.0)
     rake (11.3.0)
     sass (3.4.22)
     sequel (4.41.0)
@@ -71,6 +73,9 @@ GEM
       sprockets (>= 2.2)
     tilt (2.0.5)
     timecop (0.8.1)
+    unicorn (5.4.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -96,6 +101,7 @@ DEPENDENCIES
   sinatra-asset-pipeline (>= 1.0.2)
   sinatra-contrib
   timecop
+  unicorn
 
 RUBY VERSION
    ruby 2.3.0p0
