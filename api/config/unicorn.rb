@@ -4,6 +4,8 @@ preload_app true
 app_path = File.expand_path(File.dirname(__FILE__) + "/../../")
 working_directory app_path
 
+pid "#{app_path}/unicorn.pid"
+
 before_fork do |server, worker|
   Signal.trap 'TERM' do
     puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
