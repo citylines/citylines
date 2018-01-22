@@ -58,6 +58,17 @@ Client
 
 Go to localhost:8080 and you should have Citylines running in your machine.
 
+How to use Citylines with Docker
+======
+
+```
+docker-compose up --build
+docker-compose exec web rake db:migrate
+docker-compose exec web yarn install
+docker-compose exec web yarn build
+```
+Go to localhost:8080 and you should have Citylines running in your machine.
+
 Test
 ====
 API
