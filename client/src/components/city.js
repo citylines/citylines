@@ -72,8 +72,6 @@ class City extends PureComponent {
   }
 
   onMapLoad(map) {
-    this.mapLoaded = true;
-
     const geo = this.getGeoFromMap(map);
     CityStore.setGeoData(this.urlName, geo);
   }
@@ -154,7 +152,7 @@ class City extends PureComponent {
               pathName={this.props.location.pathname}
               urlName={this.urlName}
             />
-            { this.mapLoaded && this.props.children }
+            { this.props.children }
           </div>
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}

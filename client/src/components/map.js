@@ -30,6 +30,7 @@ class Map extends Component {
     });
 
     this.map.on('load', () => {
+      this.mapLoaded = true;
       this.forceUpdate();
       if (typeof props.onLoad === 'function') props.onLoad(this.map);
     });
@@ -76,7 +77,7 @@ class Map extends Component {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
         <div id="map"></div>
-        {this.props.children}
+        { this.mapLoaded && this.props.children }
       </main>
       )
   }
