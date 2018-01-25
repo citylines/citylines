@@ -1,4 +1,8 @@
+require "sinatra/namespace"
+
 class Api < App
+  register Sinatra::Namespace
+
   DEFAULT_ZOOM = 11
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
@@ -53,20 +57,29 @@ class Api < App
       pitch: DEFAULT_PITCH }.to_json
   end
 
-  get '/:url_name/view_data' do |url_name|
-    @city = City[url_name: url_name]
+  namespace '/:url_name/view' do
+    get '/base_data' do |url_name|
+      @city = City[url_name: url_name]
 
-    last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), last_modified_system_or_line(@city)].compact.max
+      last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
 
-    { lines: city_lines(@city),
-      systems: city_systems(@city),
-      lines_length_by_year: lines_length_by_year(@city),
-      years: { start: @city.start_year,
-               end: Date.today.year,
-               current: nil,
-               previous: nil,
-               default: Date.today.year }
-    }.to_json
+      { lines: city_lines(@city),
+        systems: city_systems(@city),
+        years: { start: @city.start_year,
+                 end: Date.today.year,
+                 current: nil,
+                 previous: nil,
+                 default: Date.today.year }
+      }.to_json
+    end
+
+    get '/years_data' do |url_name|
+      @city = City[url_name: url_name]
+
+      last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
+
+      lines_length_by_year(@city).to_json
+    end
   end
 
   get '/:url_name/source/:type' do |url_name, type|

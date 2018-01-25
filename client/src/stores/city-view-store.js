@@ -12,15 +12,31 @@ const CityViewStore = Object.assign({}, Store, {
   cityData: {},
   stateCache: {},
 
-  async fetchCityData(urlName) {
-    const url = `/api/${urlName}/view_data`;
+  async fetchCityBaseData(urlName) {
+    const url = `/api/${urlName}/view/base_data`;
     const response = await fetch(url);
     const json = await response.json();
     return json;
   },
 
+  async fetchCityYearsData(urlName) {
+    const url = `/api/${urlName}/view/years_data`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  },
+
+  async loadKmInfo(urlName, year, lines) {
+    const yearsData = await this.fetchCityYearsData(urlName);
+
+    this.cityData[urlName].kmInfo = new KmInfo(yearsData);
+    this.cityData[urlName].kmInfo.update({year: year, lines: lines});
+
+    this.emitChangeEvent();
+  },
+
   async load(urlName, queryParams) {
-    let cityData = await this.fetchCityData(urlName);
+    let cityData = await this.fetchCityBaseData(urlName);
 
     if (this.stateCache[urlName]) {
       cityData = this.updateWithStateCache(cityData, Object.assign({}, this.stateCache[urlName]));
@@ -34,13 +50,13 @@ const CityViewStore = Object.assign({}, Store, {
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
-    cityData.kmInfo = new KmInfo(cityData.lines_length_by_year);
 
     const startingYear = cityData.years.default || cityData.years.start;
     cityData.timeline.toYear(startingYear);
-    cityData.kmInfo.update({year: startingYear, lines: linesShown});
 
     this.cityData[urlName] = cityData;
+
+    this.loadKmInfo(urlName, startingYear, linesShown);
 
     this.emitChangeEvent();
   },
