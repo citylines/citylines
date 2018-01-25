@@ -30,6 +30,7 @@ class Map extends Component {
     });
 
     this.map.on('load', () => {
+      this.mapLoaded = true;
       this.forceUpdate();
       if (typeof props.onLoad === 'function') props.onLoad(this.map);
     });
@@ -76,7 +77,7 @@ class Map extends Component {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
         <div id="map"></div>
-        {this.props.children}
+        { this.mapLoaded && this.props.children }
       </main>
       )
   }
@@ -89,7 +90,7 @@ Map.childContextTypes = {
 class Source extends Component {
   componentDidMount(){
     this.map = this.context.map;
-    if (this.map) this.load();
+    this.load();
   }
 
   componentWillUnmount(){
@@ -101,13 +102,6 @@ class Source extends Component {
       type: 'geojson',
       data: this.props.data
     });
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (!this.map && nextContext.map) {
-      this.map = nextContext.map;
-      this.load();
-    }
   }
 
   shouldComponentUpdate() {
@@ -126,7 +120,7 @@ Source.contextTypes = {
 class Layer extends Component {
   componentDidMount(){
     this.map = this.context.map;
-    if (this.map) this.load();
+    this.load();
   }
 
   componentWillUnmount(){
@@ -134,11 +128,6 @@ class Layer extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (!this.map && nextContext.map) {
-      this.map = nextContext.map;
-      this.load();
-    }
-
     if (nextProps.filter && nextProps.filter !== this.props.filter) {
       this.map.setFilter(this.props.id, nextProps.filter);
     }
@@ -217,9 +206,9 @@ class Draw extends Component {
 
   componentDidMount() {
     this.map = this.context.map;
-    if (this.map && this.map.loaded()) {
+    if (this.map.loaded()) {
       this.load();
-    } else if (this.map) {
+    } else {
       this.map.on('render', this.bindedOnMapReady);
     }
   }
