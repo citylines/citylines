@@ -77,7 +77,7 @@ class Map extends Component {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
         <div id="map"></div>
-        { this.map && this.mapLoaded && this.props.children }
+        { this.mapLoaded && this.props.children }
       </main>
       )
   }
