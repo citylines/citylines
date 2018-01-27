@@ -17,6 +17,7 @@ gem 'dalli'
 gem 'oauth'
 gem 'overpass-api-ruby'
 gem 'unicorn'
+gem 'xml-sitemap'
 
 gem 'pry', require: false
 
