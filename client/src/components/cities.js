@@ -55,6 +55,7 @@ class Cities extends Component {
 
   componentDidMount() {
     CitiesStore.fetchCities();
+    CitiesStore.fetchContributors();
   }
 
   onInputChange(e) {

@@ -24,25 +24,36 @@ class Api < App
     cache_control :no_cache
   end
 
-  get '/cities' do
-    last_modified last_modified_city_date
+  namespace '/cities' do
+    get '/list' do
+      last_modified last_modified_city_date
 
-    contributors_by_city = contributors
-    city_length = lengths
+      contributors_by_city = contributors
+      city_length = lengths
 
-    cities = City.map do |city|
-      {name: city.name,
-       state: city.country_state,
-       country: city.country,
-       length: city_length[city.id] || 0,
-       systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
-       contributors_count: contributors_by_city[city.id] || 0,
-       url: city.url}
+      cities = City.all.map do |city|
+        {name: city.name,
+         state: city.country_state,
+         country: city.country,
+         length: city_length[city.id] || 0,
+         systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
+         contributors_count: contributors_by_city[city.id] || 0,
+         url: city.url}
+      end
+
+      {
+        cities: cities
+      }.to_json
     end
 
-    {cities: cities,
-     top_contributors: top_contributors,
-     month_top_contributors: top_contributors(last_month: true)}.to_json
+    get '/top_contributors' do
+      last_modified last_modified_city_date
+
+      {
+        top_contributors: top_contributors,
+        month_top_contributors: top_contributors(last_month: true)
+      }.to_json
+    end
   end
 
   get '/:url_name/config' do |url_name|
