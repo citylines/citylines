@@ -1,9 +1,10 @@
 require './api/config/boot'
 require 'sinatra/asset_pipeline/task'
-require './api/app/controllers/app'
+require './api/config/app'
+require './api/app/controllers/base_app'
 require 'rake/testtask'
 
-Sinatra::AssetPipeline::Task.define! App
+Sinatra::AssetPipeline::Task.define! BaseApp
 
 namespace :db do
   desc "Run database migrations"

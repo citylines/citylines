@@ -1,12 +1,13 @@
 require File.join(File.dirname(__FILE__), "api", "config", "boot")
-require File.join(File.dirname(__FILE__), "api", "app", "controllers", "app")
+require File.join(File.dirname(__FILE__), "api", "config", "app")
+require File.join(File.dirname(__FILE__), "api", "app", "controllers", "base_app")
 require File.join(File.dirname(__FILE__), "api", "app", "controllers", "api")
 require File.join(File.dirname(__FILE__), "api", "app", "controllers", "auth")
 
 $stdout.sync = true
 
 map "/" do
-  run App.new
+  run BaseApp.new
 end
 
 map "/api" do
