@@ -15,6 +15,8 @@ export default {
       support_link: 'sala de chat en Gitter'
     },
     main: {
+      title: 'Citylines.co - Queremos reconstruir los sistemas de transporte de las ciudades del mundo',
+      description: 'Citylines.co es una plataforma de mapeo colaborativo de los sistemas de transporte del mundo',
       log_in: 'Ingresar'
     },
     auth: {
@@ -38,6 +40,8 @@ export default {
     }
   },
   city: {
+    title: 'Sistemas de transporte de %(city)s',
+    description: 'Explora los sistemas de transporte de %(city)s en citylines.co',
     edit: 'Editar',
     stop_editing: 'Dejar de editar',
     lines: 'Líneas',

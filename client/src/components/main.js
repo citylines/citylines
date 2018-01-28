@@ -5,6 +5,7 @@ import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
+import {Helmet} from "react-helmet";
 
 class Main extends Component {
   constructor(props, context) {
@@ -65,6 +66,12 @@ class Main extends Component {
   render() {
     return (
         <div>
+          <Helmet>
+            <Translate component="title" content="main.title" />
+            <Translate component="meta" name="description" content="meta.description" />
+            <Translate component="meta" property="og:title" content="main.title"/>
+            <Translate component="meta" property="og:description" content="meta.description" />
+          </Helmet>
           <nav className="c-nav c-nav--inline">
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
