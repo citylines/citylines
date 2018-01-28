@@ -1,0 +1,66 @@
+city,city_ascii,lat,lng,pop,country,iso2,iso3,province
+Annecy,Annecy,45.89997479,6.116670287,77490.5,France,FR,FRA,Rhône-Alpes
+Roanne,Roanne,46.03332583,4.066666218,56577.5,France,FR,FRA,Rhône-Alpes
+Roura,Roura,4.729981302,-52.33002059,2069.5,France,GF,FRA,Guinaa
+Sinnamary,Sinnamary,5.380019144,-52.95998214,2781.5,France,GF,FRA,Guinaa
+St.-Brieuc,St.-Brieuc,48.51666262,-2.783303265,52998.5,France,FR,FRA,Bretagne
+Poitier,Poitier,46.58329226,0.333276529,85383.5,France,FR,FRA,Poitou-Charentes
+Angers,Angers,47.48000755,-0.530029949,178329.5,France,FR,FRA,Pays de la Loire
+Biarritz,Biarritz,43.47327537,-1.561594891,89268,France,FR,FRA,Aquitaine
+Aix-en-Provence,Aix-en-Provence,43.51999086,5.449992634,145309,France,FR,FRA,Provence-Alpes-Côte-d'Azur
+Perpignan,Perpignan,42.69998924,2.899967406,128663,France,FR,FRA,Languedoc-Roussillon
+Tarbes,Tarbes,43.23329002,0.083343464,53480,France,FR,FRA,Midi-Pyrénées
+Clermont-Ferrand,Clermont-Ferrand,45.77998212,3.080008096,185865.5,France,FR,FRA,Auvergne
+Melun,Melun,48.53330243,2.666648314,144192.5,France,FR,FRA,Île-de-France
+Arras,Arras,50.28332481,2.783333698,55608.5,France,FR,FRA,Nord-Pas-de-Calais
+Besancon,Besancon,47.22999697,6.03000891,124193,France,FR,FRA,Franche-Comté
+Saint-Georges,Saint-Georges,3.9104706,-51.81000065,1558,France,GF,FRA,Amapá
+Saint-Etienne,Saint-Etienne,45.43039105,4.380032103,220982,France,FR,FRA,Rhône-Alpes
+Grenoble,Grenoble,45.18038047,5.720001992,273563,France,FR,FRA,Rhône-Alpes
+Fort-de-France,Fort-de-France,14.6104118,-61.08002914,172622,France,MQ,FRA,Martinique
+Saint-Laurent-du-Maroni,Saint-Laurent-du-Maroni,5.497624081,-54.03253459,20850.5,France,GF,FRA,Guinaa
+Iracoubo,Iracoubo,5.480426452,-53.21999211,881,France,GF,FRA,Guinaa
+Cherbourg,Cherbourg,49.65039187,-1.649987428,60991,France,FR,FRA,Basse-Normandie
+Caen,Caen,49.18375368,-0.349989259,150361.5,France,FR,FRA,Basse-Normandie
+Lorient,Lorient,47.75040448,-3.366575156,71532,France,FR,FRA,Bretagne
+Brest,Brest,48.39044293,-4.49500757,142914,France,FR,FRA,Bretagne
+Le Mans,Le Mans,48.00041506,0.099983275,143392.5,France,FR,FRA,Pays de la Loire
+Agen,Agen,44.20041445,0.633335733,46295,France,FR,FRA,Aquitaine
+Ajaccio,Ajaccio,41.92706484,8.728293822,46905,France,FR,FRA,Corse
+Bastia,Bastia,42.70316734,9.450006875,40558.5,France,FR,FRA,Corse
+Toulon,Toulon,43.13418645,5.918821566,263197,France,FR,FRA,Provence-Alpes-Côte-d'Azur
+Beziers,Beziers,43.35049217,3.209974323,77759.5,France,FR,FRA,Languedoc-Roussillon
+Montpellier,Montpellier,43.61039878,3.869985716,287753,France,FR,FRA,Languedoc-Roussillon
+Nimes,Nimes,43.83038535,4.350008096,158891.5,France,FR,FRA,Languedoc-Roussillon
+Vichy,Vichy,46.117145,3.416680052,35088.5,France,FR,FRA,Auvergne
+Nevers,Nevers,46.98373293,3.166669473,44958.5,France,FR,FRA,Bourgogne
+Auxerre,Auxerre,47.80042727,3.566593382,38034,France,FR,FRA,Bourgogne
+Dijon,Dijon,47.33040428,5.030018268,159864,France,FR,FRA,Bourgogne
+Bourges,Bourges,47.08372683,2.399997923,70163.5,France,FR,FRA,Centre
+Tours,Tours,47.38037539,0.699946654,188858.5,France,FR,FRA,Centre
+Orleans,Orleans,47.90042116,1.900028441,170725,France,FR,FRA,Centre
+Dieppe,Dieppe,49.93373374,1.083334105,39084,France,FR,FRA,Haute-Normandie
+Rouen,Rouen,49.43040529,1.079975137,321417.5,France,FR,FRA,Haute-Normandie
+Versailles,Versailles,48.80046958,2.133347533,85416,France,FR,FRA,Île-de-France
+Brive,Brive,45.15040814,1.533332477,54457,France,FR,FRA,Limousin
+Troyes,Troyes,48.34039431,4.083357705,61244,France,FR,FRA,Champagne-Ardenne
+Reims,Reims,49.25039044,4.029975951,177939,France,FR,FRA,Champagne-Ardenne
+Calais,Calais,50.95041587,1.833314167,83317,France,FR,FRA,Nord-Pas-de-Calais
+Amiens,Amiens,49.90037661,2.300004027,118908.5,France,FR,FRA,Picardie
+Mulhouse,Mulhouse,47.75040448,7.34998002,163442,France,FR,FRA,Alsace
+Nancy,Nancy,48.68368085,6.200024372,187155,France,FR,FRA,Lorraine
+Metz,Metz,49.1203467,6.180025593,266550,France,FR,FRA,Lorraine
+Pointe-a-Pitre,Pointe-a-Pitre,16.24147504,-61.5329989,81887.5,France,GP,FRA,Guadeloupe
+Basse-terre,Basse-terre,16.23039044,-61.43998132,307,France,GP,FRA,Guadeloupe
+St.-Benoit,St.-Benoit,-21.03351072,55.71281612,23979,France,RE,FRA,La Réunion
+Dzaoudzi,Dzaoudzi,-12.78708901,45.27500362,23099,France,YT,FRA,Moyotte
+Nice,Nice,43.71501772,7.265023965,632810,France,FR,FRA,Provence-Alpes-Côte-d'Azur
+Toulouse,Toulouse,43.61995892,1.449926716,640027.5,France,FR,FRA,Midi-Pyrénées
+Limoges,Limoges,45.82997906,1.249990599,146687.5,France,FR,FRA,Limousin
+Lille,Lille,50.64996909,3.080008096,636164,France,FR,FRA,Nord-Pas-de-Calais
+Strasbourg,Strasbourg,48.57996625,7.750007282,357408.5,France,FR,FRA,Alsace
+Kourou,Kourou,5.159980895,-52.64994938,22425.5,France,GF,FRA,Guinaa
+La Rochelle,La Rochelle,46.16665102,-1.149992108,76903.5,France,FR,FRA,Poitou-Charentes
+Le Havre,Le Havre,49.50497438,0.104970051,214048,France,FR,FRA,Haute-Normandie
+St.-Denis,St.-Denis,-20.87889484,55.44807776,163621,France,RE,FRA,La Réunion
+Cayenne,Cayenne,4.932992166,-52.33002059,57179.5,France,GF,FRA,Guinaa
