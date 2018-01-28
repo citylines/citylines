@@ -1,0 +1,29 @@
+version: '2'
+services:
+  memcached:
+    image: "memcached:alpine"
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    links:
+      - memcached:memcached.local
+      - db:db.local
+    environment:
+      - MEMCACHIER_SERVERS=memcached.local:11211
+      - DATABASE_URL=postgres://citylines:citylines@db.local/citylines
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - memcached
+  db:
+    image: "mdillon/postgis"
+    environment:
+      - POSTGRES_DB=citylines
+      - POSTGRES_USER=citylines
+      - POSTGRES_PASSWORD=citylines
+    volumes:
+      - ./dumps:/dumps:ro
+    ports:
+      - "5432:5432"
