@@ -1,0 +1,2 @@
+rake db:migrate
+exec "$@"

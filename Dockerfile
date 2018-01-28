@@ -32,4 +32,5 @@ RUN \
   yarn install --no-cache --frozen-lockfile && \
   yarn build
 
+ENTRYPOINT ["sh", "entrypoint.sh"]
 CMD ["rackup", "-p", "8080", "-o","0.0.0.0"]
