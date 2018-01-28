@@ -28,8 +28,5 @@ RUN \
 
 ADD . /app/
 
-RUN \
-  yarn install --no-cache --frozen-lockfile
-
 ENTRYPOINT ["sh", "entrypoint.sh"]
-CMD ["rackup", "-p", "8080", "-o","0.0.0.0"]
+CMD ["bundle", "exec", "rake", "test"]

@@ -56,7 +56,7 @@ describe Station do
   end
 
   it "should return the right city" do
-    assert_equal @city, @station.city
+    assert_equal @city.id, @station.city.id
   end
 
   it "should return the lines" do
