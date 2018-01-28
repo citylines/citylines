@@ -64,7 +64,7 @@ describe Section do
   end
 
   it "should return the right city" do
-    assert_equal @city, @section.city
+    assert_equal @city.id, @section.city.id
   end
 
   it "should return the lines" do
