@@ -4,9 +4,8 @@ import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
-import counterpart from 'counterpart';
+import Tags from './tags';
 import assets from '../lib/assets-provider';
-import {Helmet} from "react-helmet";
 
 class Main extends Component {
   constructor(props, context) {
@@ -67,12 +66,7 @@ class Main extends Component {
   render() {
     return (
         <div>
-          <Helmet>
-            <title>{counterpart("main.title")}</title>
-            <meta name="description" content={counterpart("main.description")} />
-            <meta property="og:title" content={counterpart("main.title")} />
-            <meta property="og:description" content={counterpart("main.description")} />
-          </Helmet>
+          <Tags klass="main" />
           <nav className="c-nav c-nav--inline">
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
