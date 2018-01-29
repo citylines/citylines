@@ -5,6 +5,7 @@ import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
 import {PanelHeader, PanelBody} from './panel';
 import {Map, Source, Layer, Popup, Draw} from './map';
+import Tags from './tags';
 
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
@@ -146,6 +147,10 @@ class City extends PureComponent {
 
     return (
         <div className="o-grid o-panel">
+          { this.state.name && <Tags
+            klass="city"
+            interpolations={{city: this.state.name}}
+          /> }
           <div id="panel" style={this.panelStyle()}>
             <PanelHeader
               name={this.state.name}
