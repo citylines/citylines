@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
+import Tags from './tags';
 
 import MainStore from '../stores/main-store';
 import UserStore from '../stores/user-store';
@@ -82,6 +83,10 @@ class User extends Component {
 
     return (
       <div className="o-container o-container--medium">
+        { this.state.name && <Tags
+          title="user.cities_of_user"
+          interpolations={{name: this.state.name}}
+        /> }
         <div className="u-letter-box--large">
           <h1 className="c-heading">{this.state.name}</h1>
 

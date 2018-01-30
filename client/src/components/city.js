@@ -148,7 +148,8 @@ class City extends PureComponent {
     return (
         <div className="o-grid o-panel">
           { this.state.name && <Tags
-            klass="city"
+            title="city.title"
+            description="city.description"
             interpolations={{city: this.state.name}}
           /> }
           <div id="panel" style={this.panelStyle()}>

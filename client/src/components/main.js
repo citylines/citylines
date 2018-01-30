@@ -66,7 +66,7 @@ class Main extends Component {
   render() {
     return (
         <div>
-          <Tags klass="main" />
+          <Tags title="main.title" description="main.description"/>
           <nav className="c-nav c-nav--inline">
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
