@@ -1,4 +1,4 @@
-*.yml
+api/config/*.yml
 node_modules
 client/assets/bundle.js
 unicorn.pid
