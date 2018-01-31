@@ -15,6 +15,8 @@ export default {
       support_link: 'live chat room at Gitter'
     },
     main: {
+      title: "citylines.co",
+      description: "Citylines.co is a collaborative mapping platform where people can build the transit systems of the World",
       log_in: 'Log in'
     },
     auth: {
@@ -38,6 +40,8 @@ export default {
     }
   },
   city: {
+    title: '%(city)s Transit System',
+    description: 'Explore the transport systems of %(city)s in citylines.co',
     edit: 'Edit',
     stop_editing: 'Stop editing',
     lines: 'Lines',

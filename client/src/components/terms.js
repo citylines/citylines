@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
+import Tags from './tags';
 
 class Terms extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class Terms extends Component {
   render() {
     return (
         <div className="o-container o-container--medium" style={{textAlign: 'justify'}}>
+          <Tags title="terms.title" />
           <div className="u-letter-box--large">
             <Translate component="h1" className="c-heading" content="terms.title" />
 

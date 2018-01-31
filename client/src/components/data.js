@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
+import Tags from './tags';
 
 class Data extends Component {
   datasets() {
@@ -28,6 +29,7 @@ class Data extends Component {
   render() {
     return (
         <div className="o-container o-container--medium">
+          <Tags title="data.title" />
           <div className="u-letter-box--large">
             <Translate component="h1" className="c-heading" content="data.title" />
 
