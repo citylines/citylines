@@ -34,7 +34,6 @@ class Tags extends Component {
         { description && <meta name="description" content={description} /> }
         { description && <meta property="og:description" content={description} /> }
 
-        <link rel="canonical" href={this.url()} />
         <link rel="alternate" hreflang="es" href={this.urlWithLocale("es")} />
         <link rel="alternate" hreflang="en" href={this.urlWithLocale("en")} />
       </Helmet>
