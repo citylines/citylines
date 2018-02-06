@@ -18,13 +18,15 @@ import MainStore from './stores/main-store';
 import locale from 'browser-locale';
 const browserLocale = locale().split('-')[0].toLowerCase();
 
+const params = browserHistory.getCurrentLocation().query;
+
 import EN from '../locales/en';
 import ES from '../locales/es';
 
 Counterpart.registerTranslations('en', EN);
 Counterpart.registerTranslations('es', ES);
 Counterpart.setFallbackLocale('en')
-Counterpart.setLocale(browserLocale);
+Counterpart.setLocale(params.locale || browserLocale);
 
 import assets from './lib/assets-provider';
 assets.loadPaths(window.assetsPaths);
