@@ -41,7 +41,7 @@ export default {
   },
   city: {
     title: '%(city)s Transit System',
-    description: 'Explore the transport systems of %(city)s in citylines.co',
+    description: 'Explore the transport systems of %(city)s, and their history, in citylines.co —the collaborative mapping platform of transit systems.',
     edit: 'Edit',
     stop_editing: 'Stop editing',
     lines: 'Lines',
