@@ -16,14 +16,14 @@ const EditorStore = Object.assign({}, Store, {
   },
 
   async fetchStations(urlName) {
-    const url = `/api/${urlName}/source/stations?raw=true`;
+    const url = `/api/${urlName}/raw_source/stations`;
     const response = await fetch(url);
     const json = await response.json();
     return json;
   },
 
   async fetchSections(urlName) {
-    const url = `/api/${urlName}/source/sections?raw=true`;
+    const url = `/api/${urlName}/raw_source/sections`;
     const response = await fetch(url);
     const json = await response.json();
     return json;

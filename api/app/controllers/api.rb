@@ -96,11 +96,15 @@ class Api < App
 
     last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
 
-    if params[:raw]
-      lines_features_collection(@city, type).to_json
-    else
-      formatted_lines_features_collection(@city, type).to_json
-    end
+    formatted_lines_features_collection(@city, type).to_json
+  end
+
+  get '/:url_name/raw_source/:type' do |url_name, type|
+    @city = City[url_name: url_name]
+
+    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
+
+    lines_features_collection(@city, type).to_json
   end
 
   get '/editor/:url_name/data' do |url_name|
