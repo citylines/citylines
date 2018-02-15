@@ -99,21 +99,21 @@ class Api < App
     formatted_lines_features_collection(@city, type).to_json
   end
 
+  get '/:url_name/raw_source/:type' do |url_name, type|
+    @city = City[url_name: url_name]
+
+    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
+
+    lines_features_collection(@city, type).to_json
+  end
+
   get '/editor/:url_name/data' do |url_name|
     protect
 
     @city = City[url_name: url_name]
 
-    { features: all_features_collection(@city),
-      lines: city_lines(@city),
+    { lines: city_lines(@city),
       systems: city_systems(@city) }.to_json
-  end
-
-  get '/editor/:url_name/features' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-    all_features_collection(@city).to_json
   end
 
   put '/editor/:url_name/features' do |url_name|
