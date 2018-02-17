@@ -1,5 +1,3 @@
-require 'xml-sitemap'
-
 class BaseApp < App
   set :public_folder, File.join(APP_ROOT, '..', 'public')
   set :views, File.join(APP_ROOT, 'app', 'views')
@@ -11,20 +9,7 @@ class BaseApp < App
   register Sinatra::AssetPipeline
 
   get '/robots.txt' do
-    "sitemap: http://citylines.co/sitemap.xml"
-  end
-
-  get '/sitemap.xml' do
-    map = XmlSitemap::Map.new("citylines.co") do |m|
-      m.add "data"
-      m.add "terms"
-
-      City.all.map do |city|
-        m.add city.url_name
-      end
-    end
-
-    map.render
+    "sitemap: https://s3.us-east-2.amazonaws.com/citylines/sitemaps/sitemap.xml.gz"
   end
 
   get '/*' do
