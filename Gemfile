@@ -18,6 +18,7 @@ gem 'oauth'
 gem 'overpass-api-ruby'
 gem 'unicorn'
 gem 'sitemap_generator'
+gem 'addressable'
 
 gem 'pry', require: false
 
