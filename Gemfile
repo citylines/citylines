@@ -19,6 +19,8 @@ gem 'overpass-api-ruby'
 gem 'unicorn'
 gem 'sitemap_generator'
 gem 'addressable'
+gem 'fog-aws'
+gem 'mime-types'
 
 gem 'pry', require: false
 

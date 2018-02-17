@@ -1,17 +1,19 @@
 require 'addressable/uri'
 require 'sitemap_generator'
+require 'fog-aws'
 
-def alternates(url)
-  href = Addressable::URI.parse(url)
-
-  %w(es en).map do |lang|
-    href.query_values = href.query_values.merge(locale: lang)
-    {
-      href: href.to_s,
-      lang: lang
-    }
+SitemapGenerator::Interpreter.class_eval {
+  def alternates(url)
+    %w(es en).map do |lang|
+      href = Addressable::URI.parse(url)
+      href.query_values = (href.query_values || {}).merge(locale: lang)
+      {
+        href: href.to_s,
+        lang: lang
+      }
+    end
   end
-end
+}
 
 SitemapGenerator::Sitemap.default_host = 'http://citylines.co'
 SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(fog_provider: 'AWS',
