@@ -8,6 +8,7 @@ require 'sequel'
 require 'sinatra'
 require 'sinatra/asset_pipeline'
 
+require_relative 'aws'
 require_relative 'database'
 require_relative 'mapbox'
 require_relative 'auth'
