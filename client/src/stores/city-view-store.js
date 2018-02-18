@@ -15,6 +15,9 @@ const CityViewStore = Object.assign({}, Store, {
   async fetchCityBaseData(urlName) {
     const url = `/api/${urlName}/view/base_data`;
     const response = await fetch(url);
+
+    if (response.status == 404) return;
+
     const json = await response.json();
     return json;
   },
@@ -22,6 +25,9 @@ const CityViewStore = Object.assign({}, Store, {
   async fetchCityYearsData(urlName) {
     const url = `/api/${urlName}/view/years_data`;
     const response = await fetch(url);
+
+    if (response.status == 404) return;
+
     const json = await response.json();
     return json;
   },
@@ -37,6 +43,8 @@ const CityViewStore = Object.assign({}, Store, {
 
   async load(urlName, queryParams) {
     let cityData = await this.fetchCityBaseData(urlName);
+
+    if (!cityData) return;
 
     if (this.stateCache[urlName]) {
       cityData = this.updateWithStateCache(cityData, Object.assign({}, this.stateCache[urlName]));
@@ -62,11 +70,13 @@ const CityViewStore = Object.assign({}, Store, {
   },
 
   unload(urlName) {
-    const cityData = Object.assign({}, this.cityData[urlName]);
+    const cityData = {...this.cityData[urlName]};
 
-    this.stateCache[urlName] = {
-      currentYear: cityData.timeline.years.current,
-      linesShown: cityData.linesMapper.linesShown,
+    if (Object.keys(cityData).length > 0) {
+      this.stateCache[urlName] = {
+        currentYear: cityData.timeline.years.current,
+        linesShown: cityData.linesMapper.linesShown,
+      }
     }
 
     delete this.cityData[urlName];

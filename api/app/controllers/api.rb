@@ -72,6 +72,8 @@ class Api < App
     get '/base_data' do |url_name|
       @city = City[url_name: url_name]
 
+      halt 404 unless @city
+
       last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
 
       { lines: city_lines(@city),
@@ -86,6 +88,8 @@ class Api < App
 
     get '/years_data' do |url_name|
       @city = City[url_name: url_name]
+
+      halt 404 unless @city
 
       last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
 

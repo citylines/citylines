@@ -57,7 +57,7 @@ class City extends PureComponent {
   componentWillUpdate(nextProps, nextState) {
     if (nextState && nextState.error) {
       MainStore.unsetLoading();
-      browserHistory.push('/error');
+      browserHistory.push(`/error?path=${this.urlName}`);
     }
   }
 
