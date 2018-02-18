@@ -15,11 +15,27 @@ const EditorStore = Object.assign({}, Store, {
     return json;
   },
 
-  async fetchFeatures(urlName) {
-    const url = `/api/editor/${urlName}/features`;
-    const response = await fetch(url, {credentials: 'same-origin'});
+  async fetchStations(urlName) {
+    const url = `/api/${urlName}/raw_source/stations`;
+    const response = await fetch(url);
     const json = await response.json();
     return json;
+  },
+
+  async fetchSections(urlName) {
+    const url = `/api/${urlName}/raw_source/sections`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+  },
+
+  async fetchFeatures(urlName) {
+    const values = await Promise.all([this.fetchStations(urlName), this.fetchSections(urlName)]);
+
+    return {
+      "type": "FeatureCollection",
+      "features" : [...values[0].features, ...values[1].features]
+    };
   },
 
   async updateFeatures(urlName, body) {
@@ -111,7 +127,7 @@ const EditorStore = Object.assign({}, Store, {
 
   async load(urlName) {
     this.cityData[urlName] = await this.fetchCityData(urlName);
-
+    this.cityData[urlName].features = await this.fetchFeatures(urlName);
     this.emitChangeEvent();
   },
 

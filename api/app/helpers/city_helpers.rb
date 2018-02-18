@@ -65,12 +65,6 @@ module CityHelpers
      features: features}
   end
 
-  def all_features_collection(city)
-    features_collection = lines_features_collection(city, 'sections').clone
-    features_collection[:features] += lines_features_collection(city, 'stations')[:features]
-    features_collection
-  end
-
   def update_feature_lines(feature, properties)
     current_lines = feature.lines.map(&:url_name)
     updated_lines = properties[:lines].map{|l| l[:line_url_name]}

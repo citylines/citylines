@@ -3,14 +3,6 @@ import counterpart from 'counterpart';
 import {Helmet} from "react-helmet";
 
 class Tags extends Component {
-  url() {
-    return window.location.origin + window.location.pathname;
-  }
-
-  urlWithLocale(locale) {
-    return `${this.url()}?locale=${locale}`;
-  }
-
   render() {
     const interpolations = this.props.interpolations || {};
 
@@ -33,9 +25,6 @@ class Tags extends Component {
 
         { description && <meta name="description" content={description} /> }
         { description && <meta property="og:description" content={description} /> }
-
-        <link rel="alternate" hreflang="es" href={this.urlWithLocale("es")} />
-        <link rel="alternate" hreflang="en" href={this.urlWithLocale("en")} />
       </Helmet>
     )
   }

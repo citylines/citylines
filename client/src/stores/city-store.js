@@ -11,6 +11,11 @@ const CityStore = Object.assign({}, Store, {
   async fetchCityData(urlName) {
     const url = `/api/${urlName}/config`;
     const response = await fetch(url);
+
+    if (response.status == 404) {
+      return {error: 'Missing city'}
+    }
+
     const json = await response.json();
     return json;
   },

@@ -14,6 +14,13 @@ module CacheHelpers
   end
 
   def last_modified_system_or_line(city)
-    [System.where(city_id: city.id).max(:updated_at), Line.where(city_id: city.id).max(:updated_at)].compact.max
+    # SystemBack and LineBackup are added to catch
+    # removed systems or lines. There is overlap regarding modified elements.
+    [
+      System.where(city_id: city.id).max(:updated_at),
+      Line.where(city_id: city.id).max(:updated_at),
+      SystemBackup.where(city_id: city.id).max(:created_at),
+      LineBackup.where(city_id: city.id).max(:created_at)
+    ].compact.max
   end
 end

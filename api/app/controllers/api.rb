@@ -57,6 +57,8 @@ class Api < App
   get '/:url_name/config' do |url_name|
     @city = City[url_name: url_name]
 
+    halt 404 unless @city
+
     { name: @city.name,
       mapbox_access_token: MAPBOX_ACCESS_TOKEN,
       mapbox_style: MAPBOX_STYLE,
@@ -69,6 +71,8 @@ class Api < App
   namespace '/:url_name/view' do
     get '/base_data' do |url_name|
       @city = City[url_name: url_name]
+
+      halt 404 unless @city
 
       last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
 
@@ -85,6 +89,8 @@ class Api < App
     get '/years_data' do |url_name|
       @city = City[url_name: url_name]
 
+      halt 404 unless @city
+
       last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
 
       lines_length_by_year(@city).to_json
@@ -99,21 +105,21 @@ class Api < App
     formatted_lines_features_collection(@city, type).to_json
   end
 
+  get '/:url_name/raw_source/:type' do |url_name, type|
+    @city = City[url_name: url_name]
+
+    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
+
+    lines_features_collection(@city, type).to_json
+  end
+
   get '/editor/:url_name/data' do |url_name|
     protect
 
     @city = City[url_name: url_name]
 
-    { features: all_features_collection(@city),
-      lines: city_lines(@city),
+    { lines: city_lines(@city),
       systems: city_systems(@city) }.to_json
-  end
-
-  get '/editor/:url_name/features' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-    all_features_collection(@city).to_json
   end
 
   put '/editor/:url_name/features' do |url_name|

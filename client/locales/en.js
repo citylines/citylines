@@ -166,5 +166,10 @@ export default {
     you_never_contributed: "You haven't contributed to any city yet!",
     user_never_contributed: "%(name)s hasn't contributed to any city yet",
     see_cities: 'See cities'
+  },
+  error: {
+    title: "The entered URL doesn't belong to any city",
+    subtitle: "Maybe the URL is mispelled or maybe we haven't uploaded yet the city you are looking for.",
+    redirect: 'Search other cities'
   }
 }

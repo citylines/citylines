@@ -3,6 +3,7 @@ require 'sinatra/asset_pipeline/task'
 require './api/config/app'
 require './api/app/controllers/base_app'
 require 'rake/testtask'
+require 'sitemap_generator/tasks'
 
 Sinatra::AssetPipeline::Task.define! BaseApp
 
