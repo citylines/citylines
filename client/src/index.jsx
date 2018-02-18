@@ -12,6 +12,7 @@ import Auth from './components/auth';
 import Terms from './components/terms';
 import Data from './components/data';
 import User from './components/user';
+import Error from './components/error';
 
 import MainStore from './stores/main-store';
 
@@ -53,6 +54,7 @@ render(
         <Route path="auth" component={Auth} />
         <Route path="terms" component={Terms} />
         <Route path="data" component={Data} />
+        <Route path="error" component={Error} />
         <Route path="user/:user_id" component={User} />
         <Route path=":city_url_name" component={City}>
           <IndexRoute component={CityView} />

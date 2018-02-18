@@ -166,5 +166,10 @@ export default {
     you_never_contributed: '¡Todavía no haz contribuido a ninguna ciudad!',
     user_never_contributed: '%(name)s todavía no contribuyó a ninguna ciudad',
     see_cities: 'Ver ciudades'
+  },
+  error: {
+    title: 'La URL ingresada no corresponde a ninguna ciudad',
+    subtitle: 'Quizás la URL está mal escrita o quizás todavía no cargamos la ciudad que buscas.',
+    redirect: 'Buscar otras ciudades'
   }
 }

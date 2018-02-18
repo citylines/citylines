@@ -57,6 +57,8 @@ class Api < App
   get '/:url_name/config' do |url_name|
     @city = City[url_name: url_name]
 
+    halt 404 unless @city
+
     { name: @city.name,
       mapbox_access_token: MAPBOX_ACCESS_TOKEN,
       mapbox_style: MAPBOX_STYLE,

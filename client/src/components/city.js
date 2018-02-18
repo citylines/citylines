@@ -54,6 +54,13 @@ class City extends PureComponent {
     CityStore.load(this.urlName, this.params());
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState && nextState.error) {
+      MainStore.unsetLoading();
+      browserHistory.push('/error');
+    }
+  }
+
   params() {
     return this.props.location.query;
   }
