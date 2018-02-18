@@ -30,7 +30,6 @@ SitemapGenerator::Sitemap.create do
   add "/terms", alternates: alternates("/terms")
 
   City.all.map do |city|
-    city_url = "/#{city.url_name}"
-    add city_url, alternates: alternates(city_url)
+    add city.url, alternates: alternates(city.url)
   end
 end
