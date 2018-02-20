@@ -3,11 +3,14 @@ require 'naturally'
 module CityHelpers
   def city_lines(city)
     lines = city.lines.map { |line|
-      { name: line.name,
+      {
+        name: line.name,
         url_name: line.url_name,
         color: line.color,
         deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
-        system_id: line.system_id}
+        system_id: line.system_id,
+        system_url_name: line.system.url_name
+      }
     }
 
     Naturally.sort_by(lines){|line| line[:name]}
