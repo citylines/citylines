@@ -8,6 +8,10 @@ Sequel.migration do
       add_column :url_name, String
     end
 
+    alter_table :system_backups do
+      add_column :url_name, String
+    end
+
     from(:systems).each do |system|
       system_name = system[:name] || 'unnamed'
       url_name = "#{system[:id]}-#{system_name.strip.accentless.gsub(/\s|\//,'-').downcase}"
@@ -17,6 +21,10 @@ Sequel.migration do
 
   down do
     alter_table :systems do
+      drop_column :url_name
+    end
+
+    alter_table :system_backups do
       drop_column :url_name
     end
   end
