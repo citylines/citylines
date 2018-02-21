@@ -2,6 +2,10 @@ require 'naturally'
 
 module CityHelpers
   def city_lines(city)
+    systems_memo = Hash.new do |hash, id|
+      hash[id] = System[id]
+    end
+
     lines = city.lines.map { |line|
       {
         name: line.name,
@@ -9,7 +13,7 @@ module CityHelpers
         color: line.color,
         deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
         system_id: line.system_id,
-        system_url_name: line.system.url_name
+        system_url_name: systems_memo[line.system_id].url_name
       }
     }
 
