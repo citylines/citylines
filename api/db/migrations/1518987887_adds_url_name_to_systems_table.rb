@@ -11,7 +11,7 @@ Sequel.migration do
     from(:systems).each do |system|
       system_name = system[:name] || 'unnamed'
       url_name = "#{system[:id]}-#{system_name.strip.accentless.gsub(/\s|\//,'-').downcase}"
-      from(:systems).where(id: system[:id]).update(url_name: url_name)
+      from(:systems).where(id: system[:id]).update(url_name: url_name, updated_at: Time.now)
     end
   end
 
