@@ -76,7 +76,8 @@ class Api < App
 
       last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
 
-      { lines: city_lines(@city),
+      { name: @city.name,
+        lines: city_lines(@city),
         systems: city_systems(@city),
         years: { start: @city.start_year,
                  end: Date.today.year,

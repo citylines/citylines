@@ -8,6 +8,7 @@ import {PanelHeader, PanelBody} from '../panel';
 import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
+import Tags from '../tags';
 
 class CityView extends PureComponent {
   constructor(props, context) {
@@ -98,11 +99,27 @@ class CityView extends PureComponent {
     this.updateParams({lines: linesShown});
   }
 
+  systemTitle() {
+    const firstSystem = this.params().systems.split(',')[0];
+
+    const interpolations = {
+      city: this.state.name,
+      system: this.state.systems.find(s => s.url_name == firstSystem).name
+    }
+
+    return <Tags
+            title="city.system_title"
+            description="city.description"
+            interpolations={interpolations}
+          />
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <PanelBody>
+          { this.params().systems && this.systemTitle() } 
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}

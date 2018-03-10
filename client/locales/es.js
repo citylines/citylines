@@ -41,6 +41,7 @@ export default {
   },
   city: {
     title: 'Sistemas de transporte de %(city)s',
+    system_title: '%(system)s de %(city)s',
     description: 'Explora los sistemas de transporte de %(city)s, y su historia, en citylines.co —la plataforma de mapeo colaborativo de los sistemas de transporte urbano del mundo.',
     edit: 'Editar',
     stop_editing: 'Dejar de editar',

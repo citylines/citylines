@@ -21,7 +21,7 @@ module CityHelpers
   end
 
   def city_systems(city)
-    systems = @city.systems.map{|system| {id: system.id, name: system.name}}
+    systems = @city.systems.map{|system| {id: system.id, name: system.name, url_name: system.url_name}}
     Naturally.sort_by(systems){|system| system[:name]}
   end
 
