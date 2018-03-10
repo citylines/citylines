@@ -103,7 +103,7 @@ class CityView extends PureComponent {
     const firstSystem = this.params().systems.split(',')[0];
 
     const interpolations = {
-      city: this.state.name,
+      city: this.context.cityName,
       system: this.state.systems.find(s => s.url_name == firstSystem).name
     }
 
@@ -151,6 +151,10 @@ class CityView extends PureComponent {
         </PanelBody>
     )
   }
+}
+
+CityView.contextTypes = {
+  cityName: React.PropTypes.string
 }
 
 export default CityView

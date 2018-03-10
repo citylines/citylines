@@ -35,6 +35,10 @@ class City extends PureComponent {
     this.bindedOnDrawModeChange = this.onDrawModeChange.bind(this);
   }
 
+  getChildContext() {
+    return {cityName: this.state && this.state.name};
+  }
+
   componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
@@ -236,6 +240,10 @@ class City extends PureComponent {
         </div>
         );
   }
+}
+
+City.childContextTypes = {
+  cityName: React.PropTypes.string
 }
 
 export default City
