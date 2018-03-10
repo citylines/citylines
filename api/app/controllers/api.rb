@@ -213,6 +213,7 @@ class Api < App
     args = JSON.parse(request.body.read, symbolize_names: true)
 
     system = System.new(city_id: @city.id, name: args[:name])
+    system.save
     system.generate_url_name
     system.save
 
