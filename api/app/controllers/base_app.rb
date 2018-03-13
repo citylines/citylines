@@ -9,7 +9,7 @@ class BaseApp < App
   register Sinatra::AssetPipeline
 
   get '/robots.txt' do
-    "sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
+    "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
 
   get '/*' do
