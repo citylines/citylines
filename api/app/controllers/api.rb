@@ -214,8 +214,6 @@ class Api < App
 
     system = System.new(city_id: @city.id, name: args[:name])
     system.save
-    system.generate_url_name
-    system.save
 
     city_systems(@city).to_json
   end

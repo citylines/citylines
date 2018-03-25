@@ -61,8 +61,8 @@ class CityView extends PureComponent {
     Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
 
     // We delete systems param if the new ones include the lines param
-    if (newParams.lines && this.params().systems) {
-      delete params.systems;
+    if (newParams.lines && this.params().system_id) {
+      delete params.system_id;
     }
 
     // If new params are equal to the current ones, we don't push the state to the
@@ -100,11 +100,14 @@ class CityView extends PureComponent {
   }
 
   systemTitle() {
-    const firstSystem = this.params().systems.split(',')[0];
+    const systemId = parseInt(this.params().system_id);
+    const system = this.state.systems.find(s => s.id == systemId);
+
+    if (!system) return;
 
     const interpolations = {
       city: this.context.cityName,
-      system: this.state.systems.find(s => s.url_name == firstSystem).name
+      system: system.name
     }
 
     return <Tags
@@ -119,7 +122,7 @@ class CityView extends PureComponent {
 
     return (
         <PanelBody>
-          { this.params().systems && this.systemTitle() } 
+          { this.params().system_id && this.systemTitle() } 
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}

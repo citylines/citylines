@@ -86,10 +86,9 @@ const CityViewStore = Object.assign({}, Store, {
   updateWithQuery(cityData, queryParams) {
     if (queryParams.year) cityData.years.default = parseInt(queryParams.year);
     if (queryParams.lines) cityData.linesShown = queryParams.lines.split(',');
-    if (queryParams.systems) {
-      const systems = queryParams.systems.split(',')
-      const systemsLines = cityData.lines.filter((line) => systems.includes(line.system_url_name));
-      cityData.linesShown = systemsLines.map(l => l.url_name);
+    if (queryParams.system_id) {
+      const systemLines =  cityData.lines.filter((line) => line.system_id == parseInt(queryParams.system_id));
+      cityData.linesShown = systemLines.map(l => l.url_name);
     }
 
     return cityData;

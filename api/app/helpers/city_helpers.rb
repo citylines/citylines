@@ -2,26 +2,19 @@ require 'naturally'
 
 module CityHelpers
   def city_lines(city)
-    systems_memo = Hash.new do |hash, id|
-      hash[id] = System[id]
-    end
-
     lines = city.lines.map { |line|
-      {
-        name: line.name,
+      { name: line.name,
         url_name: line.url_name,
         color: line.color,
         deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
-        system_id: line.system_id,
-        system_url_name: systems_memo[line.system_id].url_name
-      }
+        system_id: line.system_id}
     }
 
     Naturally.sort_by(lines){|line| line[:name]}
   end
 
   def city_systems(city)
-    systems = @city.systems.map{|system| {id: system.id, name: system.name, url_name: system.url_name}}
+    systems = @city.systems.map{|system| {id: system.id, name: system.name}}
     Naturally.sort_by(systems){|system| system[:name]}
   end
 
