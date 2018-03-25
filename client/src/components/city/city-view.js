@@ -122,8 +122,7 @@ class CityView extends PureComponent {
 
     return (
         <PanelBody>
-          { this.params().system_id && this.systemTitle() } 
-          <div className="year-and-km-container">
+          {this.params().system_id && this.systemTitle()}<div className="year-and-km-container">
             <Year
               urlName={this.urlName}
               min={(this.state.years || {}).start}
