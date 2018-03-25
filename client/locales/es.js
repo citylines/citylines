@@ -11,6 +11,7 @@ export default {
           last_month: 'Último mes'
         }
       },
+      top_systems: 'Mayores sistemas',
       support: 'Únete a nuestra',
       support_link: 'sala de chat en Gitter'
     },

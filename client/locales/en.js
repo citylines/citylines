@@ -11,6 +11,7 @@ export default {
           last_month: 'Last month'
         }
       },
+      top_systems: 'Biggest systems',
       support: 'Join our',
       support_link: 'live chat room at Gitter'
     },
