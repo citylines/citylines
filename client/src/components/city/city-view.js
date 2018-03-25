@@ -60,11 +60,6 @@ class CityView extends PureComponent {
     // We delete null params
     Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
 
-    // We delete systems param if the new ones include the lines param
-    if (newParams.lines && this.params().system_id) {
-      delete params.system_id;
-    }
-
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
     if (JSON.stringify(params) === JSON.stringify(this.params())) return;
@@ -96,7 +91,8 @@ class CityView extends PureComponent {
       linesShown = this.state.linesShown.join(',');
     }
 
-    this.updateParams({lines: linesShown});
+    // An update in the lines parameter should remove the system_id param
+    this.updateParams({lines: linesShown, system_id: null});
   }
 
   systemTitle() {
