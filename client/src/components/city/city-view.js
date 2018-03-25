@@ -8,6 +8,7 @@ import {PanelHeader, PanelBody} from '../panel';
 import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
+import Tags from '../tags';
 
 class CityView extends PureComponent {
   constructor(props, context) {
@@ -59,6 +60,11 @@ class CityView extends PureComponent {
     // We delete null params
     Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
 
+    // We delete systems param if the new ones include the lines param
+    if (newParams.lines && this.params().system_id) {
+      delete params.system_id;
+    }
+
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
     if (JSON.stringify(params) === JSON.stringify(this.params())) return;
@@ -93,12 +99,30 @@ class CityView extends PureComponent {
     this.updateParams({lines: linesShown});
   }
 
+  systemTitle() {
+    const systemId = parseInt(this.params().system_id);
+    const system = this.state.systems.find(s => s.id == systemId);
+
+    if (!system) return;
+
+    const interpolations = {
+      city: this.context.cityName,
+      system: system.name
+    }
+
+    return <Tags
+            title="city.system_title"
+            description="city.description"
+            interpolations={interpolations}
+          />
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <PanelBody>
-          <div className="year-and-km-container">
+          {this.params().system_id && this.systemTitle()}<div className="year-and-km-container">
             <Year
               urlName={this.urlName}
               min={(this.state.years || {}).start}
@@ -129,6 +153,10 @@ class CityView extends PureComponent {
         </PanelBody>
     )
   }
+}
+
+CityView.contextTypes = {
+  cityName: React.PropTypes.string
 }
 
 export default CityView

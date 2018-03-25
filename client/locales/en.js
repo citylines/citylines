@@ -11,6 +11,7 @@ export default {
           last_month: 'Last month'
         }
       },
+      top_systems: 'Biggest systems',
       support: 'Join our',
       support_link: 'live chat room at Gitter'
     },
@@ -41,6 +42,7 @@ export default {
   },
   city: {
     title: '%(city)s Transit System',
+    system_title: '%(city)s %(system)s',
     description: 'Explore the transport systems of %(city)s, and their history, in citylines.co —the collaborative mapping platform of transit systems.',
     edit: 'Edit',
     stop_editing: 'Stop editing',

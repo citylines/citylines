@@ -52,6 +52,14 @@ class Api < App
         month_top_contributors: top_contributors(last_month: true)
       }.to_json
     end
+
+    get'/top_systems' do
+      last_modified last_modified_city_date
+
+      {
+        top_systems: top_systems
+      }.to_json
+    end
   end
 
   get '/:url_name/config' do |url_name|

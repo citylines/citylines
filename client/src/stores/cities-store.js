@@ -6,6 +6,7 @@ const CitiesStore = Object.assign({}, Store, {
   value: '',
   topContributors: [],
   monthTopContributors: [],
+  topSystems: [],
 
   async fetchCities() {
     const url = '/api/cities/list';
@@ -24,6 +25,14 @@ const CitiesStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  async fetchTopSystems() {
+    const url = '/api/cities/top_systems';
+    const response = await fetch(url);
+    const json = await response.json();
+    this.topSystems = json.top_systems;
+    this.emitChangeEvent();
+  },
+
   setValue(value) {
     this.value = value;
     this.emitChangeEvent();
@@ -34,7 +43,8 @@ const CitiesStore = Object.assign({}, Store, {
       value: this.value,
       cities: this.cities,
       topContributors: this.topContributors,
-      monthTopContributors: this.monthTopContributors
+      monthTopContributors: this.monthTopContributors,
+      topSystems: this.topSystems
     }
   }
 });

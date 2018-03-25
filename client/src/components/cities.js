@@ -56,6 +56,7 @@ class Cities extends Component {
   componentDidMount() {
     CitiesStore.fetchCities();
     CitiesStore.fetchContributors();
+    CitiesStore.fetchTopSystems();
   }
 
   onInputChange(e) {
@@ -119,6 +120,19 @@ class Cities extends Component {
               <div>
               { cities }
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="o-container o-container--small">
+          <div className="u-letter-box--large" style={{textAlign: 'center'}}>
+            <Translate component="h2" className="c-heading" content="cities.top_systems" />
+            <div className="top-systems-list">
+              <ol className="c-list c-list--ordered">
+                {this.state.topSystems.map(system =>
+                    <li key={`tsystem-${system.url}`} className="c-list__item"><Link to={system.url} className="c-link">{system.name} - {system.city_name}</Link> {system.length} km</li>
+                  )}
+              </ol>
             </div>
           </div>
         </div>

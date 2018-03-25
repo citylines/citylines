@@ -373,6 +373,15 @@ button.save-system {
   padding-bottom: 5px;
 }
 
+.top-systems-list {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.top-systems-list li {
+  padding-bottom: 5px;
+}
+
 ul.auth {
   list-style-type: none;
   padding: 0;
