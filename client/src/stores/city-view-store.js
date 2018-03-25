@@ -10,7 +10,6 @@ import KmInfo from '../lib/km-info';
 
 const CityViewStore = Object.assign({}, Store, {
   cityData: {},
-  stateCache: {},
 
   async fetchCityBaseData(urlName) {
     const url = `/api/${urlName}/view/base_data`;
@@ -46,11 +45,7 @@ const CityViewStore = Object.assign({}, Store, {
 
     if (!cityData) return;
 
-    if (this.stateCache[urlName]) {
-      cityData = this.updateWithStateCache(cityData, Object.assign({}, this.stateCache[urlName]));
-    } else {
-      cityData = this.updateWithQuery(cityData, queryParams);
-    }
+    cityData = this.updateWithQuery(cityData, queryParams);
 
     const style = new Style(cityData.lines);
 
@@ -70,15 +65,6 @@ const CityViewStore = Object.assign({}, Store, {
   },
 
   unload(urlName) {
-    const cityData = {...this.cityData[urlName]};
-
-    if (Object.keys(cityData).length > 0) {
-      this.stateCache[urlName] = {
-        currentYear: cityData.timeline.years.current,
-        linesShown: cityData.linesMapper.linesShown,
-      }
-    }
-
     delete this.cityData[urlName];
     this.emitChangeEvent();
   },
@@ -90,13 +76,6 @@ const CityViewStore = Object.assign({}, Store, {
       const systemLines =  cityData.lines.filter((line) => line.system_id == parseInt(queryParams.system_id));
       cityData.linesShown = systemLines.map(l => l.url_name);
     }
-
-    return cityData;
-  },
-
-  updateWithStateCache(cityData, stateCache) {
-    cityData.years.default = stateCache.currentYear;
-    cityData.linesShown = stateCache.linesShown;
 
     return cityData;
   },
