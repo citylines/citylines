@@ -32,4 +32,8 @@ SitemapGenerator::Sitemap.create do
   City.all.map do |city|
     add city.url, alternates: alternates(city.url)
   end
+
+  System.exclude(name: nil).all.map do |system|
+    add system.url, alternates: alternates(system.url)
+  end
 end

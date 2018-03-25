@@ -26,4 +26,8 @@ describe System do
     assert_equal @system.city_id, backup.city_id
     assert_equal @system.name, backup.name
   end
+
+  it "should have the right url" do
+    assert_equal "/city?system_id=#{@system.id}", @system.url
+  end
 end
