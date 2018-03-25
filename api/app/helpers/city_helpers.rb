@@ -179,9 +179,11 @@ module CityHelpers
   end
 
   def lengths
+    today = Time.now.year
+
     query = %{
       select sum(length), city_id from sections where
-        (sections.opening is not null or sections.opening <= 2017) and (sections.closure is null or sections.closure > 2017)
+        (sections.opening is not null or sections.opening <= #{today}) and (sections.closure is null or sections.closure > #{today})
       group by city_id}
 
     cities = {}
