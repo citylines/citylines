@@ -183,7 +183,7 @@ module CityHelpers
 
     query = %{
       select sum(length), city_id from sections where
-        (sections.opening is not null or sections.opening <= #{today}) and (sections.closure is null or sections.closure > #{today})
+        sections.opening is not null and sections.opening <= #{today} and (sections.closure is null or sections.closure > #{today})
       group by city_id}
 
     cities = {}
@@ -202,7 +202,7 @@ module CityHelpers
       left_join(:section_lines, section_id: :id).
       left_join(:lines, id: :line_id).
       left_join(:systems, id: :system_id).
-      where{((sections__opening !~ nil) | (sections__opening <= today)) & ((sections__closure =~ nil) | (sections__closure > today))}.
+      where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}.
       select(:system_id).select_append{sum(:length)}.
       group_by(:system_id).order(Sequel.desc(:sum))
 
