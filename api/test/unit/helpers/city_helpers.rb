@@ -88,4 +88,44 @@ describe CityHelpers do
       assert_equal 65, result[city2.id]
     end
   end
+
+  describe "top systems" do
+    it "should return the top systems" do
+      city = City.create(name: 'Trulalá', system_name: '', url_name: 'trulala', start_year: 2017)
+
+      system1 = System.create(name: "Metro", city_id: city.id)
+      system2 = System.create(name: "Train", city_id: city.id)
+
+      line1 = Line.create(name: "A", city_id: city.id, system_id: system1.id)
+      line2 = Line.create(name: "1", city_id: city.id, system_id: system2.id)
+
+      [{length: 5000, buildstart: 2010},
+       {length: 10000, opening: 2010},
+       {length: 15000, opening: 1995},
+       {length: 20000, opening: 1990, closure: 1993}].each do |data|
+         section = Section.create(data.merge(city_id: city.id))
+         SectionLine.create(section_id: section.id, line_id: line1.id, city_id: city.id)
+       end
+
+      [{length: 25000, buildstart: 2010},
+       {length: 30000, opening: 2010},
+       {length: 35000, opening: 1995},
+       {length: 40000, opening: 1990, closure: 1993}].each do |data|
+         section = Section.create(data.merge(city_id: city.id))
+         SectionLine.create(section_id: section.id, line_id: line2.id, city_id: city.id)
+       end
+
+       results = top_systems
+
+       assert_equal system2.name, results.first[:name]
+       assert_equal system2.url, results.first[:url]
+       assert_equal system2.city.name, results.first[:city_name]
+       assert_equal 65, results.first[:length]
+
+       assert_equal system1.name, results.last[:name]
+       assert_equal system1.url, results.last[:url]
+       assert_equal system1.city.name, results.last[:city_name]
+       assert_equal 25, results.last[:length]
+    end
+  end
 end
