@@ -184,6 +184,18 @@
   padding:5px 10px 5px 5px;
 }
 
+.year-container {
+  padding-bottom: 8px;
+}
+
+.year-container .year-config{
+  margin-bottom: 10px;
+}
+
+.year-container .year-group {
+  padding-bottom: 8px;
+}
+
 .year-and-km-container {
   padding: 10px 20px 20px 20px;
 }

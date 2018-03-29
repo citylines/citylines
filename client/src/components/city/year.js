@@ -1,7 +1,18 @@
 import React, {PureComponent} from 'react';
 import CityViewStore from '../../stores/city-view-store';
+import YearsConfig from './years-config';
 
 class Year extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {showConfigPanel: false};
+  }
+
+  toggleConfigPanel() {
+    this.setState({showConfigPanel: !this.state.showConfigPanel});
+  }
+
   toggleAnimation() {
     CityViewStore.toggleAnimation(this.props.urlName);
   }
@@ -30,8 +41,8 @@ class Year extends PureComponent {
     const icon = this.props.playing ? 'fa-pause' : 'fa-play';
 
     return (
-    <div>
-      <div className="c-input-group c-input-group--right">
+    <div className="year-container">
+      <div className="c-input-group c-input-group--right year-group">
         <div className="o-field">
           <input ref="currentYear"
                  className="c-field"
@@ -44,7 +55,8 @@ class Year extends PureComponent {
         </div>
         <button ref="action"
                 className="c-button c-button--ghost"
-                onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span> </button>
+                onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span></button>
+        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}>...</button>
       </div>
       <input ref="slider"
              type="range"
@@ -53,6 +65,7 @@ class Year extends PureComponent {
              max={this.props.max}
              onChange={this.yearChange.bind(this)}
              value={this.props.year || 0} />
+      {this.state.showConfigPanel && <YearsConfig />}
      </div>
      )
   }
