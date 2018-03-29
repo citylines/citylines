@@ -125,6 +125,7 @@ class CityView extends PureComponent {
               max={(this.state.years || {}).end}
               year={this.state.currentYear}
               playing={this.state.playing}
+              speed={this.state.speed}
               onYearChange={this.bindedOnYearChange}
             />
             <KmIndicator

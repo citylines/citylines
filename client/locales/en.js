@@ -47,6 +47,11 @@ export default {
     edit: 'Edit',
     stop_editing: 'Stop editing',
     lines: 'Lines',
+    years: {
+      config: {
+        timeline_speed: 'Timeline speed'
+      }
+    },
     km_operative: 'Operative: %(km)s km',
     km_under_construction: 'Under construction: %(km)s km',
     all_lines: "All the lines",
