@@ -188,8 +188,9 @@
   padding-bottom: 8px;
 }
 
-.year-container .year-config{
-  margin-bottom: 10px;
+.year-container .year-config {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .year-container .year-group {
