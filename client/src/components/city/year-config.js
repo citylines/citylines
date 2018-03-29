@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import Translate from 'react-translate-component';
 
 class YearConfig extends PureComponent {
   constructor(props, context) {
@@ -20,7 +21,7 @@ class YearConfig extends PureComponent {
     return (
       <div className="c-card year-config">
         <div className="c-card__item">
-          Velocidad de animación
+          <Translate content="city.years.config.timeline_speed" />
           <input
             type="range"
             className="c-range"
