@@ -92,6 +92,7 @@ const CityViewStore = Object.assign({}, Store, {
       years: cityData.years,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false,
+      speed: cityData.timeline ? cityData.timeline.speed : null,
       clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null,
       mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : [],
       kmOperative: cityData.kmInfo ? cityData.kmInfo.kmOperative : null,
@@ -122,6 +123,13 @@ const CityViewStore = Object.assign({}, Store, {
   setYear(urlName, year) {
     const cityData = this.cityData[urlName];
     cityData.timeline.toYear(year);
+
+    this.emitChangeEvent();
+  },
+
+  setSpeed(urlName, speed) {
+    const cityData = this.cityData[urlName];
+    cityData.timeline.setSpeed(speed);
 
     this.emitChangeEvent();
   },

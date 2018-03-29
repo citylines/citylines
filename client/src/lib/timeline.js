@@ -42,6 +42,10 @@ class Timeline {
   stopAnimation(callback) {
     this.playing = false;
   }
+
+  setSpeed(speed) {
+    this.speed = speed;
+  }
 }
 
 export default Timeline

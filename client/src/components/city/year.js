@@ -22,6 +22,10 @@ class Year extends PureComponent {
     CityViewStore.setYear(this.props.urlName, year);
   }
 
+  handleSpeedChange(speed) {
+    CityViewStore.setSpeed(this.props.urlName, speed);
+  }
+
   onKeyPress(e) {
     if (e.key !== 'Enter') return;
 
@@ -65,7 +69,11 @@ class Year extends PureComponent {
              max={this.props.max}
              onChange={this.yearChange.bind(this)}
              value={this.props.year || 0} />
-      {this.state.showConfigPanel && <YearConfig />}
+      {this.state.showConfigPanel &&
+        <YearConfig
+          speed={this.props.speed}
+          onSpeedChange={this.handleSpeedChange.bind(this)}
+        />}
      </div>
      )
   }
