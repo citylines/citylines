@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import CityViewStore from '../../stores/city-view-store';
-import YearsConfig from './years-config';
+import YearConfig from './year-config';
 
 class Year extends PureComponent {
   constructor(props, context) {
@@ -65,7 +65,7 @@ class Year extends PureComponent {
              max={this.props.max}
              onChange={this.yearChange.bind(this)}
              value={this.props.year || 0} />
-      {this.state.showConfigPanel && <YearsConfig />}
+      {this.state.showConfigPanel && <YearConfig />}
      </div>
      )
   }
