@@ -3,7 +3,7 @@ class Timeline {
     this.linesMapper = linesMapper;
     this.years = years;
 
-    this.speed = 1;
+    this.speed = 100;
     this.interval = null;
     this.playing = false;
   }
