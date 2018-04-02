@@ -2,7 +2,7 @@
 
 This is the source code of [citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
 
-![](https://user-images.githubusercontent.com/6061036/33101557-7865f5fe-cef7-11e7-9dce-67ae0992e900.png)
+![](https://user-images.githubusercontent.com/6061036/38197618-92d53952-365f-11e8-92d7-0fafcf5a25a6.png)
 
 Development
 ===========
