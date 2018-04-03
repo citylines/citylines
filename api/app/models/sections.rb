@@ -5,16 +5,12 @@ class Section < Sequel::Model(:sections)
   include StartYear
   include FeatureBackup
 
-  one_to_many :section_lines
+  many_through_many :lines, [[:section_lines, :section_id, :line_id]]
   many_to_one :city
 
   plugin :geometry
 
   FUTURE = 999999
-
-  def lines
-    @lines ||= section_lines.map(&:line)
-  end
 
   def build_feature(h, line, opts={})
     closure = self.closure || FUTURE

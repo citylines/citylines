@@ -29,4 +29,5 @@ end
 
 DB.extension :pg_json
 
+Sequel::Model.plugin :many_through_many
 Sequel::Model.plugin :tactical_eager_loading

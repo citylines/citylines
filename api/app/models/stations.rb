@@ -4,16 +4,12 @@ class Station < Sequel::Model(:stations)
   include StartYear
   include FeatureBackup
 
-  one_to_many :station_lines
+  many_through_many :lines, [[:station_lines, :station_id, :line_id]]
   many_to_one :city
 
   plugin :geometry
 
   SHARED_STATION_LINE_URL_NAME = "shared-station"
-
-  def lines
-    @lines ||= station_lines.map(&:line)
-  end
 
   def shared_station?
     lines.count > 1
