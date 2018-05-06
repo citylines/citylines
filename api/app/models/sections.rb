@@ -10,12 +10,14 @@ class Section < Sequel::Model(:sections)
 
   plugin :geometry
 
+  include Feature
+
   FUTURE = 999999
 
-  def build_feature(h, line, opts={})
+  def feature_properties(line: nil, **opts)
     closure = self.closure || FUTURE
 
-    h[:properties].merge!(
+    h = {
       length: self.length,
       opening: self.opening || FUTURE,
       buildstart: self.buildstart || self.opening,
@@ -23,17 +25,17 @@ class Section < Sequel::Model(:sections)
       osm_id: self.osm_id,
       osm_tags: self.osm_tags,
       closure: closure
-    )
+    }
 
     if line
-      h[:properties].merge!(
+      h.merge!(
         id: "#{id}-#{line.url_name}",
         line: line.name,
         line_url_name: line.url_name,
         system: line.system.name || '',
       )
     else
-      h[:properties][:lines] = lines.map do |l|
+      h[:lines] = lines.map do |l|
         {
           line: l.name,
           line_url_name: l.url_name,
@@ -42,9 +44,7 @@ class Section < Sequel::Model(:sections)
       end
     end
 
-    h[:properties].merge!(opts)
-
-    h
+    super.merge(h).merge(opts)
   end
 
   def ranges(lines_count)
@@ -63,19 +63,12 @@ class Section < Sequel::Model(:sections)
     }
   end
 
-  def multiple_features(feature_hash)
+  # We override this from Feature module
+  def formatted_feature(**opts)
     offsets = ranges(lines.count)
     lines.each_with_index.map do |l, index|
-      hash_clone = Marshal.load(Marshal.dump(feature_hash))
-      build_feature(hash_clone, l, offset: offsets[index])
+      hash_clone = Marshal.load(Marshal.dump(feature(opts)))
+      hash_clone.merge(properties: feature_properties(line: l, offset: offsets[index]))
     end
-  end
-
-  def raw_feature
-    build_feature(feature, nil)
-  end
-
-  def formatted_feature
-    multiple_features(feature)
   end
 end

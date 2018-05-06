@@ -9,6 +9,8 @@ class Station < Sequel::Model(:stations)
 
   plugin :geometry
 
+  include Feature
+
   SHARED_STATION_LINE_URL_NAME = "shared-station"
 
   def shared_station?
@@ -31,9 +33,7 @@ class Station < Sequel::Model(:stations)
     end
   end
 
-  def feature
-    h = super
-
+  def feature_properties(**opts)
     closure = self.closure || Section::FUTURE
 
     opts = {line_url_name: line_url_name,
@@ -55,16 +55,6 @@ class Station < Sequel::Model(:stations)
       end
     end
 
-    h[:properties].merge!(opts)
-
-    h
-  end
-
-  def raw_feature
-    feature
-  end
-
-  def formatted_feature
-    feature
+    super.merge(opts)
   end
 end
