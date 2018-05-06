@@ -27,10 +27,6 @@ module Sequel
                 def geojson_geometry(column = :geometry)
                     self.class.dataset.where(id: self.id).geojson(column)
                 end
-
-                def feature(column = :geometry)
-                    {type: "Feature", geometry: JSON.parse(geojson_geometry(column)), properties:{id: self.id, klass: self.class.to_s}}
-                end
             end
 
             module DatasetMethods
