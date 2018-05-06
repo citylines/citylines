@@ -31,7 +31,7 @@ Build!
 ------
 
 ```
-docker-compose up --build
+tools/build
 ```
 
 This command also runs migrations and builds the frontend (`rake db:migrate`, `yarn install` and `yarn build`).
@@ -48,7 +48,7 @@ docker exec citylines_db_1 pg_restore --verbose --clean --no-acl --no-owner -U c
 
 - Connect to the local console
 ```
-docker exec -it citylines_web_1 bundle exec rake console
+tools/local_console
 ```
 
 - Re-build the frontend

@@ -51,15 +51,31 @@ module CityHelpers
     klass.where(city_id: city.id)
   end
 
+  def features_geometry(city, type)
+    Hash[
+      features_query(city, type).id_and_geojson.map do |el|
+        [el[:id], el[:st_asgeojson]]
+      end
+    ]
+  end
+
   def formatted_lines_features_collection(city, type)
-    features = features_query(city, type).all.map(&:formatted_feature).flatten
+    geoms = features_geometry(city, type)
+
+    features = features_query(city, type).all.map do |el|
+      el.formatted_feature(geometry: geoms[el.id])
+    end.flatten
 
     {type: "FeatureCollection",
      features: features}
   end
 
   def lines_features_collection(city, type)
-    features = features_query(city, type).all.map(&:raw_feature)
+    geoms = features_geometry(city, type)
+
+    features = features_query(city, type).all.map do |el|
+      el.raw_feature(geometry: geoms[el.id])
+    end
 
     {type: "FeatureCollection",
      features: features}

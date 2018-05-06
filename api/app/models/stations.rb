@@ -4,16 +4,14 @@ class Station < Sequel::Model(:stations)
   include StartYear
   include FeatureBackup
 
-  one_to_many :station_lines
+  many_to_many :lines, join_table: :station_lines
   many_to_one :city
 
   plugin :geometry
 
-  SHARED_STATION_LINE_URL_NAME = "shared-station"
+  include Feature
 
-  def lines
-    @lines ||= station_lines.map(&:line)
-  end
+  SHARED_STATION_LINE_URL_NAME = "shared-station"
 
   def shared_station?
     lines.count > 1
@@ -35,9 +33,7 @@ class Station < Sequel::Model(:stations)
     end
   end
 
-  def feature
-    h = super
-
+  def feature_properties(**opts)
     closure = self.closure || Section::FUTURE
 
     opts = {line_url_name: line_url_name,
@@ -59,16 +55,6 @@ class Station < Sequel::Model(:stations)
       end
     end
 
-    h[:properties].merge!(opts)
-
-    h
-  end
-
-  def raw_feature
-    feature
-  end
-
-  def formatted_feature
-    feature
+    super.merge(opts)
   end
 end

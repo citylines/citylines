@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker exec -it citylines_web_1 bundle exec rake console

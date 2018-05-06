@@ -30,3 +30,7 @@ end
 DB.extension :pg_json
 
 Sequel::Model.plugin :tactical_eager_loading
+
+if APP_ENV == 'development'
+  DB.loggers << Logger.new($stdout)
+end
