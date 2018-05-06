@@ -5,7 +5,7 @@ class Section < Sequel::Model(:sections)
   include StartYear
   include FeatureBackup
 
-  many_through_many :lines, [[:section_lines, :section_id, :line_id]]
+  many_to_many :lines, join_table: :section_lines
   many_to_one :city
 
   plugin :geometry

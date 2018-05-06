@@ -4,7 +4,7 @@ class Station < Sequel::Model(:stations)
   include StartYear
   include FeatureBackup
 
-  many_through_many :lines, [[:station_lines, :station_id, :line_id]]
+  many_to_many :lines, join_table: :station_lines
   many_to_one :city
 
   plugin :geometry
