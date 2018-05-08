@@ -57,7 +57,6 @@ class Station < Sequel::Model(:stations)
       end
     end
 
-
     super.merge(opts)
   end
 
