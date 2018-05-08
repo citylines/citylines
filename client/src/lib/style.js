@@ -6,15 +6,6 @@ class Style {
       this.lines[line.url_name] = line.color;
     });
 
-    this.typeStyles = {
-      'sections': {
-        'line-width': 7
-      },
-      'stations': {
-        'circle-radius': 7
-      }
-    }
-
     this.operationStyles = {
       'hover': {
         'color': '#000',
@@ -41,8 +32,9 @@ class Style {
 
   calculate(type, operation) {
     const colorCategory = type === 'sections' ? 'line-color' : 'circle-color';
+    const widthCategory = type === 'sections' ? 'line-width' : 'circle-radius';
 
-    let style = Object.assign({}, this.typeStyles[type], this.operationStyles[operation]);
+    let style = Object.assign({}, this.operationStyles[operation]);
 
     if (style['color']) {
       style[colorCategory] = style["color"];
@@ -54,6 +46,11 @@ class Style {
         type: "identity",
         property: "offset"
       };
+    }
+
+    style[widthCategory] = {
+      type: "identity",
+      property: "width"
     }
 
     if (operation == 'opening'){
@@ -75,7 +72,10 @@ class Style {
       style[opacityCategory] = style['opacity'];
       delete style['opacity'];
     } else if (operation === 'inner') {
-      style["circle-radius"] = style["circle-radius"] - 3;
+      style["circle-radius"] = {
+        type: "identity",
+        property: "inner_width"
+      }
     }
 
     return style;

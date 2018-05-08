@@ -24,7 +24,8 @@ class Section < Sequel::Model(:sections)
       buildstart_end: self.opening || closure,
       osm_id: self.osm_id,
       osm_tags: self.osm_tags,
-      closure: closure
+      closure: closure,
+      width: style_width
     }
 
     if line
@@ -48,7 +49,7 @@ class Section < Sequel::Model(:sections)
   end
 
   def ranges(lines_count)
-    width = 7
+    width = style_width
     ranges = lines_count/2
     arr = (-ranges..ranges).to_a
     if lines_count.even?
@@ -70,5 +71,12 @@ class Section < Sequel::Model(:sections)
       hash_clone = Marshal.load(Marshal.dump(feature(opts)))
       hash_clone.merge(properties: feature_properties(line: l, offset: offsets[index]))
     end
+  end
+
+  def style_width
+    width = lines.map(&:width).max
+    target_width = width.to_f / lines.count
+    target_width = 1 if target_width < 1
+    target_width.to_i
   end
 end

@@ -26,4 +26,8 @@ class Line < Sequel::Model(:lines)
 
     klass.create(attr => feature.id, :line_id => id, city_id: city.id)
   end
+
+  def width
+    6
+  end
 end

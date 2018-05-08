@@ -44,7 +44,9 @@ class Station < Sequel::Model(:stations)
             buildstart_end: self.opening || closure,
             osm_id: self.osm_id,
             osm_tags: self.osm_tags,
-            closure: closure }
+            closure: closure,
+            width: style_width,
+            inner_width: inner_style_width }
 
     # We add other line_url_name attrs if the station is shared
     # so the original url_name refers to style, and the following ones
@@ -55,6 +57,16 @@ class Station < Sequel::Model(:stations)
       end
     end
 
+
     super.merge(opts)
+  end
+
+  def style_width
+    lines.map(&:width).max || 0
+  end
+
+  def inner_style_width
+    w = style_width
+    w < 3 ? 0 : w - 2
   end
 end
