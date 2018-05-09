@@ -66,6 +66,6 @@ class Station < Sequel::Model(:stations)
 
   def inner_style_width
     w = style_width
-    w < 3 ? 0 : w - 2
+    w < 4 ? 0 : w - 2
   end
 end

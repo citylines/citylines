@@ -74,9 +74,22 @@ class Section < Sequel::Model(:sections)
   end
 
   def style_width
-    width = lines.map(&:width).max
-    target_width = width.to_f / lines.count
-    target_width = 1 if target_width < 1
-    target_width.to_i
+    l = lines.sort_by{|l| l.width}.last
+    return unless l
+
+    width = l.width
+    min_width = l.min_width
+
+    target_width = case lines.count
+                   when 1
+                     width
+                   when 2
+                     width * 0.75
+                   else
+                     width * 0.66
+                   end
+
+    target_width = min_width if target_width < min_width
+    target_width
   end
 end

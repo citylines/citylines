@@ -30,4 +30,8 @@ class Line < Sequel::Model(:lines)
   def width
     6
   end
+
+  def min_width
+    2
+  end
 end
