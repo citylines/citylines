@@ -1,9 +1,11 @@
 require 'accentless'
+require_relative '../../lib/transport_modes'
 
 class Line < Sequel::Model(:lines)
   plugin :timestamps, :update_on_create => true
   using Accentless
 
+  include TransportModes
   include FeatureBackup
 
   many_to_one :city
@@ -27,11 +29,15 @@ class Line < Sequel::Model(:lines)
     klass.create(attr => feature.id, :line_id => id, city_id: city.id)
   end
 
+  def transport_mode
+    TRANSPORT_MODES[transport_mode_id || 0]
+  end
+
   def width
-    6
+    transport_mode[:width]
   end
 
   def min_width
-    2
+    transport_mode[:min_width]
   end
 end
