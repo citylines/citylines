@@ -27,6 +27,50 @@ Google Auth
 - Get a `google_client_id` for the Google Login from the Google console
 - Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the attributes. The `secret` should be a secret random string
 
+DB
+--
+- Enter to the psql shell:
+```
+docker exec -it citylines_db_1 psql -U postgres
+```
+
+- Create the `citylines` db:
+```
+create database citylines;
+```
+
+- Create the role:
+```
+create user citylines with password 'citylines';
+```
+
+- Enter the DB:
+```
+\c citylines;
+```
+
+- Grant permissions:
+```
+grant  CREATE,CONNECT on database citylines to citylines;
+```
+
+- Create schema:
+```
+create schema citylines;
+```
+
+- Grant permissions to schema:
+```
+grant SELECT,INSERT,UPDATE on all tables in schema citylines to citylines;
+```
+
+- Create the postgis extension
+```
+create extension postgis;
+```
+
+- Import a dump. See instructions below.
+
 Build!
 ------
 
