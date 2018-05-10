@@ -25,7 +25,7 @@ class Section < Sequel::Model(:sections)
       osm_id: self.osm_id,
       osm_tags: self.osm_tags,
       closure: closure,
-      width: style_width
+      width: width
     }
 
     if line
@@ -49,7 +49,6 @@ class Section < Sequel::Model(:sections)
   end
 
   def ranges(lines_count)
-    width = style_width
     ranges = lines_count/2
     arr = (-ranges..ranges).to_a
     if lines_count.even?
@@ -73,20 +72,20 @@ class Section < Sequel::Model(:sections)
     end
   end
 
-  def style_width
+  def width
     l = lines.sort_by{|l| l.width}.last
     return unless l
 
-    width = l.width
+    default_width = l.width
     min_width = l.min_width
 
     target_width = case lines.count
                    when 1
-                     width
+                     default_width
                    when 2
-                     width * 0.75
+                     default_width * 0.75
                    else
-                     width * 0.66
+                     default_width * 0.66
                    end
 
     target_width = min_width if target_width < min_width

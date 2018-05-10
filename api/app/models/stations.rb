@@ -45,8 +45,8 @@ class Station < Sequel::Model(:stations)
             osm_id: self.osm_id,
             osm_tags: self.osm_tags,
             closure: closure,
-            width: style_width,
-            inner_width: inner_style_width }
+            width: radius,
+            inner_width: inner_radius }
 
     # We add other line_url_name attrs if the station is shared
     # so the original url_name refers to style, and the following ones
@@ -60,12 +60,12 @@ class Station < Sequel::Model(:stations)
     super.merge(opts)
   end
 
-  def style_width
+  def radius
     lines.map(&:width).max || 0
   end
 
-  def inner_style_width
-    w = style_width
-    w < 4 ? 0 : w - 2
+  def inner_radius
+    r = radius
+    r < 4 ? 0 : r - 2
   end
 end
