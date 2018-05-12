@@ -7,7 +7,9 @@ module CityHelpers
         url_name: line.url_name,
         color: line.color,
         deletable: SectionLine.where(line_id: line.id).count == 0 && StationLine.where(line_id: line.id).count == 0,
-        system_id: line.system_id}
+        system_id: line.system_id,
+        transport_mode_id: line.transport_mode_id
+      }
     }
 
     Naturally.sort_by(lines){|line| line[:name]}

@@ -10,4 +10,8 @@ module TransportModes
     7 => { name: 'People mover', width: 3, min_width: 2},
     8 => { name: 'Bus', width: 1, min_width: 1},
   }
+
+  def self.all
+    TRANSPORT_MODES.each_pair.map{|k, v| v.merge(id: k)}
+  end
 end

@@ -127,7 +127,9 @@ class Api < App
     @city = City[url_name: url_name]
 
     { lines: city_lines(@city),
-      systems: city_systems(@city) }.to_json
+      systems: city_systems(@city),
+      transport_modes: TransportModes.all
+    }.to_json
   end
 
   put '/editor/:url_name/features' do |url_name|

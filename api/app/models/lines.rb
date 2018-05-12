@@ -1,5 +1,4 @@
 require 'accentless'
-require_relative '../../lib/transport_modes'
 
 class Line < Sequel::Model(:lines)
   plugin :timestamps, :update_on_create => true
