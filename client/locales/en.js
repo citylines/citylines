@@ -109,9 +109,7 @@ export default {
       unnamed_system: 'Unnamed system',
       save: 'Save',
       delete: 'Delete',
-      are_you_sure: 'Are you sure?',
-      yes: 'Yes',
-      no: 'No'
+      cancel: 'Cancel'
     },
     osm: {
       zoom: 'Import is only allowed in zoom levels bigger than 13',

@@ -109,9 +109,7 @@ export default {
       unnamed_system: 'Sistema sin nombre',
       save: 'Guardar',
       delete: 'Borrar',
-      are_you_sure: '¿Estás seguro?',
-      yes: 'Sí',
-      no: 'No'
+      cancel: 'Cancelar'
     },
     osm: {
       zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',

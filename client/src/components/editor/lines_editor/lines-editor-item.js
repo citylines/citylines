@@ -105,9 +105,8 @@ class LinesEditorItem extends Component {
 
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
-        <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
-        <button className="c-button" onClick={this.bindedOnActualDelete}><Translate content="editor.lines_editor.yes" /></button>
-        <button className="c-button" onClick={this.bindedOnCancelDelete}><Translate content="editor.lines_editor.no" /></button>
+        <button className="c-button" onClick={this.bindedOnActualDelete}><Translate content="editor.lines_editor.delete" /></button>
+        <button className="c-button" onClick={this.bindedOnCancelDelete}><Translate content="editor.lines_editor.cancel" /></button>
       </span>;
 
     return (
