@@ -106,6 +106,7 @@ class LinesEditor extends Component {
               color="#000"
               name=""
               system_id={system.id}
+              transport_mode_id={null}
               transportModes={this.props.transportModes}
               onSave={this.bindedOnCreate}
               url_name={`${system.id}-the-new-one`}

@@ -46,12 +46,16 @@ class LinesEditorItem extends Component {
     this.updateState({name: e.target.value});
   }
 
+  onTransportModeChange(e) {
+    this.updateState({transport_mode_id: e.target.value});
+  }
+
   displaySaveButton() {
-    return ((
+    return (
       (this.state.values.name && this.state.values.name !== this.props.name) ||
-      (this.state.values.color && this.state.values.color !== this.props.color)
-    ) && this.state.values.name && this.state.values.name.length > 0
-    );
+      (this.state.values.color && this.state.values.color !== this.props.color) ||
+      (this.state.values.transport_mode_id && this.state.values.transport_mode_id != this.props.transport_mode_id)
+    ) && this.state.values.name && this.state.values.name.length > 0;
   }
 
   updateState(newValue) {
@@ -122,7 +126,7 @@ class LinesEditorItem extends Component {
             }
           </div>
           <div className="o-field">
-            <select className="c-field line-system-select" value={this.state.values.transport_mode_id || 0}>
+            <select className="c-field line-system-select" value={this.state.values.transport_mode_id || 0} onChange={this.onTransportModeChange.bind(this)}>
               {this.props.transportModes.map(tm => <Translate component="option" key={tm.id} value={tm.id} content={`transport_modes.${tm.name}`}/>)}
             </select>
           </div>
@@ -158,7 +162,8 @@ class LinesEditorNew extends LinesEditorItem {
       values: {
         name: this.props.name,
         color: this.props.color,
-        system_id: this.props.system_id
+        system_id: this.props.system_id,
+        transport_mode_id: this.props.transport_mode_id
       }
     });
   }
@@ -190,6 +195,9 @@ class LinesEditorNew extends LinesEditorItem {
             }
           </div>
           <div className="o-field">
+            <select className="c-field line-system-select" value={this.state.values.transport_mode_id || 0} onChange={this.onTransportModeChange.bind(this)}>
+              {this.props.transportModes.map(tm => <Translate component="option" key={tm.id} value={tm.id} content={`transport_modes.${tm.name}`}/>)}
+            </select>
           </div>
           <div className="o-field">
             <span className="c-input-group" style={{float:'right'}}>
