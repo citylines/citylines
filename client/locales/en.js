@@ -178,5 +178,16 @@ export default {
     title: "The entered URL doesn't belong to any city",
     subtitle: "Maybe the URL is mispelled or maybe we haven't uploaded yet the city you are looking for.",
     redirect: 'Search other cities'
+  },
+  transport_modes: {
+    default: 'Select mode',
+    high_speed_train: 'High Speed Train',
+    interurban_train: 'Interurban Train',
+    commuter_train: 'Commuter Train',
+    heavy_rail: 'Heavy Rail',
+    light_rail: 'Light Rail',
+    brt: 'BRT',
+    people_mover: 'People Mover',
+    bus: 'Bus'
   }
 }

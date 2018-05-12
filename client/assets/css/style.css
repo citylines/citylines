@@ -225,6 +225,14 @@
   border-radius: 4px;
 }
 
+.lines-editor-container .o-field {
+  margin-left: 10px;
+}
+
+.lines-editor-container .o-field select {
+  border-color: #e6e6e6;
+}
+
 .cookie-notice-container {
   background-color:#f2f2ea;
   padding:0 15px;

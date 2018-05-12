@@ -193,6 +193,7 @@ class Editor extends PureComponent {
             :
             <LinesEditor lines={this.state.lines}
                          systems={this.state.systems}
+                         transportModes={this.state.transportModes}
                          onSave={this.bindedOnLineSave}
                          onDelete={this.bindedOnLineDelete}
                          onCreate={this.bindedOnLineCreate}

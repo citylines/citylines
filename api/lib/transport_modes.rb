@@ -1,14 +1,14 @@
 module TransportModes
   TRANSPORT_MODES = {
-    0 => { name: 'Default', width: 6, min_width: 6},
-    1 => { name: 'High Speed', width: 9, min_width: 3},
-    2 => { name: 'Interurban train', width: 8, min_width: 3},
-    3 => { name: 'Commuter train', width: 7, min_width: 2},
-    4 => { name: 'Heavy Metro', width: 6, min_width: 2},
-    5 => { name: 'Light Rail', width: 4, min_width: 2},
-    6 => { name: 'BRT', width: 4, min_width: 1},
-    7 => { name: 'People mover', width: 3, min_width: 2},
-    8 => { name: 'Bus', width: 1, min_width: 1},
+    0 => { name: 'default', width: 6, min_width: 6},
+    1 => { name: 'high_speed_train', width: 9, min_width: 3},
+    2 => { name: 'interurban_train', width: 8, min_width: 3},
+    3 => { name: 'commuter_train', width: 7, min_width: 2},
+    4 => { name: 'heavy_rail', width: 6, min_width: 2},
+    5 => { name: 'light_rail', width: 4, min_width: 2},
+    6 => { name: 'brt', width: 4, min_width: 1},
+    7 => { name: 'people_mover', width: 3, min_width: 2},
+    8 => { name: 'bus', width: 1, min_width: 1},
   }
 
   def self.all

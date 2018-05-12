@@ -88,6 +88,8 @@ class LinesEditor extends Component {
                       deletable={line.deletable}
                       color={line.color}
                       system_id={system.id}
+                      transport_mode_id={line.transport_mode_id}
+                      transportModes={this.props.transportModes}
                       onSave={this.bindedOnSave}
                       onDelete={this.bindedOnDelete}
                       displayColorPicker={this.state.displayColorPicker[line.url_name]}
@@ -104,6 +106,7 @@ class LinesEditor extends Component {
               color="#000"
               name=""
               system_id={system.id}
+              transportModes={this.props.transportModes}
               onSave={this.bindedOnCreate}
               url_name={`${system.id}-the-new-one`}
               displayColorPicker={this.state.displayColorPicker[`${system.id}-the-new-one`]}

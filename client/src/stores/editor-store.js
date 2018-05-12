@@ -142,6 +142,7 @@ const EditorStore = Object.assign({}, Store, {
       features: cityData.features,
       lines: cityData.lines,
       systems: cityData.systems,
+      transportModes: cityData.transport_modes,
       selectedFeature: cityData.selectedFeature,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,

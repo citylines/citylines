@@ -125,6 +125,11 @@ class LinesEditorItem extends Component {
             }
           </div>
           <div className="o-field">
+            <select className="c-field line-system-select" value={this.props.transport_mode_id || 0}>
+              {this.props.transportModes.map(tm => <option key={tm.id} value={tm.id}><Translate content={`transport_modes.${tm.name}`}/></option> )}
+            </select>
+          </div>
+          <div className="o-field">
             {this.props.systems.length > 1 &&
             <select className="c-field line-system-select" value={this.props.system_id} onChange={this.onSystemSelectChange.bind(this)}>
               {this.props.systems.map(system => system.name ? <option key={system.id} value={system.id}>{system.name}</option> : <Translate component="option" key={system.id} value={system.id} content="editor.lines_editor.unnamed_system" />)}

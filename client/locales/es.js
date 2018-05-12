@@ -178,5 +178,16 @@ export default {
     title: 'La URL ingresada no corresponde a ninguna ciudad',
     subtitle: 'Quizás la URL está mal escrita o quizás todavía no cargamos la ciudad que buscas.',
     redirect: 'Buscar otras ciudades'
+  },
+  transport_modes: {
+    default: 'Seleccionar modo',
+    high_speed_train: 'Tren de Alta Velocidad',
+    interurban_train: 'Tren Interurbano',
+    commuter_train: 'Tren de Cercanías',
+    heavy_rail: 'Metro',
+    light_rail: 'Tren Ligero',
+    brt: 'BRT',
+    people_mover: 'People Mover',
+    bus: 'Autobús'
   }
 }
