@@ -28,6 +28,14 @@ class FeaturePopupContent extends Component {
     return systems;
   }
 
+  stationTransportModes() {
+    return [ ...new Set(this.fProps().lines.map(l => l.transport_mode_name)) ].filter(e => e && e != 'default');
+  }
+
+  transportModeLabel(tm) {
+    return <Translate className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${tm}`} />;
+  }
+
   render() {
     const fProps = this.fProps();
 
@@ -47,6 +55,7 @@ class FeaturePopupContent extends Component {
                   </li>
                 }
               )}
+              <li className="c-list__item">{this.stationTransportModes().map(t => this.transportModeLabel(t))}</li>
             </div>
               :
             <div>
@@ -54,11 +63,14 @@ class FeaturePopupContent extends Component {
                 <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{fProps.line}</span>
                 <strong>{fProps.system}</strong>
               </li>
-              <li className="c-list__item">
-                <Translate className="section-popup" content="city.popup.track" />
-              </li>
+              {fProps.transport_mode_name && fProps.transport_mode_name != 'default' &&
+                <li className="c-list__item">{this.transportModeLabel(fProps.transport_mode_name)}</li>}
             </div>
           }
+
+          <li className="c-list__item" className="popup-data-title">
+            { fProps.klass === 'Section' && <Translate content="city.popup.track" /> }
+          </li>
           { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
           { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
           { this.validFeatureValue(fProps.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: fProps.closure}} /></li> : ''}

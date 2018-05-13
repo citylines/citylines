@@ -33,6 +33,7 @@
 .popup-feature-info {
   display: block;
   margin-top:5px;
+  padding-right:5px;
 }
 
 .popup-feature-adjacent {
@@ -47,8 +48,13 @@
   font-size:1.15em;
 }
 
-.section-popup {
+.popup-data-title {
+  padding-top: 5px;
   font-style: italic;
+}
+
+.popup-transport-mode {
+  margin-right: 5px;
 }
 
 .panel-header {

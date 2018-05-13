@@ -33,6 +33,7 @@ class Section < Sequel::Model(:sections)
         id: "#{id}-#{line.url_name}",
         line: line.name,
         line_url_name: line.url_name,
+        transport_mode_name: line.transport_mode[:name],
         system: line.system.name || '',
       )
     else
