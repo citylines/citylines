@@ -55,7 +55,7 @@ class FeaturePopupContent extends Component {
                   </li>
                 }
               )}
-              <li className="c-list__item">{this.stationTransportModes().map(t => this.transportModeLabel(t))}</li>
+              <li className="c-list__item">{this.stationTransportModes().map(t => <span key={t}>{this.transportModeLabel(t)}</span>)}</li>
             </div>
               :
             <div>
