@@ -179,9 +179,9 @@ export default {
   },
   transport_modes: {
     default: 'Select mode',
-    high_speed_train: 'High Speed Train',
-    interurban_train: 'Interurban Train',
-    commuter_train: 'Commuter Train',
+    high_speed_rail: 'High-speed Rail',
+    inter_city_rail: 'Inter-city Rail',
+    commuter_rail: 'Commuter Rail',
     heavy_rail: 'Heavy Rail',
     light_rail: 'Light Rail',
     brt: 'BRT',
