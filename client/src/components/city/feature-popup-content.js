@@ -67,8 +67,7 @@ class FeaturePopupContent extends Component {
                 <li className="c-list__item">{this.transportModeLabel(fProps.transport_mode_name)}</li>}
             </div>
           }
-
-          <li className="c-list__item" className="popup-data-title">
+          <li className="c-list__item popup-data-title">
             { fProps.klass === 'Section' && <Translate content="city.popup.track" /> }
           </li>
           { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
