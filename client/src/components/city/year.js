@@ -60,7 +60,7 @@ class Year extends PureComponent {
         <button ref="action"
                 className="c-button c-button--ghost"
                 onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span></button>
-        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}>...</button>
+        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}><span className="fa fa-sliders"></span></button>
       </div>
       <input ref="slider"
              type="range"
