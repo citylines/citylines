@@ -36,6 +36,10 @@ class FeaturePopupContent extends Component {
     return <Translate className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${tm}`} />;
   }
 
+  isStation() {
+    return this.fProps().klass === 'Station';
+  }
+
   render() {
     const fProps = this.fProps();
     const checkBoxId = `${fProps.klass}-${fProps.id}`;
@@ -43,7 +47,7 @@ class FeaturePopupContent extends Component {
     return (
         <div className="c-text popup-feature-info">
           <ul className={`c-list c-list--unstyled ${this.props.index > 0 ? 'popup-feature-adjacent' : ''}`}>
-          {fProps.klass === 'Station' ?
+          {this.isStation() ?
             <div>
               <li className="c-list__item">
                 <Translate className="station-popup" content={`city.popup.${fProps.name ? '' : 'unnamed_'}station`} with={{name: fProps.name}} />
@@ -56,7 +60,6 @@ class FeaturePopupContent extends Component {
                   </li>
                 }
               )}
-              <li className="c-list__item">{this.stationTransportModes().map(t => <span key={t}>{this.transportModeLabel(t)}</span>)}</li>
             </div>
               :
             <div>
@@ -64,14 +67,20 @@ class FeaturePopupContent extends Component {
                 <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{fProps.line}</span>
                 <strong>{fProps.system}</strong>
               </li>
-              {fProps.transport_mode_name && fProps.transport_mode_name != 'default' &&
-                <li className="c-list__item">{this.transportModeLabel(fProps.transport_mode_name)}</li>}
             </div>
           }
           <input className="popup-data-checkbox" id={checkBoxId} type='checkbox'></input>
           <div className="popup-data">
+            {
+              this.isStation() &&
+              <li className="c-list__item">{this.stationTransportModes().map(t => <span key={t}>{this.transportModeLabel(t)}</span>)}</li>
+            }
+            {
+              !this.isStation() && fProps.transport_mode_name && fProps.transport_mode_name != 'default' &&
+                <li className="c-list__item">{this.transportModeLabel(fProps.transport_mode_name)}</li>
+            }
             <li className="c-list__item popup-data-title">
-              { fProps.klass === 'Section' && <Translate content="city.popup.track" /> }
+              { !this.isStation() && <Translate content="city.popup.track" /> }
             </li>
             { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
             { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
