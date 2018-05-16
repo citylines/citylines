@@ -45,13 +45,14 @@
 
 .station-popup {
   display: block;
-  margin-bottom:5px;
+  margin-bottom:10px;
   font-size:1.15em;
 }
 
 
 .popup-transport-mode {
   margin-right: 5px;
+  margin-top:4px;
 }
 
 .popup-data {
@@ -67,6 +68,7 @@
   width: 100%;
   display: block;
   text-align: right;
+  margin-top: 5px;
 }
 
 .popup-data-checkbox {
