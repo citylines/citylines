@@ -32,8 +32,8 @@ class FeaturePopupContent extends Component {
     return [ ...new Set(this.fProps().lines.map(l => l.transport_mode_name)) ].filter(e => e && e != 'default');
   }
 
-  transportModeLabel(tm) {
-    return <Translate className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${tm}`} />;
+  transportModeLabel(tm, key = null) {
+    return <Translate key={key} className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${tm}`} />;
   }
 
   isStation() {
@@ -73,7 +73,7 @@ class FeaturePopupContent extends Component {
           <div className="popup-data">
             {
               this.isStation() &&
-              <li className="c-list__item">{this.stationTransportModes().map(t => <span key={t}>{this.transportModeLabel(t)}</span>)}</li>
+              <li className="c-list__item">{this.stationTransportModes().map(t => this.transportModeLabel(t, t))}</li>
             }
             {
               !this.isStation() && fProps.transport_mode_name && fProps.transport_mode_name != 'default' &&
