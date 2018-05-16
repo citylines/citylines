@@ -38,6 +38,7 @@ class FeaturePopupContent extends Component {
 
   render() {
     const fProps = this.fProps();
+    const checkBoxId = `${fProps.klass}-${fProps.id}`;
 
     return (
         <div className="c-text popup-feature-info">
@@ -67,16 +68,20 @@ class FeaturePopupContent extends Component {
                 <li className="c-list__item">{this.transportModeLabel(fProps.transport_mode_name)}</li>}
             </div>
           }
-          <li className="c-list__item popup-data-title">
-            { fProps.klass === 'Section' && <Translate content="city.popup.track" /> }
-          </li>
-          { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
-          { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
-          { this.validFeatureValue(fProps.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: fProps.closure}} /></li> : ''}
-          { fProps.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(fProps.length)/1000).toFixed(2)}} /></li> : ''}
-          </ul>
-        </div>
-        )
+          <input className="popup-data-checkbox" id={checkBoxId} type='checkbox'></input>
+          <div className="popup-data">
+            <li className="c-list__item popup-data-title">
+              { fProps.klass === 'Section' && <Translate content="city.popup.track" /> }
+            </li>
+            { fProps.buildstart ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: fProps.buildstart}} /></li> : ''}
+            { this.validFeatureValue(fProps.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: fProps.opening}} /></li> : ''}
+            { this.validFeatureValue(fProps.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: fProps.closure}} /></li> : ''}
+            { fProps.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(fProps.length)/1000).toFixed(2)}} /></li> : ''}
+          </div>
+          <label htmlFor={checkBoxId} className="c-link popup-data-toggle fa fa-info-circle"></label>
+        </ul>
+      </div>
+    )
   }
 }
 

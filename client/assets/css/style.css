@@ -34,6 +34,7 @@
   display: block;
   margin-top:5px;
   padding-right:5px;
+  min-width:200px;
 }
 
 .popup-feature-adjacent {
@@ -48,14 +49,31 @@
   font-size:1.15em;
 }
 
+
+.popup-transport-mode {
+  margin-right: 5px;
+}
+
+.popup-data {
+  display: none;
+}
+
 .popup-data-title {
   padding-top: 5px;
   font-style: italic;
 }
 
-.popup-transport-mode {
-  margin-right: 5px;
+.popup-data-toggle {
+  width: 100%;
+  display: block;
+  text-align: right;
 }
+
+.popup-data-checkbox {
+  display: none;
+}
+
+input.popup-data-checkbox:checked + .popup-data { display: block; }
 
 .panel-header {
 
