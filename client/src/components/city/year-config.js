@@ -31,6 +31,15 @@ class YearConfig extends PureComponent {
             onChange={this.handleSpeedChange.bind(this)}
             />
         </div>
+        <div className="c-card__item">
+          <label className="c-field c-field--choice">
+            <input
+              type="checkbox"
+              checked={this.props.showTransportModes}
+              onChange={this.props.onShowTransportModesChange.bind(this)}
+            /> Show transport modes
+          </label>
+        </div>
       </div>
     )
   }

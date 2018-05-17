@@ -126,6 +126,7 @@ class CityView extends PureComponent {
               year={this.state.currentYear}
               playing={this.state.playing}
               speed={this.state.speed}
+              showTransportModes={this.state.showTransportModes}
               onYearChange={this.bindedOnYearChange}
             />
             <KmIndicator
@@ -143,6 +144,8 @@ class CityView extends PureComponent {
               defaultExpanded={true}
               lines={systemLines}
               linesShown={this.state.linesShown}
+              transportModes={this.state.transportModes}
+              showTransportModes={this.state.showTransportModes}
               onLineToggle={this.bindedOnLineToggle}
               onAllLinesToggle={this.bindedOnAllLinesToggle}
             /> : null })

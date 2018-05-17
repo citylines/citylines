@@ -86,6 +86,7 @@ class Api < App
 
       { lines: city_lines(@city),
         systems: city_systems(@city),
+        transport_modes: TransportModes.all,
         years: { start: @city.start_year,
                  end: Date.today.year,
                  current: nil,

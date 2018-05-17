@@ -512,3 +512,12 @@ table .narrow {
 .cut-line button:active {
   color: #111;
 }
+
+.system-tree {
+  margin-left: 1em;
+  padding-right: 1em;
+}
+
+.system-tree .c-badge {
+  font-size: 0.7em;
+}
