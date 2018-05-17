@@ -75,7 +75,21 @@
   display: none;
 }
 
+.popup-data-toggle > span {
+  font-weight: bold;
+}
+
+.popup-data-toggle > .show-more {
+  display: block;
+}
+
+.popup-data-toggle > .show-less {
+  display: none;
+}
+
 input.popup-data-checkbox:checked + .popup-data { display: block; }
+input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-more { display: none; }
+input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-less { display: block; }
 
 .panel-header {
 
