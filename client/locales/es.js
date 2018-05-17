@@ -49,7 +49,8 @@ export default {
     lines: 'Líneas',
     years: {
       config: {
-        timeline_speed: 'Velocidad de la línea de tiempo'
+        timeline_speed: 'Velocidad de la línea de tiempo',
+        show_transport_modes: 'Mostrar modos de transporte'
       }
     },
     km_operative: 'Operativos: %(km)s km',
