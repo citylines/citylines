@@ -107,9 +107,9 @@ class DetailedData extends Component {
           { this.validFeatureValue(this.props.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.closure}} /></li> : ''}
           { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(this.props.length)/1000).toFixed(2)}} /></li> : ''}
         </div>
-        <label htmlFor={this.props.id} className="popup-data-toggle">
-          <span className="show-more c-link">+</span>
-          <span className="show-less c-link">−</span>
+        <label htmlFor={this.props.id} className="popup-data-toggle c-link">
+          <span className="show-more">+</span>
+          <span className="show-less">−</span>
         </label>
       </div>
     )
