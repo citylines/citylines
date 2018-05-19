@@ -24,8 +24,7 @@ class Section < Sequel::Model(:sections)
       buildstart_end: self.opening || closure,
       osm_id: self.osm_id,
       osm_tags: self.osm_tags,
-      closure: closure,
-      width: width
+      closure: closure
     }
 
     if line
@@ -34,6 +33,7 @@ class Section < Sequel::Model(:sections)
         line: line.name,
         line_url_name: line.url_name,
         transport_mode_name: line.transport_mode[:name],
+        width: width,
         system: line.system.name || '',
       )
     else
