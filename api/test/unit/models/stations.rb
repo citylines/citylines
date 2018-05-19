@@ -79,7 +79,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -92,7 +93,9 @@ describe Station do
                              buildstart_end: @station.opening,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: @station.closure}
+                             closure: @station.closure,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -107,7 +110,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -120,7 +124,9 @@ describe Station do
                              buildstart_end: Section::FUTURE,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: Section::FUTURE}
+                             closure: Section::FUTURE,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -134,7 +140,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -147,7 +154,9 @@ describe Station do
                              buildstart_end: @station.opening,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: @station.closure}
+                             closure: @station.closure,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
