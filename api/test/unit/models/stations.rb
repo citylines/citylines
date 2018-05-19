@@ -183,4 +183,25 @@ describe Station do
       assert_equal 'other-line-url-name', feature_props[:line_url_name_2]
     end
   end
+
+  describe "width" do
+    it "should set the radius using the line with the max width" do
+      line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
+      StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
+
+      assert line2.width > @line.width
+      assert_equal 2, @station.lines.count
+      assert_equal line2.width, @station.radius
+      assert_equal @station.radius - 2, @station.inner_radius
+    end
+
+    it "should set a 0 inner_radius if the radius if lower than 4" do
+      # transport mode 7 is people mover, with a radius of 3
+      @line.transport_mode_id = 7
+      @line.save
+
+      assert_equal 3, @station.radius
+      assert_equal 0, @station.inner_radius
+    end
+  end
 end
