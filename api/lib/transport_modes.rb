@@ -1,6 +1,6 @@
 module TransportModes
   TRANSPORT_MODES = {
-    0 => { name: 'default', width: 6, min_width: 6},
+    0 => { name: 'default', width: 6, min_width: 2},
     1 => { name: 'high_speed_rail', width: 9, min_width: 3},
     2 => { name: 'inter_city_rail', width: 8, min_width: 3},
     3 => { name: 'commuter_rail', width: 7, min_width: 2},
