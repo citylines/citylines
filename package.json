@@ -39,7 +39,5 @@
     "webpack": "^1.13.1",
     "whatwg-fetch": "^1.0.0"
   },
-  "devDependencies": {
-    "compression-webpack-plugin": "^0.3.1"
-  }
+  "devDependencies": {}
 }
