@@ -1,0 +1,6 @@
+// This file is only for tests. It's ignored when using Webpack since we set the
+// `babelrc:false` option in the webpack config files
+
+{
+  "presets": ["es2015", "stage-2"]
+}

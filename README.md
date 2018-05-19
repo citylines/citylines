@@ -97,7 +97,7 @@ tools/local_console
 
 - Re-build the frontend
 ```
-docker exec citylines_web_1 yarn build
+tools/build_frontend
 ```
 
 Test
@@ -107,6 +107,13 @@ API
 Run
 ```
 tools/test
+```
+
+Frontend
+------
+Run
+```
+tools/test_frontend
 ```
 
 Contact
