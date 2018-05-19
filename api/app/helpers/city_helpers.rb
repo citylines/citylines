@@ -24,7 +24,7 @@ module CityHelpers
     lengths = {}
     years_range = (city.start_year..DateTime.now.year)
 
-    Section.where(city_id: city.id).each do |section|
+    Section.where(city_id: city.id).all.each do |section|
       years_range.each do |year|
         lengths[year] ||= {}
         if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
