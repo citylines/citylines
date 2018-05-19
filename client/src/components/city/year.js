@@ -26,6 +26,10 @@ class Year extends PureComponent {
     CityViewStore.setSpeed(this.props.urlName, speed);
   }
 
+  handleTransportModesChange(e) {
+    CityViewStore.setShowTransportModes(this.props.urlName, e.target.checked);
+  }
+
   onKeyPress(e) {
     if (e.key !== 'Enter') return;
 
@@ -60,7 +64,7 @@ class Year extends PureComponent {
         <button ref="action"
                 className="c-button c-button--ghost"
                 onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span></button>
-        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}>...</button>
+        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}><span className="fa fa-sliders"></span></button>
       </div>
       <input ref="slider"
              type="range"
@@ -73,6 +77,8 @@ class Year extends PureComponent {
         <YearConfig
           speed={this.props.speed}
           onSpeedChange={this.handleSpeedChange.bind(this)}
+          showTransportModes={this.props.showTransportModes}
+          onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
         />}
      </div>
      )

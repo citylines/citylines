@@ -33,6 +33,8 @@
 .popup-feature-info {
   display: block;
   margin-top:5px;
+  padding-right:5px;
+  min-width:200px;
 }
 
 .popup-feature-adjacent {
@@ -43,13 +45,51 @@
 
 .station-popup {
   display: block;
-  margin-bottom:5px;
+  margin-bottom:10px;
   font-size:1.15em;
 }
 
-.section-popup {
+
+.popup-transport-mode {
+  margin-right: 5px;
+  margin-top:4px;
+}
+
+.popup-data {
+  display: none;
+}
+
+.popup-data-title {
+  padding-top: 5px;
   font-style: italic;
 }
+
+.popup-data-toggle {
+  width: 100%;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.popup-data-checkbox {
+  display: none;
+}
+
+.popup-data-toggle > span {
+  font-weight: bold;
+}
+
+.popup-data-toggle > .show-more {
+  display: block;
+}
+
+.popup-data-toggle > .show-less {
+  display: none;
+}
+
+input.popup-data-checkbox:checked + .popup-data { display: block; }
+input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-more { display: none; }
+input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-less { display: block; }
 
 .panel-header {
 
@@ -223,6 +263,14 @@
 
 .lines-editor-container.new-system .c-card__item--brand {
   border-radius: 4px;
+}
+
+.lines-editor-container .o-field {
+  margin-left: 10px;
+}
+
+.lines-editor-container .o-field select {
+  border-color: #e6e6e6;
 }
 
 .cookie-notice-container {
@@ -463,4 +511,13 @@ table .narrow {
 
 .cut-line button:active {
   color: #111;
+}
+
+.system-tree {
+  margin-left: 1em;
+  padding-right: 1em;
+}
+
+.system-tree .c-badge {
+  font-size: 0.7em;
 }

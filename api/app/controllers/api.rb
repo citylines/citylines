@@ -86,6 +86,7 @@ class Api < App
 
       { lines: city_lines(@city),
         systems: city_systems(@city),
+        transport_modes: TransportModes.all,
         years: { start: @city.start_year,
                  end: Date.today.year,
                  current: nil,
@@ -127,7 +128,9 @@ class Api < App
     @city = City[url_name: url_name]
 
     { lines: city_lines(@city),
-      systems: city_systems(@city) }.to_json
+      systems: city_systems(@city),
+      transport_modes: TransportModes.all
+    }.to_json
   end
 
   put '/editor/:url_name/features' do |url_name|
@@ -160,6 +163,7 @@ class Api < App
     line.color = args[:color]
     line.name = args[:name]
     line.system_id = args[:system_id]
+    line.transport_mode_id = args[:transport_mode_id]
     line.save
 
     city_lines(@city).to_json
@@ -171,7 +175,7 @@ class Api < App
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id])
+    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id], transport_mode_id: args[:transport_mode_id])
     line.save
     line.reload.generate_url_name
     line.save

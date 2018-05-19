@@ -2,7 +2,7 @@
 
 This is the source code of [citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
 
-![](https://user-images.githubusercontent.com/6061036/38197618-92d53952-365f-11e8-92d7-0fafcf5a25a6.png)
+![](https://user-images.githubusercontent.com/6061036/40272543-53a12d90-5b85-11e8-88a9-787f257fd243.png)
 
 Development
 ===========
@@ -26,6 +26,50 @@ Google Auth
 -----------
 - Get a `google_client_id` for the Google Login from the Google console
 - Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the attributes. The `secret` should be a secret random string
+
+DB
+--
+- Enter to the psql shell:
+```
+docker exec -it citylines_db_1 psql -U postgres
+```
+
+- Create the `citylines` db:
+```
+create database citylines;
+```
+
+- Create the role:
+```
+create user citylines with password 'citylines';
+```
+
+- Enter the DB:
+```
+\c citylines;
+```
+
+- Grant permissions:
+```
+grant  CREATE,CONNECT on database citylines to citylines;
+```
+
+- Create schema:
+```
+create schema citylines;
+```
+
+- Grant permissions to schema:
+```
+grant SELECT,INSERT,UPDATE on all tables in schema citylines to citylines;
+```
+
+- Create the postgis extension
+```
+create extension postgis;
+```
+
+- Import a dump. See instructions below.
 
 Build!
 ------
@@ -53,7 +97,7 @@ tools/local_console
 
 - Re-build the frontend
 ```
-docker exec citylines_web_1 yarn build
+tools/build_frontend
 ```
 
 Test
@@ -63,6 +107,13 @@ API
 Run
 ```
 tools/test
+```
+
+Frontend
+------
+Run
+```
+tools/test_frontend
 ```
 
 Contact

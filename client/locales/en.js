@@ -49,7 +49,8 @@ export default {
     lines: 'Lines',
     years: {
       config: {
-        timeline_speed: 'Timeline speed'
+        timeline_speed: 'Timeline speed',
+        show_transport_modes: 'Show transport modes'
       }
     },
     km_operative: 'Operative: %(km)s km',
@@ -109,9 +110,7 @@ export default {
       unnamed_system: 'Unnamed system',
       save: 'Save',
       delete: 'Delete',
-      are_you_sure: 'Are you sure?',
-      yes: 'Yes',
-      no: 'No'
+      cancel: 'Cancel'
     },
     osm: {
       zoom: 'Import is only allowed in zoom levels bigger than 13',
@@ -178,5 +177,16 @@ export default {
     title: "The entered URL doesn't belong to any city",
     subtitle: "Maybe the URL is mispelled or maybe we haven't uploaded yet the city you are looking for.",
     redirect: 'Search other cities'
+  },
+  transport_modes: {
+    default: 'Select mode',
+    high_speed_rail: 'High-speed Rail',
+    inter_city_rail: 'Inter-city Rail',
+    commuter_rail: 'Commuter Rail',
+    heavy_rail: 'Heavy Rail',
+    light_rail: 'Light Rail',
+    brt: 'BRT',
+    people_mover: 'People Mover',
+    bus: 'Bus'
   }
 }

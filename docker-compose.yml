@@ -25,6 +25,5 @@ services:
       - POSTGRES_PASSWORD=citylines
     volumes:
       - ./dumps:/dumps:ro
-      - ./postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"

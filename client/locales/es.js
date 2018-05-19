@@ -49,7 +49,8 @@ export default {
     lines: 'Líneas',
     years: {
       config: {
-        timeline_speed: 'Velocidad de la línea de tiempo'
+        timeline_speed: 'Velocidad de la línea de tiempo',
+        show_transport_modes: 'Mostrar modos de transporte'
       }
     },
     km_operative: 'Operativos: %(km)s km',
@@ -109,9 +110,7 @@ export default {
       unnamed_system: 'Sistema sin nombre',
       save: 'Guardar',
       delete: 'Borrar',
-      are_you_sure: '¿Estás seguro?',
-      yes: 'Sí',
-      no: 'No'
+      cancel: 'Cancelar'
     },
     osm: {
       zoom: 'La importación está habilitada sólo para niveles de zoom mayores a 13',
@@ -178,5 +177,16 @@ export default {
     title: 'La URL ingresada no corresponde a ninguna ciudad',
     subtitle: 'Quizás la URL está mal escrita o quizás todavía no cargamos la ciudad que buscas.',
     redirect: 'Buscar otras ciudades'
+  },
+  transport_modes: {
+    default: 'Seleccionar modo',
+    high_speed_rail: 'Tren de Alta Velocidad',
+    inter_city_rail: 'Tren Interurbano',
+    commuter_rail: 'Tren de Cercanías',
+    heavy_rail: 'Metro Pesado',
+    light_rail: 'Tren Ligero',
+    brt: 'BRT',
+    people_mover: 'People Mover',
+    bus: 'Autobús'
   }
 }

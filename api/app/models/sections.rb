@@ -32,6 +32,8 @@ class Section < Sequel::Model(:sections)
         id: "#{id}-#{line.url_name}",
         line: line.name,
         line_url_name: line.url_name,
+        transport_mode_name: line.transport_mode[:name],
+        width: width,
         system: line.system.name || '',
       )
     else
@@ -48,7 +50,6 @@ class Section < Sequel::Model(:sections)
   end
 
   def ranges(lines_count)
-    width = 7
     ranges = lines_count/2
     arr = (-ranges..ranges).to_a
     if lines_count.even?
@@ -70,5 +71,25 @@ class Section < Sequel::Model(:sections)
       hash_clone = Marshal.load(Marshal.dump(feature(opts)))
       hash_clone.merge(properties: feature_properties(line: l, offset: offsets[index]))
     end
+  end
+
+  def width
+    l = lines.sort_by{|l| l.width}.last
+    return unless l
+
+    default_width = l.width
+    min_width = l.min_width
+
+    target_width = case lines.count
+                   when 1
+                     default_width
+                   when 2
+                     default_width * 0.75
+                   else
+                     default_width * 0.66
+                   end
+
+    target_width = min_width if target_width < min_width
+    target_width
   end
 end

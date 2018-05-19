@@ -6,17 +6,15 @@ class LinesEditorItem extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.color = this.props.color;
-    this.name = this.props.name;
-    this.system_id = this.props.system_id;
-
     this.state = {
-      color: this.color,
-      name: this.name,
-      system_id: this.system_id
-    }
-
-    this.displaySaveButton = false;
+      displayDeleteWarning: false,
+      values: {
+        color: this.props.color,
+        name: this.props.name,
+        system_id: this.props.system_id,
+        transport_mode_id: this.props.transport_mode_id
+      }
+    };
 
     this.bindedOnColorChange = this.onColorChange.bind(this);
     this.bindedOnNameChange = this.onNameChange.bind(this);
@@ -41,50 +39,54 @@ class LinesEditorItem extends Component {
   }
 
   onColorChange(color) {
-    if (this.name && this.name != '') {
-      this.displaySaveButton = true;
-    }
-    this.color = color.hex;
-    this.updateState();
+    this.updateState({color: color.hex});
   }
 
   onNameChange(e) {
-    const newName = e.target.value;
-    this.name = newName;
-    if (newName && newName != '') {
-      this.displaySaveButton = true;
-    }
-    this.updateState();
+    this.updateState({name: e.target.value});
   }
 
-  updateState() {
-    this.displayDeleteWarning = false;
+  onTransportModeChange(e) {
+    this.updateState({transport_mode_id: e.target.value});
+  }
 
-    this.setState({
-      color: this.color,
-      name: this.name,
-      system_id: this.system_id
+  displaySaveButton() {
+    return (
+      (this.state.values.name && this.state.values.name !== this.props.name) ||
+      (this.state.values.color && this.state.values.color !== this.props.color) ||
+      (this.state.values.transport_mode_id && this.state.values.transport_mode_id != this.props.transport_mode_id)
+    ) && this.state.values.name && this.state.values.name.length > 0;
+  }
+
+  updateState(newValue) {
+    this.setState((prevState) => {
+      return {
+        displayDeleteWarning: false,
+        values: {...prevState.values, ...newValue}
+      }
     });
   }
 
   onDelete() {
-    this.displayDeleteWarning = true;
-    this.forceUpdate();
+    this.setState({
+      displayDeleteWarning: true
+    });
   }
 
   onActualDelete() {
-    this.displayDeleteWarning = false;
-    if (typeof this.props.onDelete === 'function') this.props.onDelete(this.props.url_name);
+    this.setState({displayDeleteWarning: false}, () =>
+      this.props.onDelete(this.props.url_name)
+    )
   }
 
   onCancelDelete() {
-    this.displayDeleteWarning = false;
-    this.forceUpdate();
+    this.setState({
+      displayDeleteWarning: false
+    });
   }
 
   onSave() {
-    this.displaySaveButton = false;
-    const args = Object.assign({}, this.state, {line_url_name: this.props.url_name});
+    const args = {...this.state.values, ...{line_url_name: this.props.url_name}};
     if (typeof this.props.onSave === 'function') this.props.onSave(args);
   }
 
@@ -107,22 +109,26 @@ class LinesEditorItem extends Component {
 
   render() {
     const deleteWarningControl = <span className="c-input-group" style={{float:'right'}}>
-        <Translate className="editor-delete-warning-text" content="editor.lines_editor.are_you_sure" />
-        <button className="c-button" onClick={this.bindedOnActualDelete}><Translate content="editor.lines_editor.yes" /></button>
-        <button className="c-button" onClick={this.bindedOnCancelDelete}><Translate content="editor.lines_editor.no" /></button>
+        <button className="c-button" onClick={this.bindedOnActualDelete}><Translate content="editor.lines_editor.delete" /></button>
+        <button className="c-button" onClick={this.bindedOnCancelDelete}><Translate content="editor.lines_editor.cancel" /></button>
       </span>;
 
     return (
       <div onDragStart={this.onDragStart.bind(this)} onDragEnd={this.onDragEnd.bind(this)} className="c-card__item draggable-line" onClick={this.bindedOnClick} draggable={true}>
         <div className="c-input-group">
           <div className="o-field">
-            <input className="c-field" type="text" value={this.state.name} onChange={this.bindedOnNameChange}></input>
+            <input className="c-field" type="text" value={this.state.values.name} onChange={this.bindedOnNameChange}></input>
           </div>
           <div className="o-field">
-            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}}></div></div>
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.values.color}}></div></div>
             {this.props.displayColorPicker ?
-            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.values.color } onChange={this.bindedOnColorChange}/></div> : null
             }
+          </div>
+          <div className="o-field">
+            <select className="c-field line-system-select" value={this.state.values.transport_mode_id || 0} onChange={this.onTransportModeChange.bind(this)}>
+              {this.props.transportModes.map(tm => <Translate component="option" key={tm.id} value={tm.id} content={`transport_modes.${tm.name}`}/>)}
+            </select>
           </div>
           <div className="o-field">
             {this.props.systems.length > 1 &&
@@ -132,10 +138,10 @@ class LinesEditorItem extends Component {
             }
           </div>
           <div className="o-field">
-            { this.displayDeleteWarning ?
+            { this.state.displayDeleteWarning ?
               deleteWarningControl :
               <span className="c-input-group" style={{float:'right'}}>
-                { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">
+                { this.displaySaveButton() && <button onClick={this.bindedOnSave} className="c-button c-button--info">
                     <Translate content="editor.lines_editor.save" />
                   </button> }
                 { this.props.deletable && <button onClick={this.bindedOnDelete} className="c-button">
@@ -152,19 +158,19 @@ class LinesEditorItem extends Component {
 
 class LinesEditorNew extends LinesEditorItem {
   resetState() {
-    this.name = this.props.name;
-    this.color = this.props.color;
-    this.system_id = this.props.system_id;
-
-    this.updateState();
+    this.setState({
+      values: {
+        name: this.props.name,
+        color: this.props.color,
+        system_id: this.props.system_id,
+        transport_mode_id: this.props.transport_mode_id
+      }
+    });
   }
 
   onSave() {
-    if (this.state.name == '') return;
-    this.displaySaveButton = false;
-    const args = Object.assign({}, this.state);
-    if (typeof this.props.onSave === 'function') this.props.onSave(args);
-
+    const args = {...this.state.values};
+    this.props.onSave(args);
     this.resetState();
   }
 
@@ -177,22 +183,25 @@ class LinesEditorNew extends LinesEditorItem {
               component="input"
               className="c-field"
               type="text"
-              value={this.state.name}
+              value={this.state.values.name}
               onChange={this.bindedOnNameChange}
               attributes={{placeholder:"editor.lines_editor.new_line_placeholder"}}
             />
           </div>
           <div className="o-field">
-            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.color}}></div></div>
+            <div className="editor-line-color"><div className="color" style={{backgroundColor: this.state.values.color}}></div></div>
             {this.props.displayColorPicker ?
-            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.color } onChange={this.bindedOnColorChange}/></div> : null
+            <div ref="colorPickerContainer" className="color-picker-container"><SketchPicker color={ this.state.values.color } onChange={this.bindedOnColorChange}/></div> : null
             }
           </div>
           <div className="o-field">
+            <select className="c-field line-system-select" value={this.state.values.transport_mode_id || 0} onChange={this.onTransportModeChange.bind(this)}>
+              {this.props.transportModes.map(tm => <Translate component="option" key={tm.id} value={tm.id} content={`transport_modes.${tm.name}`}/>)}
+            </select>
           </div>
           <div className="o-field">
             <span className="c-input-group" style={{float:'right'}}>
-              { this.displaySaveButton && <button onClick={this.bindedOnSave} className="c-button c-button--info">
+              { this.displaySaveButton() && <button onClick={this.bindedOnSave} className="c-button c-button--info">
                   <Translate content="editor.lines_editor.create" />
                 </button> }
             </span>

@@ -79,7 +79,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -92,7 +93,9 @@ describe Station do
                              buildstart_end: @station.opening,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: @station.closure}
+                             closure: @station.closure,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -107,7 +110,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -120,7 +124,9 @@ describe Station do
                              buildstart_end: Section::FUTURE,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: Section::FUTURE}
+                             closure: Section::FUTURE,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -134,7 +140,8 @@ describe Station do
       expected_lines = [{
         line: @line.name,
         line_url_name: @line.url_name,
-        system: @system.name
+        system: @system.name,
+        transport_mode_name: @line.transport_mode[:name]
       }]
 
       expected_properties = {id: @station.id,
@@ -147,7 +154,9 @@ describe Station do
                              buildstart_end: @station.opening,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
-                             closure: @station.closure}
+                             closure: @station.closure,
+                             width: @station.radius,
+                             inner_width: @station.inner_radius}
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -172,6 +181,27 @@ describe Station do
       assert_equal Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
       assert_equal 'a-url-name', feature_props[:line_url_name_1]
       assert_equal 'other-line-url-name', feature_props[:line_url_name_2]
+    end
+  end
+
+  describe "width" do
+    it "should set the radius using the line with the max width" do
+      line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
+      StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
+
+      assert line2.width > @line.width
+      assert_equal 2, @station.lines.count
+      assert_equal line2.width, @station.radius
+      assert_equal @station.radius - 2, @station.inner_radius
+    end
+
+    it "should set a 0 inner_radius if the radius if lower than 4" do
+      # transport mode 7 is people mover, with a radius of 3
+      @line.transport_mode_id = 7
+      @line.save
+
+      assert_equal 3, @station.radius
+      assert_equal 0, @station.inner_radius
     end
   end
 end

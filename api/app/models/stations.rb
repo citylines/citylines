@@ -29,7 +29,9 @@ class Station < Sequel::Model(:stations)
     lines.map do |l|
       {line: l.name,
        line_url_name: l.url_name,
-       system: l.system.name || ''}
+       system: l.system.name || '',
+       transport_mode_name: l.transport_mode[:name]
+      }
     end
   end
 
@@ -44,7 +46,9 @@ class Station < Sequel::Model(:stations)
             buildstart_end: self.opening || closure,
             osm_id: self.osm_id,
             osm_tags: self.osm_tags,
-            closure: closure }
+            closure: closure,
+            width: radius,
+            inner_width: inner_radius }
 
     # We add other line_url_name attrs if the station is shared
     # so the original url_name refers to style, and the following ones
@@ -56,5 +60,14 @@ class Station < Sequel::Model(:stations)
     end
 
     super.merge(opts)
+  end
+
+  def radius
+    lines.map(&:width).max || 0
+  end
+
+  def inner_radius
+    r = radius
+    r < 4 ? 0 : r - 2
   end
 end

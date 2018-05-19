@@ -21,15 +21,24 @@ class YearConfig extends PureComponent {
     return (
       <div className="c-card year-config">
         <div className="c-card__item">
-          <Translate content="city.years.config.timeline_speed" />
-          <input
-            type="range"
-            className="c-range"
-            min={this.minSpeed}
-            max={this.maxSpeed}
-            value={this.speed()}
-            onChange={this.handleSpeedChange.bind(this)}
-            />
+            <div className="o-form-element">
+              <Translate content="city.years.config.timeline_speed" />
+              <input
+                type="range"
+                className="c-range"
+                min={this.minSpeed}
+                max={this.maxSpeed}
+                value={this.speed()}
+                onChange={this.handleSpeedChange.bind(this)}
+                />
+            </div>
+            <label className="c-field c-field--choice">
+              <input
+                type="checkbox"
+                checked={this.props.showTransportModes}
+                onChange={this.props.onShowTransportModesChange.bind(this)}
+              /> <Translate content="city.years.config.show_transport_modes" />
+            </label>
         </div>
       </div>
     )

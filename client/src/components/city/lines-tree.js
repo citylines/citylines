@@ -30,9 +30,9 @@ class LinesTree extends PureComponent {
     const expandClass = this.state.expanded ? 'c-tree__item--expanded' : 'c-tree__item--expandable';
 
     return (
-      <ul style={{marginLeft: "1em", paddingRight: "1em"}} className="c-tree">
-        <li className={`c-tree__item ${expandClass}`} onClick={this.toggleExpanded.bind(this)}>
-          <span className="c-link">{this.props.name || <Translate content="city.lines" />} </span>
+      <ul className="c-tree system-tree">
+        <li className={`c-tree__item ${expandClass}`}>
+          <span className="c-link" onClick={this.toggleExpanded.bind(this)}>{this.props.name || <Translate content="city.lines" />} </span>
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
             { lines.length > 1 ?
             <AllLinesItem
@@ -46,6 +46,8 @@ class LinesTree extends PureComponent {
                 urlName={line.url_name}
                 name={line.name}
                 color={line.color}
+                transportMode={this.props.transportModes.find(tm => tm.id === line.transport_mode_id)}
+                showTransportMode={this.props.showTransportModes}
                 show={this.props.linesShown.includes(line.url_name)}
                 onToggle={this.bindedOnItemToggle}
               />
@@ -74,6 +76,8 @@ class LinesTreeItem extends PureComponent {
             <div className="c-toggle__handle"></div>
           </div>
           {this.props.name}
+          {this.props.transportMode && this.props.showTransportMode &&
+              <Translate className="c-badge c-badge--ghost" style={{marginLeft:"10px"}} content={`transport_modes.${this.props.transportMode.name}`} />}
         </label>
     )
   }
