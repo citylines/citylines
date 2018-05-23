@@ -3,6 +3,19 @@ require File.expand_path '../../../test_config', __FILE__
 describe CityHelpers do
   include CityHelpers
 
+  describe "#city_systems" do
+    it "should return the city's systems, sorted" do
+      city = City.create(name: 'A city', system_name: '', url_name:'a-city', start_year: 1920)
+      s1 = System.create(name: 'Subway', city_id: city.id)
+      s2 = System.create(name: 'LRT', city_id: city.id)
+
+      systems = city_systems(city)
+
+      expected_result = [{id: s2.id, name: s2.name}, {id: s1.id, name: s1.name}]
+      assert_equal expected_result, systems
+    end
+  end
+
   describe "#lines_length_by_year" do
     before do
       @city = City.create(name: 'Test city', system_name:'', url_name:'test-city', start_year: 1920)
