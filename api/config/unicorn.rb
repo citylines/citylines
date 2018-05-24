@@ -1,4 +1,4 @@
-worker_processes 4
+worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 preload_app true
 
 app_path = File.expand_path(File.dirname(__FILE__) + "/../../")
