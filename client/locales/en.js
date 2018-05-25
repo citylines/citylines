@@ -136,12 +136,13 @@ export default {
       p3: 'Citylines.co agrees that it may only use or sub-license the content you contributed as part of a database and only under the terms of the ODbL 1.0 license for the database and DbCL 1.0 license for the individual contents of the database.'
     },
     privacy: {
-      title: 'Privacy policy',
+      title: 'Privacy policy and data protection',
       p1: 'Citylines.co collects your name, surname, email and screen name (if applicable), which are retrieved from the authentication system when you log in using Google or Twitter.',
-      p2: 'Citylines.co stores this data in a secured private database.',
-      p3: 'Citylines.co uses your information only for authentication purposes or to send you emails occasionally.',
+      p2: 'Citylines.co stores this data in a secured private database in the Cloud.',
+      p3: 'Citylines.co uses your information only for authentication purposes or to send you emails occasionally, with news or notifications.',
       p4: 'Citylines.co won’t share your information with no one else.',
-      p5: 'You can ask Citylines.co, at any time, to delete your personal information from it’s database.'
+      p5: 'By default, Citylines.co will store your information as long as your are a registered user of Citylines.co.',
+      p6: 'You as individual have the following rights: right to be informed about the data Citylines.co has about you, right to correct or update it, right to delete it at any time, right to request limited processing of it, right to request the transfor of the data to a different location or organization -as long as it`s possible technically-, right to make objections to further processing, right to file complaints to the competent authorities.'
     }
   },
   data: {

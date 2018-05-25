@@ -136,12 +136,13 @@ export default {
       p3: 'Citylines.co se compromete a usar y distribuir el contenido que usted aportó en fórma de base de datos y sólo bajo los términos de las licencias ODbL 1.0 para la base de datos y DbCL 1.0 para los contenidos individuales de la base de datos.'
     },
     privacy: {
-      title: 'Política de privacidad',
+      title: 'Política de privacidad y tratamiento de datos personales',
       p1: 'Citylines.co recoge su nombre, apellido, correo electrónico y nombre de pantalla (en el caso de Twitter) cuando Usted inicia sesión usando Google o Twitter.',
-      p2: 'Citylines.co guarda esta información en una base de datos privada protegida.',
-      p3: 'Citylines.co usa esta información con fines sólo relacionados a su autenticación y/o para enviarle correos electrónicos ocasionalmente.',
+      p2: 'Citylines.co guarda esta información en una base de datos privada protegida en la nube.',
+      p3: 'Citylines.co usa esta información con fines sólo relacionados a su autenticación y/o para enviarle correos electrónicos ocasionalmente, con novedades o notificaciones.',
       p4: 'Citylines.co no va a compartir su información con nadie más.',
-      p5: 'Usted puede pedir a Citylines.co, en cualquier momento, que borre su información personal de la base de datos.'
+      p5: 'Por defecto, Citylines.co va a guardar su información mientras usted sea un usuario de Citylines.co.',
+      p6: 'Usted, en tanto individuo, tiene los siguientes derechos: derecho a la información sobre los datos que Citylines.co tiene sobre usted, derecho a su corrección, actualización o eliminación en cualquier momento, derecho a solicitar su procesamiento de forma limitada, derecho a solicitar su tranferencia a otra localización u organización -mientras sea posible técnicamente-, derecho a hacer objeciones sobre su eventual procesamiento, derecho a hacer reclamos a las autoridades competentes.'
     }
   },
   data: {

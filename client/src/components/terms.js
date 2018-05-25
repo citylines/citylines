@@ -54,6 +54,7 @@ class Terms extends Component {
               <li><Translate content="terms.privacy.p3" /></li>
               <li><Translate content="terms.privacy.p4" /></li>
               <li><Translate content="terms.privacy.p5" /></li>
+              <li><Translate content="terms.privacy.p6" /></li>
             </ol>
 
             <Translate component="h3" className="c-heading" content="cookie_notice.text.title" ref="cookies"/>
