@@ -113,7 +113,7 @@ Frontend
 ------
 Run
 ```
-tools/test_frontend
+yarn test
 ```
 
 Contact
