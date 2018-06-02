@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:17.06.1-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install docker-compose
+          command: |
+            set -x
+            apk update && apk add curl curl-dev bash python3 yarn
+            pip3 install docker-compose
+      - run:
+          name: Backend tests
+          command: |
+            set -x
+            chmod +x tools/test
+            tools/test
+      - run:
+          name: Frontend tests
+          command: |
+            set -x
+            yarn && yarn test
