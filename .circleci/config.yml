@@ -17,6 +17,7 @@ jobs:
           name: Backend tests
           command: |
             set -x
+            mv api/config/auth.yml.sample api/config/auth.yml
             chmod +x tools/test
             tools/test
       - run:
