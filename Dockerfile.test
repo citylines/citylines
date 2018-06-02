@@ -28,5 +28,5 @@ RUN \
 
 ADD . /app/
 
-ENTRYPOINT ["bash", "entrypoint.sh"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
 CMD ["bundle", "exec", "rake", "test"]
