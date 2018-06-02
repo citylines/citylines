@@ -1,11 +1,9 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: docker:17.06.1-ce-git
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Install docker-compose
           command: |
