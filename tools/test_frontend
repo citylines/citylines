@@ -1,3 +1,0 @@
-#! /bin/bash
-
-docker exec citylines_web_1 yarn test
