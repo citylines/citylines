@@ -11,33 +11,15 @@ jobs:
             sudo apt-get install curl bash python3
             pip install docker-compose
       - run:
-          name: Install node@8.1.4
-          command: |
-            set +e
-            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v8.1.4
-            nvm alias default v8.1.4
-
-            # Each step uses the same `$BASH_ENV`, so need to modify it
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
-      - run:
-          name: Install yarn
-          command: |
-            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt-get update && sudo apt-get install yarn
-      - run:
           name: Backend tests
           command: |
             set -x
             mv api/config/auth.yml.sample api/config/auth.yml
-            chmod +x tools/test
-            tools/test
+            chmod +x tools/backend_tests
+            tools/backend_tests
       - run:
           name: Frontend tests
           command: |
             set -x
-            yarn && yarn test
+            chmod +x tools/frontend_tests
+            tools/frontend_tests

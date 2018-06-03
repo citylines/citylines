@@ -1,0 +1,24 @@
+version: '2'
+services:
+  web_test:
+    links:
+      - db_test:db.local
+    environment:
+      - RACK_ENV=test
+      - DATABASE_URL=postgres://citylines_test:citylines_test@db.local/citylines_test
+    volumes:
+      - .:/app
+    depends_on:
+      - db_test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: bundle exec rake test
+  db_test:
+    image: "mdillon/postgis"
+    environment:
+      - POSTGRES_DB=citylines_test
+      - POSTGRES_USER=citylines_test
+      - POSTGRES_PASSWORD=citylines_test
+    volumes:
+      - ./dumps:/dumps:ro

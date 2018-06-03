@@ -106,14 +106,14 @@ API
 ---
 Run
 ```
-tools/test
+tools/backend_tests
 ```
 
 Frontend
 ------
 Run
 ```
-yarn test
+tools/frontend_tests
 ```
 
 Contact

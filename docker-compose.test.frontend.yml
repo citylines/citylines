@@ -13,6 +13,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
+    command: bash -c 'yarn && yarn test'
   db_test:
     image: "mdillon/postgis"
     environment:
