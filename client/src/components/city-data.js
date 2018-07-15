@@ -49,8 +49,7 @@ class CityData extends Component {
         <select className="c-field" value={this.state.city} onChange={this.onCityChange.bind(this)}>
           {this.state.cities && this.state.cities
             .filter(city => city.length > 0)
-            .sort(city => city.length)
-            .reverse()
+            .sort((city1, city2) => city2.length - city1.length)
             .map(city => <option key={city.url} value={city.url}>{`${city.name}, ${city.country}`}</option>)}
         </select>
         </p>
