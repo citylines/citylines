@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
 import Tags from './tags';
+import CityData from './city-data';
 
 class Data extends Component {
   datasets() {
@@ -35,12 +36,15 @@ class Data extends Component {
 
             <p><Translate content="data.license" unsafe />. <Translate content="data.see_terms_1" /> <Translate component={Link} className="c-link" to="/terms" content="data.see_terms_2" />.</p>
 
-            <Translate component="h3" className="c-heading" content="data.download"/>
+            <Translate component="h2" className="c-heading" content="data.download"/>
+            <h3 className="c-heading">Todos los datos</h3>
             { Object.entries(this.datasets()).map(entry => {
               const label = entry[0];
               const url = entry[1];
               return <p key={label}><Translate content={`data.${label}`} />: {this.formats().map(format => <a key={`${label}-${format}`} name={`${label}-${format}`} className="data-link c-link" href={`${url}.${format}`} onClick={this.sendGAEvent}>{format}</a>)} </p>;
             })}
+            <h3 className="c-heading">Datos por ciudad</h3>
+            <CityData />
             </div>
         </div>
         )
