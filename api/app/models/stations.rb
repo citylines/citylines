@@ -38,7 +38,7 @@ class Station < Sequel::Model(:stations)
   def feature_properties(**opts)
     closure = self.closure || Section::FUTURE
 
-    opts = {line_url_name: line_url_name,
+    data = {line_url_name: line_url_name,
             lines: lines_data,
             name: self.name,
             opening: self.opening || Section::FUTURE,
@@ -46,20 +46,25 @@ class Station < Sequel::Model(:stations)
             buildstart_end: self.opening || closure,
             osm_id: self.osm_id,
             osm_tags: self.osm_tags,
-            closure: closure,
-            width: radius,
-            inner_width: inner_radius }
+            closure: closure}
+
+    if opts[:formatted]
+      data.merge!(
+        width: radius,
+        inner_width: inner_radius
+      )
+    end
 
     # We add other line_url_name attrs if the station is shared
     # so the original url_name refers to style, and the following ones
     # are use by the client's filter function
     if shared_station?
       lines.each_with_index do |line, i|
-        opts["line_url_name_#{i + 1}".to_sym] = line.url_name
+        data["line_url_name_#{i + 1}".to_sym] = line.url_name
       end
     end
 
-    super.merge(opts)
+    super.merge(data)
   end
 
   def radius

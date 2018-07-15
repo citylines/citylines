@@ -64,10 +64,17 @@ describe Station do
   end
 
   describe "feature" do
-    it "should be equal to raw_feature and formatted_feature" do
-      feature = @station.feature
-      assert_equal feature, @station.raw_feature
-      assert_equal feature, @station.formatted_feature
+    it "should be equal to raw_feature" do
+      assert_equal @station.feature, @station.raw_feature
+    end
+
+    it "formatted_feature should add width to raw_feature" do
+      expected_feature = @station.feature.dup
+      expected_feature[:properties].merge!(
+        width: @station.radius,
+        inner_width: @station.inner_radius,
+      )
+      assert_equal expected_feature, @station.formatted_feature
     end
 
     it "should return the right feature" do
@@ -94,8 +101,7 @@ describe Station do
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
                              closure: @station.closure,
-                             width: @station.radius,
-                             inner_width: @station.inner_radius}
+                            }
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -125,8 +131,7 @@ describe Station do
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
                              closure: Section::FUTURE,
-                             width: @station.radius,
-                             inner_width: @station.inner_radius}
+                            }
 
       assert_equal expected_properties, feature[:properties]
     end
@@ -155,8 +160,7 @@ describe Station do
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
                              closure: @station.closure,
-                             width: @station.radius,
-                             inner_width: @station.inner_radius}
+                            }
 
       assert_equal expected_properties, feature[:properties]
     end
