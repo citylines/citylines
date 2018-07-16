@@ -148,7 +148,6 @@ export default {
   data: {
     short_title: 'Data',
     title: "Our data is open",
-    download: "Download",
     license: "The information stored in the <b>citylines.co</b> database is under the <a class='c-link' href='http://opendatacommons.org/licenses/odbl/1.0/' target='_blank'> Open Database License</a> (ODbL)",
     see_terms_1: "See the",
     see_terms_2: "terms of use",
