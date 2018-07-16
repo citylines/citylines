@@ -64,7 +64,7 @@ class CityData extends Component {
       <div>
         <p>
         <select className="c-field" value={this.state.city} onChange={this.onCityChange.bind(this)}>
-          <option>Seleccionar ciudad</option>
+          <Translate component="option" content="data.select_city" />
           {this.state.cities && this.state.cities
             .filter(city => city.length > 0)
             .sort((city1, city2) => city2.length - city1.length)

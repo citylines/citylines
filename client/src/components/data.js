@@ -36,13 +36,13 @@ class Data extends Component {
 
             <p><Translate content="data.license" unsafe />. <Translate content="data.see_terms_1" /> <Translate component={Link} className="c-link" to="/terms" content="data.see_terms_2" />.</p>
 
-            <h2 className="c-heading">Todos los datos</h2>
+            <Translate component="h2" className="c-heading" content="data.all_data" />
             { Object.entries(this.datasets()).map(entry => {
               const label = entry[0];
               const url = entry[1];
               return <p key={label}><Translate content={`data.${label}`} />: {this.formats().map(format => <a key={`${label}-${format}`} name={`${label}-${format}`} className="data-link c-link" href={`${url}.${format}`} onClick={this.sendGAEvent}>{format}</a>)} </p>;
             })}
-            <h2 className="c-heading">Datos por ciudad</h2>
+            <Translate component="h2" className="c-heading" content="data.data_by_city" />
             <CityData />
           </div>
         </div>

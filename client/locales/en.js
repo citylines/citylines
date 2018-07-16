@@ -157,7 +157,10 @@ export default {
     features: 'Tracks',
     stations: 'Stations',
     section_lines: "Tracks' lines",
-    station_lines: "Stations' lines"
+    station_lines: "Stations' lines",
+    all_data: 'All data',
+    data_by_city: 'Data by city',
+    select_city: 'Select city'
   },
   user: {
     my_cities: 'My cities',

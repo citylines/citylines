@@ -157,7 +157,10 @@ export default {
     features: 'Tramos',
     stations: 'Estaciones',
     section_lines: 'Líneas por tramos',
-    station_lines: 'Líneas por estaciones'
+    station_lines: 'Líneas por estaciones',
+    all_data: 'Todos los datos',
+    data_by_city: 'Datos por ciudad',
+    select_city: 'Seleccionar ciudad'
   },
   user: {
     my_cities: 'Mis ciudades',
