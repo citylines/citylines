@@ -52,6 +52,12 @@ class CityData extends Component {
     }
   }
 
+  sendGAEvent(e) {
+    const name = e.target.attributes.download.value;
+
+    ga('send', 'event', 'data', 'city_download', name);
+  }
+
   render() {
     console.log(this.state)
     return (
@@ -77,7 +83,14 @@ class CityData extends Component {
             {
               ['sections', 'stations' ].map(type =>
                 <p>
-                  <a className="c-link" href={this.currentCityLink(type).url} download={this.currentCityLink(type).label}>{this.currentCityLink(type).label}</a>
+                  <a
+                    className="c-link"
+                    href={this.currentCityLink(type).url}
+                    download={this.currentCityLink(type).label}
+                    onClick={this.sendGAEvent}
+                  >
+                    {this.currentCityLink(type).label}
+                  </a>
                 </p>
               )
             }
