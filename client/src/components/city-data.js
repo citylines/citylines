@@ -59,7 +59,6 @@ class CityData extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <p>
