@@ -81,7 +81,7 @@ class CityData extends Component {
           <div>
             {
               ['sections', 'stations' ].map(type =>
-                <p>
+                <p key={this.currentCityLink(type).label}>
                   <a
                     className="c-link"
                     href={this.currentCityLink(type).url}
