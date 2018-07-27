@@ -21,13 +21,10 @@ const browserLocale = locale().split('-')[0].toLowerCase();
 
 const params = browserHistory.getCurrentLocation().query;
 
-import EN from '../locales/en';
-import ES from '../locales/es';
-import FR from '../locales/fr';
-
-Counterpart.registerTranslations('en', EN);
-Counterpart.registerTranslations('es', ES);
-Counterpart.registerTranslations('fr', FR);
+window.locales.map(locale => {
+  import ll from `../locales/${locale}`;
+  Counterpart.registerTranslations(locale, ll);
+}
 
 Counterpart.setFallbackLocale('en')
 Counterpart.setLocale(params.locale || browserLocale);
