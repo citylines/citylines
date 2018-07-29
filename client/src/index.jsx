@@ -21,7 +21,9 @@ const browserLocale = locale().split('-')[0].toLowerCase();
 
 const params = browserHistory.getCurrentLocation().query;
 
-Object.entries(window.locales).map((lang, locale) => {
+Object.entries(window.locales).map(el => {
+  const lang = el[0];
+  const locale = el[1];
   Counterpart.registerTranslations(lang, locale);
 });
 
