@@ -21,6 +21,7 @@ gem 'sitemap_generator'
 gem 'addressable'
 gem 'fog-aws'
 gem 'mime-types'
+gem 'http-accept'
 
 gem 'pry', require: false
 

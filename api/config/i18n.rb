@@ -1,3 +1,4 @@
+DEFAULT_LOCALE="en"
 
 LOCALES = {}
 

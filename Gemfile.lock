@@ -35,6 +35,7 @@ GEM
     google-id-token (1.3.1)
       jwt
       multi_json
+    http-accept (1.7.0)
     httpi (2.4.2)
       rack
       socksify
@@ -117,6 +118,7 @@ DEPENDENCIES
   database_cleaner
   fog-aws
   google-id-token
+  http-accept
   jwt
   mime-types
   minitest
@@ -141,4 +143,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

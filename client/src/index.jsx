@@ -16,19 +16,8 @@ import Error from './components/error';
 
 import MainStore from './stores/main-store';
 
-import locale from 'browser-locale';
-const browserLocale = locale().split('-')[0].toLowerCase();
-
-const params = browserHistory.getCurrentLocation().query;
-
-Object.entries(window.locales).map(el => {
-  const lang = el[0];
-  const locale = el[1];
-  Counterpart.registerTranslations(lang, locale);
-});
-
-Counterpart.setFallbackLocale('en')
-Counterpart.setLocale(params.locale || browserLocale);
+Counterpart.registerTranslations(window.locale, window.i18n);
+Counterpart.setLocale(window.locale);
 
 import assets from './lib/assets-provider';
 assets.loadPaths(window.assetsPaths);

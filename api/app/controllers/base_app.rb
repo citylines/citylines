@@ -8,11 +8,15 @@ class BaseApp < App
 
   register Sinatra::AssetPipeline
 
+  helpers I18nHelpers
+
   get '/robots.txt' do
     "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
 
   get '/*' do
+    @locale = locale_from_params(params) || browser_locale(request) || DEFAULT_LOCALE
+    @i18n = LOCALES[@locale]
     erb :index
   end
 end

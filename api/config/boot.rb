@@ -13,7 +13,7 @@ require_relative 'database'
 require_relative 'mapbox'
 require_relative 'auth'
 require_relative 'cache'
-require_relative 'locales'
+require_relative 'i18n'
 
 Dir[File.join(APP_ROOT, "lib", "**/*.rb")].each {|file| require file}
 Dir[File.join(APP_ROOT, "app", "helpers", "*.rb")].each {|file| require file}
