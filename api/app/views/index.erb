@@ -49,7 +49,9 @@
       <div id="container">
       </div>
       <script>
-        window.assetsPaths = <%= (Sprockets::Helpers.manifest ? Sprockets::Helpers.manifest.assets : {}).to_json %>
+        window.assetsPaths = <%= (Sprockets::Helpers.manifest ? Sprockets::Helpers.manifest.assets : {}).to_json %>;
+        window.i18n = <%= @i18n.to_json %>;
+        window.locale = <%= @locale.to_json %>;
       </script>
       <script src="<%= asset_path('bundle.js') %>"></script>
     </body>
