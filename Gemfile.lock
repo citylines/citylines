@@ -97,7 +97,7 @@ GEM
       builder (~> 3.0)
     slop (3.6.0)
     socksify (1.7.1)
-    sprockets (3.7.0)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-helpers (1.2.1)
