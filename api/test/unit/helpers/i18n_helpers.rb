@@ -13,9 +13,9 @@ describe I18nHelpers do
   end
 
   describe "browser_locale" do
-    it "should return an available_browser locale" do
+    it "should return the first available_browser locale" do
       available_locales.each do |locale|
-        request = OpenStruct.new(env: {"HTTP_ACCEPT_LANGUAGE" => "#{locale}-CC"})
+        request = OpenStruct.new(env: {"HTTP_ACCEPT_LANGUAGE" => "xa-XA,rr-RR,#{locale}-CC,fr-FR"})
         assert_equal locale, browser_locale(request)
       end
     end

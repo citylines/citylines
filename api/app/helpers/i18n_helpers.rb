@@ -7,11 +7,9 @@ module I18nHelpers
 
   def browser_locale(request)
     languages = HTTP::Accept::Languages.parse(request.env["HTTP_ACCEPT_LANGUAGE"])
-    locale = unless languages.blank?
-               languages.first.locale.split("-").first
-             end
+    locales = languages.map{|lang| lang.locale.split("-").first}.uniq
 
-    locale if available_locales.include?(locale)
+    (locales & available_locales).first
   end
 
   def locale_from_params(params)
