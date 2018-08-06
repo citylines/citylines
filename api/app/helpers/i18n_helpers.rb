@@ -6,6 +6,7 @@ module I18nHelpers
   end
 
   def browser_locale(request)
+    return if request.env["HTTP_ACCEPT_LANGUAGE"].blank?
     languages = HTTP::Accept::Languages.parse(request.env["HTTP_ACCEPT_LANGUAGE"])
     locales = languages.map{|lang| lang.locale.split("-").first}.uniq
     (locales & available_locales).first

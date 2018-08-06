@@ -25,8 +25,13 @@ describe I18nHelpers do
       refute browser_locale(request)
     end
 
-    it "should reutn nil because the header is not set" do
+    it "should reutn nil because the header is blank" do
       request = OpenStruct.new(env: {"HTTP_ACCEPT_LANGUAGE" => ''})
+      refute browser_locale(request)
+    end
+
+    it "should reutn nil because the header is nil" do
+      request = OpenStruct.new(env: {})
       refute browser_locale(request)
     end
   end
