@@ -70,7 +70,7 @@ class LinesEditor extends Component {
   render() {
     return (
       <div className={`u-letter-box--small u-pillar-box--medium ${this.state.dragging ? 'dragging-line' : 'not-dragging-line'}`} style={{maxWidth:"1000px"}}>
-        { this.props.systems.map((system) => {
+        { this.props.systems && this.props.systems.map((system) => {
           return (
             <System
               key={system.id}

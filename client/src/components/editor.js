@@ -154,6 +154,8 @@ class Editor extends PureComponent {
   }
 
   render() {
+    if (!this.state.systems) return null;
+
     return (
           <PanelBody>
             <span className="c-input-group edit-mode-buttons">
