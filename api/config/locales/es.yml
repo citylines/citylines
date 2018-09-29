@@ -80,8 +80,8 @@ editor:
     add_line: Agregar línea
     fields:
       klasses_id:
-        section_id: Tramo Id:%(id)s
-        station_id: Estación Id:%(id)s
+        section: Tramo Id:%(id)s
+        station: Estación Id:%(id)s
       name: Nombre
       opening: Inauguración
       buildstart: Comienzo de construcción
