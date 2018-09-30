@@ -1,6 +1,6 @@
 ![citylines.co](https://user-images.githubusercontent.com/6061036/33101609-a6c7569a-cef7-11e7-8a49-1846b3ccf852.png)
 
-This is the source code of [citylines.co](http://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
+This is the source code of [citylines.co](https://www.citylines.co), a collaborative platform where people can build the transport systems of the World's cities.
 
 ![](https://user-images.githubusercontent.com/6061036/40272543-53a12d90-5b85-11e8-88a9-787f257fd243.png)
 
