@@ -12,7 +12,8 @@ class PanelHeader extends PureComponent {
       <div className="panel-header o-grid__cell o-grid__cell--width-100">
         <div className="panel-header-title">
           <h3 className="c-heading">{this.props.name}</h3>
-          <Link className="c-link" to={linkTo}>{linkLabel}</Link>
+          {!this.props.loading &&
+            <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
         </div>
       </div>
     );

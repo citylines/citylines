@@ -168,6 +168,7 @@ class City extends PureComponent {
               name={this.state.name}
               pathName={this.props.location.pathname}
               urlName={this.urlName}
+              loading={this.state.main.loading}
             />
             { this.props.children }
           </div>

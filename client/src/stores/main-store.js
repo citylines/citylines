@@ -63,11 +63,15 @@ const MainStore = Object.assign({}, Store, {
 
   setLoading() {
     this.state.loading = true;
+    this.state = {...this.state};
+
     this.emitChangeEvent();
   },
 
   unsetLoading() {
     this.state.loading = false;
+    this.state = {...this.state};
+
     this.emitChangeEvent();
   }
 });
