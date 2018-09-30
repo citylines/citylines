@@ -5,6 +5,7 @@ class BaseApp < App
   set :assets_paths, %w(../../client/assets)
   set :assets_precompile, %w(bundle.js *.css *.png *.svg)
   set :assets_host, "cdn.citylines.co"
+  set :assets_protocol, :https
 
   register Sinatra::AssetPipeline
 
