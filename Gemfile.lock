@@ -69,6 +69,7 @@ GEM
       rack (>= 0.4)
     rack-protection (1.5.5)
       rack
+    rack-ssl-enforcer (0.2.9)
     rack-test (0.6.3)
       rack (>= 1.0)
     raindrops (0.19.0)
@@ -129,6 +130,7 @@ DEPENDENCIES
   pg
   pry
   rack-cache
+  rack-ssl-enforcer
   rack-test
   rake
   sequel
@@ -143,4 +145,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.16.3
+   1.16.5

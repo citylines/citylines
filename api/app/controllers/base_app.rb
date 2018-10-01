@@ -1,4 +1,8 @@
+require 'rack/ssl-enforcer'
+
 class BaseApp < App
+  use Rack::SslEnforcer, only_environments: 'production'
+
   set :public_folder, File.join(APP_ROOT, '..', 'public')
   set :views, File.join(APP_ROOT, 'app', 'views')
 

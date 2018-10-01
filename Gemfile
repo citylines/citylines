@@ -22,6 +22,7 @@ gem 'addressable'
 gem 'fog-aws'
 gem 'mime-types'
 gem 'http-accept'
+gem 'rack-ssl-enforcer'
 
 gem 'pry', require: false
 
