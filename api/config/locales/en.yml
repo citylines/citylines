@@ -201,3 +201,4 @@ transport_modes:
   brt: BRT
   people_mover: People Mover
   bus: Bus
+  tram: Tram/Streetcar

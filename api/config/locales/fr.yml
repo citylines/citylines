@@ -207,3 +207,4 @@ transport_modes:
   brt: BHNS
   people_mover: Transport hectométrique
   bus: Bus
+  tram: Tram

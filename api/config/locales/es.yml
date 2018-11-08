@@ -204,3 +204,4 @@ transport_modes:
   brt: BRT
   people_mover: People Mover
   bus: Autobús
+  tram: Tranvía

@@ -9,6 +9,7 @@ module TransportModes
     6 => { name: 'brt', width: 4, min_width: 1},
     7 => { name: 'people_mover', width: 3, min_width: 2},
     8 => { name: 'bus', width: 1, min_width: 1},
+    9 => { name: 'tram', width: 3, min_width: 1},
   }
 
   def self.all
