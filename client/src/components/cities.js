@@ -38,7 +38,7 @@ class RequestCity extends Component {
       <div className="c-card">
         <header className="c-card__header">
           <h3 className="c-heading">
-            You don't find your city? <Link className="c-link c-link--primary" to={''}>{'Request it!'}</Link>
+            {"You don't find your city?"} <a target="_blank" className="c-link c-link--primary" href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}>{"Request it!"}</a>
           </h3>
         </header>
         <div className="c-card__body">
