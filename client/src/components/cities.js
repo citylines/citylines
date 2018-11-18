@@ -32,6 +32,22 @@ class CityItem extends Component {
   }
 }
 
+class RequestCity extends Component {
+  render() {
+    return (
+      <div className="c-card">
+        <header className="c-card__header">
+          <h3 className="c-heading">
+            You don't find your city? <Link className="c-link c-link--primary" to={''}>{'Request it!'}</Link>
+          </h3>
+        </header>
+        <div className="c-card__body">
+        </div>
+      </div>
+    )
+  }
+}
+
 class Cities extends Component {
   constructor(props, context) {
     super(props, context);
@@ -85,7 +101,7 @@ class Cities extends Component {
   }
 
   render() {
-    const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
+    let cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
       return (
         <CityItem
           key={`${city.name}-${city.state}-${city.country}`}
@@ -99,6 +115,8 @@ class Cities extends Component {
         />
       )
     });
+
+    cities = [...cities,<RequestCity key="_request-city" />];
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
