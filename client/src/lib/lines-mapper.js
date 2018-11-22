@@ -13,12 +13,6 @@ class LinesMapper extends Mapper {
         BUILDSTART: 'sections_buildstart',
         OPENGING: 'sections_opening',
         HOVER: 'sections_hover'
-      },
-      stations: {
-        BUILDSTART: 'stations_buildstart',
-        OPENGING: 'stations_opening',
-        HOVER: 'stations_hover',
-        INNER_LAYER: 'stations_inner_layer'
       }
     };
   }

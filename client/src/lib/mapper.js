@@ -9,10 +9,10 @@ class Mapper {
 
     this.linesShown = [];
     this.layers = [];
-    this.sources = ['sections', 'stations'].map((type) => {
+    this.sources = ['sections'].map((type) => {
       return {
         name: `${type}_source`,
-        data: `/api/${this.urlName}/source/${type}`
+        data: 'mapbox://brunosalerno.8vs17wdk'
       }
     });
 
@@ -29,7 +29,7 @@ class Mapper {
   updateLayers() {
     const layers = [];
 
-    ['sections', 'stations'].map((type) => {
+    ['sections'].map((type) => {
       Object.values(this.layerNames[type]).map((layer) => {
         const sourceName = `${type}_source`;
         const featureType = type === 'sections' ? 'line' : 'circle';

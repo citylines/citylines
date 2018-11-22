@@ -99,8 +99,8 @@ class Source extends Component {
 
   load() {
     this.map.addSource(this.props.name, {
-      type: 'geojson',
-      data: this.props.data
+      type: 'vector',
+      url: this.props.data
     });
   }
 
@@ -137,6 +137,7 @@ class Layer extends Component {
     this.map.addLayer({
       id: this.props.id,
       source: this.props.source,
+      'source-layer': 'tokyo-sections-1lf9uh',
       type: this.props.type,
       paint: this.props.paint
     });
