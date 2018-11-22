@@ -24,7 +24,7 @@ describe City do
 
     assert @city.coords
 
-    assert_equal [-68.304444, -54.807222], @city.geojson_coords
+    assert_equal [-68.30444, -54.80722], @city.geojson_coords
   end
 
   describe "url_name" do

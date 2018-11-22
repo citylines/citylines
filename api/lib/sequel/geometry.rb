@@ -2,6 +2,7 @@ module Sequel
     module Plugins
         module Geometry
             SRID = 4326
+            MAX_PRECISION = 5
 
             module InstanceMethods
                 def set_geometry_from_wkt(geometry, column = :geometry)
@@ -31,11 +32,11 @@ module Sequel
 
             module DatasetMethods
                 def geojson(column)
-                    self.get(Sequel.function :ST_AsGeoJSON, column)
+                    self.get(Sequel.function :ST_AsGeoJSON, column, MAX_PRECISION)
                 end
 
                 def id_and_geojson
-                  self.select(:id, Sequel.function(:ST_AsGeoJSON, :geometry))
+                  self.select(:id, Sequel.function(:ST_AsGeoJSON, :geometry, MAX_PRECISION))
                 end
             end
         end
