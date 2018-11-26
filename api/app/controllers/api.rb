@@ -39,9 +39,9 @@ class Api < App
          url: city.url}
       end
 
-      {
+      Oj.dump({
         cities: cities
-      }.to_json
+      })
     end
 
     get '/top_contributors' do
@@ -84,7 +84,7 @@ class Api < App
 
       last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
 
-      { lines: city_lines(@city),
+      Oj.dump({ lines: city_lines(@city),
         systems: city_systems(@city),
         transport_modes: TransportModes.all,
         years: { start: @city.start_year,
@@ -92,7 +92,7 @@ class Api < App
                  current: nil,
                  previous: nil,
                  default: Date.today.year }
-      }.to_json
+      })
     end
 
     get '/years_data' do |url_name|
@@ -102,7 +102,7 @@ class Api < App
 
       last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
 
-      lines_length_by_year(@city).to_json
+      Oj.dump(lines_length_by_year(@city))
     end
   end
 
@@ -111,7 +111,7 @@ class Api < App
 
     last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
 
-    formatted_lines_features_collection(@city, type).to_json
+    Oj.dump(formatted_lines_features_collection(@city, type))
   end
 
   get '/:url_name/raw_source/:type' do |url_name, type|
@@ -119,7 +119,7 @@ class Api < App
 
     last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
 
-    lines_features_collection(@city, type).to_json
+    Oj.dump(lines_features_collection(@city, type))
   end
 
   get '/editor/:url_name/data' do |url_name|
