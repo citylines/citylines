@@ -56,6 +56,7 @@ GEM
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.3)
+    oj (3.7.1)
     overpass-api-ruby (0.2)
       httpi (~> 2.4.0)
     pg (0.19.0)
@@ -126,6 +127,7 @@ DEPENDENCIES
   mocha
   naturally
   oauth
+  oj
   overpass-api-ruby
   pg
   pry
@@ -145,4 +147,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.16.5
+   1.17.1

@@ -23,6 +23,7 @@ gem 'fog-aws'
 gem 'mime-types'
 gem 'http-accept'
 gem 'rack-ssl-enforcer'
+gem 'oj'
 
 gem 'pry', require: false
 
