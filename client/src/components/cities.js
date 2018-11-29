@@ -32,22 +32,6 @@ class CityItem extends Component {
   }
 }
 
-class RequestCity extends Component {
-  render() {
-    return (
-      <div className="c-card">
-        <header className="c-card__header">
-          <h3 className="c-heading">
-            {"You don't find your city?"} <a target="_blank" className="c-link c-link--primary" href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}>{"Request it!"}</a>
-          </h3>
-        </header>
-        <div className="c-card__body">
-        </div>
-      </div>
-    )
-  }
-}
-
 class Cities extends Component {
   constructor(props, context) {
     super(props, context);
@@ -116,8 +100,6 @@ class Cities extends Component {
       )
     });
 
-    cities = [...cities,<RequestCity key="_request-city" />];
-
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
         <div className="o-container o-container--medium">
@@ -139,6 +121,11 @@ class Cities extends Component {
               { cities }
               </div>
             </div>
+            <p className="request-city">
+              <small>
+              {"Cannot find your city?"} <a target="_blank" className="c-link c-link--primary" href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}>{"Request it!"}</a>
+              </small>
+            </p>
           </div>
         </div>
 

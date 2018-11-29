@@ -521,3 +521,7 @@ table .narrow {
 .system-tree .c-badge {
   font-size: 0.7em;
 }
+
+.request-city {
+  text-align: center;
+}
