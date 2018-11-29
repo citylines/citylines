@@ -85,7 +85,7 @@ class Cities extends Component {
   }
 
   render() {
-    let cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
+    const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
       return (
         <CityItem
           key={`${city.name}-${city.state}-${city.country}`}
