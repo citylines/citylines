@@ -12,6 +12,9 @@ cities:
   top_systems: Mayores sistemas
   support: Únete a nuestra
   support_link: sala de chat en Gitter
+  request_city:
+    cant_find: ¿No encuentras tu ciudad?
+    request_it: Pide por ella
 main:
   title: citylines.co
   description: Citylines.co es una plataforma de mapeo colaborativo de los sistemas

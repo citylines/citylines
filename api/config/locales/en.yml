@@ -12,6 +12,9 @@ cities:
   top_systems: Biggest systems
   support: Join our
   support_link: live chat room at Gitter
+  request_city:
+    cant_find: Cannot find your city?
+    request_it: Request it
 main:
   title: citylines.co
   description: Citylines.co is a collaborative mapping platform where people can build
