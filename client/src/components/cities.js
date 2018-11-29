@@ -121,6 +121,17 @@ class Cities extends Component {
               { cities }
               </div>
             </div>
+            <p className="request-city">
+              <small>
+                <Translate content="cities.request_city.cant_find"/>
+                {' '}
+                <Translate component="a"
+                           target="_blank"
+                           className="c-link c-link--primary"
+                           href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
+                           content="cities.request_city.request_it" />
+              </small>
+            </p>
           </div>
         </div>
 
