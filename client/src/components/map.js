@@ -88,14 +88,13 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
-  componentDidMount(){
+  componentWillMount(){
     this.map = this.context.map;
     this.load();
   }
 
   getChildContext() {
     return {
-      map: this.map,
       source: this.props.name
     };
   }
@@ -111,12 +110,12 @@ class Source extends Component {
     });
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
-    return null;
+    return (
+      <div>
+      { this.props.children }
+      </div>
+    )
   }
 }
 
@@ -125,7 +124,6 @@ Source.contextTypes = {
 }
 
 Source.childContextTypes = {
-  map: React.PropTypes.object,
   source: React.PropTypes.string
 }
 
@@ -167,7 +165,7 @@ class Layer extends Component {
 
 Layer.contextTypes = {
   map: React.PropTypes.object,
-  source: React.PropTypes.object
+  source: React.PropTypes.string
 }
 
 class Popup extends Component {

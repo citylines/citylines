@@ -185,24 +185,23 @@ class City extends PureComponent {
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
             disableMouseEvents={this.state.playing} >
-            { this.state.sources && this.state.sources.map((source) => { return (
+            { this.state.sources && this.state.sources.map(source =>
                 <Source
                   key={source.name}
                   name={source.name}
                   data={source.data}
                 >
-                { this.state.layers && this.state.layers.filter(layer => layer.source == source.name).map(layer => {return <Layer
+                { this.state.layers && this.state.layers.filter(layer => layer.source == source.name).map(layer => <Layer
                       key={layer.id}
                       id={layer.id}
                       type={layer.type}
                       paint={layer.paint}
                       filter={layer.filter}
-                    /> }
+                    />
                   )
                 }
                 </Source>
-              )
-            }) }
+            ) }
             { this.state.clickedFeatures && (<Popup
               point={this.state.clickedFeatures.point}
               onClose={this.bindedOnPopupClose}>
