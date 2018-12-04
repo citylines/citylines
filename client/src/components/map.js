@@ -93,6 +93,13 @@ class Source extends Component {
     this.load();
   }
 
+  getChildContext() {
+    return {
+      map: this.map,
+      source: this.props.name
+    };
+  }
+
   componentWillUnmount(){
     this.map.removeSource(this.props.name);
   }
@@ -117,6 +124,11 @@ Source.contextTypes = {
   map: React.PropTypes.object
 }
 
+Source.childContextTypes = {
+  map: React.PropTypes.object,
+  source: React.PropTypes.string
+}
+
 class Layer extends Component {
   componentDidMount(){
     this.map = this.context.map;
@@ -136,7 +148,7 @@ class Layer extends Component {
   load() {
     this.map.addLayer({
       id: this.props.id,
-      source: this.props.source,
+      source: this.context.source,
       type: this.props.type,
       paint: this.props.paint
     });
@@ -154,7 +166,8 @@ class Layer extends Component {
 }
 
 Layer.contextTypes = {
-  map: React.PropTypes.object
+  map: React.PropTypes.object,
+  source: React.PropTypes.object
 }
 
 class Popup extends Component {
