@@ -8,13 +8,9 @@ class Mapper {
     this.filterCache = {};
 
     this.linesShown = [];
-    this.layers = [];
-    this.sources = ['sections', 'stations'].map((type) => {
-      return {
-        name: `${type}_source`,
-        data: `/api/${this.urlName}/source/${type}`
-      }
-    });
+
+    this.SOURCE_TYPES = ['sections', 'stations'];
+    this.layers = {};
 
     this.currentHoverId = {sections: ['none'], stations: ['none']};
 
@@ -22,18 +18,32 @@ class Mapper {
     // Set this.layerNames;
   }
 
+  sources() {
+    return (
+      this.SOURCE_TYPES.map(type => {
+        return {
+          name: `${type}_source`,
+          layers: this.layers[type],
+          data: `/api/${this.urlName}/source/${type}`
+        };
+      }
+      )
+    );
+  }
+
   filter(layer) {
     // To implement
   }
 
   updateLayers() {
-    const layers = [];
+    const layers = {};
 
-    ['sections', 'stations'].map((type) => {
+    this.SOURCE_TYPES.map((type) => {
+      layers[type] = [];
       Object.values(this.layerNames[type]).map((layer) => {
         const sourceName = `${type}_source`;
         const featureType = type === 'sections' ? 'line' : 'circle';
-        layers.push(this.layer(sourceName, layer, featureType));
+        layers[type].push(this.layer(sourceName, layer, featureType));
       });
     });
 

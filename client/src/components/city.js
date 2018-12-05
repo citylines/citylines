@@ -191,7 +191,7 @@ class City extends PureComponent {
                   name={source.name}
                   data={source.data}
                 >
-                { this.state.layers && this.state.layers.filter(layer => layer.source == source.name).map(layer => <Layer
+                { source.layers.map(layer => <Layer
                       key={layer.id}
                       id={layer.id}
                       type={layer.type}
