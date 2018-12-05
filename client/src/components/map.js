@@ -88,6 +88,11 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.layers = {};
+  }
+
   componentWillMount(){
     this.map = this.context.map;
     this.load();
@@ -100,6 +105,7 @@ class Source extends Component {
   }
 
   componentWillUnmount(){
+    Object.values(this.layers).map(child => child.preUnmount());
     this.map.removeSource(this.props.name);
   }
 
@@ -113,7 +119,12 @@ class Source extends Component {
   render() {
     return (
       <div>
-      { this.props.children }
+      {
+        React.Children.map(this.props.children, child =>
+          React.cloneElement(child, { onRef: (ref) => {this.layers[child.props.id] = ref} })
+        )
+      }
+
       </div>
     )
   }
@@ -129,11 +140,12 @@ Source.childContextTypes = {
 
 class Layer extends Component {
   componentDidMount(){
+    this.props.onRef(this)
     this.map = this.context.map;
     this.load();
   }
 
-  componentWillUnmount(){
+  preUnmount(){
     this.map.removeLayer(this.props.id);
   }
 
