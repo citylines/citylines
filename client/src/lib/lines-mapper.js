@@ -9,17 +9,17 @@ class LinesMapper extends Mapper {
     this.currentYear = null;
 
     this.layerNames = {
-      sections: {
-        BUILDSTART: 'sections_buildstart',
-        OPENGING: 'sections_opening',
-        HOVER: 'sections_hover'
-      },
-      stations: {
-        BUILDSTART: 'stations_buildstart',
-        OPENGING: 'stations_opening',
-        HOVER: 'stations_hover',
-        INNER_LAYER: 'stations_inner_layer'
-      }
+      sections: [
+        'sections_buildstart',
+        'sections_opening',
+        'sections_hover'
+      ],
+      stations: [
+        'stations_buildstart',
+        'stations_opening',
+        'stations_hover',
+        'stations_inner_layer'
+      ]
     };
   }
 
@@ -74,8 +74,6 @@ class LinesMapper extends Mapper {
 
   setYear(year) {
     this.currentYear = year;
-
-    this.updateLayers();
   }
 }
 
