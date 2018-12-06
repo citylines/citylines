@@ -124,7 +124,6 @@ class Source extends Component {
           React.cloneElement(child, { onRef: (ref) => {this.layers[child.props.id] = ref} })
         )
       }
-
       </div>
     )
   }
