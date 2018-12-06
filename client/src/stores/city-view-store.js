@@ -88,7 +88,7 @@ const CityViewStore = Object.assign({}, Store, {
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
-      sources: cityData.linesMapper ? cityData.linesMapper.sources() : [],
+      sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown.slice() : [],
       years: cityData.years,
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,

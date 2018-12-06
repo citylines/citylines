@@ -74,6 +74,8 @@ class LinesMapper extends Mapper {
 
   setYear(year) {
     this.currentYear = year;
+
+    this.updateLayers();
   }
 }
 
