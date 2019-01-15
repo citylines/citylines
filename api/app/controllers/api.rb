@@ -100,7 +100,15 @@ class Api < App
 
       halt 404 unless @city
 
-      last_modified [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
+      last_updated = [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
+
+      # We add this hack so we have current year's data
+      # if the original data is cached
+      if last_updated.year < Time.now.year
+        last_updated = Time.new(Time.now.year,1,1) + 1
+      end
+
+      last_modified last_updated
 
       Oj.dump(lines_length_by_year(@city))
     end
