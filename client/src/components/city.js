@@ -172,6 +172,7 @@ class City extends PureComponent {
             />
             { this.props.children }
           </div>
+          <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
             mapboxStyle={this.state.mapbox_style}
@@ -231,6 +232,7 @@ class City extends PureComponent {
                 />
               }
           </Map>
+          </main>
           { this.state.drawFeatures &&
             <div className="mapboxgl-ctrl-group mapboxgl-ctrl cut-line">
               <button

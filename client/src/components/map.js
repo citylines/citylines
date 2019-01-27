@@ -12,10 +12,21 @@ class Map extends Component {
     return {map: this.map};
   }
 
+  mapId() {
+    return `map${this.props.mapIndex || ""}`;
+  }
+
+  mapClass() {
+    let className = "map"
+    if (this.props.mapIndex == 0) className = className + " left";
+    if (this.props.mapIndex == 1) className = className + " right";
+    return className;
+  }
+
   setMap(props) {
     mapboxgl.accessToken = props.mapboxAccessToken;
     this.map = new mapboxgl.Map({
-      container: 'map',
+      container: this.mapId(),
       style: props.mapboxStyle,
       center: props.center,
       zoom: props.zoom,
@@ -75,10 +86,10 @@ class Map extends Component {
 
   render() {
     return (
-      <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
-        <div id="map"></div>
+      <div className={this.mapClass()}>
+        <div id={this.mapId()} className="map"></div>
         { this.mapLoaded && this.props.children }
-      </main>
+      </div>
       )
   }
 }

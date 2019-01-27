@@ -1,4 +1,4 @@
-#map {
+.map {
   position:absolute;
   padding:0;
   margin:0;
@@ -6,6 +6,15 @@
   height:100%;
   left:0;
   top:0;
+}
+
+.map.left {
+  width:50%;
+}
+
+.map.right {
+  width:50%;
+  left:50%;
 }
 
 #panel {
