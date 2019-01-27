@@ -1,6 +1,9 @@
 import React, {PureComponent} from 'react';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
+import Translate from 'react-translate-component';
+import FeaturePopupContent from './city/feature-popup-content';
+
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 
@@ -51,6 +54,9 @@ class CityComparison extends PureComponent {
             zoom={state.zoom}
             bearing={state.bearing}
             pitch={state.pitch}
+            mouseEventsLayerNames={state.mouseEventsLayerNames}
+            onMouseMove={(point, features) => {CityViewStore.hover(urlName, features)}}
+            onMouseClick={(point, features) => {CityViewStore.clickFeatures(urlName, point, features)}}
             disableMouseEvents={state.playing} >
             { state.sources && state.sources.map((source) => { return (
                 <Source
@@ -71,6 +77,19 @@ class CityComparison extends PureComponent {
                 />
               )
             }) }
+            { state.clickedFeatures && (<Popup
+              point={state.clickedFeatures.point}
+              onClose={() => {CityViewStore.unClickFeatures(urlName)}}>
+              <div>
+              {
+                state.clickedFeatures.features.map((f,i) =>
+                    <FeaturePopupContent
+                      key={`${f.properties.klass}-${f.properties.id}-${f.properties.line_url_name}`}
+                      feature={f}
+                      index={i} />)
+              }
+              </div>
+              </Popup>) }
           </Map>;
         })
       }
