@@ -13,7 +13,8 @@ class CityComparison extends PureComponent {
     super(props, context);
 
     this.state = {
-      urlNames: ["buenos-aires", "madrid"]
+      urlNames: ["buenos-aires", "madrid"],
+      cities: {}
     }
 
     this.bindedOnChange = this.onChange.bind(this);
@@ -40,9 +41,24 @@ class CityComparison extends PureComponent {
   }
 
   onChange() {
-    let newState = {urlNames: this.state.urlNames};
-    this.state.urlNames.map(urlName => newState[urlName] = CityStore.getState(urlName));
+    let newState = {urlNames: this.state.urlNames, cities: {}};
+    this.state.urlNames.map(urlName => newState.cities[urlName] = CityStore.getState(urlName));
     this.setState(newState);
+  }
+
+  handleCitiesChange(urlNames) {
+    const oldUrlNames = [...this.state.urlNames];
+
+    this.setState({urlNames: [...urlNames]}, () => {
+      urlNames.map((newUrlName, index) => {
+        const oldUrlName = oldUrlNames[index];
+        if (newUrlName != oldUrlName) {
+          CityViewStore.unload(oldUrlName);
+          CityStore.load(newUrlName,{});
+          CityViewStore.load(newUrlName, {});
+        }
+      });
+    });
   }
 
   render() {
@@ -50,10 +66,11 @@ class CityComparison extends PureComponent {
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
       <CityComparisonHeader
         urlNames={this.state.urlNames}
+        onChange={this.handleCitiesChange.bind(this)}
       />
       {
         this.state.urlNames.map((urlName, mapIndex) => {
-          const state = this.state[urlName];
+          const state = this.state.cities[urlName];
           if (!state) return null;
 
           return <Map
