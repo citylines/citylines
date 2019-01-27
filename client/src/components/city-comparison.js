@@ -2,24 +2,30 @@ import React, {PureComponent} from 'react';
 import {Map, Source, Layer, Popup, Draw} from './map';
 
 import CityStore from '../stores/city-store';
+import CityViewStore from '../stores/city-view-store';
 
 class CityComparison extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.urlNames = ["buenos-aires", "la-paz"];
+    this.urlNames = ["buenos-aires", "madrid"];
   }
 
   componentWillMount() {
     CityStore.addChangeListener(this.onChange.bind(this));
+    CityViewStore.addChangeListener(this.onChange.bind(this));
   }
 
   componentWillUnmount() {
     CityStore.removeChangeListener(this.onChange.bind(this));
+    CityViewStore.removeChangeListener(this.onChange.bind(this));
   }
 
   componentDidMount() {
-    this.urlNames.map(urlName => CityStore.load(urlName, {}));
+    this.urlNames.map(urlName => {
+      CityStore.load(urlName, {});
+      CityViewStore.load(urlName, {});
+    });
   }
 
   onChange() {
@@ -46,6 +52,25 @@ class CityComparison extends PureComponent {
             bearing={state.bearing}
             pitch={state.pitch}
             disableMouseEvents={state.playing} >
+            { state.sources && state.sources.map((source) => { return (
+                <Source
+                  key={source.name}
+                  name={source.name}
+                  data={source.data}
+                />
+              )
+            }) }
+            { state.layers && state.layers.map((layer) => { return (
+                <Layer
+                  key={layer.id}
+                  id={layer.id}
+                  source={layer.source}
+                  type={layer.type}
+                  paint={layer.paint}
+                  filter={layer.filter}
+                />
+              )
+            }) }
           </Map>;
         })
       }
