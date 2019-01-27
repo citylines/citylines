@@ -3,6 +3,7 @@ import {Map, Source, Layer, Popup, Draw} from './map';
 
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
+import CityComparisonHeader from './city-comparison-header';
 
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
@@ -46,6 +47,9 @@ class CityComparison extends PureComponent {
 
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
+      <CityComparisonHeader
+        urlNames={this.urlNames}
+      />
       {
         this.urlNames.map((urlName, mapIndex) => {
           const state = this.state[urlName];

@@ -9,10 +9,14 @@
 }
 
 .map.left {
+  top: 6%;
+  height: 94%;
   width:50%;
 }
 
 .map.right {
+  top: 6%;
+  height: 94%;
   width:50%;
   left:50%;
 }
@@ -27,6 +31,15 @@
     width:300px;
     z-index:1000;
     overflow-x: hidden;
+}
+
+#comparison-header {
+  width: 100%;
+  height: 5%;
+}
+
+#comparison-header .o-grid__cell {
+  margin:4px;
 }
 
 @media (max-width: 600px){
