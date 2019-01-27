@@ -24,6 +24,8 @@ class CityComparisonHeader extends PureComponent {
           <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
+            toggleAnimation={this.props.toggleAnimation}
+            playing={this.props.playing}
           />
         </div>
         <div className="o-grid__cell">

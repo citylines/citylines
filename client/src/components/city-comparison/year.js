@@ -34,7 +34,7 @@ class Year extends PureComponent {
         </div>
         <button ref="action"
                 className="c-button c-button--ghost"
-                onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span></button>
+                onClick={this.props.toggleAnimation}><span className={`fa ${icon}`}></span></button>
       </div>
     )
   }

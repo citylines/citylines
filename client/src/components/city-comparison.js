@@ -51,6 +51,7 @@ class CityComparison extends PureComponent {
       newState.year = firstCityState.currentYear;
       newState.min = (firstCityState.years || {}).start;
       newState.max = (firstCityState.years || {}).end;
+      newState.playing = firstCityState.playing;
     }
 
     this.setState(newState);
@@ -77,6 +78,12 @@ class CityComparison extends PureComponent {
     );
   }
 
+  handleToggleAnimation() {
+    this.state.urlNames.map(urlName =>
+      CityViewStore.toggleAnimation(urlName)
+    );
+  }
+
   render() {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
@@ -85,6 +92,8 @@ class CityComparison extends PureComponent {
         onChange={this.handleCitiesChange.bind(this)}
         year={this.state.year}
         onYearChange={this.handleYearChange.bind(this)}
+        toggleAnimation={this.handleToggleAnimation.bind(this)}
+        playing={this.state.playing}
       />
       {
         this.state.urlNames.map((urlName, mapIndex) => {
