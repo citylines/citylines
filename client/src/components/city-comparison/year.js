@@ -1,0 +1,43 @@
+import React, {PureComponent} from 'react';
+
+class Year extends PureComponent {
+  handleKeyPress(event) {
+    if (event.key !== 'Enter') return;
+
+    let year = parseInt(event.target.value);
+    if (year < this.props.min) year = this.props.min;
+    if (year > this.props.max) year = this.props.max;
+
+    this.props.onYearChange(year);
+  };
+
+  handleYearChange(event) {
+    const year = parseInt(event.target.value);
+    this.props.onYearChange(year);
+  };
+
+  toggleAnimation() {};
+
+  render() {
+    const icon = this.props.playing ? 'fa-pause' : 'fa-play';
+    return (
+      <div className="c-input-group c-input-group--right year-group">
+        <div className="o-field">
+          <input ref="currentYear"
+                 className="c-field"
+                 type="number"
+                 min={this.props.min}
+                 max={this.props.max}
+                 onKeyPress={this.handleKeyPress.bind(this)}
+                 onChange={this.handleYearChange.bind(this)}
+                 value={this.props.year || ""}/>
+        </div>
+        <button ref="action"
+                className="c-button c-button--ghost"
+                onClick={this.toggleAnimation.bind(this)}><span className={`fa ${icon}`}></span></button>
+      </div>
+    )
+  }
+}
+
+export default Year

@@ -3,7 +3,7 @@ import {Map, Source, Layer, Popup, Draw} from './map';
 
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
-import CityComparisonHeader from './city-comparison-header';
+import CityComparisonHeader from './city-comparison/header';
 
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
