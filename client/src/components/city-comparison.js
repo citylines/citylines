@@ -37,6 +37,7 @@ class CityComparison extends PureComponent {
         this.urlNames.map((urlName, mapIndex) => {
           const state = this.state[urlName];
           return <Map
+            key={`map-${mapIndex}`}
             mapIndex={mapIndex}
             mapboxAccessToken={state.mapbox_access_token}
             mapboxStyle={state.mapbox_style}
