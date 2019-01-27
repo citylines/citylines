@@ -26,7 +26,7 @@ class CityComparison extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.urlNames.map(urlName => {
+    this.state.urlNames.map(urlName => {
       CityViewStore.unload(urlName);
     });
     CityStore.removeChangeListener(this.bindedOnChange);
