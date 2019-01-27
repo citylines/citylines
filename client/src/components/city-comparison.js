@@ -12,7 +12,10 @@ class CityComparison extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.urlNames = ["buenos-aires", "madrid"];
+    this.state = {
+      urlNames: ["buenos-aires", "madrid"]
+    }
+
     this.bindedOnChange = this.onChange.bind(this);
   }
 
@@ -30,29 +33,29 @@ class CityComparison extends PureComponent {
   }
 
   componentDidMount() {
-    this.urlNames.map(urlName => {
+    this.state.urlNames.map(urlName => {
       CityStore.load(urlName, {});
       CityViewStore.load(urlName, {});
     });
   }
 
   onChange() {
-    let newState = {};
-    this.urlNames.map(urlName => newState[urlName] = CityStore.getState(urlName));
+    let newState = {urlNames: this.state.urlNames};
+    this.state.urlNames.map(urlName => newState[urlName] = CityStore.getState(urlName));
     this.setState(newState);
   }
 
   render() {
-    if (!this.state) return null;
-
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
       <CityComparisonHeader
-        urlNames={this.urlNames}
+        urlNames={this.state.urlNames}
       />
       {
-        this.urlNames.map((urlName, mapIndex) => {
+        this.state.urlNames.map((urlName, mapIndex) => {
           const state = this.state[urlName];
+          if (!state) return null;
+
           return <Map
             key={`map-${mapIndex}`}
             mapIndex={mapIndex}
