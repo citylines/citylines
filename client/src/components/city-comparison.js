@@ -71,6 +71,12 @@ class CityComparison extends PureComponent {
     });
   }
 
+  handleYearChange(year) {
+    this.state.urlNames.map(urlName =>
+      CityViewStore.setYear(urlName, year)
+    );
+  }
+
   render() {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
@@ -78,6 +84,7 @@ class CityComparison extends PureComponent {
         urlNames={this.state.urlNames}
         onChange={this.handleCitiesChange.bind(this)}
         year={this.state.year}
+        onYearChange={this.handleYearChange.bind(this)}
       />
       {
         this.state.urlNames.map((urlName, mapIndex) => {

@@ -22,6 +22,7 @@ class CityComparisonHeader extends PureComponent {
         <div className="o-grid__cell">
           <YearControl
             year={this.props.year}
+            onYearChange={this.props.onYearChange}
           />
         </div>
         <div className="o-grid__cell">
@@ -53,8 +54,21 @@ class CitySelect extends Component {
 }
 
 class YearControl extends Component {
-  handleKeyPress() {};
-  handleYearChange() {};
+  handleKeyPress(event) {
+    if (event.key !== 'Enter') return;
+
+    let year = parseInt(event.target.value);
+    if (year < this.props.min) year = this.props.min;
+    if (year > this.props.max) year = this.props.max;
+
+    this.props.onYearChange(year);
+  };
+
+  handleYearChange(event) {
+    const year = parseInt(event.target.value);
+    this.props.onYearChange(year);
+  };
+
   toggleAnimation() {};
 
   render() {
