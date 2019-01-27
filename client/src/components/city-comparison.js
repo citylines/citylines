@@ -42,7 +42,17 @@ class CityComparison extends PureComponent {
 
   onChange() {
     let newState = {urlNames: this.state.urlNames, cities: {}};
-    this.state.urlNames.map(urlName => newState.cities[urlName] = CityStore.getState(urlName));
+    this.state.urlNames.map(urlName =>
+      newState.cities[urlName] = CityStore.getState(urlName)
+    );
+
+    if (this.state.urlNames[0]) {
+      const firstCityState = CityViewStore.getState(this.state.urlNames[0]);
+      newState.year = firstCityState.currentYear;
+      newState.min = (firstCityState.years || {}).start;
+      newState.max = (firstCityState.years || {}).end;
+    }
+
     this.setState(newState);
   }
 
@@ -67,6 +77,7 @@ class CityComparison extends PureComponent {
       <CityComparisonHeader
         urlNames={this.state.urlNames}
         onChange={this.handleCitiesChange.bind(this)}
+        year={this.state.year}
       />
       {
         this.state.urlNames.map((urlName, mapIndex) => {
