@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import {Link} from 'react-router';
 import Year from './year';
 
 class CityComparisonHeader extends PureComponent {
@@ -51,11 +52,16 @@ class CitySelect extends PureComponent {
 
   render() {
     return (
-      <select value={this.props.urlName} onChange={this.handleChange.bind(this)} className="c-field">
-        {this.props.cities.map(city =>
-          <option key={city.url_name} value={city.url_name}>{city.name}</option>
-        )}
-      </select>
+      <div className="c-input-group">
+        <select value={this.props.urlName} onChange={this.handleChange.bind(this)} className="c-field">
+          {this.props.cities.map(city =>
+            <option key={city.url_name} value={city.url_name}>{city.name}</option>
+          )}
+        </select>
+        <Link to={`/${this.props.urlName}`} className="c-link c-link--primary">
+          <i className="fa fa-external-link see-city"></i>
+        </Link>
+      </div>
     )
   }
 }
