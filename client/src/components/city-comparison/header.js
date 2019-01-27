@@ -10,12 +10,16 @@ class CityComparisonHeader extends PureComponent {
     ];
   }
 
+  theOtherCity(urlName) {
+    return this.props.urlNames.find(un => un != urlName);
+  }
+
   render() {
     return (
       <div id="comparison-header" className="o-grid">
         <div className="o-grid__cell">
           <CitySelect
-            cities={this.cities()}
+            cities={this.cities().filter(city => city.url_name != this.theOtherCity(this.props.urlNames[0]))}
             urlName={this.props.urlNames[0]}
             onChange={(newUrlName) => {this.props.onChange([newUrlName, this.props.urlNames[1]])}}
           />
@@ -30,7 +34,7 @@ class CityComparisonHeader extends PureComponent {
         </div>
         <div className="o-grid__cell">
           <CitySelect
-            cities={this.cities()}
+            cities={this.cities().filter(city => city.url_name != this.theOtherCity(this.props.urlNames[1]))}
             urlName={this.props.urlNames[1]}
             onChange={(newUrlName) => {this.props.onChange([this.props.urlNames[0], newUrlName])}}
           />
