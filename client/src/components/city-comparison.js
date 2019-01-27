@@ -12,16 +12,20 @@ class CityComparison extends PureComponent {
     super(props, context);
 
     this.urlNames = ["buenos-aires", "madrid"];
+    this.bindedOnChange = this.onChange.bind(this);
   }
 
   componentWillMount() {
-    CityStore.addChangeListener(this.onChange.bind(this));
-    CityViewStore.addChangeListener(this.onChange.bind(this));
+    CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
-    CityStore.removeChangeListener(this.onChange.bind(this));
-    CityViewStore.removeChangeListener(this.onChange.bind(this));
+    this.urlNames.map(urlName => {
+      CityViewStore.unload(urlName);
+    });
+    CityStore.removeChangeListener(this.bindedOnChange);
+    CityViewStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {
