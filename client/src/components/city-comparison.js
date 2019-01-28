@@ -1,4 +1,6 @@
 import React, {PureComponent} from 'react';
+import {browserHistory} from 'react-router';
+
 import {Map, Source, Layer, Popup, Draw} from './map';
 
 import Translate from 'react-translate-component';
@@ -12,12 +14,31 @@ class CityComparison extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    const urlNames = this.params().cities ? this.params().cities.split(",") : [];
+
     this.state = {
-      urlNames: ["buenos-aires", "madrid"],
+      urlNames: urlNames,
       cities: {}
     }
 
     this.bindedOnChange = this.onChange.bind(this);
+  }
+
+  params() {
+    return this.props.location.query;
+  }
+
+  updateParams(newParams) {
+    const params = {...this.params(), ...newParams};
+
+    // We delete null params
+    Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
+
+    // If new params are equal to the current ones, we don't push the state to the
+    // browser history
+    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
+
+    browserHistory.push({...this.props.location, query: params});
   }
 
   componentWillMount() {
@@ -59,6 +80,8 @@ class CityComparison extends PureComponent {
 
   handleCitiesChange(urlNames) {
     const oldUrlNames = [...this.state.urlNames];
+
+    this.updateParams({cities: urlNames.join(",")});
 
     this.setState({urlNames: [...urlNames]}, () => {
       urlNames.map((newUrlName, index) => {

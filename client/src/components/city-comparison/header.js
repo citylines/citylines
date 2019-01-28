@@ -54,6 +54,7 @@ class CitySelect extends PureComponent {
     return (
       <div className="c-input-group">
         <select value={this.props.urlName} onChange={this.handleChange.bind(this)} className="c-field">
+          <option>Select city</option>
           {this.props.cities.map(city =>
             <option key={city.url_name} value={city.url_name}>{city.name}</option>
           )}
