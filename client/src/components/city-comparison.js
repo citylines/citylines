@@ -56,8 +56,8 @@ class CityComparison extends PureComponent {
 
   componentDidMount() {
     this.state.urlNames.map(urlName => {
-      CityStore.load(urlName, {});
-      CityViewStore.load(urlName, {});
+      CityStore.load(urlName, this.params());
+      CityViewStore.load(urlName, this.params());
     });
   }
 
@@ -88,8 +88,8 @@ class CityComparison extends PureComponent {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
           CityViewStore.unload(oldUrlName);
-          CityStore.load(newUrlName,{});
-          CityViewStore.load(newUrlName, {});
+          CityStore.load(newUrlName, this.params());
+          CityViewStore.load(newUrlName, this.params());
         }
       });
     });
@@ -99,6 +99,11 @@ class CityComparison extends PureComponent {
     this.state.urlNames.map(urlName =>
       CityViewStore.setYear(urlName, year)
     );
+  }
+
+  handleYearUpdate() {
+    if (this.state.playing) return;
+    this.updateParams({year: this.state.year});
   }
 
   handleToggleAnimation() {
@@ -115,6 +120,7 @@ class CityComparison extends PureComponent {
         onChange={this.handleCitiesChange.bind(this)}
         year={this.state.year}
         onYearChange={this.handleYearChange.bind(this)}
+        onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
         playing={this.state.playing}
       />

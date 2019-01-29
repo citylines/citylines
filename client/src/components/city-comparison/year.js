@@ -16,7 +16,11 @@ class Year extends PureComponent {
     this.props.onYearChange(year);
   };
 
-  toggleAnimation() {};
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.year != this.props.year && this.props.onUpdate) {
+      this.props.onUpdate();
+    }
+  }
 
   render() {
     const icon = this.props.playing ? 'fa-pause' : 'fa-play';
