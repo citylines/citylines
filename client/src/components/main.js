@@ -34,7 +34,7 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms/);
+    return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms|\/compare/);
   }
 
   togglePanel() {
