@@ -7,6 +7,7 @@ import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
 import CityComparisonHeader from './city-comparison/header';
 
+import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 
@@ -18,7 +19,8 @@ class CityComparison extends PureComponent {
 
     this.state = {
       urlNames: urlNames,
-      cities: {}
+      cities: {},
+      citiesList: []
     }
 
     this.bindedOnChange = this.onChange.bind(this);
@@ -44,6 +46,7 @@ class CityComparison extends PureComponent {
   componentWillMount() {
     CityStore.addChangeListener(this.bindedOnChange);
     CityViewStore.addChangeListener(this.bindedOnChange);
+    CitiesStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
@@ -52,6 +55,7 @@ class CityComparison extends PureComponent {
     });
     CityStore.removeChangeListener(this.bindedOnChange);
     CityViewStore.removeChangeListener(this.bindedOnChange);
+    CitiesStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {
@@ -59,10 +63,16 @@ class CityComparison extends PureComponent {
       CityStore.load(urlName, this.params());
       CityViewStore.load(urlName, this.params());
     });
+    CitiesStore.fetchCities();
   }
 
   onChange() {
-    let newState = {urlNames: this.state.urlNames, cities: {}};
+    let newState = {
+      urlNames: this.state.urlNames,
+      cities: {},
+      citiesList: CitiesStore.getState().cities
+    };
+
     this.state.urlNames.map(urlName =>
       newState.cities[urlName] = CityStore.getState(urlName)
     );
@@ -123,6 +133,7 @@ class CityComparison extends PureComponent {
         onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
         playing={this.state.playing}
+        citiesList={this.state.citiesList}
       />
       {
         this.state.urlNames.map((urlName, mapIndex) => {
