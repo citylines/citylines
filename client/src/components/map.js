@@ -82,6 +82,12 @@ class Map extends Component {
     if (nextProps.center && !this.map) {
       this.setMap(nextProps);
     }
+
+    if (nextProps.zoom != this.props.zoom) {
+      if (this.map.getZoom().toFixed(2) != nextProps.zoom) {
+        this.map.flyTo({zoom: nextProps.zoom});
+      }
+    }
   }
 
   render() {

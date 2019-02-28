@@ -66,6 +66,12 @@ const CityStore = Object.assign({}, Store, {
     cityData.pitch = geo.pitch;
 
     this.emitChangeEvent()
+  },
+
+  setZoom(urlName, zoom) {
+    const cityData = this.cityData[urlName];
+    cityData.zoom = zoom;
+    this.emitChangeEvent();
   }
 });
 

@@ -88,6 +88,16 @@ class CityComparison extends PureComponent {
     this.setState(newState);
   }
 
+  handleMapMove(map) {
+    if (this.state.playing) return;
+
+    const zoom = map.getZoom().toFixed(2);
+
+    this.state.urlNames.map(urlName =>
+      CityStore.setZoom(urlName, zoom)
+    );
+  }
+
   handleCitiesChange(urlNames) {
     const oldUrlNames = [...this.state.urlNames];
 
@@ -152,6 +162,7 @@ class CityComparison extends PureComponent {
             mouseEventsLayerNames={state.mouseEventsLayerNames}
             onMouseMove={(point, features) => {CityViewStore.hover(urlName, features)}}
             onMouseClick={(point, features) => {CityViewStore.clickFeatures(urlName, point, features)}}
+            onMove={this.handleMapMove.bind(this)}
             disableMouseEvents={state.playing} >
             { state.sources && state.sources.map((source) => { return (
                 <Source
