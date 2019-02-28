@@ -93,6 +93,8 @@ class CityComparison extends PureComponent {
 
     const zoom = map.getZoom().toFixed(2);
 
+    this.updateParams({zoom: zoom});
+
     this.state.urlNames.map(urlName =>
       CityStore.setZoom(urlName, zoom)
     );
