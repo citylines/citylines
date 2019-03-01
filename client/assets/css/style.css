@@ -133,6 +133,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .panel-header-title a.c-link {
   margin-left:10px;
+  font-size:0.9em;
 }
 
 .panel-body {

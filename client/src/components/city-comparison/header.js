@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from 'react-router';
 import Year from './year';
+import Translate from 'react-translate-component';
 
 class CityComparisonHeader extends PureComponent {
   cities() {
@@ -58,7 +59,7 @@ class CitySelect extends PureComponent {
     return (
       <div className="c-input-group">
         <select value={this.props.urlName} onChange={this.handleChange.bind(this)} className="c-field">
-          <option value="">Select city</option>
+          <Translate component="option" value="" content="compare.select_city"/>
           {this.props.cities.map((city, cityIndex) =>
             <option key={`${city.url_name}-${cityIndex}`} value={city.url_name}>{city.name}</option>
           )}

@@ -211,3 +211,7 @@ transport_modes:
   people_mover: Transport hectométrique
   bus: Bus
   tram: Tram
+compare:
+  short_title: Comparer
+  link: Comparer
+  select_city: Choisir une ville
