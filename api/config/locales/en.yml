@@ -206,6 +206,7 @@ transport_modes:
   bus: Bus
   tram: Tram/Streetcar
 compare:
+  title: "Comparison: %(cities)s"
   short_title: Comparator
   link: Compare
   select_city: Select city

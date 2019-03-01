@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
 import {Map, Source, Layer, Popup, Draw} from './map';
+import Tags from './tags';
 
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
@@ -142,9 +143,31 @@ class CityComparison extends PureComponent {
     CityViewStore.load(urlName, this.params());
   }
 
+  title() {
+    let cities = this.activeUrlNames().map(urlName => {
+      const city = this.state.cities[urlName];
+      if (city) return city.name;
+      }
+    );
+
+    cities = cities.filter(city => !!city);
+
+    if (cities.length  > 1) {
+      return cities.join(" vs ");
+    } else if (cities.length > 0) {
+      return cities[0];
+    } else {
+      return;
+    }
+  }
+
   render() {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
+         { this.title() && <Tags
+           title="compare.title"
+            interpolations={{cities: this.title()}}
+          /> }
       <CityComparisonHeader
         urlNames={this.state.urlNames}
         onChange={this.handleCitiesChange.bind(this)}
