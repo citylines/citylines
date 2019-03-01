@@ -60,8 +60,7 @@ class CityComparison extends PureComponent {
 
   componentDidMount() {
     this.state.urlNames.map(urlName => {
-      CityStore.load(urlName, this.params());
-      CityViewStore.load(urlName, this.params());
+      this.loadCity(urlName);
     });
     CitiesStore.fetchCities();
   }
@@ -110,8 +109,7 @@ class CityComparison extends PureComponent {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
           CityViewStore.unload(oldUrlName);
-          CityStore.load(newUrlName, this.params());
-          CityViewStore.load(newUrlName, this.params());
+          this.loadCity(newUrlName);
         }
       });
     });
@@ -132,6 +130,12 @@ class CityComparison extends PureComponent {
     this.state.urlNames.map(urlName =>
       CityViewStore.toggleAnimation(urlName)
     );
+  }
+
+  loadCity(urlName) {
+    if (!urlName) return;
+    CityStore.load(urlName, this.params());
+    CityViewStore.load(urlName, this.params());
   }
 
   render() {
