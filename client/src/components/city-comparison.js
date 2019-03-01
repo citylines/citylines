@@ -50,7 +50,7 @@ class CityComparison extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.state.urlNames.map(urlName => {
+    this.activeUrlNames().map(urlName => {
       CityViewStore.unload(urlName);
     });
     CityStore.removeChangeListener(this.bindedOnChange);
@@ -59,7 +59,7 @@ class CityComparison extends PureComponent {
   }
 
   componentDidMount() {
-    this.state.urlNames.map(urlName => {
+    this.activeUrlNames().map(urlName => {
       this.loadCity(urlName);
     });
     CitiesStore.fetchCities();
@@ -72,12 +72,12 @@ class CityComparison extends PureComponent {
       citiesList: CitiesStore.getState().cities
     };
 
-    this.state.urlNames.map(urlName =>
+    this.activeUrlNames().map(urlName =>
       newState.cities[urlName] = CityStore.getState(urlName)
     );
 
-    if (this.state.urlNames[0]) {
-      const firstCityState = CityViewStore.getState(this.state.urlNames[0]);
+    if (this.activeUrlNames()[0]) {
+      const firstCityState = CityViewStore.getState(this.activeUrlNames()[0]);
       newState.year = firstCityState.currentYear;
       newState.min = (firstCityState.years || {}).start;
       newState.max = (firstCityState.years || {}).end;
@@ -94,7 +94,7 @@ class CityComparison extends PureComponent {
 
     this.updateParams({zoom: zoom});
 
-    this.state.urlNames.map(urlName =>
+    this.activeUrlNames().map(urlName =>
       CityStore.setZoom(urlName, zoom)
     );
   }
@@ -116,7 +116,7 @@ class CityComparison extends PureComponent {
   }
 
   handleYearChange(year) {
-    this.state.urlNames.map(urlName =>
+    this.activeUrlNames().map(urlName =>
       CityViewStore.setYear(urlName, year)
     );
   }
@@ -127,9 +127,13 @@ class CityComparison extends PureComponent {
   }
 
   handleToggleAnimation() {
-    this.state.urlNames.map(urlName =>
+    this.activeUrlNames().map(urlName =>
       CityViewStore.toggleAnimation(urlName)
     );
+  }
+
+  activeUrlNames() {
+    return this.state.urlNames.filter(urlName => !!urlName);
   }
 
   loadCity(urlName) {
