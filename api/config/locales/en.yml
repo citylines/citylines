@@ -206,6 +206,6 @@ transport_modes:
   bus: Bus
   tram: Tram/Streetcar
 compare:
-  short_title: Compare
+  short_title: Comparator
   link: Compare
   select_city: Select city

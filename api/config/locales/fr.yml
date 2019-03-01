@@ -212,6 +212,6 @@ transport_modes:
   bus: Bus
   tram: Tram
 compare:
-  short_title: Comparer
+  short_title: Comparateur
   link: Comparer
   select_city: Choisir une ville
