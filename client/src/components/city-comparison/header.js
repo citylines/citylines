@@ -8,7 +8,7 @@ class CityComparisonHeader extends PureComponent {
     return this.props.citiesList.
       filter(city => city.length > 0).
       sort((a,b) => {
-        return a.length > b.length ? -1 : 1;
+        return a.name > b.name ? 1 : -1;
       }).
       map(city => {
         return {name: city.name, url_name: city.url.split("/")[1]};
