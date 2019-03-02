@@ -30,13 +30,13 @@ class CityComparisonHeader extends PureComponent {
           />
         </div>
         <div className="o-grid__cell">
-          <Year
+          {typeof(this.props.year) != "undefined" && <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
             onUpdate={this.props.onYearUpdate}
             toggleAnimation={this.props.toggleAnimation}
             playing={this.props.playing}
-          />
+          />}
         </div>
         <div className="o-grid__cell">
           <CitySelect

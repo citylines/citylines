@@ -36,7 +36,7 @@ class CityComparison extends PureComponent {
     const params = {...this.params(), ...newParams};
 
     // We delete null params
-    Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
+    Object.keys(params).forEach((key) => (params[key] == null || isNaN(params[key])) && delete params[key]);
 
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
