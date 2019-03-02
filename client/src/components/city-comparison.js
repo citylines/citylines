@@ -7,6 +7,7 @@ import Tags from './tags';
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
 import CityComparisonHeader from './city-comparison/header';
+import Intro from './city-comparison/intro';
 
 import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
@@ -178,6 +179,9 @@ class CityComparison extends PureComponent {
         playing={this.state.playing}
         citiesList={this.state.citiesList}
       />
+      {
+        !this.activeUrlNames().length && <Intro />
+      }
       {
         this.state.urlNames.map((urlName, mapIndex) => {
           const state = this.state.cities[urlName];

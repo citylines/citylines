@@ -210,3 +210,4 @@ compare:
   short_title: Comparator
   link: Compare
   select_city: Select city
+  intro: There is no city selected. To start, choose two cities from the lists above.

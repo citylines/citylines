@@ -48,6 +48,13 @@
   padding-left:5px;
 }
 
+.comparison-intro {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
 @media (max-width: 600px){
     #panel {
         width: 100%;
