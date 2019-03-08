@@ -82,7 +82,7 @@ class Api < App
 
       halt 404 unless @city
 
-      last_modified [last_modified_system_or_line(@city), @city.updated_at].compact.max
+      last_modified last_modified_base_data(@city)
 
       Oj.dump({ lines: city_lines(@city),
         systems: city_systems(@city),
@@ -100,7 +100,7 @@ class Api < App
 
       halt 404 unless @city
 
-      last_updated = [last_modified_source_feature(@city, 'sections'), last_modified_source_feature(@city, 'stations'), @city.updated_at].compact.max
+      last_updated = last_modified_years_data(@city)
 
       # We add this hack so we have current year's data
       # if the original data is cached
@@ -117,7 +117,7 @@ class Api < App
   get '/:url_name/source/:type' do |url_name, type|
     @city = City[url_name: url_name]
 
-    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
+    last_modified last_modified_source(@city, type)
 
     Oj.dump(formatted_lines_features_collection(@city, type))
   end
@@ -125,7 +125,7 @@ class Api < App
   get '/:url_name/raw_source/:type' do |url_name, type|
     @city = City[url_name: url_name]
 
-    last_modified [last_modified_source_feature(@city, type), last_modified_system_or_line(@city)].compact.max
+    last_modified last_modified_source(@city, type)
 
     Oj.dump(lines_features_collection(@city, type))
   end

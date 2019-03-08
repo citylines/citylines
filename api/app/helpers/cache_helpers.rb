@@ -1,26 +1,48 @@
 module CacheHelpers
   def last_modified_city_date
-    [Section.max(:updated_at), DeletedFeature.where(feature_class: 'Section').max(:created_at), System.max(:updated_at), City.max(:updated_at)].compact.max
+    Section.select(Sequel.function(:max,:updated_at)).
+      union(DeletedFeature.where(feature_class: 'Section').select(Sequel.function(:max,:created_at)), all: true).
+      union(System.select(Sequel.function(:max,:updated_at)), all: true).
+      union(City.select(Sequel.function(:max,:updated_at)), all: true).
+      max(:max)
   end
+
+  def last_modified_years_data(city)
+    last_modified_source_feature(city, 'sections').
+      union(last_modified_source_feature(city, 'stations'), all: true).
+      union(City.where(id: city.id).select(Sequel.function(:max, :updated_at)), all: true).
+      max(:max)
+  end
+
+  def last_modified_base_data(city)
+    last_modified_system_or_line(city).
+      union(City.where(id: city.id).select(Sequel.function(:max, :updated_at)), all: true).
+      max(:max)
+  end
+
+  def last_modified_source(city, type)
+    last_modified_source_feature(city, type).
+      union(last_modified_system_or_line(city), all: true).
+      max(:max)
+  end
+
+  private
 
   def last_modified_source_feature(city, type)
     klass_name = type == 'sections' ? 'Section' : 'Station'
 
-    [
-      features_query(city, type).max(:updated_at),
-      feature_lines_query(city, type).max(:updated_at),
-      DeletedFeature.where(feature_class: klass_name, city_id: city.id).max(:created_at)
-    ].compact.max
+    features_query(city, type).select(Sequel.function(:max, :updated_at)).
+      union(feature_lines_query(city, type).select(Sequel.function(:max, :updated_at)), all: true).
+      union(DeletedFeature.where(feature_class: klass_name, city_id: city.id).select(Sequel.function(:max, :created_at)), all: true)
   end
 
   def last_modified_system_or_line(city)
     # SystemBack and LineBackup are added to catch
     # removed systems or lines. There is overlap regarding modified elements.
-    [
-      System.where(city_id: city.id).max(:updated_at),
-      Line.where(city_id: city.id).max(:updated_at),
-      SystemBackup.where(city_id: city.id).max(:created_at),
-      LineBackup.where(city_id: city.id).max(:created_at)
-    ].compact.max
+
+    System.where(city_id: city.id).select(Sequel.function(:max, :updated_at)).
+      union(Line.where(city_id: city.id).select(Sequel.function(:max, :updated_at)), all: true).
+      union(SystemBackup.where(city_id: city.id).select(Sequel.function(:max, :created_at)), all: true).
+      union(LineBackup.where(city_id: city.id).select(Sequel.function(:max, :created_at)), all: true)
   end
 end
