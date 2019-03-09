@@ -94,6 +94,9 @@ class Section < Sequel::Model(:sections)
   end
 
   # This method is used with the raw json that comes from the Editor
+  # Although this method could consider as valid erroneus MultiLineStrings
+  # in Citylines we only work with LineStrings (which come from OSM or from
+  # the Editor manual input)
   def self.valid_geometry?(geom)
     coords = geom[:coordinates]
     coords.first.is_a?(Array) && coords.length > 1
