@@ -19,6 +19,8 @@ class Api < App
     :entitystore => CACHE_CLIENT,
     :private_headers => []
 
+  enable :logging
+
   before do
     cache_control :no_cache
   end

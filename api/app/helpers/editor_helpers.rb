@@ -58,7 +58,10 @@ module EditorHelpers
     klass = Object.const_get(change[:klass])
 
     if change[:created] || change[:geo]
-      return unless klass.valid_geometry?(change[:feature][:geometry])
+      unless klass.valid_geometry?(change[:feature][:geometry])
+        logger.debug("Invalid geometry: #{change.inspect}")
+        return
+      end
     end
 
     if change[:created]
@@ -74,8 +77,7 @@ module EditorHelpers
 
     feature.backup!
 
-    puts "Feature to modify #{klass}:#{id} = #{feature}"
-    puts change.inspect
+    logger.debug "Feature to modify #{klass} ##{id}: #{change.inspect}"
 
     if change[:removed]
       remove_lines_from_feature(feature)
