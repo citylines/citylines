@@ -393,4 +393,62 @@ describe CacheHelpers do
       assert_equal @city.updated_at, last_modified_base_data(@city)
     end
   end
+
+  describe "last_modified_source" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    describe "sections" do
+      it "should match the feature" do
+        feature = Timecop.freeze(Date.today) do
+          Section.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today - 1) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal feature.updated_at, last_modified_source(@city, 'sections')
+      end
+
+      it "should match the line" do
+        feature = Timecop.freeze(Date.today - 1) do
+          Section.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal line.updated_at, last_modified_source(@city, 'sections')
+      end
+    end
+
+    describe "stations" do
+      it "should match the feature" do
+        feature = Timecop.freeze(Date.today) do
+          Station.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today - 1) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal feature.updated_at, last_modified_source(@city, 'stations')
+      end
+
+      it "should match the line" do
+        feature = Timecop.freeze(Date.today - 1) do
+          Station.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal line.updated_at, last_modified_source(@city, 'stations')
+      end
+    end
+  end
 end
