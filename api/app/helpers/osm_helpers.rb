@@ -4,7 +4,7 @@ module OSMHelpers
 
     features = elements.map do |element|
         build_osm_feature(element)
-    end
+    end.compact
 
     features = filter_out_existing_features(city, features)
 
@@ -56,6 +56,9 @@ module OSMHelpers
                              else
                                element[:nodes].map {|node| [node[:lon], node[:lat]]}
                              end
+
+    return unless valid_geometry?(geometry)
+
     properties = {
       osm_id: element[:id],
       osm_tags: element[:tags].to_json
@@ -83,5 +86,10 @@ module OSMHelpers
       (type == 'Point' && stations_osm_ids.include?(osm_id)) ||
         (type == 'LineString' && sections_osm_ids.include?(osm_id))
     }
+  end
+
+  def valid_geometry?(geometry)
+    klass = geometry[:type] == 'Point' ? Station : Section
+    klass.valid_geometry?(geometry)
   end
 end
