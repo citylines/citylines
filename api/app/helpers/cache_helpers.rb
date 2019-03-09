@@ -37,7 +37,7 @@ module CacheHelpers
   end
 
   def last_modified_system_or_line(city)
-    # SystemBack and LineBackup are added to catch
+    # SystemBackup and LineBackup are added to catch
     # removed systems or lines. There is overlap regarding modified elements.
 
     System.where(city_id: city.id).select(Sequel.function(:max, :updated_at)).
