@@ -11,6 +11,7 @@ class Api < App
   helpers UserHelpers
   helpers CacheHelpers
   helpers OSMHelpers
+  helpers EditorHelpers
 
   use Rack::Cache,
     :verbose     => true,
