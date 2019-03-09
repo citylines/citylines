@@ -319,7 +319,7 @@ describe CacheHelpers do
       assert_equal station.updated_at, last_modified_years_data(@city)
     end
 
-    it "should match the station" do
+    it "should match the city" do
       section = Timecop.freeze(Date.today - 2) do
         Section.create(city_id: @city.id)
       end
@@ -334,6 +334,63 @@ describe CacheHelpers do
       end
 
       assert_equal @city.updated_at, last_modified_years_data(@city)
+    end
+  end
+
+  describe "last_modified_base_data" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    it "should match the line" do
+      line = Timecop.freeze(Date.today) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today - 1) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal line.updated_at, last_modified_base_data(@city)
+    end
+
+    it "should match the system" do
+      line = Timecop.freeze(Date.today - 1) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal system.updated_at, last_modified_base_data(@city)
+    end
+
+    it "should match the city" do
+      line = Timecop.freeze(Date.today - 1) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today - 5) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal @city.updated_at, last_modified_base_data(@city)
     end
   end
 end
