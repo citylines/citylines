@@ -101,7 +101,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections')
+        assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
 
       it "should return the last modified section_line updated_at" do
@@ -123,7 +123,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal section_line2.updated_at, last_modified_source_feature(@city, 'sections')
+        assert_equal section_line2.updated_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
 
       it "should return the last deleted_feature created_at" do
@@ -141,7 +141,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'sections')
+        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
     end
 
@@ -161,7 +161,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations')
+        assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
 
       it "should return the last modified section_line updated_at" do
@@ -183,7 +183,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal station_line2.updated_at, last_modified_source_feature(@city, 'stations')
+        assert_equal station_line2.updated_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
 
       it "should return the last deleted_feature created_at" do
@@ -201,7 +201,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'stations')
+        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
     end
   end
@@ -223,7 +223,7 @@ describe CacheHelpers do
       # system of another city
       System.create(city_id: 567, name: "Subte")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal system.created_at, last_modified
     end
@@ -240,7 +240,7 @@ describe CacheHelpers do
       # line of another city
       Line.create(city_id: 567, name: "H")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal line.created_at, last_modified
     end
@@ -257,7 +257,7 @@ describe CacheHelpers do
       # system of another city
       System.create(city_id: 567, name: "Subte")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal system.created_at, last_modified
     end
@@ -274,9 +274,181 @@ describe CacheHelpers do
       # line of another city
       Line.create(city_id: 567, name: "H")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal line.created_at, last_modified
+    end
+  end
+
+  describe "last_modified_years_data" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    it "should match the section" do
+      section = Timecop.freeze(Date.today) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today - 2) do
+        Station.create(city_id: @city.id)
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal section.updated_at, last_modified_years_data(@city)
+    end
+
+    it "should match the station" do
+      section = Timecop.freeze(Date.today - 2) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today) do
+        Station.create(city_id: @city.id)
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal station.updated_at, last_modified_years_data(@city)
+    end
+
+    it "should match the city" do
+      section = Timecop.freeze(Date.today - 2) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today - 5) do
+        Station.create(city_id: @city.id)
+      end
+
+      Timecop.freeze(Date.today) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal @city.updated_at, last_modified_years_data(@city)
+    end
+  end
+
+  describe "last_modified_base_data" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    it "should match the line" do
+      line = Timecop.freeze(Date.today) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today - 1) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal line.updated_at, last_modified_base_data(@city)
+    end
+
+    it "should match the system" do
+      line = Timecop.freeze(Date.today - 1) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal system.updated_at, last_modified_base_data(@city)
+    end
+
+    it "should match the city" do
+      line = Timecop.freeze(Date.today - 1) do
+        Line.create(city_id: @city.id, name: "Line 1")
+      end
+
+      system = Timecop.freeze(Date.today - 5) do
+        System.create(city_id: @city.id, name: "Subway")
+      end
+
+      Timecop.freeze(Date.today) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal @city.updated_at, last_modified_base_data(@city)
+    end
+  end
+
+  describe "last_modified_source" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    describe "sections" do
+      it "should match the feature" do
+        feature = Timecop.freeze(Date.today) do
+          Section.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today - 1) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal feature.updated_at, last_modified_source(@city, 'sections')
+      end
+
+      it "should match the line" do
+        feature = Timecop.freeze(Date.today - 1) do
+          Section.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal line.updated_at, last_modified_source(@city, 'sections')
+      end
+    end
+
+    describe "stations" do
+      it "should match the feature" do
+        feature = Timecop.freeze(Date.today) do
+          Station.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today - 1) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal feature.updated_at, last_modified_source(@city, 'stations')
+      end
+
+      it "should match the line" do
+        feature = Timecop.freeze(Date.today - 1) do
+          Station.create(city_id: @city.id)
+        end
+
+        line = Timecop.freeze(Date.today) do
+          Line.create(city_id: @city.id, name: "Line 1")
+        end
+
+        assert_equal line.updated_at, last_modified_source(@city, 'stations')
+      end
     end
   end
 end
