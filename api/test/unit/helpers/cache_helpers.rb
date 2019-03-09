@@ -101,7 +101,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections')
+        assert_equal section2.updated_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
 
       it "should return the last modified section_line updated_at" do
@@ -123,7 +123,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal section_line2.updated_at, last_modified_source_feature(@city, 'sections')
+        assert_equal section_line2.updated_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
 
       it "should return the last deleted_feature created_at" do
@@ -141,7 +141,7 @@ describe CacheHelpers do
 
         section_of_another_city = Section.create(city_id: @city2.id)
 
-        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'sections')
+        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'sections').max(:max)
       end
     end
 
@@ -161,7 +161,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations')
+        assert_equal station2.updated_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
 
       it "should return the last modified section_line updated_at" do
@@ -183,7 +183,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal station_line2.updated_at, last_modified_source_feature(@city, 'stations')
+        assert_equal station_line2.updated_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
 
       it "should return the last deleted_feature created_at" do
@@ -201,7 +201,7 @@ describe CacheHelpers do
 
         station_of_another_city = Station.create(city_id: @city2.id)
 
-        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'stations')
+        assert_equal deleted_feature.created_at, last_modified_source_feature(@city, 'stations').max(:max)
       end
     end
   end
@@ -223,7 +223,7 @@ describe CacheHelpers do
       # system of another city
       System.create(city_id: 567, name: "Subte")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal system.created_at, last_modified
     end
@@ -240,7 +240,7 @@ describe CacheHelpers do
       # line of another city
       Line.create(city_id: 567, name: "H")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal line.created_at, last_modified
     end
@@ -257,7 +257,7 @@ describe CacheHelpers do
       # system of another city
       System.create(city_id: 567, name: "Subte")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal system.created_at, last_modified
     end
@@ -274,7 +274,7 @@ describe CacheHelpers do
       # line of another city
       Line.create(city_id: 567, name: "H")
 
-      last_modified = last_modified_system_or_line(@city)
+      last_modified = last_modified_system_or_line(@city).max(:max)
 
       assert_equal line.created_at, last_modified
     end
