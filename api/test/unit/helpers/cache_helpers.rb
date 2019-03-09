@@ -279,4 +279,27 @@ describe CacheHelpers do
       assert_equal line.created_at, last_modified
     end
   end
+
+  describe "last_modified_years_data" do
+    before do
+      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+    end
+
+    it "should match the section" do
+      section = Timecop.freeze(Date.today) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today - 2) do
+        Station.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal section.updated_at, last_modified_years_data(@city)
+    end
+  end
 end
