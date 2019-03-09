@@ -297,15 +297,15 @@ describe Section do
 
       linestring = multi_linestring.first
 
-      assert Section.valid_geometry?(coordinates: multi_linestring)
+      assert Section.valid_geometry?(coordinates: multi_linestring, type: 'MultiLineString')
 
-      assert Section.valid_geometry?(coordinates: linestring)
+      assert Section.valid_geometry?(coordinates: linestring, type: 'LineString')
 
-      refute Section.valid_geometry?(coordinates: linestring.first)
+      refute Section.valid_geometry?(coordinates: linestring.first, type: 'LineString')
 
-      refute Section.valid_geometry?(coordinates: [linestring.first])
+      refute Section.valid_geometry?(coordinates: [linestring.first], type: 'LineString')
 
-      refute Section.valid_geometry?(coordinates: [])
+      refute Section.valid_geometry?(coordinates: [], type: 'LineString')
     end
   end
 end
