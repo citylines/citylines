@@ -47,3 +47,10 @@ def protect
     halt 403, {'Content-Type' => 'application/json'}, {msg: 'The token does not have a valid "issued at" time'}.to_json
   end
 end
+
+def reject_if_banned(user)
+  if user.banned
+    response.delete_cookie(token_cookie_name, path: '/')
+    halt 409, {'Content-Type' => 'application/json'}, {msg: 'Banned user'}.to_json
+  end
+end

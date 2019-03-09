@@ -29,6 +29,9 @@ class Auth extends Component {
     const body = JSON.stringify({token: token});
 
     const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
+
+    if (response.status != 200) return;
+
     const json = await response.json();
 
     MainStore.setUser(json);

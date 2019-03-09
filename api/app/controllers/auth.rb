@@ -26,6 +26,8 @@ class Auth < App
       user.save
     end
 
+    reject_if_banned(user)
+
     response.set_cookie(token_cookie_name,
                         value: token(user.id),
                         path: '/',
@@ -42,6 +44,8 @@ class Auth < App
 
     user_id = payload['user']['user_id']
     user = User[user_id]
+
+    reject_if_banned(user)
 
     {username: user.name,
      userid: user.id,
@@ -91,6 +95,8 @@ class Auth < App
         user = User.new(name: name, email: email, twitter: twitter)
         user.save
       end
+
+      reject_if_banned(user)
 
       response.set_cookie(token_cookie_name,
                           value: token(user.id),
