@@ -294,12 +294,46 @@ describe CacheHelpers do
         Station.create(city_id: @city.id)
       end
 
-      station = Timecop.freeze(Date.today - 5) do
+      Timecop.freeze(Date.today - 5) do
         @city.name = "Updated name"
         @city.save
       end
 
       assert_equal section.updated_at, last_modified_years_data(@city)
+    end
+
+    it "should match the station" do
+      section = Timecop.freeze(Date.today - 2) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today) do
+        Station.create(city_id: @city.id)
+      end
+
+      Timecop.freeze(Date.today - 5) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal station.updated_at, last_modified_years_data(@city)
+    end
+
+    it "should match the station" do
+      section = Timecop.freeze(Date.today - 2) do
+        Section.create(city_id: @city.id)
+      end
+
+      station = Timecop.freeze(Date.today - 5) do
+        Station.create(city_id: @city.id)
+      end
+
+      Timecop.freeze(Date.today) do
+        @city.name = "Updated name"
+        @city.save
+      end
+
+      assert_equal @city.updated_at, last_modified_years_data(@city)
     end
   end
 end
