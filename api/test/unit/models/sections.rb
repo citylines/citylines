@@ -290,13 +290,20 @@ describe Section do
 
   describe "valid_geometry?" do
     it "should asses if the geometry is valid or not" do
-      coords = [[42.258729,-71.160281],[42.259113, -71.160837]]
+      multi_linestring = [
+        [[10, 10], [20, 20], [10, 40]],
+        [[40, 40], [30, 30], [40, 20], [30, 10]]
+      ]
 
-      assert Section.valid_geometry?(coordinates: coords)
+      linestring = multi_linestring.first
 
-      refute Section.valid_geometry?(coordinates: coords.first)
+      assert Section.valid_geometry?(coordinates: multi_linestring)
 
-      refute Section.valid_geometry?(coordinates: [coords.first])
+      assert Section.valid_geometry?(coordinates: linestring)
+
+      refute Section.valid_geometry?(coordinates: linestring.first)
+
+      refute Section.valid_geometry?(coordinates: [linestring.first])
 
       refute Section.valid_geometry?(coordinates: [])
     end
