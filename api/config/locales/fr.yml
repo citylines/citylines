@@ -211,3 +211,9 @@ transport_modes:
   people_mover: Transport hectométrique
   bus: Bus
   tram: Tram
+compare:
+  title: "Comparateur: %(cities)s"
+  short_title: Comparateur
+  link: Comparer
+  select_city: Choisir une ville
+  intro: Il n'y a pas de ville sélectionnée. Pour commencer, choisissez deux villes dans les listes ci-dessus.

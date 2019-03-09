@@ -208,3 +208,9 @@ transport_modes:
   people_mover: People Mover
   bus: Autobús
   tram: Tranvía
+compare:
+  title: "Comparador: %(cities)s"
+  short_title: Comparador
+  link: Comparar
+  select_city: Seleccionar ciudad
+  intro: No hay ninguna ciudad seleccionada. Para empezar, elige dos de las listas de arriba.

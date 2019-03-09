@@ -14,6 +14,8 @@ class PanelHeader extends PureComponent {
           <h3 className="c-heading">{this.props.name}</h3>
           {!this.props.loading &&
             <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
+          {!this.props.loading && !editPath &&
+            <Translate className="c-link" component={Link} to={`/compare?cities=${this.props.urlName},`} content="compare.link" />}
         </div>
       </div>
     );

@@ -205,3 +205,9 @@ transport_modes:
   people_mover: People Mover
   bus: Bus
   tram: Tram/Streetcar
+compare:
+  title: "Comparison: %(cities)s"
+  short_title: Compare
+  link: Compare
+  select_city: Select city
+  intro: There is no city selected. To start, choose two cities from the lists above.
