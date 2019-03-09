@@ -287,4 +287,18 @@ describe Section do
       assert_equal 1, @section.width
     end
   end
+
+  describe "valid_geometry?" do
+    it "should asses if the geometry is valid or not" do
+      coords = [[42.258729,-71.160281],[42.259113, -71.160837]]
+
+      assert Section.valid_geometry?(coordinates: coords)
+
+      refute Section.valid_geometry?(coordinates: coords.first)
+
+      refute Section.valid_geometry?(coordinates: [coords.first])
+
+      refute Section.valid_geometry?(coordinates: [])
+    end
+  end
 end

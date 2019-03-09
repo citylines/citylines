@@ -92,4 +92,10 @@ class Section < Sequel::Model(:sections)
     target_width = min_width if target_width < min_width
     target_width
   end
+
+  # This method is used with the raw json that comes from the Editor
+  def self.valid_geometry?(geom)
+    coords = geom[:coordinates]
+    coords.first.is_a?(Array) && coords.length > 1
+  end
 end

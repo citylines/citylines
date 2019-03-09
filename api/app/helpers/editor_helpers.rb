@@ -57,6 +57,10 @@ module EditorHelpers
   def update_create_or_delete_feature(city, user, change)
     klass = Object.const_get(change[:klass])
 
+    if change[:created] || change[:geo]
+      return unless klass.valid_geometry?(change[:feature][:geometry])
+    end
+
     if change[:created]
       new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])

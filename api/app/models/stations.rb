@@ -75,4 +75,9 @@ class Station < Sequel::Model(:stations)
     r = radius
     r < 4 ? 0 : r - 2
   end
+
+  # This method is used with the raw json that comes from the Editor
+  def self.valid_geometry?(geom)
+    true
+  end
 end
