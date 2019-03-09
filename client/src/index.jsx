@@ -13,6 +13,7 @@ import Terms from './components/terms';
 import Data from './components/data';
 import User from './components/user';
 import Error from './components/error';
+import CityComparison from './components/city-comparison';
 
 import MainStore from './stores/main-store';
 
@@ -45,6 +46,7 @@ render(
         <Route path="terms" component={Terms} />
         <Route path="data" component={Data} />
         <Route path="error" component={Error} />
+        <Route path="compare" component={CityComparison} />
         <Route path="user/:user_id" component={User} />
         <Route path=":city_url_name" component={City}>
           <IndexRoute component={CityView} />

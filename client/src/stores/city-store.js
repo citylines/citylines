@@ -36,6 +36,10 @@ const CityStore = Object.assign({}, Store, {
       cityData.bearing = parseFloat(parts[3]);
       cityData.pitch = parseFloat(parts[4]);
     }
+    // This is the case of the city-comparison
+    if (queryParams.zoom) {
+      cityData.zoom = queryParams.zoom;
+    }
     return cityData;
   },
 
@@ -66,6 +70,12 @@ const CityStore = Object.assign({}, Store, {
     cityData.pitch = geo.pitch;
 
     this.emitChangeEvent()
+  },
+
+  setZoom(urlName, zoom) {
+    const cityData = this.cityData[urlName];
+    cityData.zoom = zoom;
+    this.emitChangeEvent();
   }
 });
 
