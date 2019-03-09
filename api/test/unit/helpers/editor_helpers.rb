@@ -45,6 +45,48 @@ describe EditorHelpers do
           assert_equal 0, Section.count
         end
       end
+
+      describe "update" do
+        before do
+          @section = Section.create(city_id: @city.id)
+        end
+
+        it "should update the section succesfully" do
+          change = {
+            klass: 'Section',
+            id: @section.id,
+            geo: true,
+            feature: {
+              geometry: {coordinates: [[42.258729,-71.160281],[42.259113, -71.160837]],
+            type: "LineString"},
+              properties: {lines: []}
+            }
+          }
+
+          original_geo = @section.geometry
+
+          update_create_or_delete_feature(@city, @user, change)
+          refute_equal original_geo, @section.reload.geometry
+        end
+
+        it "shouldn't update the section because it has an erroneus geo" do
+          change = {
+            klass: 'Section',
+            id: @section.id,
+            geo: true,
+            feature: {
+              geometry: {coordinates: [[42.258729,-71.160281]],
+            type: "LineString"},
+              properties: {lines: []}
+            }
+          }
+
+          original_geo = @section.geometry
+
+          update_create_or_delete_feature(@city, @user, change)
+          assert_equal original_geo, @section.reload.geometry
+        end
+      end
     end
   end
 end
