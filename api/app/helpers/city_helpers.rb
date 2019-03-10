@@ -22,19 +22,37 @@ module CityHelpers
 
   def lines_length_by_year(city)
     lengths = {}
-    years_range = (city.start_year..DateTime.now.year)
 
-    Section.where(city_id: city.id).all.each do |section|
-      years_range.each do |year|
+    start_range = city.start_year
+    end_range = DateTime.now.year
+
+    Section.where(city_id: city.id).select(:id, :buildstart, :closure, :opening, :length).all.each do |section|
+      from = if section.buildstart
+               section.buildstart.to_i
+             elsif section.opening
+               section.opening.to_i
+             else
+               start_range
+             end
+
+      to = if section.closure && section.closure.to_i < end_range
+             section.closure.to_i
+           else
+             end_range
+           end
+
+      lines = section.lines.map(&:url_name)
+
+      (from..to).each do |year|
         lengths[year] ||= {}
         if section.buildstart && section.buildstart.to_i <= year && (!section.opening || section.opening.to_i > year)
           lengths[year][section.id] ||= {
-            lines: section.lines.map(&:url_name)
+            lines: lines
           }
           lengths[year][section.id][:under_construction] = section.length
         elsif section.opening && section.opening.to_i <= year && (!section.closure || section.closure.to_i > year)
           lengths[year][section.id] ||= {
-            lines: section.lines.map(&:url_name)
+            lines: lines
           }
           lengths[year][section.id][:operative] = section.length
         end
