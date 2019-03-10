@@ -277,4 +277,26 @@ describe OSMHelpers do
       assert_equal expected_feature_collection, feature_collection
     end
   end
+
+  describe "geometry_validation" do
+    before do
+      @city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
+    end
+
+    it "should filter out any invalid geometry" do
+      # The following feature is invalid because it is a way and it has only one node
+      response = {
+        elements: [
+          {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
+          {type: "way",  id: 26192812, nodes: [81551276]}
+        ]
+      }
+
+      OverpassAPI::QL.any_instance.stubs(:query).returns(response)
+
+      feature_collection = get_osm_features_collection(@city, "subway", 1, 2, 3, 4)
+
+      assert feature_collection[:features].empty?
+    end
+  end
 end

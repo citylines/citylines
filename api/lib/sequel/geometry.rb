@@ -39,6 +39,12 @@ module Sequel
                   self.select(:id, Sequel.function(:ST_AsGeoJSON, :geometry, MAX_PRECISION))
                 end
             end
+
+            module ClassMethods
+              def valid_linestring?(linestring)
+                linestring.all?{|el| el.is_a?(Array)} && linestring.length > 1
+              end
+            end
         end
     end
 end

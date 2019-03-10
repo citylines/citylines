@@ -287,4 +287,25 @@ describe Section do
       assert_equal 1, @section.width
     end
   end
+
+  describe "valid_geometry?" do
+    it "should asses if the geometry is valid or not" do
+      multi_linestring = [
+        [[10, 10], [20, 20], [10, 40]],
+        [[40, 40], [30, 30], [40, 20], [30, 10]]
+      ]
+
+      linestring = multi_linestring.first
+
+      assert Section.valid_geometry?(coordinates: multi_linestring, type: 'MultiLineString')
+
+      assert Section.valid_geometry?(coordinates: linestring, type: 'LineString')
+
+      refute Section.valid_geometry?(coordinates: linestring.first, type: 'LineString')
+
+      refute Section.valid_geometry?(coordinates: [linestring.first], type: 'LineString')
+
+      refute Section.valid_geometry?(coordinates: [], type: 'LineString')
+    end
+  end
 end

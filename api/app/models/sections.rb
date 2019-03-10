@@ -92,4 +92,15 @@ class Section < Sequel::Model(:sections)
     target_width = min_width if target_width < min_width
     target_width
   end
+
+  # This method is used with the raw json that comes from the Editor
+  def self.valid_geometry?(geom)
+    coords = geom[:coordinates]
+    type = geom[:type]
+    if type == 'LineString'
+      valid_linestring?(coords)
+    elsif type == 'MultiLineString'
+      coords.all?{|el| valid_linestring?(el)}
+    end
+  end
 end

@@ -7,6 +7,10 @@ APP_ENV = 'test'
 
 require File.expand_path "../../config/boot", __FILE__
 
+def logger
+  Logger.new(nil)
+end
+
 class Minitest::Spec
   before do
     DatabaseCleaner.strategy = :transaction

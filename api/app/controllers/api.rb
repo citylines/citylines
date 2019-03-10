@@ -11,12 +11,15 @@ class Api < App
   helpers UserHelpers
   helpers CacheHelpers
   helpers OSMHelpers
+  helpers EditorHelpers
 
   use Rack::Cache,
     :verbose     => true,
     :metastore   => CACHE_CLIENT,
     :entitystore => CACHE_CLIENT,
     :private_headers => []
+
+  enable :logging
 
   before do
     cache_control :no_cache
