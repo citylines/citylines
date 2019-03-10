@@ -26,7 +26,7 @@ module CityHelpers
     start_range = city.start_year
     end_range = DateTime.now.year
 
-    Section.where(city_id: city.id).all.each do |section|
+    Section.where(city_id: city.id).select(:id, :buildstart, :closure, :opening, :length).all.each do |section|
       from = if section.buildstart
                section.buildstart.to_i
              elsif section.opening
