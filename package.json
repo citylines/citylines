@@ -42,5 +42,8 @@
     "babel-jest": "^22.4.4",
     "jest": "^22.4.4",
     "jest-cli": "^22.4.4"
+  },
+  "jest": {
+    "testURL": "http://localhost/"
   }
 }
