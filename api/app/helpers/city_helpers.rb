@@ -64,7 +64,7 @@ module CityHelpers
   def formatted_lines_features_collection(city, type)
     geoms = features_geometry(city, type)
 
-    features = features_query(city, type).all.map do |el|
+    features = features_query(city, type).without_geometry.all.map do |el|
       el.formatted_feature(geometry: geoms[el.id])
     end.flatten
 
@@ -75,7 +75,7 @@ module CityHelpers
   def lines_features_collection(city, type)
     geoms = features_geometry(city, type)
 
-    features = features_query(city, type).all.map do |el|
+    features = features_query(city, type).without_geometry.all.map do |el|
       el.raw_feature(geometry: geoms[el.id])
     end
 
