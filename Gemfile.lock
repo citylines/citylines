@@ -53,7 +53,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.12.1)
     naturally (2.1.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.3)
     oj (3.7.1)
@@ -142,9 +142,6 @@ DEPENDENCIES
   sitemap_generator
   timecop
   unicorn
-
-RUBY VERSION
-   ruby 2.3.0p0
 
 BUNDLED WITH
    1.17.1
