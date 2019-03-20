@@ -35,6 +35,10 @@ module CityHelpers
                start_range
              end
 
+      if from < start_range
+        from = start_range
+      end
+
       to = if section.closure && section.closure.to_i < end_range
              section.closure.to_i
            else

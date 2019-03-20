@@ -78,6 +78,15 @@ describe CityHelpers do
         end
       end
     end
+
+    it "shouldn't use years lower than start_year" do
+      s1 = Section.create(city_id: @city.id, length:20, buildstart: 0, opening: 0, closure: 1930)
+      result = lines_length_by_year(@city)
+      years = result.keys
+
+      assert_equal 1920, years.min
+      assert_equal 1930, years.max
+    end
   end
 
   describe "#length" do
