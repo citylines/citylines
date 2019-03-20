@@ -211,6 +211,7 @@ transport_modes:
   people_mover: Transport hectométrique
   bus: Bus
   tram: Tram
+  ferry: Ferry
 compare:
   title: "Comparateur: %(cities)s"
   short_title: Comparateur

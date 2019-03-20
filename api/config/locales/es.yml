@@ -208,6 +208,7 @@ transport_modes:
   people_mover: People Mover
   bus: Autobús
   tram: Tranvía
+  ferry: Ferry
 compare:
   title: "Comparador: %(cities)s"
   short_title: Comparador

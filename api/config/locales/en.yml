@@ -205,6 +205,7 @@ transport_modes:
   people_mover: People Mover
   bus: Bus
   tram: Tram/Streetcar
+  ferry: Ferry
 compare:
   title: "Comparison: %(cities)s"
   short_title: Compare
