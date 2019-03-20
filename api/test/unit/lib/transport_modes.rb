@@ -1,7 +1,7 @@
 describe TransportModes do
   it "should be a hash with the transport modes data" do
     assert TransportModes::TRANSPORT_MODES.is_a?(Hash)
-    assert_equal 10, TransportModes::TRANSPORT_MODES.keys.count
+    assert_equal 11, TransportModes::TRANSPORT_MODES.keys.count
     TransportModes::TRANSPORT_MODES.each_pair do |k,v|
       assert v[:name]
       assert v[:width]
