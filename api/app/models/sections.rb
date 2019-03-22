@@ -103,4 +103,29 @@ class Section < Sequel::Model(:sections)
       coords.all?{|el| valid_linestring?(el)}
     end
   end
+
+  def self.features_collection(**opts)
+    query = %Q{
+      json_build_object(
+          'type', 'FeatureCollection',
+          'features', json_agg(
+              json_build_object(
+                  'type',       'Feature',
+                  'geometry',   ST_AsGeoJSON(geometry)::json,
+                  'properties', json_build_object(
+                      'length', length,
+                      'osm_id', osm_id,
+                      'osm_tags', osm_tags,
+                      'opening', coalesce(opening, 999999),
+                      'buildstart', coalesce(buildstart, opening),
+                      'buildstart_end', coalesce(opening, closure, 999999),
+                      'closure', coalesce(closure, 999999)
+                  )
+              )
+          )
+      )
+    }
+
+    self.where(city_id: opts[:city_id]).select(Sequel.lit(query))
+  end
 end
