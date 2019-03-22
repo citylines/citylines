@@ -111,7 +111,7 @@ class Section < Sequel::Model(:sections)
           'features', json_agg(
               json_build_object(
                   'type',       'Feature',
-                  'geometry',   ST_AsGeoJSON(geometry)::json,
+                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
                   'properties', json_build_object(
                       'length', length,
                       'osm_id', osm_id,
