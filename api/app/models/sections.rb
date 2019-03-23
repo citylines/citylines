@@ -124,7 +124,7 @@ class Section < Sequel::Model(:sections)
                       'closure', coalesce(closure, 999999),
                       'lines', (
                         select json_agg(all_lines.*) from (
-                          select name, url_name from lines left join section_lines on lines.id = section_lines.line_id where sections.id = section_lines.section_id
+                          select lines.name as name, url_name, coalesce(systems.name,'') as system from lines left join section_lines on lines.id = section_lines.line_id left join systems on systems.id = system_id where sections.id = section_lines.section_id
                         ) as all_lines
                       )
                   )
