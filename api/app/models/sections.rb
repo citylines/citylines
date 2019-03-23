@@ -113,6 +113,8 @@ class Section < Sequel::Model(:sections)
                   'type',       'Feature',
                   'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
                   'properties', json_build_object(
+                      'id', id,
+                      'klass', 'Section',
                       'length', length,
                       'osm_id', osm_id,
                       'osm_tags', osm_tags,
