@@ -121,7 +121,12 @@ class Section < Sequel::Model(:sections)
                       'opening', coalesce(opening, 999999),
                       'buildstart', coalesce(buildstart, opening),
                       'buildstart_end', coalesce(opening, closure, 999999),
-                      'closure', coalesce(closure, 999999)
+                      'closure', coalesce(closure, 999999),
+                      'lines', (
+                        select json_agg(all_lines.*) from (
+                          select name, url_name from lines left join section_lines on lines.id = section_lines.line_id where sections.id = section_lines.section_id
+                        ) as all_lines
+                      )
                   )
               )
           )
