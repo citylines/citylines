@@ -156,14 +156,25 @@ class Section < Sequel::Model(:sections)
                       'line_url_name', line_url_name,
                       'transport_mode_name', null,
                       'width', null,
-                      'system', null
+                      'system', system
                   )
               )
           )
       )
       from (
-        select sections.id as section_id, geometry, length, opening, buildstart, closure, lines.name as line, lines.url_name as line_url_name, array_position(all_lines, line_id) as position, count
-          from sections
+        select
+          sections.id as section_id,
+          geometry,
+          length,
+          opening,
+          buildstart,
+          closure,
+          lines.name as line,
+          lines.url_name as line_url_name,
+          coalesce(systems.name,'') as system,
+          array_position(all_lines, line_id) as position,
+          count
+        from sections
           right join section_lines
             on section_lines.section_id = sections.id
           left join (
@@ -175,6 +186,8 @@ class Section < Sequel::Model(:sections)
           ) as lines_data on lines_data.section_id = sections.id
           left join lines
             on line_id = lines.id
+          left join systems
+            on system_id = systems.id
           where sections.city_id = #{opts[:city_id]}
           order by section_id, position
         ) as sections_data
