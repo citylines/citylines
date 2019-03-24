@@ -156,7 +156,19 @@ class Section < Sequel::Model(:sections)
                       'line_url_name', line_url_name,
                       'transport_mode_name', transport_mode_name,
                       'width', width,
-                      'offset', null,
+                      'offset', (
+                        case count
+                        when 1 then 0
+                        else
+                          (case ( count % 2 )
+                            when 0 then
+                              (position - 1 - count / 2) * width + width::decimal / 2
+                            else
+                              (position - (count + 1) / 2) * width
+                            end
+                          )
+                        end
+                       ),
                       'system', system
                   )
               )
