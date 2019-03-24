@@ -135,4 +135,46 @@ class Section < Sequel::Model(:sections)
 
     self.where(city_id: opts[:city_id]).select(Sequel.lit(query))
   end
+
+  def self.formatted_features_collection(**opts)
+    query = %Q{
+      select json_build_object(
+          'type', 'FeatureCollection',
+          'features', json_agg(
+              json_build_object(
+                  'type',       'Feature',
+                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
+                  'properties', json_build_object(
+                      'id', null,
+                      'klass', 'Section',
+                      'length', length,
+                      'osm_id', osm_id,
+                      'osm_tags', osm_tags,
+                      'opening', coalesce(opening, 999999),
+                      'buildstart', coalesce(buildstart, opening),
+                      'buildstart_end', coalesce(opening, closure, 999999),
+                      'closure', coalesce(closure, 999999)
+                  )
+              )
+          )
+      )
+      from (
+        select sections.id as section_id, geometry, length, osm_tags, osm_id, opening, buildstart, closure, line_id, array_position(all_lines, line_id) as position, count
+          from sections
+          right join section_lines
+            on section_lines.section_id = sections.id
+          left join (
+            select  lines_count.section_id,
+              array_agg(lines_count.line_id) as all_lines,
+              count(lines_count.line_id) as count
+              from (select section_id, line_id from section_lines order by line_id) as lines_count
+              group by lines_count.section_id
+          ) as lines_data on lines_data.section_id = sections.id
+          where sections.city_id = #{opts[:city_id]}
+          order by section_id, position
+        ) as sections_data
+    }
+
+    DB.fetch(query)
+  end
 end
