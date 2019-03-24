@@ -154,8 +154,9 @@ class Section < Sequel::Model(:sections)
                       'closure', coalesce(closure, 999999),
                       'line', line,
                       'line_url_name', line_url_name,
-                      'transport_mode_name', null,
+                      'transport_mode_name', transport_mode_name,
                       'width', null,
+                      'offset', null,
                       'system', system
                   )
               )
@@ -172,6 +173,7 @@ class Section < Sequel::Model(:sections)
           lines.name as line,
           lines.url_name as line_url_name,
           coalesce(systems.name,'') as system,
+          transport_modes.name as transport_mode_name,
           array_position(all_lines, line_id) as position,
           count
         from sections
@@ -188,6 +190,8 @@ class Section < Sequel::Model(:sections)
             on line_id = lines.id
           left join systems
             on system_id = systems.id
+          left join transport_modes
+            on transport_modes.id = coalesce(transport_mode_id,0)
           where sections.city_id = #{opts[:city_id]}
           order by section_id, position
         ) as sections_data
