@@ -8,6 +8,10 @@ class Line < Sequel::Model(:lines)
 
   many_to_one :city
   many_to_one :system
+
+  # FIXME:
+  # The association here will return nil if no transport_mode_id is set.
+  # Instead, it should return the default transport_mode (id: 0)
   many_to_one :transport_mode
 
   many_to_many :sections, join_table: :section_lines
