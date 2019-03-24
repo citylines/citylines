@@ -145,21 +145,24 @@ class Section < Sequel::Model(:sections)
                   'type',       'Feature',
                   'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
                   'properties', json_build_object(
-                      'id', null,
+                      'id', concat(section_id,'-',line_url_name),
                       'klass', 'Section',
                       'length', length,
-                      'osm_id', osm_id,
-                      'osm_tags', osm_tags,
                       'opening', coalesce(opening, 999999),
                       'buildstart', coalesce(buildstart, opening),
                       'buildstart_end', coalesce(opening, closure, 999999),
-                      'closure', coalesce(closure, 999999)
+                      'closure', coalesce(closure, 999999),
+                      'line', line,
+                      'line_url_name', line_url_name,
+                      'transport_mode_name', null,
+                      'width', null,
+                      'system', null
                   )
               )
           )
       )
       from (
-        select sections.id as section_id, geometry, length, osm_tags, osm_id, opening, buildstart, closure, line_id, array_position(all_lines, line_id) as position, count
+        select sections.id as section_id, geometry, length, opening, buildstart, closure, lines.name as line, lines.url_name as line_url_name, array_position(all_lines, line_id) as position, count
           from sections
           right join section_lines
             on section_lines.section_id = sections.id
@@ -170,6 +173,8 @@ class Section < Sequel::Model(:sections)
               from (select section_id, line_id from section_lines order by line_id) as lines_count
               group by lines_count.section_id
           ) as lines_data on lines_data.section_id = sections.id
+          left join lines
+            on line_id = lines.id
           where sections.city_id = #{opts[:city_id]}
           order by section_id, position
         ) as sections_data
