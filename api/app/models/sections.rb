@@ -124,7 +124,7 @@ class Section < Sequel::Model(:sections)
                       'closure', coalesce(closure, 999999),
                       'lines', (
                         select json_agg(all_lines.*) from (
-                          select lines.name as name, url_name, coalesce(systems.name,'') as system from lines left join section_lines on lines.id = section_lines.line_id left join systems on systems.id = system_id where sections.id = section_lines.section_id
+                          select lines.name as line, url_name as line_url_name, coalesce(systems.name,'') as system from lines left join section_lines on lines.id = section_lines.line_id left join systems on systems.id = system_id where sections.id = section_lines.section_id
                         ) as all_lines
                       )
                   )
@@ -133,7 +133,7 @@ class Section < Sequel::Model(:sections)
       )
     }
 
-    self.where(city_id: opts[:city_id]).select(Sequel.lit(query))
+    self.where(city_id: opts[:city_id]).select(Sequel.lit(query)).first[:json_build_object]
   end
 
   def self.formatted_features_collection(**opts)
@@ -216,6 +216,6 @@ class Section < Sequel::Model(:sections)
         ) as sections_data
     }
 
-    DB.fetch(query)
+    DB.fetch(query).first[:json_build_object]
   end
 end
