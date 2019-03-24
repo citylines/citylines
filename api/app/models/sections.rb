@@ -198,7 +198,7 @@ class Section < Sequel::Model(:sections)
           left join systems
             on system_id = systems.id
           left join transport_modes
-            on transport_modes.id = coalesce(transport_mode_id,0)
+            on transport_modes.id = transport_mode_id
           where sections.city_id = #{opts[:city_id]}
           order by section_id, position
         ) as sections_data
