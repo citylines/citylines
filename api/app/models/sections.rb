@@ -155,7 +155,7 @@ class Section < Sequel::Model(:sections)
                       'line', line,
                       'line_url_name', line_url_name,
                       'transport_mode_name', transport_mode_name,
-                      'width', null,
+                      'width', width,
                       'offset', null,
                       'system', system
                   )
@@ -174,6 +174,13 @@ class Section < Sequel::Model(:sections)
           lines.url_name as line_url_name,
           coalesce(systems.name,'') as system,
           transport_modes.name as transport_mode_name,
+          greatest(transport_modes.min_width, (
+              case
+                when count = 1 then transport_modes.width
+                when count = 2 then transport_modes.width * 0.75
+                else transport_modes.width * 0.66
+              end
+          )) as width,
           array_position(all_lines, line_id) as position,
           count
         from sections
