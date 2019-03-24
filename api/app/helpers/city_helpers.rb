@@ -84,6 +84,10 @@ module CityHelpers
   end
 
   def formatted_lines_features_collection(city, type)
+    if type == 'sections'
+      return Section.formatted_features_collection(city_id: city.id)
+    end
+
     geoms = features_geometry(city, type)
 
     features = features_query(city, type).without_geometry.all.map do |el|
@@ -95,6 +99,10 @@ module CityHelpers
   end
 
   def lines_features_collection(city, type)
+    if type == 'sections'
+      return Section.features_collection(city_id: city.id)
+    end
+
     geoms = features_geometry(city, type)
 
     features = features_query(city, type).without_geometry.all.map do |el|
