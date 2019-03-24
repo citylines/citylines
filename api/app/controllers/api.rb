@@ -89,7 +89,7 @@ class Api < App
 
       Oj.dump({ lines: city_lines(@city),
         systems: city_systems(@city),
-        transport_modes: TransportModes.all,
+        transport_modes: TransportMode.summary,
         years: { start: @city.start_year,
                  end: Date.today.year,
                  current: nil,
@@ -140,7 +140,7 @@ class Api < App
 
     { lines: city_lines(@city),
       systems: city_systems(@city),
-      transport_modes: TransportModes.all
+      transport_modes: TransportMode.summary
     }.to_json
   end
 
