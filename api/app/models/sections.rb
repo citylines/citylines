@@ -202,7 +202,7 @@ class Section < Sequel::Model(:sections)
             select  lines_count.section_id,
               array_agg(lines_count.line_id) as all_lines,
               count(lines_count.line_id) as count
-              from (select section_id, line_id from section_lines order by line_id) as lines_count
+              from (select section_id, line_id from section_lines) as lines_count
               group by lines_count.section_id
           ) as lines_data on lines_data.section_id = sections.id
           left join lines
