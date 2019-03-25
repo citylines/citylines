@@ -106,7 +106,7 @@ class Section < Sequel::Model(:sections)
 
   def self.features_collection(**opts)
     query = %Q{
-      json_build_object(
+      select json_build_object(
           'type', 'FeatureCollection',
           'features', json_agg(
               json_build_object(
@@ -122,18 +122,26 @@ class Section < Sequel::Model(:sections)
                       'buildstart', coalesce(buildstart, opening),
                       'buildstart_end', coalesce(opening, closure, 999999),
                       'closure', coalesce(closure, 999999),
-                      'lines', (
-                        select json_agg(all_lines.*) from (
-                          select lines.name as line, url_name as line_url_name, coalesce(systems.name,'') as system from lines left join section_lines on lines.id = section_lines.line_id left join systems on systems.id = system_id where sections.id = section_lines.section_id
-                        ) as all_lines
-                      )
+                      'lines', lines
                   )
               )
           )
-      )
+      ) from (
+        select id, length, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
+        from sections
+        left join (
+          select all_lines.section_id as section_id, json_agg((all_lines.line, all_lines.line_url_name, all_lines.system)) as lines from (
+            select section_id, lines.name as line, url_name as line_url_name, coalesce(systems.name,'') as system
+            from lines
+            left join section_lines on lines.id = section_lines.line_id
+            left join systems on systems.id = system_id
+          ) as all_lines group by section_id
+         ) as lines_data on section_id = sections.id
+        where sections.city_id = #{opts[:city_id]}
+      ) sections_data
     }
 
-    self.where(city_id: opts[:city_id]).select(Sequel.lit(query)).first[:json_build_object]
+    DB.fetch(query).first[:json_build_object]
   end
 
   def self.formatted_features_collection(**opts)
