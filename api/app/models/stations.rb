@@ -98,7 +98,10 @@ class Station < Sequel::Model(:stations)
                       'buildstart_end', coalesce(opening, closure, 999999),
                       'closure', coalesce(closure, 999999),
                       'lines', lines,
-                      'line_url_name',null,
+                      'line_url_name', (case
+                                          when lines_count > 1 then 'shared-station'
+                                          else first_line_url_name
+                                        end),
                       'radius',radius,
                       'inner_radius', (case
                                         when radius < 4 then 0
@@ -108,10 +111,11 @@ class Station < Sequel::Model(:stations)
               )
           )
       ) from (
-        select id, name, geometry, opening, buildstart, closure, lines, radius
+        select id, name, geometry, opening, buildstart, closure, lines, radius, first_line_url_name, lines_count
         from stations
         left join (
-          select all_lines.station_id as station_id, json_agg(json_build_object('line',all_lines.line,'line_url_name',all_lines.line_url_name,'system',all_lines.system, 'transport_mode_name', transport_mode_name)) as lines, coalesce(max(all_lines.width), 0) as radius from (
+          select all_lines.station_id as station_id, json_agg(json_build_object('line',all_lines.line,'line_url_name',all_lines.line_url_name,'system',all_lines.system, 'transport_mode_name', transport_mode_name)) as lines, coalesce(max(all_lines.width), 0) as radius, (array_agg(all_lines.line_url_name))[1] as first_line_url_name, count(all_lines) as lines_count
+          from (
             select station_id, lines.name as line, url_name as line_url_name, width, coalesce(systems.name,'') as system, transport_modes.name as transport_mode_name
             from station_lines
             left join lines on lines.id = station_lines.line_id
