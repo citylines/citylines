@@ -80,4 +80,46 @@ class Station < Sequel::Model(:stations)
   def self.valid_geometry?(geom)
     true
   end
+
+  def self.formatted_features_collection(**opts)
+    query = %Q{
+      select json_build_object(
+          'type', 'FeatureCollection',
+          'features', json_agg(
+              json_build_object(
+                  'type',       'Feature',
+                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
+                  'properties', json_build_object(
+                      'id', id,
+                      'klass', 'Station',
+                      'length', name,
+                      'opening', coalesce(opening, 999999),
+                      'buildstart', coalesce(buildstart, opening),
+                      'buildstart_end', coalesce(opening, closure, 999999),
+                      'closure', coalesce(closure, 999999),
+                      'lines', lines,
+                      'line_url_name',null,
+                      'radius',null,
+                      'inner_radius', null
+                  )
+              )
+          )
+      ) from (
+        select id, name, geometry, opening, buildstart, closure, lines
+        from stations
+        left join (
+          select all_lines.station_id as station_id, json_agg(json_build_object('line',all_lines.line,'line_url_name',all_lines.line_url_name,'system',all_lines.system, 'transport_mode_name', transport_mode_name)) as lines from (
+            select station_id, lines.name as line, url_name as line_url_name, coalesce(systems.name,'') as system, transport_modes.name as transport_mode_name
+            from station_lines
+            left join lines on lines.id = station_lines.line_id
+            left join systems on systems.id = system_id
+            left join transport_modes on transport_modes.id = transport_mode_id
+          ) as all_lines group by station_id
+         ) as lines_data on station_id = stations.id
+        where stations.city_id = #{opts[:city_id]}
+      ) stations_data
+    }
+
+    DB.fetch(query).first[:json_build_object]
+  end
 end
