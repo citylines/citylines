@@ -86,25 +86,24 @@ class Station < Sequel::Model(:stations)
       select json_build_object(
           'type', 'FeatureCollection',
           'features', json_agg(
-              json_strip_nulls(
-                json_build_object(
-                    'type',       'Feature',
-                    'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
-                    'properties', json_build_object(
-                        'id', id,
-                        'klass', 'Station',
-                        'name', name,
-                        'opening', coalesce(opening, 999999),
-                        'buildstart', coalesce(buildstart, opening),
-                        'buildstart_end', coalesce(opening, closure, 999999),
-                        'closure', coalesce(closure, 999999),
-                        'lines', lines
-                    )
+              json_build_object(
+                  'type',       'Feature',
+                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
+                  'properties', json_build_object(
+                      'id', id,
+                      'klass', 'Station',
+                      'name', name,
+                      'osm_id', osm_id,
+                      'osm_tags', osm_tags,
+                      'opening', coalesce(opening, 999999),
+                      'buildstart', coalesce(buildstart, opening),
+                      'closure', coalesce(closure, 999999),
+                      'lines', lines
                   )
               )
           )
       ) from (
-        select id, name, geometry, opening, buildstart, closure, lines
+        select id, name, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
         from stations
         left join (
           select

@@ -120,7 +120,6 @@ class Section < Sequel::Model(:sections)
                       'osm_tags', osm_tags,
                       'opening', coalesce(opening, 999999),
                       'buildstart', coalesce(buildstart, opening),
-                      'buildstart_end', coalesce(opening, closure, 999999),
                       'closure', coalesce(closure, 999999),
                       'lines', lines
                   )
