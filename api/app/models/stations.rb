@@ -92,7 +92,7 @@ class Station < Sequel::Model(:stations)
                   'properties', json_build_object(
                       'id', id,
                       'klass', 'Station',
-                      'length', name,
+                      'name', name,
                       'opening', coalesce(opening, 999999),
                       'buildstart', coalesce(buildstart, opening),
                       'buildstart_end', coalesce(opening, closure, 999999),
