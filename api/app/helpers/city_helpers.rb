@@ -84,18 +84,8 @@ module CityHelpers
   end
 
   def formatted_lines_features_collection(city, type)
-    if type == 'sections'
-      return Section.formatted_features_collection(city_id: city.id)
-    end
-
-    geoms = features_geometry(city, type)
-
-    features = features_query(city, type).without_geometry.all.map do |el|
-      el.formatted_feature(geometry: geoms[el.id])
-    end.flatten
-
-    {type: "FeatureCollection",
-     features: features}
+    klass = type == 'sections' ? Section : Station
+    klass.formatted_features_collection(city_id: city.id)
   end
 
   def lines_features_collection(city, type)
