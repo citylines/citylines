@@ -86,27 +86,34 @@ class Station < Sequel::Model(:stations)
       select json_build_object(
           'type', 'FeatureCollection',
           'features', json_agg(
-              json_build_object(
-                  'type',       'Feature',
-                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
-                  'properties', json_build_object(
-                      'id', id,
-                      'klass', 'Station',
-                      'name', name,
-                      'opening', coalesce(opening, 999999),
-                      'buildstart', coalesce(buildstart, opening),
-                      'buildstart_end', coalesce(opening, closure, 999999),
-                      'closure', coalesce(closure, 999999),
-                      'lines', lines,
-                      'line_url_name', (case
-                                          when lines_count > 1 then 'shared-station'
-                                          else line_url_names[1]
-                                        end),
-                      'width',width,
-                      'inner_width', (case
-                                        when width < 4 then 0
-                                        else width - 2
-                                       end)
+              json_strip_nulls(
+                json_build_object(
+                    'type',       'Feature',
+                    'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
+                    'properties', json_build_object(
+                        'id', id,
+                        'klass', 'Station',
+                        'name', name,
+                        'opening', coalesce(opening, 999999),
+                        'buildstart', coalesce(buildstart, opening),
+                        'buildstart_end', coalesce(opening, closure, 999999),
+                        'closure', coalesce(closure, 999999),
+                        'lines', lines,
+                        'line_url_name', (case
+                                            when lines_count > 1 then 'shared-station'
+                                            else line_url_names[1]
+                                          end),
+                        'line_url_name_1', (case when lines_count > 1 then line_url_names[1] else null end),
+                        'line_url_name_2', line_url_names[2],
+                        'line_url_name_3', line_url_names[3],
+                        'line_url_name_4', line_url_names[4],
+                        'line_url_name_5', line_url_names[5],
+                        'width',width,
+                        'inner_width', (case
+                                          when width < 4 then 0
+                                          else width - 2
+                                         end)
+                    )
                   )
               )
           )
