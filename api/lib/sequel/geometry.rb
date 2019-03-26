@@ -34,15 +34,6 @@ module Sequel
                 def geojson(column)
                     self.get(Sequel.function :ST_AsGeoJSON, column, MAX_PRECISION)
                 end
-
-                def id_and_geojson
-                  self.select(:id, Sequel.function(:ST_AsGeoJSON, :geometry, MAX_PRECISION))
-                end
-
-                def without_geometry
-                  cols = self.columns - [:geometry, :created_at, :updated_at, :city_id]
-                  self.select(*cols)
-                end
             end
 
             module ClassMethods
