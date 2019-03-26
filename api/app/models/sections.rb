@@ -109,20 +109,22 @@ class Section < Sequel::Model(:sections)
       select json_build_object(
           'type', 'FeatureCollection',
           'features', json_agg(
-              json_build_object(
-                  'type',       'Feature',
-                  'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
-                  'properties', json_build_object(
-                      'id', id,
-                      'klass', 'Section',
-                      'length', length,
-                      'osm_id', osm_id,
-                      'osm_tags', osm_tags,
-                      'opening', coalesce(opening, 999999),
-                      'buildstart', coalesce(buildstart, opening),
-                      'closure', coalesce(closure, 999999),
-                      'lines', lines
-                  )
+              json_strip_nulls(
+                json_build_object(
+                    'type',       'Feature',
+                    'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
+                    'properties', json_build_object(
+                        'id', id,
+                        'klass', 'Section',
+                        'length', length,
+                        'osm_id', osm_id,
+                        'osm_tags', osm_tags,
+                        'opening', coalesce(opening, 999999),
+                        'buildstart', coalesce(buildstart, opening),
+                        'closure', coalesce(closure, 999999),
+                        'lines', lines
+                    )
+                )
               )
           )
       ) from (
