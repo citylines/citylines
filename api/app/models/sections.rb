@@ -10,6 +10,8 @@ class Section < Sequel::Model(:sections)
 
   plugin :geometry
 
+  FUTURE = 999999.freeze
+
   # This method is used with the raw json that comes from the Editor
   def self.valid_geometry?(geom)
     coords = geom[:coordinates]
@@ -36,9 +38,9 @@ class Section < Sequel::Model(:sections)
                         'length', length,
                         'osm_id', osm_id,
                         'osm_tags', osm_tags,
-                        'opening', coalesce(opening, 999999),
+                        'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
-                        'closure', coalesce(closure, 999999),
+                        'closure', coalesce(closure, #{FUTURE}),
                         'lines', lines
                     )
                 )
@@ -74,10 +76,10 @@ class Section < Sequel::Model(:sections)
                       'id', concat(section_id,'-',line_url_name),
                       'klass', 'Section',
                       'length', length,
-                      'opening', coalesce(opening, 999999),
+                      'opening', coalesce(opening, #{FUTURE}),
                       'buildstart', coalesce(buildstart, opening),
-                      'buildstart_end', coalesce(opening, closure, 999999),
-                      'closure', coalesce(closure, 999999),
+                      'buildstart_end', coalesce(opening, closure, #{FUTURE}),
+                      'closure', coalesce(closure, #{FUTURE}),
                       'line', line,
                       'line_url_name', line_url_name,
                       'transport_mode_name', transport_mode_name,

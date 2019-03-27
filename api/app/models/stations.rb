@@ -9,6 +9,7 @@ class Station < Sequel::Model(:stations)
 
   plugin :geometry
 
+  FUTURE = 999999.freeze
   SHARED_STATION_LINE_URL_NAME = "shared-station".freeze
 
   # This method is used with the raw json that comes from the Editor
@@ -31,9 +32,9 @@ class Station < Sequel::Model(:stations)
                         'name', name,
                         'osm_id', osm_id,
                         'osm_tags', osm_tags,
-                        'opening', coalesce(opening, 999999),
+                        'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
-                        'closure', coalesce(closure, 999999),
+                        'closure', coalesce(closure, #{FUTURE}),
                         'lines', lines
                     )
                 )
@@ -74,10 +75,10 @@ class Station < Sequel::Model(:stations)
                         'id', id,
                         'klass', 'Station',
                         'name', name,
-                        'opening', coalesce(opening, 999999),
+                        'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
-                        'buildstart_end', coalesce(opening, closure, 999999),
-                        'closure', coalesce(closure, 999999),
+                        'buildstart_end', coalesce(opening, closure, #{FUTURE}),
+                        'closure', coalesce(closure, #{FUTURE}),
                         'lines', lines,
                         'line_url_name', (case
                                             when lines_count > 1 then '#{SHARED_STATION_LINE_URL_NAME}'
