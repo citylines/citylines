@@ -138,11 +138,11 @@ class Section < Sequel::Model(:sections)
             left join systems on systems.id = system_id
           ) as all_lines group by section_id
          ) as lines_data on section_id = sections.id
-        where sections.city_id = #{opts[:city_id]}
+        where ?
       ) sections_data
     }
 
-    DB.fetch(query).first[:json_build_object]
+    DB.fetch(query, Sequel.expr(opts)).first[:json_build_object]
   end
 
   def self.formatted_features_collection(**opts)
@@ -220,11 +220,11 @@ class Section < Sequel::Model(:sections)
             on system_id = systems.id
           left join transport_modes
             on transport_modes.id = transport_mode_id
-          where sections.city_id = #{opts[:city_id]}
+          where ?
           order by section_id, position
         ) as sections_data
     }
 
-    DB.fetch(query).first[:json_build_object]
+    DB.fetch(query, Sequel.expr(opts)).first[:json_build_object]
   end
 end

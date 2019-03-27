@@ -119,11 +119,11 @@ class Station < Sequel::Model(:stations)
             left join transport_modes on transport_modes.id = transport_mode_id
           ) as all_lines group by station_id
          ) as lines_data on station_id = stations.id
-        where stations.city_id = #{opts[:city_id]}
+        where ?
       ) stations_data
     }
 
-    DB.fetch(query).first[:json_build_object]
+    DB.fetch(query, Sequel.expr(opts)).first[:json_build_object]
   end
 
   def self.formatted_features_collection(**opts)
@@ -180,10 +180,10 @@ class Station < Sequel::Model(:stations)
             left join transport_modes on transport_modes.id = transport_mode_id
           ) as all_lines group by station_id
          ) as lines_data on station_id = stations.id
-        where stations.city_id = #{opts[:city_id]}
+        where ?
       ) stations_data
     }
 
-    DB.fetch(query).first[:json_build_object]
+    DB.fetch(query, Sequel.expr(opts)).first[:json_build_object]
   end
 end
