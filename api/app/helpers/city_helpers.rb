@@ -77,12 +77,14 @@ module CityHelpers
 
   def formatted_lines_features_collection(city, type)
     klass = type == 'sections' ? Section : Station
-    klass.formatted_features_collection(city_id: city.id)
+    key = [type, "city_id"].join("__").to_sym
+    klass.formatted_features_collection({key => city.id})
   end
 
   def lines_features_collection(city, type)
     klass = type == 'sections' ? Section : Station
-    klass.features_collection(city_id: city.id)
+    key = [type, "city_id"].join("__").to_sym
+    klass.features_collection({key => city.id})
   end
 
   def contributors
