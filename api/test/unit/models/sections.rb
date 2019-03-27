@@ -1,4 +1,5 @@
 require File.expand_path '../../../test_config', __FILE__
+require File.expand_path '../../../../lib/symbolize_hash', __FILE__
 
 describe Section do
   before do
@@ -73,7 +74,11 @@ describe Section do
 
   describe "raw_feature" do
     it "should return the right feature" do
-      feature = @section.raw_feature
+      feature = symbolize_hash(
+        Section.
+          features_collection(sections__id: @section.id)["features"].
+          first
+      )
 
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
@@ -90,7 +95,6 @@ describe Section do
                              lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
-                             buildstart_end: @section.opening,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
                              closure: @section.closure}
@@ -103,7 +107,11 @@ describe Section do
       @section.closure = nil
       @section.save
 
-      feature = @section.raw_feature
+      feature = symbolize_hash(
+        Section.
+          features_collection(sections__id: @section.id)["features"].
+          first
+      )
 
       expected_lines = [{
           line: @line.name,
@@ -117,7 +125,6 @@ describe Section do
                              lines: expected_lines,
                              opening: Section::FUTURE,
                              buildstart: @section.buildstart,
-                             buildstart_end: Section::FUTURE,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
                              closure: Section::FUTURE}
@@ -129,7 +136,11 @@ describe Section do
       @section.buildstart = nil
       @section.save
 
-      feature = @section.raw_feature
+      feature = symbolize_hash(
+        Section.
+          features_collection(sections__id: @section.id)["features"].
+          first
+      )
 
       expected_lines = [{
           line: @line.name,
@@ -143,7 +154,6 @@ describe Section do
                              lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.opening,
-                             buildstart_end: @section.opening,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
                              closure: @section.closure}
@@ -157,13 +167,21 @@ describe Section do
       @line.system_id = system.id
       @line.save
 
-      assert_equal '', @section.reload.raw_feature[:properties][:lines].first[:system]
+      feature = symbolize_hash(
+        Section.
+          features_collection(sections__id: @section.id)["features"].
+          first
+      )
+
+      assert_equal '', feature[:properties][:lines].first[:system]
     end
   end
 
   describe "formatted_feature" do
     it "should handle one line" do
-      features = @section.formatted_feature
+      features = Section.
+        formatted_features_collection(sections__id: @section.id)["features"].
+        map{|el| symbolize_hash(el)}
 
       assert 1, features.count
       feature = features.first
@@ -177,14 +195,12 @@ describe Section do
                              line: @line.name,
                              line_url_name: @line.url_name,
                              transport_mode_name: @line.transport_mode[:name],
-                             width: @section.width,
+                             width: @line.width,
                              system: @system.name,
                              offset: 0,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
-                             osm_id: @section.osm_id,
-                             osm_tags: @section.osm_tags,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]
@@ -194,7 +210,9 @@ describe Section do
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
 
-      features = @section.formatted_feature
+      features = Section.
+        formatted_features_collection(sections__id: @section.id)["features"].
+        map{|el| symbolize_hash(el)}
 
       assert 2, features.count
 
@@ -210,14 +228,12 @@ describe Section do
                              line: @line.name,
                              line_url_name: @line.url_name,
                              transport_mode_name: @line.transport_mode[:name],
-                             width: @section.width,
+                             width: @line.width * 0.75,
                              system: @system.name,
                              offset: -2.25,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
-                             osm_id: @section.osm_id,
-                             osm_tags: @section.osm_tags,
                              closure: @section.closure}
 
       assert_equal expected_properties1, features.first[:properties]
@@ -228,63 +244,15 @@ describe Section do
                              line: @line2.name,
                              line_url_name: @line2.url_name,
                              transport_mode_name: @line.transport_mode[:name],
-                             width: @section.width,
+                             width: @line2.width * 0.75,
                              system: @system.name,
                              offset: 2.25,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
                              buildstart_end: @section.opening,
-                             osm_id: @section.osm_id,
-                             osm_tags: @section.osm_tags,
                              closure: @section.closure}
 
       assert_equal expected_properties2, features.last[:properties]
-    end
-  end
-
-  describe "width" do
-    it "should return the right width when the section has 1 line" do
-      assert_equal 1, @section.lines.count
-      assert_equal @section.lines.first.width, @section.width
-    end
-
-    it "should return the right width when the section has 2 lines" do
-      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
-      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
-
-      assert_equal 2, @section.lines.count
-      assert_equal @section.lines.first.width * 0.75, @section.width
-    end
-
-    it "should return the right width when the section has 3 or more lines" do
-      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
-      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
-
-      line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
-      SectionLine.create(line_id: line3.id, section_id: @section.id, city_id: @city.id)
-
-      assert_equal 3, @section.lines.count
-      assert_equal @section.lines.first.width * 0.66, @section.width
-    end
-
-    it "should use the wider line if lines belong to different transport modes" do
-      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 1)
-      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
-
-      assert_equal 2, @section.lines.count
-      assert_equal line2.width * 0.75, @section.width
-    end
-
-    it "should use the min_width" do
-      # transport mode 8 is bus, with width = 1 and min_width = 1
-      @line.transport_mode_id = 8
-      @line.save
-
-      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 8)
-      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
-
-      assert_equal 2, @section.lines.count
-      assert_equal 1, @section.width
     end
   end
 
