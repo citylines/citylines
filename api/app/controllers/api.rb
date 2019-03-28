@@ -122,7 +122,7 @@ class Api < App
 
     last_modified last_modified_source(@city, type)
 
-    Oj.dump(formatted_lines_features_collection(@city, type).to_hash)
+    formatted_lines_features_collection(@city, type)
   end
 
   get '/:url_name/raw_source/:type' do |url_name, type|
@@ -130,7 +130,7 @@ class Api < App
 
     last_modified last_modified_source(@city, type)
 
-    Oj.dump(lines_features_collection(@city, type).to_hash)
+    lines_features_collection(@city, type)
   end
 
   get '/editor/:url_name/data' do |url_name|

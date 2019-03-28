@@ -46,7 +46,8 @@ class Section < Sequel::Model(:sections)
                 )
               )
           )
-      ) from (
+      )::text
+      from (
         select id, length, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
         from sections
         left join (
@@ -101,7 +102,7 @@ class Section < Sequel::Model(:sections)
                   )
               )
           )
-      )
+      )::text
       from (
         select
           sections.id as section_id,

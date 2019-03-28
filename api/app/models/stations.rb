@@ -40,7 +40,8 @@ class Station < Sequel::Model(:stations)
                 )
               )
           )
-      ) from (
+      )::text
+      from (
         select id, name, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
         from stations
         left join (
@@ -98,7 +99,8 @@ class Station < Sequel::Model(:stations)
                   )
               )
           )
-      ) from (
+      )::text
+      from (
         select id, name, geometry, opening, buildstart, closure, lines, width, line_url_names, lines_count
         from stations
         left join (
