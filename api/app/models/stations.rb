@@ -4,9 +4,6 @@ class Station < Sequel::Model(:stations)
   include StartYear
   include FeatureBackup
 
-  include FeatureCollection::Station
-  include FeatureCollection::Base
-
   many_to_many :lines, join_table: :station_lines
   many_to_one :city
 

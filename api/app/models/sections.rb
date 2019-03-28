@@ -5,9 +5,6 @@ class Section < Sequel::Model(:sections)
   include StartYear
   include FeatureBackup
 
-  include FeatureCollection::Section
-  include FeatureCollection::Base
-
   many_to_many :lines, join_table: :section_lines
   many_to_one :city
 

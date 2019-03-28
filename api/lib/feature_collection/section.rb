@@ -1,5 +1,11 @@
+require_relative 'base'
+
 module FeatureCollection
-  module Section
+  class Section < Base
+    def self.key_prefix
+      'sections'
+    end
+
     FUTURE = 999999.freeze
 
     RAW_FEATURE_COLLECTION = %Q{

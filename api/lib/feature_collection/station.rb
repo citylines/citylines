@@ -1,5 +1,9 @@
 module FeatureCollection
-  module Station
+  class Station < Base
+    def self.key_prefix
+      'stations'
+    end
+
     FUTURE = 999999.freeze
     SHARED_STATION_LINE_URL_NAME = "shared-station".freeze
 

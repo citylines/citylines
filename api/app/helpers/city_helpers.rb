@@ -76,13 +76,13 @@ module CityHelpers
   end
 
   def formatted_lines_features_collection(city, type)
-    klass = type == 'sections' ? Section : Station
-    klass.feature_collection_by_city(city.id, formatted: true)
+    klass = type == 'sections' ? FeatureCollection::Section : FeatureCollection::Station
+    klass.by_city(city.id, formatted: true)
   end
 
   def lines_features_collection(city, type)
-    klass = type == 'sections' ? Section : Station
-    klass.feature_collection_by_city(city.id)
+    klass = type == 'sections' ? FeatureCollection::Section : FeatureCollection::Station
+    klass.by_city(city.id)
   end
 
   def contributors
