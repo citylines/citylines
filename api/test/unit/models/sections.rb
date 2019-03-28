@@ -1,5 +1,4 @@
 require File.expand_path '../../../test_config', __FILE__
-require File.expand_path '../../../../lib/symbolize_hash', __FILE__
 
 describe Section do
   before do
@@ -74,11 +73,7 @@ describe Section do
 
   describe "raw_feature" do
     it "should return the right feature" do
-      feature = symbolize_hash(
-        Section.
-          features_collection(sections__id: @section.id)["features"].
-          first
-      )
+      feature = @section.feature.first
 
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
@@ -107,11 +102,7 @@ describe Section do
       @section.closure = nil
       @section.save
 
-      feature = symbolize_hash(
-        Section.
-          features_collection(sections__id: @section.id)["features"].
-          first
-      )
+      feature = @section.feature.first
 
       expected_lines = [{
           line: @line.name,
@@ -136,11 +127,7 @@ describe Section do
       @section.buildstart = nil
       @section.save
 
-      feature = symbolize_hash(
-        Section.
-          features_collection(sections__id: @section.id)["features"].
-          first
-      )
+      feature = @section.feature.first
 
       expected_lines = [{
           line: @line.name,
@@ -167,11 +154,7 @@ describe Section do
       @line.system_id = system.id
       @line.save
 
-      feature = symbolize_hash(
-        Section.
-          features_collection(sections__id: @section.id)["features"].
-          first
-      )
+      feature = @section.feature.first
 
       assert_equal '', feature[:properties][:lines].first[:system]
     end
@@ -179,9 +162,7 @@ describe Section do
 
   describe "formatted_feature" do
     it "should handle one line" do
-      features = Section.
-        formatted_features_collection(sections__id: @section.id)["features"].
-        map{|el| symbolize_hash(el)}
+      features = @section.feature(formatted: true)
 
       assert 1, features.count
       feature = features.first
@@ -210,9 +191,7 @@ describe Section do
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
 
-      features = Section.
-        formatted_features_collection(sections__id: @section.id)["features"].
-        map{|el| symbolize_hash(el)}
+      features = @section.feature(formatted: true)
 
       assert 2, features.count
 

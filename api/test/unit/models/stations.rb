@@ -64,21 +64,19 @@ describe Station do
   end
 
   describe "feature" do
-    it "should be equal to raw_feature" do
-      assert_equal @station.feature, @station.raw_feature
-    end
-
-    it "formatted_feature should add width to raw_feature" do
-      expected_feature = @station.feature.dup
+    it "formatted_feature should add width and buildstart_end to raw_feature, and remove osm fields" do
+      expected_feature = @station.feature.first.dup
       expected_feature[:properties].merge!(
-        width: @station.radius,
-        inner_width: @station.inner_radius,
-      )
-      assert_equal expected_feature, @station.formatted_feature
+        width: @line.width,
+        inner_width: @line.width - 2,
+        buildstart_end: @station.opening,
+        line_url_name: @station.lines.first.url_name,
+      ).reject!{|f| [:osm_tags, :osm_id].include?(f)}
+      assert_equal expected_feature, @station.feature(formatted: true).first
     end
 
-    it "should return the right feature" do
-      feature = @station.feature
+    it "should return the right feature, without osm fields because is raw" do
+      feature = @station.feature.first
 
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
@@ -93,11 +91,9 @@ describe Station do
       expected_properties = {id: @station.id,
                              klass: "Station",
                              lines: expected_lines,
-                             line_url_name: @station.lines.first.url_name,
                              name: @station.name,
                              opening: @station.opening,
                              buildstart: @station.buildstart,
-                             buildstart_end: @station.opening,
                              osm_id: @station.osm_id,
                              osm_tags: @station.osm_tags,
                              closure: @station.closure,
@@ -111,7 +107,7 @@ describe Station do
       @station.closure = nil
       @station.save
 
-      feature = @station.feature
+      feature = @station.feature(formatted: true).first
 
       expected_lines = [{
         line: @line.name,
@@ -128,9 +124,9 @@ describe Station do
                              opening: Section::FUTURE,
                              buildstart: @station.buildstart,
                              buildstart_end: Section::FUTURE,
-                             osm_id: @station.osm_id,
-                             osm_tags: @station.osm_tags,
                              closure: Section::FUTURE,
+                             width: @line.width,
+                             inner_width: @line.width - 2,
                             }
 
       assert_equal expected_properties, feature[:properties]
@@ -140,7 +136,7 @@ describe Station do
       @station.buildstart = nil
       @station.save
 
-      feature = @station.feature
+      feature = @station.feature(formatted: true).first
 
       expected_lines = [{
         line: @line.name,
@@ -157,9 +153,9 @@ describe Station do
                              opening: @station.opening,
                              buildstart: @station.opening,
                              buildstart_end: @station.opening,
-                             osm_id: @station.osm_id,
-                             osm_tags: @station.osm_tags,
                              closure: @station.closure,
+                             width: @line.width,
+                             inner_width: @line.width - 2,
                             }
 
       assert_equal expected_properties, feature[:properties]
@@ -171,7 +167,7 @@ describe Station do
       @line.system_id = system.id
       @line.save
 
-      assert_equal '', @station.reload.feature[:properties][:lines].first[:system]
+      assert_equal '', @station.reload.feature.first[:properties][:lines].first[:system]
     end
 
     it "should return the 'shared station' url_name, and the extra url_nam attrs, if it has more than 1 line" do
@@ -179,7 +175,7 @@ describe Station do
 
       StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
 
-      feature_props = @station.feature[:properties]
+      feature_props = @station.feature(formatted: true).first[:properties]
 
       assert_equal 2, @station.lines.count
       assert_equal Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
@@ -193,10 +189,12 @@ describe Station do
       line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
       StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
 
+      feature = @station.feature(formatted: true).first
+
       assert line2.width > @line.width
       assert_equal 2, @station.lines.count
-      assert_equal line2.width, @station.radius
-      assert_equal @station.radius - 2, @station.inner_radius
+      assert_equal line2.width, feature[:properties][:width]
+      assert_equal line2.width - 2, feature[:properties][:inner_width]
     end
 
     it "should set a 0 inner_radius if the radius if lower than 4" do
@@ -204,8 +202,10 @@ describe Station do
       @line.transport_mode_id = 7
       @line.save
 
-      assert_equal 3, @station.radius
-      assert_equal 0, @station.inner_radius
+      feature = @station.feature(formatted: true).first
+
+      assert_equal 3, feature[:properties][:width]
+      assert_equal 0, feature[:properties][:inner_width]
     end
   end
 end
