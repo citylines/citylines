@@ -4,7 +4,7 @@ module FeatureCollection
       raise NotImplementedError
     end
 
-    def self.by_feature_id(feature_id, formatted: false)
+    def self.by_feature(feature_id, formatted: false)
       key = [key_prefix,'id'].join('__').to_sym
 
       collection = by_expr(

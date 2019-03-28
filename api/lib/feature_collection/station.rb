@@ -1,3 +1,5 @@
+require_relative 'base'
+
 module FeatureCollection
   class Station < Base
     def self.key_prefix
