@@ -95,11 +95,11 @@ module FeatureCollection
           lines.url_name as line_url_name,
           coalesce(systems.name,'') as system,
           transport_modes.name as transport_mode_name,
-          greatest(width_data.min_width, (
+          greatest(lines_data.min_width, (
               case
-                when count = 1 then width_data.width
-                when count = 2 then width_data.width * 0.75
-                else width_data.width * 0.66
+                when count = 1 then lines_data.width
+                when count = 2 then lines_data.width * 0.75
+                else lines_data.width * 0.66
               end
           )) as width,
           array_position(all_lines, line_id) as position,
@@ -108,19 +108,16 @@ module FeatureCollection
           right join section_lines
             on section_lines.section_id = sections.id
           left join (
-            select lines_count.section_id,
-              array_agg(lines_count.line_id) as all_lines,
-              count(lines_count.line_id) as count
-              from (select section_id, line_id from section_lines) as lines_count
-              group by lines_count.section_id
+            select section_id,
+              array_agg(line_id) as all_lines,
+              count(line_id) as count,
+              max(transport_modes.width) as width,
+              max(transport_modes.min_width) as min_width
+            from section_lines
+              left join lines on line_id = lines.id
+              left join transport_modes on lines.transport_mode_id = transport_modes.id
+              group by section_id
           ) as lines_data on lines_data.section_id = sections.id
-          left join (
-            select section_id as width_section_id, max(transport_modes.width) as width, max(transport_modes.min_width) as min_width from
-            section_lines
-            left join lines on line_id = lines.id
-            left join transport_modes on lines.transport_mode_id = transport_modes.id
-            group by width_section_id
-          ) as width_data on sections.id = width_section_id
           left join lines
             on line_id = lines.id
           left join systems
