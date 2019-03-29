@@ -186,5 +186,70 @@ describe FeatureCollection::Section do
 
       assert_equal expected_properties2, features.last[:properties]
     end
+
+    describe "width" do
+	    it "should return the right width when the section has 1 line" do
+        features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+        feature = features.first
+	      assert_equal 1, @section.lines.count
+	      assert_equal @section.lines.first.width, feature[:properties][:width]
+	    end
+
+      it "should return the right width when the section has 2 lines" do
+	      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
+	      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+	      assert_equal 2, @section.lines.count
+
+        features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+        features.map do |feature|
+	        assert_equal @section.lines.first.width * 0.75, feature[:properties][:width]
+        end
+	    end
+
+      it "should return the right width when the section has 3 or more lines" do
+	      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
+	      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+	      line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
+	      SectionLine.create(line_id: line3.id, section_id: @section.id, city_id: @city.id)
+
+	      assert_equal 3, @section.lines.count
+
+        features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+        features.map do |feature|
+	        assert_equal @section.lines.first.width * 0.66, feature[:properties][:width]
+        end
+	    end
+
+      it "should use the wider line if lines belong to different transport modes" do
+        line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 1)
+        SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+        assert_equal 2, @section.lines.count
+
+        features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+        puts features
+        features.map do |feature|
+          assert_equal line2.width * 0.75, feature[:properties][:width]
+        end
+      end
+
+      it "should use the min_width" do
+        # transport mode 8 is bus, with width = 1 and min_width = 1
+        @line.transport_mode_id = 8
+        @line.save
+
+        line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 8)
+        SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+        assert_equal 2, @section.lines.count
+
+        features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+        features.map do |feature|
+          assert_equal 1, feature[:properties][:width]
+        end
+      end
+    end
   end
 end
