@@ -90,20 +90,19 @@ module FeatureCollection
       from (
         select id, name, geometry, opening, buildstart, closure, lines, width, line_url_names, lines_count
         from stations
-        left join (
+        left join lateral (
           select
-            all_lines.station_id as station_id,
-            json_agg(json_build_object('line',all_lines.line,'line_url_name',all_lines.line_url_name,'system',all_lines.system,'transport_mode_name',transport_mode_name)) as lines,
-            coalesce(max(all_lines.width), 0) as width,
-            array_agg(all_lines.line_url_name) as line_url_names,
-            count(all_lines) as lines_count
-          from (
-            select station_id, lines.name as line, url_name as line_url_name, width, coalesce(systems.name,'') as system, transport_modes.name as transport_mode_name
-            from station_lines
+            station_id,
+            json_agg(json_build_object('line',lines.name,'line_url_name',lines.url_name,'system',coalesce(systems.name,''),'transport_mode_name',transport_modes.name)) as lines,
+            coalesce(max(width), 0) as width,
+            array_agg(lines.url_name) as line_url_names,
+            count(lines.id) as lines_count
+          from station_lines
             left join lines on lines.id = station_lines.line_id
             left join systems on systems.id = system_id
             left join transport_modes on transport_modes.id = transport_mode_id
-          ) as all_lines group by station_id
+          where station_id = stations.id
+          group by station_id
          ) as lines_data on station_id = stations.id
         where ?
       ) stations_data
