@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     machine: true
+      image: circleci/alpine
     steps:
       - checkout
       - run:
