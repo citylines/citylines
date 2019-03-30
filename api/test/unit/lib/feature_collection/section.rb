@@ -229,7 +229,6 @@ describe FeatureCollection::Section do
         assert_equal 2, @section.lines.count
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-        puts features
         features.map do |feature|
           assert_equal line2.width * 0.75, feature[:properties][:width]
         end
