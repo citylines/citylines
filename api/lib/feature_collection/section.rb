@@ -34,13 +34,13 @@ module FeatureCollection
       from (
         select id, length, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
         from sections
-        left join (
-          select all_lines.section_id as section_id, json_agg(json_build_object('line',all_lines.line,'line_url_name',all_lines.line_url_name,'system',all_lines.system)) as lines from (
-            select section_id, lines.name as line, url_name as line_url_name, coalesce(systems.name,'') as system
+        left join lateral (
+          select section_id, json_agg(json_build_object('line', lines.name,'line_url_name',lines.url_name, 'system', coalesce(systems.name,''))) as lines
             from section_lines
             left join lines on lines.id = section_lines.line_id
             left join systems on systems.id = system_id
-          ) as all_lines group by section_id
+            where section_id = sections.id
+          group by section_id
          ) as lines_data on section_id = sections.id
         where ?
       ) sections_data
