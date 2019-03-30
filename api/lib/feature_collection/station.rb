@@ -1,3 +1,4 @@
+require_relative '../sequel/geometry'
 require_relative 'base'
 
 module FeatureCollection
