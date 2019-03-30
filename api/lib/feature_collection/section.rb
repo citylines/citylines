@@ -125,7 +125,6 @@ module FeatureCollection
           left join transport_modes
             on transport_modes.id = transport_mode_id
           where ?
-          order by section_id, position
         ) as sections_data
     }.freeze
   end
