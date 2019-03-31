@@ -24,6 +24,18 @@ describe FeatureCollection::Station do
     @city.reload
   end
 
+  it "should return a featuer collection of raw features" do
+    feature_collection = JSON.parse(FeatureCollection::Station.by_city(@city.id), symbolize_names: true)
+    assert_equal "FeatureCollection", feature_collection[:type]
+    assert_equal 1, feature_collection[:features].count
+  end
+
+  it "should return a featuer collection of formatted features" do
+    feature_collection = JSON.parse(FeatureCollection::Station.by_city(@city.id, formatted: true), symbolize_names: true)
+    assert_equal "FeatureCollection", feature_collection[:type]
+    assert_equal 1, feature_collection[:features].count
+  end
+
   it "formatted_feature should add width and buildstart_end to raw_feature, and remove osm fields" do
     expected_feature = FeatureCollection::Station.by_feature(@station.id).first
     expected_feature[:properties].merge!(
