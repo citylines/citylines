@@ -1,8 +1,9 @@
-FROM ruby:2.3.0-slim
+FROM ruby:2.3-slim-stretch
 
 RUN \
   apt-get update -qq && \
-  apt-get install apt-transport-https -y -qq && \
+  apt-get install -y gnupg2 && \
+  apt-get install curl apt-transport-https -y -qq && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
   curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
@@ -22,7 +23,6 @@ WORKDIR /app
 ADD Gemfile Gemfile.lock /app/
 
 RUN \
-  gem install rake && \
   gem install bundler && \
   bundle install --jobs 20 --retry 5
 

@@ -89,7 +89,7 @@ class Api < App
 
       Oj.dump({ lines: city_lines(@city),
         systems: city_systems(@city),
-        transport_modes: TransportModes.all,
+        transport_modes: TransportMode.summary,
         years: { start: @city.start_year,
                  end: Date.today.year,
                  current: nil,
@@ -122,7 +122,7 @@ class Api < App
 
     last_modified last_modified_source(@city, type)
 
-    Oj.dump(formatted_lines_features_collection(@city, type))
+    formatted_lines_features_collection(@city, type)
   end
 
   get '/:url_name/raw_source/:type' do |url_name, type|
@@ -130,7 +130,7 @@ class Api < App
 
     last_modified last_modified_source(@city, type)
 
-    Oj.dump(lines_features_collection(@city, type))
+    lines_features_collection(@city, type)
   end
 
   get '/editor/:url_name/data' do |url_name|
@@ -140,7 +140,7 @@ class Api < App
 
     { lines: city_lines(@city),
       systems: city_systems(@city),
-      transport_modes: TransportModes.all
+      transport_modes: TransportMode.summary
     }.to_json
   end
 
@@ -174,7 +174,11 @@ class Api < App
     line.color = args[:color]
     line.name = args[:name]
     line.system_id = args[:system_id]
-    line.transport_mode_id = args[:transport_mode_id]
+
+    unless args[:transport_mode_id].blank?
+      line.transport_mode_id = args[:transport_mode_id]
+    end
+
     line.save
 
     city_lines(@city).to_json
@@ -186,7 +190,13 @@ class Api < App
     @city = City[url_name: url_name]
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    line = Line.new(city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id], transport_mode_id: args[:transport_mode_id])
+    opts = {city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id]}
+
+    unless args[:transport_mode_id].blank?
+      opts.merge!(transport_mode_id: args[:transport_mode_id])
+    end
+
+    line = Line.new(opts)
     line.save
     line.reload.generate_url_name
     line.save

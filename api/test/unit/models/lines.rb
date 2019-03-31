@@ -76,17 +76,17 @@ describe Line do
     it "should return the right transport mode info" do
       line = Line.create(city_id: @city.id, name: 'Test', transport_mode_id: 4)
 
-      assert_equal Line::TRANSPORT_MODES[4], line.transport_mode
-      assert_equal Line::TRANSPORT_MODES[4][:width], line.width
-      assert_equal Line::TRANSPORT_MODES[4][:min_width], line.min_width
+      assert_equal TransportMode[4], line.transport_mode
+      assert_equal TransportMode[4].width, line.width
+      assert_equal TransportMode[4].min_width, line.min_width
     end
 
     it "should return the default transport mode if it's not set" do
       line = Line.create(city_id: @city.id, name: 'Test')
 
-      assert_equal Line::TRANSPORT_MODES[0], line.transport_mode
-      assert_equal Line::TRANSPORT_MODES[0][:width], line.width
-      assert_equal Line::TRANSPORT_MODES[0][:min_width], line.min_width
+      assert_equal TransportMode[0], line.transport_mode
+      assert_equal TransportMode[0].width, line.width
+      assert_equal TransportMode[0].min_width, line.min_width
     end
   end
 end
