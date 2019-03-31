@@ -73,7 +73,7 @@ describe CacheHelpers do
         Section.create(city_id: 33)
       end
 
-      city = City.create(name: 'Fake City', system_name: '', country: 'Fake Country', url_name: 'fake-city')
+      city = City.create(name: 'Fake City', country: 'Fake Country', url_name: 'fake-city')
 
       assert_equal city.updated_at, last_modified_city_date
     end
@@ -81,8 +81,8 @@ describe CacheHelpers do
 
   describe "last_modified_source_feature" do
     before do
-      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
-      @city2 = City.create(name: 'Testonia2', system_name: '', url_name: 'testonia2')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
+      @city2 = City.create(name: 'Testonia2', url_name: 'testonia2')
     end
 
     describe "sections" do
@@ -208,7 +208,7 @@ describe CacheHelpers do
 
   describe "last_modified_system_or_line" do
     before do
-      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
     end
 
     it "should return the system date" do
@@ -282,7 +282,7 @@ describe CacheHelpers do
 
   describe "last_modified_years_data" do
     before do
-      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
     end
 
     it "should match the section" do
@@ -339,7 +339,7 @@ describe CacheHelpers do
 
   describe "last_modified_base_data" do
     before do
-      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
     end
 
     it "should match the line" do
@@ -396,7 +396,7 @@ describe CacheHelpers do
 
   describe "last_modified_source" do
     before do
-      @city = City.create(name: 'Testonia', system_name: '', url_name: 'testonia')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
     end
 
     describe "sections" do

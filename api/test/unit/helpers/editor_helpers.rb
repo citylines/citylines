@@ -5,7 +5,7 @@ describe EditorHelpers do
 
   describe "update_create_or_delete_feature" do
     before do
-      @city = City.create(name: 'Testonia', system_name:'', url_name: 'testonia')
+      @city = City.create(name: 'Testonia', url_name: 'testonia')
       @user = User.create(name: 'Nuno', email: 'nuno@citylines.co')
     end
 

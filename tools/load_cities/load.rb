@@ -19,7 +19,6 @@ CSV.foreach(filename, headers:true, header_converters: :symbol) do |row|
   new_city = City.new(name: city,
                       country_state: state,
                       country: country,
-                      system_name: '',
                       start_year: 2017)
 
   new_city.set_coords(lat,lon)

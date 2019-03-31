@@ -5,7 +5,7 @@ describe CityHelpers do
 
   describe "#city_systems" do
     it "should return the city's systems, sorted" do
-      city = City.create(name: 'A city', system_name: '', url_name:'a-city', start_year: 1920)
+      city = City.create(name: 'A city', url_name:'a-city', start_year: 1920)
       s1 = System.create(name: 'Subway', city_id: city.id)
       s2 = System.create(name: 'LRT', city_id: city.id)
 
@@ -18,7 +18,7 @@ describe CityHelpers do
 
   describe "#lines_length_by_year" do
     before do
-      @city = City.create(name: 'Test city', system_name:'', url_name:'test-city', start_year: 1920)
+      @city = City.create(name: 'Test city', url_name:'test-city', start_year: 1920)
       @lineA = Line.create(name: 'A', city_id: @city.id, url_name: 'a')
       @lineB = Line.create(name: 'B', city_id: @city.id, url_name: 'b')
     end
@@ -91,8 +91,8 @@ describe CityHelpers do
 
   describe "#length" do
     it "should return the total km opened by city" do
-      city1 = City.create(name: 'City 1', system_name: '', url_name: 'city-1', start_year: 2017)
-      city2 = City.create(name: 'City 2', system_name: '', url_name: 'city-2', start_year: 2017)
+      city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
+      city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
 
       Section.create(city_id: city1.id, length: 5000, buildstart: 2010)
       Section.create(city_id: city1.id, length: 10000, opening: 2010)
@@ -113,7 +113,7 @@ describe CityHelpers do
 
   describe "top systems" do
     it "should return the top systems" do
-      city = City.create(name: 'Trulalá', system_name: '', url_name: 'trulala', start_year: 2017)
+      city = City.create(name: 'Trulalá', url_name: 'trulala', start_year: 2017)
 
       system1 = System.create(name: "Metro", city_id: city.id)
       system2 = System.create(name: "Train", city_id: city.id)

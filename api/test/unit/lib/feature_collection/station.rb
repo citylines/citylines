@@ -3,7 +3,6 @@ require File.expand_path '../../../../test_config', __FILE__
 describe FeatureCollection::Station do
   before do
     @city = City.new(name: 'Some city',
-                        system_name: '',
                         start_year: 2017,
                         url_name: 'city',
                         country: 'Argentina')

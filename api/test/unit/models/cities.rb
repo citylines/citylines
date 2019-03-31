@@ -3,7 +3,6 @@ require File.expand_path '../../../test_config', __FILE__
 describe City do
   before do
     @city = City.new(name: 'Test Cité',
-                     system_name: '',
                      coords: nil,
                      start_year: 2017,
                      country: 'Argentina',
@@ -34,7 +33,6 @@ describe City do
 
     it "should set a country-dependant url_name if it already exists" do
       new_city = City.new(name: 'Test Cité',
-                          system_name: '',
                           coords: nil,
                           start_year: 2017,
                           country: 'Nuevo País',

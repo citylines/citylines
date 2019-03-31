@@ -160,7 +160,7 @@ describe OSMHelpers do
   end
 
   it "should build the right features collection" do
-    city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
+    city = City.create(name: 'Test city', url_name:'test-city')
 
       response = {
         elements: [
@@ -204,7 +204,7 @@ describe OSMHelpers do
 
   describe "filter_out_existing_features" do
     before do
-      @city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
+      @city = City.create(name: 'Test city', url_name:'test-city')
     end
 
     it "should filter out any existing station" do
@@ -280,7 +280,7 @@ describe OSMHelpers do
 
   describe "geometry_validation" do
     before do
-      @city = City.create(name: 'Test city', system_name: '', url_name:'test-city')
+      @city = City.create(name: 'Test city', url_name:'test-city')
     end
 
     it "should filter out any invalid geometry" do

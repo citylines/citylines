@@ -8,10 +8,10 @@ describe UserHelpers do
       @user_id = 1
       @user2_id = 2
 
-      @city = City.create(name: 'La Plata', url_name: 'la-plata', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
-      @city2 = City.create(name: 'Comodoro Rivadavia', url_name: 'comodoro-rivadavia', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
-      @city3 = City.create(name: 'Berazategui', url_name: 'berazategui', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
-      @city4 = City.create(name: 'Chivilcoy', url_name: 'chivilcoy', system_name:'', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
+      @city = City.create(name: 'La Plata', url_name: 'la-plata', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
+      @city2 = City.create(name: 'Comodoro Rivadavia', url_name: 'comodoro-rivadavia', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
+      @city3 = City.create(name: 'Berazategui', url_name: 'berazategui', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
+      @city4 = City.create(name: 'Chivilcoy', url_name: 'chivilcoy', coords: Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)"))
 
       section = Section.create(city_id: @city.id, length: 3450, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
 
