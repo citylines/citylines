@@ -27,7 +27,7 @@ module FeatureCollection
                         'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
                         'closure', coalesce(closure, #{FUTURE}),
-                        'lines', lines
+                        'lines', coalesce(lines, '[]'::json)
                     )
                 )
               )

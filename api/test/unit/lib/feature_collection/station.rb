@@ -47,6 +47,17 @@ describe FeatureCollection::Station do
     assert_empty feature_collection[:features]
   end
 
+  it "should return empty lines if no lines data is available" do
+    StationLine.where(line_id: @line.id).delete
+    @line.delete
+
+    feature = FeatureCollection::Station.by_feature(@station.id).first
+    assert_empty feature[:properties][:lines]
+
+    feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+    assert_empty feature[:properties][:lines]
+  end
+
   it "formatted_feature should add width and buildstart_end to raw_feature, and remove osm fields" do
     expected_feature = FeatureCollection::Station.by_feature(@station.id).first
     expected_feature[:properties].merge!(

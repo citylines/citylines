@@ -28,7 +28,7 @@ module FeatureCollection
                         'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
                         'closure', coalesce(closure, #{FUTURE}),
-                        'lines', lines
+                        'lines', coalesce(lines,'[]'::json)
                     )
                 )
               )
@@ -70,7 +70,7 @@ module FeatureCollection
                         'buildstart', coalesce(buildstart, opening),
                         'buildstart_end', coalesce(opening, closure, #{FUTURE}),
                         'closure', coalesce(closure, #{FUTURE}),
-                        'lines', lines,
+                        'lines', coalesce(lines,'[]'::json),
                         'line_url_name', (case
                                             when lines_count > 1 then '#{SHARED_STATION_LINE_URL_NAME}'
                                             else line_url_names[1]

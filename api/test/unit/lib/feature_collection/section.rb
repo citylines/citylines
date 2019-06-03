@@ -47,6 +47,14 @@ describe FeatureCollection::Section do
     assert_empty feature_collection[:features]
   end
 
+  it "should return empty lines if no lines data is available" do
+    SectionLine.where(line_id: @line.id).delete
+    @line.delete
+
+    feature = FeatureCollection::Section.by_feature(@section.id).first
+    assert_empty feature[:properties][:lines]
+  end
+
   describe "raw_feature" do
     it "should return the right feature" do
       feature = FeatureCollection::Section.by_feature(@section.id).first
