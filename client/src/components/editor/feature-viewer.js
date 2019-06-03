@@ -81,7 +81,7 @@ class FeatureViewer extends PureComponent {
               <tr className="c-table__row">
                 <td className="c-table__cell" colSpan="2">
                   <FeatureLinesEditor
-                    featureLines={this.props.feature.properties.lines || []}
+                    featureLines={this.props.feature.properties.lines}
                     lines={this.props.lines}
                     systems={this.props.systems}
                     onAddLine={this.onAddLine.bind(this)}
