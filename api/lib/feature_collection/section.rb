@@ -12,7 +12,8 @@ module FeatureCollection
     RAW_FEATURE_COLLECTION = %Q{
       select json_build_object(
           'type', 'FeatureCollection',
-          'features', json_agg(
+          'features', coalesce (
+            json_agg(
               json_strip_nulls(
                 json_build_object(
                     'type',       'Feature',
@@ -30,6 +31,7 @@ module FeatureCollection
                     )
                 )
               )
+            ), '[]'::json
           )
       )::text
       from (
@@ -50,7 +52,8 @@ module FeatureCollection
     FORMATTED_FEATURE_COLLECTION = %Q{
       select json_build_object(
           'type', 'FeatureCollection',
-          'features', json_agg(
+          'features', coalesce (
+            json_agg(
               json_build_object(
                   'type',       'Feature',
                   'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
@@ -82,6 +85,7 @@ module FeatureCollection
                       'system', system
                   )
               )
+            ), '[]'::json
           )
       )::text
       from (

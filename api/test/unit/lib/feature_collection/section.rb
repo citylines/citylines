@@ -35,6 +35,18 @@ describe FeatureCollection::Section do
     assert_equal 1, feature_collection[:features].count
   end
 
+  it "should return an empty set of features collection" do
+    @section.delete
+
+    feature_collection = JSON.parse(FeatureCollection::Section.by_city(@city.id), symbolize_names: true)
+    assert_equal "FeatureCollection", feature_collection[:type]
+    assert_empty feature_collection[:features]
+
+    feature_collection = JSON.parse(FeatureCollection::Section.by_city(@city.id, formatted: true), symbolize_names: true)
+    assert_equal "FeatureCollection", feature_collection[:type]
+    assert_empty feature_collection[:features]
+  end
+
   describe "raw_feature" do
     it "should return the right feature" do
       feature = FeatureCollection::Section.by_feature(@section.id).first
