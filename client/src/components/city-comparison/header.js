@@ -30,6 +30,9 @@ class CityComparisonHeader extends PureComponent {
           />
         </div>
         <div className="o-grid__cell">
+          <button type="button" className="c-button c-button--ghost">Sistemas</button>
+        </div>
+        <div className="o-grid__cell">
           {typeof(this.props.year) != "undefined" && <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
@@ -37,6 +40,9 @@ class CityComparisonHeader extends PureComponent {
             toggleAnimation={this.props.toggleAnimation}
             playing={this.props.playing}
           />}
+        </div>
+        <div className="o-grid__cell">
+          <button type="button" className="c-button c-button--ghost" style={{float:'right'}}>Sistemas</button>
         </div>
         <div className="o-grid__cell">
           <CitySelect
