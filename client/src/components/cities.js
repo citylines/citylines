@@ -7,13 +7,45 @@ import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
 
 class CityItem extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {showAll: false}
+  }
+
+  toggleShow() {
+    this.setState({showAll: !this.state.showAll});
+  }
+
+  bigSystemsDiv() {
+    const el = document.getElementById(this.props.url);
+    return el && el.clientHeight > 80;
+  }
+
+  showAllClass() {
+    return this.state.showAll ? 'show-more' : 'show-less';
+  }
+
   render() {
     return (
       <div className="c-card">
         <header className="c-card__header">
           <h3 className="c-heading">
             <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
-            <div className="c-heading__sub">{this.props.systems.join(', ')}</div>
+            <div className="city-systems-container">
+              <div
+                id={this.props.url}
+                className={`c-heading__sub city-systems ${this.showAllClass()}`}>
+                  {this.props.systems.join(', ')}
+              </div>
+              {this.bigSystemsDiv() ?
+                <div
+                  className={`c-link city-systems-toggle ${this.showAllClass()}`}
+                  onClick={this.toggleShow.bind(this)}>
+                    {this.state.showAll ? '-' : '+'}
+                </div> : null
+              }
+            </div>
           </h3>
         </header>
         <div className="c-card__body">

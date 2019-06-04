@@ -561,3 +561,28 @@ table .narrow {
 .request-city {
   text-align: center;
 }
+
+.city-systems-container {
+  display: block;
+  position: relative;
+}
+.city-systems.show-less {
+  max-height: 81px;
+  overflow: hidden;
+}
+
+.city-systems.show-more{
+  max-height: auto;
+  overflow: hidden;
+}
+
+.city-systems-toggle{
+  width:100%;
+  padding-right: 10px;
+  text-align: right;
+  position: absolute;
+}
+
+.city-systems-toggle.show-less {
+  box-shadow: 0 -5px 2px rgba(0,0,0,0.1);
+}
