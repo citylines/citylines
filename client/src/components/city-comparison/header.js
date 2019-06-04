@@ -32,7 +32,7 @@ class CityComparisonHeader extends PureComponent {
         <div className="o-grid__cell o-grid__cell--width-10">
           <button type="button" className="c-button c-button--ghost"><span className="fa fa-sliders"></span></button>
         </div>
-        <div className="o-grid__cell">
+        <div className="o-grid__cell o-grid__cell--width-20">
           {typeof(this.props.year) != "undefined" && <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
