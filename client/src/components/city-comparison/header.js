@@ -29,8 +29,8 @@ class CityComparisonHeader extends PureComponent {
             onChange={(newUrlName) => {this.props.onChange([newUrlName, this.props.urlNames[1]])}}
           />
         </div>
-        <div className="o-grid__cell">
-          <button type="button" className="c-button c-button--ghost">Sistemas</button>
+        <div className="o-grid__cell o-grid__cell--width-10">
+          <button type="button" className="c-button c-button--ghost"><span className="fa fa-sliders"></span></button>
         </div>
         <div className="o-grid__cell">
           {typeof(this.props.year) != "undefined" && <Year
@@ -41,8 +41,8 @@ class CityComparisonHeader extends PureComponent {
             playing={this.props.playing}
           />}
         </div>
-        <div className="o-grid__cell">
-          <button type="button" className="c-button c-button--ghost" style={{float:'right'}}>Sistemas</button>
+        <div className="o-grid__cell o-grid__cell--width-10">
+          <button type="button" className="c-button c-button--ghost" style={{float:'right'}}><span className="fa fa-sliders"></span></button>
         </div>
         <div className="o-grid__cell">
           <CitySelect
