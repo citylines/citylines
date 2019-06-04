@@ -18,12 +18,15 @@ class CityItem extends Component {
   }
 
   bigSystemsDiv() {
-    const el = document.getElementById(this.props.url);
-    return el && el.clientHeight > 80;
+    return this.state.systemsDivHeight && this.state.systemsDivHeight > 80;
   }
 
   showAllClass() {
     return this.state.showAll ? 'show-more' : 'show-less';
+  }
+
+  componentDidMount() {
+    this.setState({systemsDivHeight: this.systemsDiv.clientHeight});
   }
 
   render() {
@@ -34,7 +37,7 @@ class CityItem extends Component {
             <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
             <div className="city-systems-container">
               <div
-                id={this.props.url}
+                ref={ (el) => this.systemsDiv = el}
                 className={`c-heading__sub city-systems ${this.showAllClass()}`}>
                   {this.props.systems.join(', ')}
               </div>
