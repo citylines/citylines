@@ -581,8 +581,9 @@ table .narrow {
   padding-right: 10px;
   text-align: right;
   position: absolute;
+  line-height: 38px;
 }
 
 .city-systems-toggle.show-less {
-  box-shadow: 0 -5px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 -3px 0px rgba(0,0,0,0.1);
 }
