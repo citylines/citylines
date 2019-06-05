@@ -37,6 +37,7 @@ class CityComparisonHeader extends PureComponent {
             toggleAnimation={this.props.toggleAnimation}
             toggleSettings={this.props.toggleSettings}
             playing={this.props.playing}
+            showSettings={this.props.showSettings}
           />}
         </div>
         <div className="o-grid__cell">

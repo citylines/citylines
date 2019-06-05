@@ -184,6 +184,7 @@ class CityComparison extends PureComponent {
         toggleAnimation={this.handleToggleAnimation.bind(this)}
         toggleSettings={this.handleToggleSettings.bind(this)}
         playing={this.state.playing}
+        showSettings={this.state.showSettings}
         citiesList={this.state.citiesList}
       />
       {
