@@ -24,7 +24,7 @@ class CityComparison extends PureComponent {
       urlNames: urlNames,
       cities: {},
       citiesList: [],
-      systems: {},
+      systemsShown: {},
       showSettings: false
     }
 
@@ -74,25 +74,19 @@ class CityComparison extends PureComponent {
     let newState = {
       urlNames: this.state.urlNames,
       cities: {},
-      citiesList: CitiesStore.getState().cities,
-      systems: this.state.systems
+      citiesList: CitiesStore.getState().cities
     };
 
     this.activeUrlNames().map(urlName => {
         newState.cities[urlName] = CityStore.getState(urlName);
+        newState.cities[urlName].systems = CityViewStore.getState(urlName).systems;
 
-        // Load systems if not previously loaded
-        if (!newState.systems[urlName]) {
-          const citySystems = (CityViewStore.getState(urlName)).systems;
-          if (citySystems) {
-            newState.systems = {
-              ...newState.systems,
-              ...{
-                [urlName]: citySystems.map(s => ({...s, ...{show: true}}))
-              }
-            }
-          }
+        if (!this.state.systemsShown[urlName] && newState.cities[urlName].systems) {
+          this.state.systemsShown[urlName] = newState.cities[urlName].systems.map(s => s.id);
         }
+
+        console.log(newState);
+        newState.cities[urlName].systemsShown = this.state.systemsShown[urlName] || [];
       }
     );
 
@@ -124,16 +118,7 @@ class CityComparison extends PureComponent {
 
     this.updateParams({cities: urlNames.join(",")});
 
-    const newState = {urlNames: [...urlNames], systems: this.state.systems};
-
-    // Delete old systems keys
-    Object.keys(newState.systems).map(city => {
-      if (!urlNames.includes(city)) {
-        delete newState.systems[city];
-      }
-    })
-
-    this.setState(newState, () => {
+    this.setState({urlNames: [...urlNames]}, () => {
       urlNames.map((newUrlName, index) => {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
@@ -215,7 +200,7 @@ class CityComparison extends PureComponent {
       {
         this.state.showSettings && <CityComparisonSettings
           urlNames={this.state.urlNames}
-          systems={this.state.systems}
+          cities={this.state.cities}
         />
       }
       {
