@@ -78,16 +78,15 @@ class CityComparison extends PureComponent {
     };
 
     this.activeUrlNames().map(urlName => {
-        newState.cities[urlName] = CityStore.getState(urlName);
-        newState.cities[urlName].systems = CityViewStore.getState(urlName).systems;
+      newState.cities[urlName] = CityStore.getState(urlName);
+      newState.cities[urlName].systems = CityViewStore.getState(urlName).systems;
 
-        if (!this.state.systemsShown[urlName] && newState.cities[urlName].systems) {
-          this.state.systemsShown[urlName] = newState.cities[urlName].systems.map(s => s.id);
-        }
-
-        console.log(newState);
-        newState.cities[urlName].systemsShown = this.state.systemsShown[urlName] || [];
+      // systems visibility
+      if (!this.state.systemsShown[urlName] && newState.cities[urlName].systems) {
+        this.state.systemsShown[urlName] = newState.cities[urlName].systems.map(s => s.id);
       }
+      newState.cities[urlName].systemsShown = this.state.systemsShown[urlName] || [];
+    }
     );
 
     if (this.activeUrlNames()[0]) {
