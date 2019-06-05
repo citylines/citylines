@@ -76,8 +76,10 @@ class CityComparison extends PureComponent {
       citiesList: CitiesStore.getState().cities
     };
 
-    this.activeUrlNames().map(urlName =>
-      newState.cities[urlName] = CityStore.getState(urlName)
+    this.activeUrlNames().map(urlName => {
+        newState.cities[urlName] = CityStore.getState(urlName);
+        newState.cities[urlName].systems = CityViewStore.getState(urlName).systems;
+      }
     );
 
     if (this.activeUrlNames()[0]) {
@@ -188,7 +190,9 @@ class CityComparison extends PureComponent {
         citiesList={this.state.citiesList}
       />
       {
-        this.state.showSettings && <CityComparisonSettings />
+        this.state.showSettings && <CityComparisonSettings
+          cities={this.state.cities}
+        />
       }
       {
         !this.activeUrlNames().length && <Intro />
