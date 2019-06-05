@@ -115,9 +115,15 @@ class CityComparison extends PureComponent {
   handleCitiesChange(urlNames) {
     const oldUrlNames = [...this.state.urlNames];
 
+    // Remove outdated systemsShown data
+    const updatedSystemsShown = {...this.state.systemsShown};
+    Object.keys(updatedSystemsShown).map(key => {
+      if (!urlNames.includes(key)) delete updatedSystemsShown[key];
+    });
+
     this.updateParams({cities: urlNames.join(",")});
 
-    this.setState({urlNames: [...urlNames]}, () => {
+    this.setState({urlNames: [...urlNames], systemsShown: updatedSystemsShown}, () => {
       urlNames.map((newUrlName, index) => {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
