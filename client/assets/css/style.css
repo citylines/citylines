@@ -170,6 +170,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .mapboxgl-popup-content {
     font-size:14px;
+    box-shadow: 0 3px rgba(0,0,0,0.1);
 }
 
 /* To fix a Blace css */
