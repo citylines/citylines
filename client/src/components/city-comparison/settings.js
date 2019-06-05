@@ -10,7 +10,7 @@ class CityComparisonSettings extends PureComponent {
               {
                 data.systems.map(system =>
                   <label className="c-toggle">
-                    <input type="checkbox" value="on"></input>
+                    <input type="checkbox" checked={true}></input>
                     <div className="c-toggle__track">
                       <div className="c-toggle__handle"></div>
                     </div>
