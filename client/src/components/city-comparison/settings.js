@@ -17,7 +17,12 @@ class CityComparisonSettings extends PureComponent {
               {
                 this.systems(urlName).map(system =>
                   <label key={`system-${system.id}`} className="c-toggle">
-                    <input type="checkbox" checked={system.show}></input>
+                    <input
+                      type="checkbox"
+                      checked={system.show}
+                      onChange={() => this.props.onSystemToggle(urlName,system.id,!system.show)}
+                    >
+                    </input>
                     <div className="c-toggle__track">
                       <div className="c-toggle__handle"></div>
                     </div>

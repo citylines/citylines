@@ -149,6 +149,19 @@ class CityComparison extends PureComponent {
     this.setState({showSettings: !this.state.showSettings});
   }
 
+  handleSystemToggle(urlName, systemId, show) {
+    let systemsShown = {...this.state.systemsShown};
+    if (show) {
+      systemsShown[urlName].push(systemId);
+    } else {
+      systemsShown[urlName] = systemsShown[urlName].filter(id => id != systemId);
+    }
+
+    this.setState({systemsShown: systemsShown}, () =>
+      CityViewStore.toggleAllLines(urlName, systemId, show)
+    );
+  }
+
   activeUrlNames() {
     return this.state.urlNames.filter(urlName => !!urlName);
   }
@@ -200,6 +213,7 @@ class CityComparison extends PureComponent {
         this.state.showSettings && <CityComparisonSettings
           urlNames={this.state.urlNames}
           cities={this.state.cities}
+          onSystemToggle={this.handleSystemToggle.bind(this)}
         />
       }
       {
