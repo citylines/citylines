@@ -8,6 +8,7 @@ import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
 import CityComparisonHeader from './city-comparison/header';
 import Intro from './city-comparison/intro';
+import CityComparisonSettings from './city-comparison/settings';
 
 import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
@@ -22,7 +23,8 @@ class CityComparison extends PureComponent {
     this.state = {
       urlNames: urlNames,
       cities: {},
-      citiesList: []
+      citiesList: [],
+      showSettings: false
     }
 
     this.bindedOnChange = this.onChange.bind(this);
@@ -134,6 +136,10 @@ class CityComparison extends PureComponent {
     );
   }
 
+  handleToggleSettings() {
+    this.setState({showSettings: !this.state.showSettings});
+  }
+
   activeUrlNames() {
     return this.state.urlNames.filter(urlName => !!urlName);
   }
@@ -176,9 +182,13 @@ class CityComparison extends PureComponent {
         onYearChange={this.handleYearChange.bind(this)}
         onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
+        toggleSettings={this.handleToggleSettings.bind(this)}
         playing={this.state.playing}
         citiesList={this.state.citiesList}
       />
+      {
+        this.state.showSettings && <CityComparisonSettings />
+      }
       {
         !this.activeUrlNames().length && <Intro />
       }

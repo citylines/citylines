@@ -35,6 +35,7 @@ class CityComparisonHeader extends PureComponent {
             onYearChange={this.props.onYearChange}
             onUpdate={this.props.onYearUpdate}
             toggleAnimation={this.props.toggleAnimation}
+            toggleSettings={this.props.toggleSettings}
             playing={this.props.playing}
           />}
         </div>
