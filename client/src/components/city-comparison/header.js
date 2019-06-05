@@ -29,10 +29,7 @@ class CityComparisonHeader extends PureComponent {
             onChange={(newUrlName) => {this.props.onChange([newUrlName, this.props.urlNames[1]])}}
           />
         </div>
-        <div className="o-grid__cell o-grid__cell--width-10">
-          <button type="button" className="c-button c-button--ghost"><span className="fa fa-sliders"></span></button>
-        </div>
-        <div className="o-grid__cell o-grid__cell--width-20">
+        <div className="o-grid__cell o-grid__cell--width-25">
           {typeof(this.props.year) != "undefined" && <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
@@ -40,9 +37,6 @@ class CityComparisonHeader extends PureComponent {
             toggleAnimation={this.props.toggleAnimation}
             playing={this.props.playing}
           />}
-        </div>
-        <div className="o-grid__cell o-grid__cell--width-10">
-          <button type="button" className="c-button c-button--ghost" style={{float:'right'}}><span className="fa fa-sliders"></span></button>
         </div>
         <div className="o-grid__cell">
           <CitySelect
