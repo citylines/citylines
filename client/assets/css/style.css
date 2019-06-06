@@ -60,7 +60,7 @@
   max-height:400px;
   padding: 15px 0;
   overflow: auto;
-  background-color: white;
+  background-color: #f9f9f9;
   position:relative;
   z-index:1000;
   border-radius: 0 0 4px 4px;
