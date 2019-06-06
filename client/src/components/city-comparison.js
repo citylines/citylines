@@ -84,6 +84,7 @@ class CityComparison extends PureComponent {
       // systems visibility
       if (!this.state.systemsShown[urlName] && newState.cities[urlName].systems) {
         this.state.systemsShown[urlName] = newState.cities[urlName].systems.map(s => s.id);
+        this.updateSystemsParam(this.state.systemsShown);
       }
       newState.cities[urlName].systemsShown = this.state.systemsShown[urlName] || [];
     }
@@ -163,9 +164,15 @@ class CityComparison extends PureComponent {
       systemsShown[urlName] = systemsShown[urlName].filter(id => id != systemId);
     }
 
+    this.updateSystemsParam(systemsShown);
     this.setState({systemsShown: systemsShown}, () =>
       CityViewStore.toggleAllLines(urlName, systemId, show)
     );
+  }
+
+  updateSystemsParam(systemsShown) {
+    const systemsParam = this.state.urlNames.map(urlName => (systemsShown[urlName] || []).join(',')).join('|');
+    this.updateParams({systems: systemsParam});
   }
 
   activeUrlNames() {
