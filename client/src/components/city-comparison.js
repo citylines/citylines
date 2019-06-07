@@ -203,7 +203,6 @@ class CityComparison extends PureComponent {
     if (params.systems) {
       const cityIndex = this.state.urlNames.indexOf(urlName);
       const systems = params.systems.split('|')[cityIndex];
-      console.log(systems, cityIndex);
       delete params.systems;
       if (systems) {
         params.systems = systems;
