@@ -24,6 +24,7 @@ class CityComparison extends PureComponent {
       urlNames: urlNames,
       cities: {},
       citiesList: [],
+      systems: {},
       systemsShown: {},
       showSettings: false
     }
@@ -74,19 +75,23 @@ class CityComparison extends PureComponent {
     let newState = {
       urlNames: this.state.urlNames,
       cities: {},
-      citiesList: CitiesStore.getState().cities
+      citiesList: CitiesStore.getState().cities,
+      systems: {},
+      systemsShown: {...this.state.systemsShown}
     };
 
     this.activeUrlNames().map(urlName => {
       newState.cities[urlName] = CityStore.getState(urlName);
-      newState.cities[urlName].systems = CityViewStore.getState(urlName).systems;
 
       // systems visibility
-      if (!this.state.systemsShown[urlName] && newState.cities[urlName].systems) {
-        this.state.systemsShown[urlName] = newState.cities[urlName].systems.map(s => s.id);
-        this.updateSystemsParam(this.state.systemsShown);
+      // ===================
+      newState.systems[urlName] = CityViewStore.getState(urlName).systems;
+
+      if (!newState.systemsShown[urlName] && newState.systems[urlName]) {
+        newState.systemsShown[urlName] = newState.systems[urlName].map(s => s.id);
+        this.updateSystemsParam(newState.systemsShown);
       }
-      newState.cities[urlName].systemsShown = this.state.systemsShown[urlName] || [];
+      // ===================
     }
     );
 
@@ -225,7 +230,8 @@ class CityComparison extends PureComponent {
       {
         this.state.showSettings && <CityComparisonSettings
           urlNames={this.state.urlNames}
-          cities={this.state.cities}
+          systems={this.state.systems}
+          systemsShown={this.state.systemsShown}
           onSystemToggle={this.handleSystemToggle.bind(this)}
         />
       }

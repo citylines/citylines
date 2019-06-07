@@ -2,10 +2,13 @@ import React, {PureComponent} from 'react';
 
 class CityComparisonSettings extends PureComponent {
   systems(urlName) {
-    const city = this.props.cities[urlName];
-    if (!city || !city.systems) return [];
-    return city.systems.filter(s => s.name).
-      map(s => {s.show = city.systemsShown.includes(s.id); return s});
+    const systems = this.props.systems[urlName];
+    const systemsShown = this.props.systemsShown[urlName];
+
+    if (!systems || !systemsShown) return [];
+
+    return systems.filter(s => s.name).
+      map(s => {s.show = systemsShown.includes(s.id); return s});
   }
 
   render() {
