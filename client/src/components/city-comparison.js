@@ -19,7 +19,7 @@ class CityComparison extends PureComponent {
     super(props, context);
 
     const urlNames = this.params().cities ? this.params().cities.split(",") : [];
-    const systemsShown = {}
+    const systemsShown = {};
 
     if (this.params().systems) {
       const systems = this.params().systems.split('|');
@@ -34,7 +34,7 @@ class CityComparison extends PureComponent {
       systems: {},
       systemsShown: systemsShown,
       showSettings: false
-    }
+    };
 
     this.bindedOnChange = this.onChange.bind(this);
   }
