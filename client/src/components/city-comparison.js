@@ -19,13 +19,20 @@ class CityComparison extends PureComponent {
     super(props, context);
 
     const urlNames = this.params().cities ? this.params().cities.split(",") : [];
+    const systemsShown = {}
+
+    if (this.params().systems) {
+      const systems = this.params().systems.split('|');
+      systemsShown[urlNames[0]] = systems[0].split(',').map(s => parseInt(s));
+      systemsShown[urlNames[1]] = systems[1].split(',').map(s => parseInt(s));
+    }
 
     this.state = {
       urlNames: urlNames,
       cities: {},
       citiesList: [],
       systems: {},
-      systemsShown: {},
+      systemsShown: systemsShown,
       showSettings: false
     }
 
@@ -89,7 +96,7 @@ class CityComparison extends PureComponent {
 
       if (!newState.systemsShown[urlName] && newState.systems[urlName]) {
         newState.systemsShown[urlName] = newState.systems[urlName].map(s => s.id);
-        this.updateSystemsParam(newState.systemsShown);
+        this.updateParams({systems: this.buildSystemsParam(newState.systemsShown)});
       }
       // ===================
     }
@@ -127,7 +134,10 @@ class CityComparison extends PureComponent {
       if (!urlNames.includes(key)) delete updatedSystemsShown[key];
     });
 
-    this.updateParams({cities: urlNames.join(",")});
+    this.updateParams({
+      cities: urlNames.join(","),
+      systems: this.buildSystemsParam(updatedSystemsShown, urlNames)
+    });
 
     this.setState({urlNames: [...urlNames], systemsShown: updatedSystemsShown}, () => {
       urlNames.map((newUrlName, index) => {
@@ -169,15 +179,16 @@ class CityComparison extends PureComponent {
       systemsShown[urlName] = systemsShown[urlName].filter(id => id != systemId);
     }
 
-    this.updateSystemsParam(systemsShown);
+    this.updateParams({systems: this.buildSystemsParam(systemsShown)});
+
     this.setState({systemsShown: systemsShown}, () =>
       CityViewStore.toggleAllLines(urlName, systemId, show)
     );
   }
 
-  updateSystemsParam(systemsShown) {
-    const systemsParam = this.state.urlNames.map(urlName => (systemsShown[urlName] || []).join(',')).join('|');
-    this.updateParams({systems: systemsParam});
+  buildSystemsParam(systemsShown, urlNames = null) {
+    urlNames = urlNames || this.state.urlNames;
+    return urlNames.map(urlName => (systemsShown[urlName] || []).join(',')).join('|');
   }
 
   activeUrlNames() {
@@ -186,8 +197,21 @@ class CityComparison extends PureComponent {
 
   loadCity(urlName) {
     if (!urlName) return;
-    CityStore.load(urlName, this.params());
-    CityViewStore.load(urlName, this.params());
+
+    const params = {...this.params()};
+
+    if (params.systems) {
+      const cityIndex = this.state.urlNames.indexOf(urlName);
+      const systems = params.systems.split('|')[cityIndex];
+      console.log(systems, cityIndex);
+      delete params.systems;
+      if (systems) {
+        params.systems = systems;
+      }
+    }
+
+    CityStore.load(urlName, params);
+    CityViewStore.load(urlName, params);
   }
 
   title() {
