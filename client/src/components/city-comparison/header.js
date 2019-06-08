@@ -21,7 +21,7 @@ class CityComparisonHeader extends PureComponent {
 
   render() {
     return (
-      <div id="comparison-header" className="o-grid">
+      <div id="comparison-header" className="o-grid o-grid--xsmall-full o-grid--small-full o-grid--medium-full o-grid--large-fit">
         <div className="o-grid__cell">
           <CitySelect
             cities={this.cities().filter(city => city.url_name != this.theOtherCity(this.props.urlNames[0]))}
