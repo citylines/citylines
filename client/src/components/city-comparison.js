@@ -8,6 +8,7 @@ import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
 import CityComparisonHeader from './city-comparison/header';
 import Intro from './city-comparison/intro';
+import CityComparisonSettings from './city-comparison/settings';
 
 import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
@@ -18,12 +19,22 @@ class CityComparison extends PureComponent {
     super(props, context);
 
     const urlNames = this.params().cities ? this.params().cities.split(",") : [];
+    const systemsShown = {};
+
+    if (this.params().systems) {
+      const systems = this.params().systems.split('|');
+      systemsShown[urlNames[0]] = systems[0].split(',').map(s => parseInt(s));
+      systemsShown[urlNames[1]] = systems[1].split(',').map(s => parseInt(s));
+    }
 
     this.state = {
       urlNames: urlNames,
       cities: {},
-      citiesList: []
-    }
+      citiesList: [],
+      systems: {},
+      systemsShown: systemsShown,
+      showSettings: false
+    };
 
     this.bindedOnChange = this.onChange.bind(this);
   }
@@ -71,11 +82,24 @@ class CityComparison extends PureComponent {
     let newState = {
       urlNames: this.state.urlNames,
       cities: {},
-      citiesList: CitiesStore.getState().cities
+      citiesList: CitiesStore.getState().cities,
+      systems: {},
+      systemsShown: {...this.state.systemsShown}
     };
 
-    this.activeUrlNames().map(urlName =>
-      newState.cities[urlName] = CityStore.getState(urlName)
+    this.activeUrlNames().map(urlName => {
+      newState.cities[urlName] = CityStore.getState(urlName);
+
+      // systems visibility
+      // ===================
+      newState.systems[urlName] = CityViewStore.getState(urlName).systems;
+
+      if (!newState.systemsShown[urlName] && newState.systems[urlName]) {
+        newState.systemsShown[urlName] = newState.systems[urlName].map(s => s.id);
+        this.updateParams({systems: this.buildSystemsParam(newState.systemsShown)});
+      }
+      // ===================
+    }
     );
 
     if (this.activeUrlNames()[0]) {
@@ -104,9 +128,18 @@ class CityComparison extends PureComponent {
   handleCitiesChange(urlNames) {
     const oldUrlNames = [...this.state.urlNames];
 
-    this.updateParams({cities: urlNames.join(",")});
+    // Remove outdated systemsShown data
+    const updatedSystemsShown = {...this.state.systemsShown};
+    Object.keys(updatedSystemsShown).map(key => {
+      if (!urlNames.includes(key)) delete updatedSystemsShown[key];
+    });
 
-    this.setState({urlNames: [...urlNames]}, () => {
+    this.updateParams({
+      cities: urlNames.join(","),
+      systems: this.buildSystemsParam(updatedSystemsShown, urlNames)
+    });
+
+    this.setState({urlNames: [...urlNames], systemsShown: updatedSystemsShown}, () => {
       urlNames.map((newUrlName, index) => {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
@@ -134,14 +167,50 @@ class CityComparison extends PureComponent {
     );
   }
 
+  handleToggleSettings() {
+    this.setState({showSettings: !this.state.showSettings});
+  }
+
+  handleSystemToggle(urlName, systemId, show) {
+    let systemsShown = {...this.state.systemsShown};
+    if (show) {
+      systemsShown[urlName].push(systemId);
+    } else {
+      systemsShown[urlName] = systemsShown[urlName].filter(id => id != systemId);
+    }
+
+    this.updateParams({systems: this.buildSystemsParam(systemsShown)});
+
+    this.setState({systemsShown: systemsShown}, () =>
+      CityViewStore.toggleAllLines(urlName, systemId, show)
+    );
+  }
+
+  buildSystemsParam(systemsShown, urlNames = null) {
+    urlNames = urlNames || this.state.urlNames;
+    return urlNames.map(urlName => (systemsShown[urlName] || []).join(',')).join('|');
+  }
+
   activeUrlNames() {
     return this.state.urlNames.filter(urlName => !!urlName);
   }
 
   loadCity(urlName) {
     if (!urlName) return;
-    CityStore.load(urlName, this.params());
-    CityViewStore.load(urlName, this.params());
+
+    const params = {...this.params()};
+
+    if (params.systems) {
+      const cityIndex = this.state.urlNames.indexOf(urlName);
+      const systems = params.systems.split('|')[cityIndex];
+      delete params.systems;
+      if (systems) {
+        params.systems = systems;
+      }
+    }
+
+    CityStore.load(urlName, params);
+    CityViewStore.load(urlName, params);
   }
 
   title() {
@@ -176,9 +245,19 @@ class CityComparison extends PureComponent {
         onYearChange={this.handleYearChange.bind(this)}
         onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
+        toggleSettings={this.handleToggleSettings.bind(this)}
         playing={this.state.playing}
+        showSettings={this.state.showSettings}
         citiesList={this.state.citiesList}
       />
+      {
+        this.state.showSettings && <CityComparisonSettings
+          urlNames={this.state.urlNames}
+          systems={this.state.systems}
+          systemsShown={this.state.systemsShown}
+          onSystemToggle={this.handleSystemToggle.bind(this)}
+        />
+      }
       {
         !this.activeUrlNames().length && <Intro />
       }
