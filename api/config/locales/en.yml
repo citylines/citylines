@@ -1,6 +1,6 @@
 ---
 cities:
-  title: We want to build the transit systems of the World
+  title: We want to map all the transit systems of the world
   search: Enter a city or a country
   contributors:
     one: "%(contributors)s contributor"
@@ -17,8 +17,7 @@ cities:
     request_it: Request it
 main:
   title: citylines.co
-  description: Citylines.co is a collaborative mapping platform where people can build
-    the transit systems of the World
+  description: citylines.co is a collaborative platform for mapping the transit systems of the world!
   log_in: Log in
 auth:
   log_in_with_google: Log in with Google
