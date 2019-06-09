@@ -42,7 +42,7 @@ class Year extends PureComponent {
         <button type="button"
                 className={`c-button c-button--ghost ${this.props.showSettings ? 'c-button--active' : ''}`}
                 onClick={this.props.toggleSettings}>
-                  <span className="fa fa-sliders"></span>
+                  <span className="fa fa-sliders-h"></span>
         </button>
       </div>
     )
