@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import PropTypes from 'prop-types';
 
 import CityViewStore from '../../stores/city-view-store';
 import MainStore from '../../stores/main-store';
@@ -156,7 +157,7 @@ class CityView extends PureComponent {
 }
 
 CityView.contextTypes = {
-  cityName: React.PropTypes.string
+  cityName: PropTypes.string
 }
 
 export default CityView
