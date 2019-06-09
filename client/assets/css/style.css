@@ -438,6 +438,12 @@ button.save-system {
 
 .contact-icon a {
   margin-left: 5px;
+  color: #888;
+  font-size:1.1em;
+}
+
+.contact-icon a:hover {
+  color: #000 !important;
 }
 
 .landing-title {
