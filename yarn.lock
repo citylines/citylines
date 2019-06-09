@@ -2385,6 +2385,15 @@ create-react-class@^15.5.1, create-react-class@^15.6.0:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
+create-react-class@^15.5.2:
+  version "15.6.3"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
+  integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -4798,7 +4807,7 @@ promise@^7.0.3, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -4963,11 +4972,14 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-translate-component@^0.13.2:
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/react-translate-component/-/react-translate-component-0.13.2.tgz#5ad41c7f78abb7a1556a1de62828fd623837a579"
+react-translate-component@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-translate-component/-/react-translate-component-0.14.0.tgz#fbd4ba127e34995a5d6c6a5be8de7850ea7f0dd4"
+  integrity sha1-+9S6En40mVpdbGpb6N54UOp/DdQ=
   dependencies:
+    create-react-class "^15.5.2"
     object-assign "^4.0.1"
+    prop-types "^15.5.8"
 
 react@^15.4.2:
   version "15.6.2"

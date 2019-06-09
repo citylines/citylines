@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import PropTypes from 'prop-types';
 
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
@@ -246,7 +247,7 @@ class City extends PureComponent {
 }
 
 City.childContextTypes = {
-  cityName: React.PropTypes.string
+  cityName: PropTypes.string
 }
 
 export default City

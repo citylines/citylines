@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
+import PropTypes from 'prop-types';
 
 class Map extends Component {
   constructor(props, context) {
@@ -101,7 +102,7 @@ class Map extends Component {
 }
 
 Map.childContextTypes = {
-  map: React.PropTypes.object
+  map: PropTypes.object
 }
 
 class Source extends Component {
@@ -131,7 +132,7 @@ class Source extends Component {
 }
 
 Source.contextTypes = {
-  map: React.PropTypes.object
+  map: PropTypes.object
 }
 
 class Layer extends Component {
@@ -171,7 +172,7 @@ class Layer extends Component {
 }
 
 Layer.contextTypes = {
-  map: React.PropTypes.object
+  map: PropTypes.object
 }
 
 class Popup extends Component {
@@ -206,7 +207,7 @@ class Popup extends Component {
 }
 
 Popup.contextTypes = {
-  map: React.PropTypes.object
+  map: PropTypes.object
 }
 
 class Draw extends Component {
@@ -331,7 +332,7 @@ class Draw extends Component {
 }
 
 Draw.contextTypes = {
-  map: React.PropTypes.object
+  map: PropTypes.object
 }
 
 export {Map, Source, Layer, Popup, Draw};
