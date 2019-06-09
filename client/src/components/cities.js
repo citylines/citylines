@@ -211,7 +211,7 @@ class Cities extends Component {
           <div className="u-letter-box--super">
             <p className="c-paragragh">
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /> Twitter</a></span>
-              <span className="contact-icon"><a className="c-link" target="_blank" href="mailto:info@citylines.co"><span className="fab fa-envelope"/> Email</a></span>
+              <span className="contact-icon"><a className="c-link" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/> Email</a></span>
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://github.com/BrunoSalerno/citylines"><span className="fab fa-github" /> Github</a></span>
               <span className="contact-icon"><a className="c-link" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /> Kaggle</a></span>
             </p>
