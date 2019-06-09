@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "node_modules/.bin/webpack --config client/config/webpack.config.js",
     "build_production": "node_modules/.bin/webpack --config client/config/production.webpack.config.js",
-    "postinstall": "npm run build_production"
+    "heroku-postbuild": "npm run build_production"
   },
   "author": "Bruno Salerno",
   "license": "ISC",
