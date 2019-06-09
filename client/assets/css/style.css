@@ -258,14 +258,14 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 2px 0;
 }
 
-.editor-features-lines-item .fa-close {
+.editor-features-lines-item .fa-times {
   position: absolute;
   right: 30px;
   margin-top:3px;
   color: #888;
 }
 
-.editor-features-lines-item .fa-close:hover {
+.editor-features-lines-item .fa-times:hover {
   color: #000;
   cursor: pointer;
 }

@@ -38,7 +38,7 @@ class FeatureLinesEditor extends PureComponent {
     return (
       <ul className="c-list c-list--unstyled">
         {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
-          <li key={`own-${l.line_url_name}`}className="c-list__item editor-features-lines-item">{l.system ? `${l.line} - ${l.system}` : l.line}<span className="fa fa-close" onClick={() => this.onRemove(l.line_url_name)}></span></li>
+          <li key={`own-${l.line_url_name}`}className="c-list__item editor-features-lines-item">{l.system ? `${l.line} - ${l.system}` : l.line}<span className="fa fa-times" onClick={() => this.onRemove(l.line_url_name)}></span></li>
           )}
         <li className="c-list__item editor-features-lines-item">
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
