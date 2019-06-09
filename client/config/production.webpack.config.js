@@ -8,8 +8,6 @@ module.exports = {
     fs: "empty"
   },
 
-  devtool: 'source-map',
-
   output: {
     path: path.resolve(__dirname, '../assets'),
     filename: 'bundle.js'
