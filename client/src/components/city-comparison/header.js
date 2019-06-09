@@ -67,7 +67,7 @@ class CitySelect extends PureComponent {
           )}
         </select>
         {this.props.urlName && <Link to={`/${this.props.urlName}`} className="c-link c-link--primary">
-          <i className="fa fa-external-link see-city"></i>
+          <i className="fa fa-external-link-alt see-city"></i>
         </Link>}
       </div>
     )

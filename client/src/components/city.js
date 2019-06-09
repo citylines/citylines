@@ -236,7 +236,7 @@ class City extends PureComponent {
           { this.state.drawFeatures &&
             <div className="mapboxgl-ctrl-group mapboxgl-ctrl cut-line">
               <button
-                className="mapbox-gl-draw_ctrl-draw-btn fa fa-scissors"
+                className="mapbox-gl-draw_ctrl-draw-btn fa fa-cut"
                 onClick={() => EditorStore.setMode(this.urlName, 'cut_line')} />
             </div>
           }
