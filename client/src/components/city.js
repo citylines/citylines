@@ -48,6 +48,7 @@ class City extends PureComponent {
   }
 
   componentWillUnmount() {
+    CityStore.unload(this.urlName);
     MainStore.removeChangeListener(this.bindedOnChange);
     CityStore.removeChangeListener(this.bindedOnChange);
     CityViewStore.removeChangeListener(this.bindedOnChange);
