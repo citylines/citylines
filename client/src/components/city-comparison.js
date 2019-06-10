@@ -282,15 +282,14 @@ class CityComparison extends PureComponent {
             onMouseClick={(point, features) => {CityViewStore.clickFeatures(urlName, point, features)}}
             onMove={this.handleMapMove.bind(this)}
             disableMouseEvents={state.playing} >
-            { state.sources && state.sources.map((source) => { return (
-                <Source
-                  key={source.name}
-                  name={source.name}
-                  data={source.data}
-                  layers={source.layers}
-                />
-              )
-            }) }
+            { state.sources && state.sources.map((source) =>
+              <Source
+                key={source.name}
+                name={source.name}
+                data={source.data}
+                layers={source.layers}
+              />
+            ) }
             { state.clickedFeatures && (<Popup
               point={state.clickedFeatures.point}
               onClose={() => {CityViewStore.unClickFeatures(urlName)}}>
