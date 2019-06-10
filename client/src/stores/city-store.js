@@ -28,6 +28,11 @@ const CityStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  unload(urlName) {
+    delete this.cityData[urlName];
+    this.emitChangeEvent();
+  },
+
   updateWithQuery(cityData, queryParams) {
     if (queryParams.geo) {
       const parts = queryParams.geo.split(',');

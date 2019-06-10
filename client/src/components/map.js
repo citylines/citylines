@@ -82,9 +82,15 @@ class Map extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.center && !this.map) {
       this.setMap(nextProps);
+    } else if (nextProps.center && nextProps.center != this.props.center && JSON.stringify(nextProps.center) != JSON.stringify(this.props.center)) {
+      let current = this.map.getCenter().wrap();
+      current = [current.lng.toFixed(6), current.lat.toFixed(6)];
+      if (JSON.stringify(nextProps.center) != JSON.stringify(current)) {
+        this.map.flyTo({center: nextProps.center});
+      }
     }
 
-    if (nextProps.zoom != this.props.zoom) {
+    if (nextProps.zoom && nextProps.zoom != this.props.zoom) {
       if (this.map.getZoom().toFixed(2) != nextProps.zoom) {
         this.map.flyTo({zoom: nextProps.zoom});
       }

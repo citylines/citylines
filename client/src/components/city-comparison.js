@@ -65,6 +65,7 @@ class CityComparison extends PureComponent {
   componentWillUnmount() {
     this.activeUrlNames().map(urlName => {
       CityViewStore.unload(urlName);
+      CityStore.unload(urlName);
     });
     CityStore.removeChangeListener(this.bindedOnChange);
     CityViewStore.removeChangeListener(this.bindedOnChange);
@@ -144,6 +145,7 @@ class CityComparison extends PureComponent {
         const oldUrlName = oldUrlNames[index];
         if (newUrlName != oldUrlName) {
           CityViewStore.unload(oldUrlName);
+          CityStore.unload(oldUrlName);
           this.loadCity(newUrlName);
         }
       });
@@ -262,9 +264,9 @@ class CityComparison extends PureComponent {
         !this.activeUrlNames().length && <Intro />
       }
       {
-        this.state.urlNames.map((urlName, mapIndex) => {
-          const state = this.state.cities[urlName];
-          if (!state) return null;
+        [0,1].map((mapIndex) => {
+          const urlName = this.state.urlNames[mapIndex];
+          const state = this.state.cities[urlName] || {};
 
           return <Map
             key={`map-${mapIndex}`}
