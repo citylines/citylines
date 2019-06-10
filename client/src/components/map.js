@@ -112,12 +112,19 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
-  componentDidMount(){
+  componentWillMount(){
+    console.log("Mount source:", this.props.name);
     this.map = this.context.map;
     this.load();
   }
 
   componentWillUnmount(){
+    console.log("Remove all layers from source:", this.props.name);
+    this.props.layers.map(layer =>
+      this.map.removeLayer(layer.id)
+    );
+
+    console.log("Unmount source:", this.props.name);
     this.map.removeSource(this.props.name);
   }
 
@@ -128,10 +135,6 @@ class Source extends Component {
     });
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
     return (
       <div>
@@ -139,7 +142,7 @@ class Source extends Component {
         <Layer
         key={layer.id}
         id={layer.id}
-        map={this.map}
+        map={this.context.map}
         source={this.props.name}
         type={layer.type}
         paint={layer.paint}
@@ -158,12 +161,9 @@ Source.contextTypes = {
 
 class Layer extends Component {
   componentDidMount(){
+    console.log("Mount layer:", this.props.id);
     this.map = this.props.map;
     this.load();
-  }
-
-  componentWillUnmount(){
-    this.map.removeLayer(this.props.id);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
