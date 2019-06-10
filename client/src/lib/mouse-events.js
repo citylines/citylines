@@ -69,7 +69,7 @@ class MouseEvents {
     const layers = [];
     Object.values(this.mappers).map((mapper) => {
       Object.values(mapper.layerNames).map((type) => {
-        Object.values(type).map((layer) => {
+        type.map((layer) => {
           if (!layer.includes('hover') && !layer.includes('inner')) {
             layers.push(layer);
           }
