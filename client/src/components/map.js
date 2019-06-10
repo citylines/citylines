@@ -133,7 +133,22 @@ class Source extends Component {
   }
 
   render() {
-    return null;
+    return (
+      <div>
+      { this.props.layers && this.props.layers.map(layer =>
+        <Layer
+        key={layer.id}
+        id={layer.id}
+        map={this.map}
+        source={this.props.name}
+        type={layer.type}
+        paint={layer.paint}
+        filter={layer.filter}
+        />
+      )
+      }
+      </div>
+    )
   }
 }
 
@@ -143,7 +158,7 @@ Source.contextTypes = {
 
 class Layer extends Component {
   componentDidMount(){
-    this.map = this.context.map;
+    this.map = this.props.map;
     this.load();
   }
 
@@ -175,10 +190,6 @@ class Layer extends Component {
   render() {
     return null;
   }
-}
-
-Layer.contextTypes = {
-  map: PropTypes.object
 }
 
 class Popup extends Component {

@@ -193,17 +193,7 @@ class City extends PureComponent {
                   key={source.name}
                   name={source.name}
                   data={source.data}
-                />
-              )
-            }) }
-            { this.state.layers && this.state.layers.map((layer) => { return (
-                <Layer
-                  key={layer.id}
-                  id={layer.id}
-                  source={layer.source}
-                  type={layer.type}
-                  paint={layer.paint}
-                  filter={layer.filter}
+                  layers={source.layers}
                 />
               )
             }) }
