@@ -79,6 +79,12 @@ class Map extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.map.remove();
+    this.map.removed = true;
+    console.log("Map removed");
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.center && !this.map) {
       this.setMap(nextProps);
@@ -119,6 +125,11 @@ class Source extends Component {
   }
 
   componentWillUnmount(){
+    if (this.map.removed) {
+      console.log("Map already removed from source:", this.props.name);
+      return;
+    }
+
     console.log("Remove all layers from source:", this.props.name);
     this.props.layers.map(layer =>
       this.map.removeLayer(layer.id)
@@ -249,14 +260,16 @@ class Draw extends Component {
   }
 
   componentWillUnmount() {
-    this.map.off('draw.selectionchange', this.bindedOnSelectionChange);
-    this.map.off('draw.update', this.bindedOnUpdate);
-    this.map.off('draw.create', this.bindedOnCreate);
-    this.map.off('draw.delete', this.bindedOnDelete);
-    this.map.off('draw.modechange', this.bindedOnModeChange);
+    if (!this.map.removed) {
+      this.map.off('draw.selectionchange', this.bindedOnSelectionChange);
+      this.map.off('draw.update', this.bindedOnUpdate);
+      this.map.off('draw.create', this.bindedOnCreate);
+      this.map.off('draw.delete', this.bindedOnDelete);
+      this.map.off('draw.modechange', this.bindedOnModeChange);
 
-    this.draw.deleteAll();
-    this.map.removeControl(this.draw)
+      this.draw.deleteAll();
+      this.map.removeControl(this.draw);
+    }
     delete this.draw;
   }
 
