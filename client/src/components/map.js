@@ -80,8 +80,10 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
-    this.map.remove();
-    this.map.removed = true;
+    if (this.map) {
+      this.map.remove();
+      this.map.removed = true;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
