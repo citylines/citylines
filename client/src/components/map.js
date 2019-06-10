@@ -82,7 +82,6 @@ class Map extends Component {
   componentWillUnmount() {
     this.map.remove();
     this.map.removed = true;
-    console.log("Map removed");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,23 +118,19 @@ Map.childContextTypes = {
 
 class Source extends Component {
   componentWillMount(){
-    console.log("Mount source:", this.props.name);
     this.map = this.context.map;
     this.load();
   }
 
   componentWillUnmount(){
     if (this.map.removed) {
-      console.log("Map already removed from source:", this.props.name);
       return;
     }
 
-    console.log("Remove all layers from source:", this.props.name);
     this.props.layers.map(layer =>
       this.map.removeLayer(layer.id)
     );
 
-    console.log("Unmount source:", this.props.name);
     this.map.removeSource(this.props.name);
   }
 
@@ -172,7 +167,6 @@ Source.contextTypes = {
 
 class Layer extends Component {
   componentDidMount(){
-    console.log("Mount layer:", this.props.id);
     this.map = this.props.map;
     this.load();
   }
