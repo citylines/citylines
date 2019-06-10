@@ -352,4 +352,4 @@ Draw.contextTypes = {
   map: PropTypes.object
 }
 
-export {Map, Source, Layer, Popup, Draw};
+export {Map, Source, Popup, Draw};

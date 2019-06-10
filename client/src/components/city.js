@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
 import {PanelHeader, PanelBody} from './panel';
-import {Map, Source, Layer, Popup, Draw} from './map';
+import {Map, Source, Popup, Draw} from './map';
 import Tags from './tags';
 
 import Translate from 'react-translate-component';

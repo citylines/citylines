@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
-import {Map, Source, Layer, Popup, Draw} from './map';
+import {Map, Source, Popup, Draw} from './map';
 import Tags from './tags';
 
 import Translate from 'react-translate-component';
