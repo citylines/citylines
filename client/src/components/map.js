@@ -79,6 +79,13 @@ class Map extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.map) {
+      this.map.remove();
+      this.map.removed = true;
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.center && !this.map) {
       this.setMap(nextProps);
@@ -112,12 +119,20 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
-  componentDidMount(){
+  componentWillMount(){
     this.map = this.context.map;
     this.load();
   }
 
   componentWillUnmount(){
+    if (this.map.removed) {
+      return;
+    }
+
+    this.props.layers.map(layer =>
+      this.map.removeLayer(layer.id)
+    );
+
     this.map.removeSource(this.props.name);
   }
 
@@ -128,12 +143,23 @@ class Source extends Component {
     });
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
-    return null;
+    return (
+      <div>
+      { this.props.layers && this.props.layers.map(layer =>
+        <Layer
+        key={layer.id}
+        id={layer.id}
+        map={this.context.map}
+        source={this.props.name}
+        type={layer.type}
+        paint={layer.paint}
+        filter={layer.filter}
+        />
+      )
+      }
+      </div>
+    )
   }
 }
 
@@ -143,12 +169,8 @@ Source.contextTypes = {
 
 class Layer extends Component {
   componentDidMount(){
-    this.map = this.context.map;
+    this.map = this.props.map;
     this.load();
-  }
-
-  componentWillUnmount(){
-    this.map.removeLayer(this.props.id);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -175,10 +197,6 @@ class Layer extends Component {
   render() {
     return null;
   }
-}
-
-Layer.contextTypes = {
-  map: PropTypes.object
 }
 
 class Popup extends Component {
@@ -238,14 +256,16 @@ class Draw extends Component {
   }
 
   componentWillUnmount() {
-    this.map.off('draw.selectionchange', this.bindedOnSelectionChange);
-    this.map.off('draw.update', this.bindedOnUpdate);
-    this.map.off('draw.create', this.bindedOnCreate);
-    this.map.off('draw.delete', this.bindedOnDelete);
-    this.map.off('draw.modechange', this.bindedOnModeChange);
+    if (!this.map.removed) {
+      this.map.off('draw.selectionchange', this.bindedOnSelectionChange);
+      this.map.off('draw.update', this.bindedOnUpdate);
+      this.map.off('draw.create', this.bindedOnCreate);
+      this.map.off('draw.delete', this.bindedOnDelete);
+      this.map.off('draw.modechange', this.bindedOnModeChange);
 
-    this.draw.deleteAll();
-    this.map.removeControl(this.draw)
+      this.draw.deleteAll();
+      this.map.removeControl(this.draw);
+    }
     delete this.draw;
   }
 
@@ -341,4 +361,4 @@ Draw.contextTypes = {
   map: PropTypes.object
 }
 
-export {Map, Source, Layer, Popup, Draw};
+export {Map, Source, Popup, Draw};

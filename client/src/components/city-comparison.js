@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
 
-import {Map, Source, Layer, Popup, Draw} from './map';
+import {Map, Source, Popup, Draw} from './map';
 import Tags from './tags';
 
 import Translate from 'react-translate-component';
@@ -282,25 +282,14 @@ class CityComparison extends PureComponent {
             onMouseClick={(point, features) => {CityViewStore.clickFeatures(urlName, point, features)}}
             onMove={this.handleMapMove.bind(this)}
             disableMouseEvents={state.playing} >
-            { state.sources && state.sources.map((source) => { return (
-                <Source
-                  key={source.name}
-                  name={source.name}
-                  data={source.data}
-                />
-              )
-            }) }
-            { state.layers && state.layers.map((layer) => { return (
-                <Layer
-                  key={layer.id}
-                  id={layer.id}
-                  source={layer.source}
-                  type={layer.type}
-                  paint={layer.paint}
-                  filter={layer.filter}
-                />
-              )
-            }) }
+            { state.sources && state.sources.map((source) =>
+              <Source
+                key={source.name}
+                name={source.name}
+                data={source.data}
+                layers={source.layers}
+              />
+            ) }
             { state.clickedFeatures && (<Popup
               point={state.clickedFeatures.point}
               onClose={() => {CityViewStore.unClickFeatures(urlName)}}>

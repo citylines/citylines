@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 
 import {PanelHeader, PanelBody} from './panel';
-import {Map, Source, Layer, Popup, Draw} from './map';
+import {Map, Source, Popup, Draw} from './map';
 import Tags from './tags';
 
 import Translate from 'react-translate-component';
@@ -188,25 +188,14 @@ class City extends PureComponent {
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
             disableMouseEvents={this.state.playing} >
-            { this.state.sources && this.state.sources.map((source) => { return (
-                <Source
-                  key={source.name}
-                  name={source.name}
-                  data={source.data}
-                />
-              )
-            }) }
-            { this.state.layers && this.state.layers.map((layer) => { return (
-                <Layer
-                  key={layer.id}
-                  id={layer.id}
-                  source={layer.source}
-                  type={layer.type}
-                  paint={layer.paint}
-                  filter={layer.filter}
-                />
-              )
-            }) }
+            { this.state.sources && this.state.sources.map((source) =>
+              <Source
+                key={source.name}
+                name={source.name}
+                data={source.data}
+                layers={source.layers}
+              />
+            ) }
             { this.state.clickedFeatures && (<Popup
               point={this.state.clickedFeatures.point}
               onClose={this.bindedOnPopupClose}>
