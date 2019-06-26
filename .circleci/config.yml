@@ -9,8 +9,7 @@ jobs:
           command: |
             set -x
             sudo apt-get install curl bash python3
-            pip install --upgrade pip
-            pip install docker-compose
+            pip3 install docker-compose
       - run:
           name: Backend tests
           command: |
