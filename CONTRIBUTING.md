@@ -1,34 +1,34 @@
 # Contributing
 
-Improving or adding data
-==
+## Improving or adding data
+
 You can start improving or adding new data from our online editor right now.
 Go to [citylines.co](https://www.citylines.co), choose a city and start editing!
 
-Development setup
-==
+## Development
+
 This repo contains the client and the API, which are built with the following technologies:
 - Client: ReactJS + Mapbox GL's data-driven magic.
 - API: Sinatra + Postgres/Postgis
 
 In order to setup the development enviroment (we use [Docker](https://www.docker.com/)), the following steps are required.
 
-Docker
-------
+### Docker
+
 Install Docker and docker-compose
 
-Mapbox
-------
+### Mapbox
+
 - Create an account in Mapbox, and a base style
 - Copy `/api/config/mapbox.yml.sample` to `/api/config/mapbox.yml` and fill the `access_token` and the `style` attributes
 
-Google Auth
------------
+### Google Auth
+
 - Get a `google_client_id` for the Google Login from the Google console
 - Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the attributes. The `secret` should be a secret random string
 
-DB
---
+### DB
+
 - Enter to the psql shell:
 ```
 docker exec -it citylines_db_1 psql -U postgres
@@ -71,8 +71,7 @@ create extension postgis;
 
 - Import a dump. See instructions below.
 
-Build!
-------
+### Building
 
 ```
 tools/build
@@ -82,8 +81,7 @@ This command also runs migrations and builds the frontend (`rake db:migrate`, `y
 
 Go to localhost:8080 and you should have Citylines running in your machine.
 
-Other tasks
--------
+### Other tasks
 
 - Import a dump
 ```
@@ -100,17 +98,16 @@ tools/local_console
 tools/build_frontend
 ```
 
-Test
-====
-API
----
+### Testing
+
+#### API
+
 Run
 ```
 tools/backend_tests
 ```
 
-Frontend
-------
+#### Frontend
 Run
 ```
 tools/frontend_tests
