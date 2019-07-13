@@ -565,6 +565,12 @@ table .narrow {
   vertical-align: middle;
 }
 
+/* We need this rule because in some browsers the color is set to white
+ * when the button is active*/
+.cut-line-control button:active {
+  color: rgba(0, 0, 0, 0.847);
+}
+
 .system-tree {
   margin-left: 1em;
   padding-right: 1em;

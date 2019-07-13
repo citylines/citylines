@@ -2,7 +2,7 @@ class CutLineControl {
   onAdd(map) {
     this._map = map;
     this._container = document.createElement('div');
-    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group cut-line-control';
 
     const button = document.createElement('button');
     button.className = 'mapbox-gl-draw_ctrl-draw-btn fa fa-cut';
