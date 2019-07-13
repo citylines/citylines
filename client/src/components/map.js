@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server'
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
 import PropTypes from 'prop-types';
+import CutLineControl from './map/cut-line-control';
 
 class Map extends Component {
   constructor(props, context) {
@@ -264,6 +265,7 @@ class Draw extends Component {
       this.map.off('draw.modechange', this.bindedOnModeChange);
 
       this.draw.deleteAll();
+      this.map.removeControl(this.cutLineControl);
       this.map.removeControl(this.draw);
     }
     delete this.draw;
@@ -292,6 +294,9 @@ class Draw extends Component {
 
     this.draw = new MapboxDraw(options);
     this.map.addControl(this.draw);
+
+    this.cutLineControl = new CutLineControl();
+    this.map.addControl(this.cutLineControl);
 
     this.map.on('draw.selectionchange', this.bindedOnSelectionChange);
     this.map.on('draw.update', this.bindedOnUpdate);

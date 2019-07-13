@@ -565,16 +565,6 @@ table .narrow {
   vertical-align: middle;
 }
 
-.cut-line {
-  position: absolute;
-  right: 10px;
-  top: 210px;
-}
-
-.cut-line button:active {
-  color: #111;
-}
-
 .system-tree {
   margin-left: 1em;
   padding-right: 1em;
