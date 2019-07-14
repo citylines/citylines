@@ -26,7 +26,7 @@ class SatelliteControl {
   }
 
   setIcon() {
-    const icon = this.currentStyle == this.styles.default ? 'fa-globe-americas' : 'fa-globe';
+    const icon = this.currentStyle == this.styles.default ? 'fa-satellite' : 'fa-map';
     this._button.className = `mapbox-gl-draw_ctrl-draw-btn fa ${icon}`;
   }
 
