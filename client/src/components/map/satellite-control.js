@@ -51,11 +51,15 @@ class SatelliteControl {
   fetchSourcesAndLayers() {
     const currentStyle = this._map.getStyle();
 
-    const layers = currentStyle.layers.filter(l => (l.id.includes('sections_') || l.id.includes('stations_')));
-    const sources = {
-      sections_source: currentStyle.sources.sections_source,
-      stations_source: currentStyle.sources.stations_source
-    };
+    const layers = currentStyle.layers.filter(l => (l.id.includes('sections_') || l.id.includes('stations_') || l.id.includes('gl-draw')));
+
+    const sources = {};
+    const validSources = ['sections_source', 'stations_source', 'mapbox-gl-draw-cold', 'mapbox-gl-draw-hot'];
+    validSources.map(key => {
+      if (currentStyle.sources[key]) {
+        sources[key] = currentStyle.sources[key];
+      }
+    });
 
     return {layers: layers, sources: sources};
   }
