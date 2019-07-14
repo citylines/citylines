@@ -74,6 +74,9 @@ class City extends PureComponent {
   updateParams(newParams) {
     const params = Object.assign({}, this.params(), newParams);
 
+    // We delete null params
+    Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
+
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
     if (JSON.stringify(params) === JSON.stringify(this.params())) return;
@@ -123,6 +126,11 @@ class City extends PureComponent {
 
   onPopupClose() {
     CityViewStore.unClickFeatures(this.urlName);
+  }
+
+  onSatelliteToggle(style) {
+    const mapStyle = style == 'satellite' ? style : null;
+    this.updateParams({map: mapStyle});
   }
 
   /* Draw Listeners */
@@ -188,6 +196,7 @@ class City extends PureComponent {
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
+            onSatelliteToggle={this.onSatelliteToggle.bind(this)}
             disableMouseEvents={this.state.playing} >
             { this.state.sources && this.state.sources.map((source) =>
               <Source

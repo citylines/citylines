@@ -50,7 +50,8 @@ class Map extends Component {
     this.map.addControl(new mapboxgl.NavigationControl());
     this.map.addControl(new SatelliteControl({
       defaultStyle: props.mapboxStyle,
-      currentStyle: mapStyle
+      currentStyle: mapStyle,
+      onStyleChange: this.props.onSatelliteToggle
     }));
 
     this.map.on('moveend', () => {

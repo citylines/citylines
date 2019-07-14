@@ -4,6 +4,8 @@ class SatelliteControl {
       default: opts.defaultStyle,
       satellite: 'mapbox://styles/mapbox/satellite-v9'
     };
+
+    this.onStyleChange = opts.onStyleChange;
     this.currentStyle = opts.currentStyle || this.styles.default;
   }
 
@@ -31,11 +33,15 @@ class SatelliteControl {
   }
 
   targetStyle() {
+    let styleName = 'default';
+
     if (this.currentStyle == this.styles.default) {
-      this.currentStyle = this.styles.satellite;
-    } else {
-      this.currentStyle = this.styles.default;
+      styleName = 'satellite';
     }
+
+    this.currentStyle = this.styles[styleName];
+    if (typeof this.onStyleChange === 'function') this.onStyleChange(styleName);
+
     return this.currentStyle;
   }
 
