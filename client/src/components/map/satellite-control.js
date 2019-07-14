@@ -1,6 +1,10 @@
 class SatelliteControl {
-  constructor() {
-    this._SATELLITE_STYLE = 'mapbox://styles/mapbox/satellite-v9';
+  constructor(opts = {}) {
+    this.styles = {
+      default: opts.defaultStyle,
+      satellite: 'mapbox://styles/mapbox/satellite-v9'
+    };
+    this.currentStyle = opts.currentStyle || this.styles.default;
   }
 
   onAdd(map) {
@@ -21,9 +25,18 @@ class SatelliteControl {
     this._map = undefined;
   }
 
+  targetStyle() {
+    if (this.currentStyle == this.styles.default) {
+      this.currentStyle = this.styles.satellite;
+    } else {
+      this.currentStyle = this.styles.default;
+    }
+    return this.currentStyle;
+  }
+
   switchBaseMap() {
     const currentData = this.fetchSourcesAndLayers();
-    this._map.setStyle(this._SATELLITE_STYLE);
+    this._map.setStyle(this.targetStyle());
     this._map.once('styledata', () => {
       this.restoreSourcesAndLayers(currentData.sources, currentData.layers);
     });

@@ -38,7 +38,7 @@ class Map extends Component {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-    this.map.addControl(new SatelliteControl());
+    this.map.addControl(new SatelliteControl({defaultStyle: props.mapboxStyle}));
 
     this.map.on('moveend', () => {
       if (typeof props.onMove === 'function') props.onMove(this.map);
