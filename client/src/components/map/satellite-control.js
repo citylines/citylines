@@ -10,12 +10,12 @@ class SatelliteControl {
   onAdd(map) {
     this._map = map;
     this._container = document.createElement('div');
-    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group satellite-control';
 
-    const button = document.createElement('button');
-    button.className = 'mapbox-gl-draw_ctrl-draw-btn fa fa-globe-americas';
-    button.onclick = this.switchBaseMap.bind(this);
-    this._container.appendChild(button);
+    this._button = document.createElement('button');
+    this._button.onclick = this.switchBaseMap.bind(this);
+    this.setIcon();
+    this._container.appendChild(this._button);
 
     return this._container;
   }
@@ -23,6 +23,11 @@ class SatelliteControl {
   onRemove() {
     this._container.parentNode.removeChild(this._container);
     this._map = undefined;
+  }
+
+  setIcon() {
+    const icon = this.currentStyle == this.styles.default ? 'fa-globe-americas' : 'fa-globe';
+    this._button.className = `mapbox-gl-draw_ctrl-draw-btn fa ${icon}`;
   }
 
   targetStyle() {
@@ -37,6 +42,7 @@ class SatelliteControl {
   switchBaseMap() {
     const currentData = this.fetchSourcesAndLayers();
     this._map.setStyle(this.targetStyle());
+    this.setIcon();
     this._map.once('styledata', () => {
       this.restoreSourcesAndLayers(currentData.sources, currentData.layers);
     });
