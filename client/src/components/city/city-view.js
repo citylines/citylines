@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {browserHistory} from 'react-router';
+import React from 'react';
+import CityBase from '../city-base';
 import PropTypes from 'prop-types';
 
 import CityViewStore from '../../stores/city-view-store';
@@ -11,7 +11,7 @@ import Year from './year';
 import KmIndicator from './km-indicator';
 import Tags from '../tags';
 
-class CityView extends PureComponent {
+class CityView extends CityBase {
   constructor(props, context) {
     super(props, context);
 
@@ -49,23 +49,6 @@ class CityView extends PureComponent {
     if (prevState.linesShown.length != this.state.linesShown.length) {
       this.onLinesShownChange();
     }
-  }
-
-  params() {
-    return this.props.location.query;
-  }
-
-  updateParams(newParams) {
-    const params = Object.assign({}, this.params(), newParams);
-
-    // We delete null params
-    Object.keys(params).forEach((key) => (params[key] == null) && delete params[key]);
-
-    // If new params are equal to the current ones, we don't push the state to the
-    // browser history
-    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
-
-    browserHistory.push({...this.props.location, query: params});
   }
 
   onYearChange() {

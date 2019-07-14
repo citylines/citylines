@@ -1,5 +1,6 @@
-import React, {PureComponent} from 'react';
-import {browserHistory} from 'react-router';
+import React from 'react';
+import CityBase from './city-base';
+
 import {Link} from 'react-router';
 
 import Translate from 'react-translate-component';
@@ -15,7 +16,7 @@ import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
 
-class Editor extends PureComponent {
+class Editor extends CityBase {
   constructor(props, context) {
     super(props, context);
 
@@ -69,20 +70,6 @@ class Editor extends PureComponent {
     EditorStore.load(this.urlName).then(() => {
       MainStore.unsetLoading();
     });
-  }
-
-  params() {
-    return this.props.location.query;
-  }
-
-  updateParams(newParams) {
-    const params = Object.assign({}, this.params(), newParams);
-
-    // If new params are equal to the current ones, we don't push the state to the
-    // browser history
-    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
-
-    browserHistory.push({...this.props.location, query: params});
   }
 
   onSelectionChange(features) {
