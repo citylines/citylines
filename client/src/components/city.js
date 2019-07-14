@@ -178,6 +178,7 @@ class City extends PureComponent {
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
             mapboxStyle={this.state.mapbox_style}
+            mapStyle={this.state.map}
             center={this.state.coords}
             zoom={this.state.zoom}
             bearing={this.state.bearing}

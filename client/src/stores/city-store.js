@@ -45,6 +45,11 @@ const CityStore = Object.assign({}, Store, {
     if (queryParams.zoom) {
       cityData.zoom = queryParams.zoom;
     }
+
+    if (queryParams.map) {
+      cityData.map = queryParams.map;
+    }
+
     return cityData;
   },
 

@@ -26,11 +26,21 @@ class Map extends Component {
     return className;
   }
 
+  mapStyle(props) {
+    if (props.mapStyle == 'satellite') {
+      return (new SatelliteControl).styles.satellite;
+    } else {
+      return props.mapboxStyle;
+    }
+  }
+
   setMap(props) {
+    const mapStyle = this.mapStyle(props);
+
     mapboxgl.accessToken = props.mapboxAccessToken;
     this.map = new mapboxgl.Map({
       container: this.mapId(),
-      style: props.mapboxStyle,
+      style: mapStyle,
       center: props.center,
       zoom: props.zoom,
       bearing: props.bearing,
@@ -38,7 +48,10 @@ class Map extends Component {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-    this.map.addControl(new SatelliteControl({defaultStyle: props.mapboxStyle}));
+    this.map.addControl(new SatelliteControl({
+      defaultStyle: props.mapboxStyle,
+      currentStyle: mapStyle
+    }));
 
     this.map.on('moveend', () => {
       if (typeof props.onMove === 'function') props.onMove(this.map);

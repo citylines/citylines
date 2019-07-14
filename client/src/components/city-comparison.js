@@ -273,6 +273,7 @@ class CityComparison extends PureComponent {
             mapIndex={mapIndex}
             mapboxAccessToken={state.mapbox_access_token}
             mapboxStyle={state.mapbox_style}
+            mapStyle={state.map}
             center={state.coords}
             zoom={state.zoom}
             bearing={state.bearing}
