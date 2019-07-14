@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw';
 import PropTypes from 'prop-types';
 import CutLineControl from './map/cut-line-control';
+import SatelliteControl from './map/satellite-control';
 
 class Map extends Component {
   constructor(props, context) {
@@ -37,6 +38,7 @@ class Map extends Component {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new SatelliteControl());
 
     this.map.on('moveend', () => {
       if (typeof props.onMove === 'function') props.onMove(this.map);
