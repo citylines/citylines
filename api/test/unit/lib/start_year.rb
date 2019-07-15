@@ -2,9 +2,13 @@ require File.expand_path '../../../test_config', __FILE__
 
 describe "start year" do
   it "should automatically set a default start year" do
-    city = City.new(name: 'Test City', url_name: 'test-city')
-    city.save
+    city = City.create(name: 'Test City', url_name: 'test-city')
     assert_equal Time.now.year, city.start_year
+  end
+
+  it "shouldn't set a default start year if it is passed" do
+    city = City.create(name: 'Test City', url_name: 'test-city', start_year: 1998)
+    assert_equal 1998, city.start_year
   end
 
   describe "setting the city start_year on features update" do
