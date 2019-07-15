@@ -1,4 +1,6 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
+import CityBase from './city-base';
+
 import {browserHistory} from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -16,7 +18,7 @@ import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
-class City extends PureComponent {
+class City extends CityBase {
   constructor(props, context) {
     super(props, context);
 
@@ -67,20 +69,6 @@ class City extends PureComponent {
     }
   }
 
-  params() {
-    return this.props.location.query;
-  }
-
-  updateParams(newParams) {
-    const params = Object.assign({}, this.params(), newParams);
-
-    // If new params are equal to the current ones, we don't push the state to the
-    // browser history
-    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
-
-    browserHistory.push({...this.props.location, query: params});
-  }
-
   onChange() {
     this.setState(CityStore.getState(this.urlName));
   }
@@ -123,6 +111,11 @@ class City extends PureComponent {
 
   onPopupClose() {
     CityViewStore.unClickFeatures(this.urlName);
+  }
+
+  onSatelliteToggle(style) {
+    const mapStyle = style == 'satellite' ? style : null;
+    this.updateParams({map: mapStyle});
   }
 
   /* Draw Listeners */
@@ -178,6 +171,7 @@ class City extends PureComponent {
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
             mapboxStyle={this.state.mapbox_style}
+            mapStyle={this.state.map}
             center={this.state.coords}
             zoom={this.state.zoom}
             bearing={this.state.bearing}
@@ -187,6 +181,7 @@ class City extends PureComponent {
             onMove={this.bindedOnMapMove}
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
+            onSatelliteToggle={this.onSatelliteToggle.bind(this)}
             disableMouseEvents={this.state.playing} >
             { this.state.sources && this.state.sources.map((source) =>
               <Source

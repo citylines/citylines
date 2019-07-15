@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {browserHistory} from 'react-router';
+import React from 'react';
+import CityBase from './city-base';
 
 import {Map, Source, Popup, Draw} from './map';
 import Tags from './tags';
@@ -14,7 +14,7 @@ import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 
-class CityComparison extends PureComponent {
+class CityComparison extends CityBase {
   constructor(props, context) {
     super(props, context);
 
@@ -37,23 +37,6 @@ class CityComparison extends PureComponent {
     };
 
     this.bindedOnChange = this.onChange.bind(this);
-  }
-
-  params() {
-    return this.props.location.query;
-  }
-
-  updateParams(newParams) {
-    const params = {...this.params(), ...newParams};
-
-    // We delete null params
-    Object.keys(params).forEach((key) => (params[key] == null || params[key].toString() == "NaN") && delete params[key]);
-
-    // If new params are equal to the current ones, we don't push the state to the
-    // browser history
-    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
-
-    browserHistory.push({...this.props.location, query: params});
   }
 
   componentWillMount() {
@@ -273,6 +256,7 @@ class CityComparison extends PureComponent {
             mapIndex={mapIndex}
             mapboxAccessToken={state.mapbox_access_token}
             mapboxStyle={state.mapbox_style}
+            mapStyle={state.map}
             center={state.coords}
             zoom={state.zoom}
             bearing={state.bearing}
