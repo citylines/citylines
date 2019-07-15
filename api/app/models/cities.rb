@@ -34,4 +34,10 @@ class City < Sequel::Model(:cities)
     def url
         "/#{self.url_name}"
     end
+
+    def before_save
+      if self.start_year.nil?
+        self.start_year = Time.now.year
+      end
+    end
 end
