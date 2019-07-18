@@ -20,7 +20,7 @@ class TimelineSpeedControl extends PureComponent {
   render() {
     return (
       <div className="o-form-element">
-        <Translate content="city.years.config.timeline_speed" />
+        <Translate content="city.config.timeline_speed" />
         <input
           type="range"
           className="c-range"

@@ -58,10 +58,9 @@ city:
   edit: Modifier
   stop_editing: Arrêter la modification
   lines: Lignes
-  years:
-    config:
-      timeline_speed: Vitesse de défilement
-      show_transport_modes: Voir les moyens de transport
+  config:
+    timeline_speed: Vitesse de défilement
+    show_transport_modes: Voir les moyens de transport
   km_operative: 'En fonctionnement : %(km)s km'
   km_under_construction: 'En construction : %(km)s km'
   all_lines: Toutes les lignes
