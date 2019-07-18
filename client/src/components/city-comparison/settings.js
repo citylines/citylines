@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import TimelineSpeedControl from '../city/timeline-speed-control';
 
 class CityComparisonSettings extends PureComponent {
   systems(urlName) {
@@ -13,10 +14,15 @@ class CityComparisonSettings extends PureComponent {
 
   render() {
     return (
-      <div className="comparison-settings o-grid">
+      <div className="comparison-settings">
+        <div className="comparison-settings-timeline-speed-container">
+          <TimelineSpeedControl />
+        </div>
+        <div className="o-grid">
         {
           this.props.urlNames.map((urlName) =>
             <div key={`systems-of-${urlName}`} className="o-grid__cell">
+              <div className="c-text">{urlName}</div>
               {
                 this.systems(urlName).map(system =>
                   <label key={`system-${system.id}`} className="c-toggle">
@@ -36,6 +42,7 @@ class CityComparisonSettings extends PureComponent {
             </div>
           )
         }
+        </div>
       </div>
     )
   }

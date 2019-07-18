@@ -74,6 +74,10 @@
   margin-top: 2px;
 }
 
+.comparison-settings-timeline-speed-container {
+  padding-left: 1em;
+  max-width: 300px;
+}
 @media (max-width: 600px){
     #panel {
         width: 100%;
