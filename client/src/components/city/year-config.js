@@ -3,7 +3,6 @@ import Translate from 'react-translate-component';
 import TimelineSpeedControl from './timeline-speed-control';
 
 class YearConfig extends PureComponent {
-
   render() {
     return (
       <div className="c-card year-config">
