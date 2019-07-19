@@ -92,6 +92,7 @@ class CityComparison extends CityBase {
       newState.min = (firstCityState.years || {}).start;
       newState.max = (firstCityState.years || {}).end;
       newState.playing = firstCityState.playing;
+      newState.speed = firstCityState.speed;
     }
 
     this.setState(newState);
@@ -171,6 +172,12 @@ class CityComparison extends CityBase {
     );
   }
 
+  handleSpeedChange(speed) {
+    this.activeUrlNames().map(urlName =>
+      CityViewStore.setSpeed(urlName, speed)
+    );
+  }
+
   buildSystemsParam(systemsShown, urlNames = null) {
     urlNames = urlNames || this.state.urlNames;
     return urlNames.map(urlName => (systemsShown[urlName] || []).join(',')).join('|');
@@ -239,8 +246,10 @@ class CityComparison extends CityBase {
         this.state.showSettings && <CityComparisonSettings
           cities={this.state.cities}
           urlNames={this.state.urlNames}
+          speed={this.state.speed}
           systems={this.state.systems}
           systemsShown={this.state.systemsShown}
+          onSpeedChange={this.handleSpeedChange.bind(this)}
           onSystemToggle={this.handleSystemToggle.bind(this)}
         />
       }

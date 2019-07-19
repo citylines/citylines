@@ -21,7 +21,10 @@ class CityComparisonSettings extends PureComponent {
     return (
       <div className="comparison-settings">
         <div className="comparison-settings-timeline-speed-container">
-          <TimelineSpeedControl />
+          <TimelineSpeedControl
+            speed={this.props.speed}
+            onSpeedChange={this.props.onSpeedChange}
+          />
         </div>
         <div className="o-grid">
         {
