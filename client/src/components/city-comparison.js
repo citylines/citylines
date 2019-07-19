@@ -173,6 +173,8 @@ class CityComparison extends CityBase {
   }
 
   handleSpeedChange(speed) {
+    this.updateParams({speed: speed});
+
     this.activeUrlNames().map(urlName =>
       CityViewStore.setSpeed(urlName, speed)
     );
