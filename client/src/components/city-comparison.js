@@ -237,6 +237,7 @@ class CityComparison extends CityBase {
       />
       {
         this.state.showSettings && <CityComparisonSettings
+          cities={this.state.cities}
           urlNames={this.state.urlNames}
           systems={this.state.systems}
           systemsShown={this.state.systemsShown}

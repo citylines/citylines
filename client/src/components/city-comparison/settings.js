@@ -12,6 +12,11 @@ class CityComparisonSettings extends PureComponent {
       map(s => {s.show = systemsShown.includes(s.id); return s});
   }
 
+  cityName(urlName) {
+   const city = this.props.cities[urlName];
+   return city ? city.name : null;
+  }
+
   render() {
     return (
       <div className="comparison-settings">
@@ -22,7 +27,7 @@ class CityComparisonSettings extends PureComponent {
         {
           this.props.urlNames.map((urlName) =>
             <div key={`systems-of-${urlName}`} className="o-grid__cell">
-              <div className="c-text">{urlName}</div>
+              <div className="c-text">{this.cityName(urlName)}</div>
               {
                 this.systems(urlName).map(system =>
                   <label key={`system-${system.id}`} className="c-toggle">
