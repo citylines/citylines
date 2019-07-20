@@ -22,10 +22,6 @@ class Year extends PureComponent {
     CityViewStore.setYear(this.props.urlName, year);
   }
 
-  handleSpeedChange(speed) {
-    CityViewStore.setSpeed(this.props.urlName, speed);
-  }
-
   handleTransportModesChange(e) {
     CityViewStore.setShowTransportModes(this.props.urlName, e.target.checked);
   }
@@ -80,7 +76,7 @@ class Year extends PureComponent {
       {this.state.showConfigPanel &&
         <YearConfig
           speed={this.props.speed}
-          onSpeedChange={this.handleSpeedChange.bind(this)}
+          onSpeedChange={this.props.onSpeedChange}
           showTransportModes={this.props.showTransportModes}
           onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
         />}

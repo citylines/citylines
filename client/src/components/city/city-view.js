@@ -21,6 +21,7 @@ class CityView extends CityBase {
     this.bindedOnYearChange = this.onYearChange.bind(this);
     this.bindedOnLineToggle = this.onLineToggle.bind(this);
     this.bindedOnAllLinesToggle = this.onAllLinesToggle.bind(this);
+    this.bindedHandleSpeedChange = this.handleSpeedChange.bind(this)
   }
 
   onChange() {
@@ -79,6 +80,12 @@ class CityView extends CityBase {
     this.updateParams({lines: linesShown, system_id: null});
   }
 
+  handleSpeedChange(speed) {
+    this.updateParams({speed: speed});
+
+    CityViewStore.setSpeed(this.urlName, speed);
+  }
+
   systemTitle() {
     const systemId = parseInt(this.params().system_id);
     const system = this.state.systems.find(s => s.id == systemId);
@@ -110,6 +117,7 @@ class CityView extends CityBase {
               year={this.state.currentYear}
               playing={this.state.playing}
               speed={this.state.speed}
+              onSpeedChange={this.bindedHandleSpeedChange}
               showTransportModes={this.state.showTransportModes}
               onYearChange={this.bindedOnYearChange}
             />

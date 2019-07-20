@@ -57,6 +57,10 @@ const CityViewStore = Object.assign({}, Store, {
     const startingYear = cityData.years.default || cityData.years.start;
     cityData.timeline.toYear(startingYear);
 
+    if (cityData.speed) {
+      cityData.timeline.setSpeed(cityData.speed);
+    }
+
     this.cityData[urlName] = cityData;
 
     this.loadKmInfo(urlName, startingYear, linesShown);
@@ -72,6 +76,8 @@ const CityViewStore = Object.assign({}, Store, {
   updateWithQuery(cityData, queryParams) {
     if (queryParams.year) cityData.years.default = parseInt(queryParams.year);
     if (queryParams.lines) cityData.linesShown = queryParams.lines.split(',');
+    if (queryParams.speed) cityData.speed = queryParams.speed;
+
     // FIXME: deprecate system_id ?
     if (queryParams.system_id || queryParams.systems) {
       const systems = (queryParams.system_id || queryParams.systems).split(',').map(s => parseInt(s));
