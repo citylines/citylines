@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
+import {formatNumber} from '../../lib/number-tools';
 
 class FeaturePopupContent extends Component {
   fProps() {
@@ -105,7 +106,7 @@ class DetailedData extends Component {
           { this.validFeatureValue(this.props.buildstart) ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: this.props.buildstart}} /></li> : ''}
           { this.validFeatureValue(this.props.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: this.props.opening}} /></li> : ''}
           { this.validFeatureValue(this.props.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.closure}} /></li> : ''}
-          { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: (parseFloat(this.props.length)/1000).toLocaleString(undefined,{ maximumFractionDigits: 2})}} /></li> : ''}
+          { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li> : ''}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
           <span className="show-more">+</span>

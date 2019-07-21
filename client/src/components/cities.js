@@ -5,6 +5,7 @@ import CitiesStore from '../stores/cities-store';
 import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
+import {formatNumber} from '../lib/number-tools';
 
 class CityItem extends Component {
   constructor(props, context) {
@@ -52,7 +53,7 @@ class CityItem extends Component {
           </h3>
         </header>
         <div className="c-card__body">
-          { this.props.length ? <span className="c-badge c-badge--success">{this.props.length.toLocaleString()} km</span> : ''}
+          { this.props.length ? <span className="c-badge c-badge--success">{formatNumber(this.props.length)} km</span> : ''}
           { this.props.contributors_count ?
             <Translate
               component="span"
@@ -127,7 +128,7 @@ class Cities extends Component {
           name={city.name}
           state={city.state}
           country={city.country}
-          length={city.length.toLocaleString()}
+          length={city.length}
           systems={city.systems}
           contributors_count={city.contributors_count}
           url={city.url}
@@ -176,7 +177,7 @@ class Cities extends Component {
             <div className="top-systems-list">
               <ol className="c-list c-list--ordered">
                 {this.state.topSystems.map(system =>
-                    <li key={`tsystem-${system.url}`} className="c-list__item"><Link to={system.url} className="c-link">{system.name} - {system.city_name}</Link> {system.length.toLocaleString()} km</li>
+                    <li key={`tsystem-${system.url}`} className="c-list__item"><Link to={system.url} className="c-link">{system.name} - {system.city_name}</Link> {formatNumber(system.length)} km</li>
                   )}
               </ol>
             </div>
@@ -191,7 +192,7 @@ class Cities extends Component {
               <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />
               <ol className="c-list c-list--ordered">
                 {this.state.topContributors.map(contributor =>
-                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum.toLocaleString()} km</li>
+                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
                   )}
               </ol>
             </div>
@@ -200,7 +201,7 @@ class Cities extends Component {
               <Translate component="h3" className="c-heading" content="cities.contributors.list.last_month" />
               <ol className="c-list c-list--ordered">
                 {this.state.monthTopContributors.map(contributor =>
-                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {contributor.sum.toLocaleString()} km</li>
+                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
                   )}
               </ol>
             </div>
