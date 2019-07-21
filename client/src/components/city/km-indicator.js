@@ -5,12 +5,14 @@ class KmIndicator extends PureComponent {
   render() {
     return (
       <div>
-        <span className="c-badge c-badge--success" style={{display: this.props.kmOperative ? 'inline-block' : 'none'}}>
-          <Translate content="city.km_operative" with={{km: this.props.kmOperative}} />
-        </span>
-        <span className="c-badge c-badge--brand" style={{display: this.props.kmUnderConstruction ? 'inline-block' : 'none'}}>
-          <Translate content="city.km_under_construction" with={{km: this.props.kmUnderConstruction}} />
-        </span>
+      {this.props.kmOperative ?
+        <span className="c-badge c-badge--success">
+          <Translate content="city.km_operative" with={{km: this.props.kmOperative.toLocaleString()}} />
+        </span> : null}
+      {this.props.kmUnderConstruction ?
+        <span className="c-badge c-badge--brand">
+          <Translate content="city.km_under_construction" with={{km: this.props.kmUnderConstruction.toLocaleString()}} />
+        </span> : null}
       </div>
     )
   }
