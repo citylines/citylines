@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
 import Tags from './tags';
+import {formatNumber} from '../lib/number-tools';
 
 import MainStore from '../stores/main-store';
 import UserStore from '../stores/user-store';
@@ -43,7 +44,7 @@ class User extends Component {
   }
 
   km(city) {
-    return city.created_features && city.created_features.section_length > 0 ? city.created_features.section_length : null;
+    return city.created_features && city.created_features.section_length > 0 ? formatNumber(city.created_features.section_length) : null;
   }
 
   modifiedFeaturesCount(city) {
@@ -53,7 +54,7 @@ class User extends Component {
       total += city[attr].section_count
       total += city[attr].station_count
     });
-    return total > 0 ? total : null
+    return total > 0 ? formatNumber(total) : null;
   }
 
   countryAndStateNames(city) {
@@ -74,7 +75,8 @@ class User extends Component {
   }
 
   stationsCreated(city) {
-    return city.created_features && city.created_features.station_count || null
+    const created = city.created_features && city.created_features.station_count;
+    return created ? formatNumber(created) : null;
   }
 
   render() {
