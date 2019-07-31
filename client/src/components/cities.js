@@ -53,7 +53,7 @@ class CityItem extends Component {
           </h3>
         </header>
         <div className="c-card__body">
-          { this.props.length ? <span className="c-badge c-badge--success">{formatNumber(this.props.length)} km</span> : ''}
+          { this.props.length ? <span className="c-badge c-badge--success">{`${formatNumber(this.props.length)} km`}</span> : ''}
           { this.props.contributors_count ?
             <Translate
               component="span"
