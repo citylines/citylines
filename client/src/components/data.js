@@ -13,7 +13,8 @@ class Data extends Component {
       features: 'https://dataclips.heroku.com/gugsgunqfrrzftoxsyphiwkmhhae',
       section_lines: 'https://dataclips.heroku.com/xefureocdynlarxzelcpwlzjzmyn-section_lines',
       stations: 'https://dataclips.heroku.com/nsdgftlpvsnevtphlkuwbnzzglrt-stations',
-      station_lines: 'https://dataclips.heroku.com/ooanimulqmfdefqsbcqqsdzsijet-station_lines'
+      station_lines: 'https://dataclips.heroku.com/ooanimulqmfdefqsbcqqsdzsijet-station_lines',
+      transport_modes: 'https://dataclips.heroku.com/laduqgisvogcjargoqgcvgdjibxl'
     }
   }
 

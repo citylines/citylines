@@ -176,6 +176,7 @@ data:
   stations: Estaciones
   section_lines: Líneas por tramos
   station_lines: Líneas por estaciones
+  transport_modes: Modos de transporte
   all_data: Todos los datos
   data_by_city: Datos por ciudad
   select_city: Seleccionar ciudad

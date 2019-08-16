@@ -172,6 +172,7 @@ data:
   stations: Stations
   section_lines: Tracks' lines
   station_lines: Stations' lines
+  transport_modes: Transport modes
   all_data: All data
   data_by_city: Data by city
   select_city: Select city
