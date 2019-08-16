@@ -10,7 +10,7 @@ class Data extends Component {
       cities: 'https://dataclips.heroku.com/fnvcwipfhumbbkedepfjbajbqqvq-cities',
       systems: 'https://dataclips.heroku.com/aprshsrwvsfdyfbwrkmuxznutfka-systems',
       lines: 'https://dataclips.heroku.com/yfwuchrcmbjnslnewiediitnfhup-lines',
-      features: 'https://dataclips.heroku.com/gugsgunqfrrzftoxsyphiwkmhhae-features',
+      features: 'https://dataclips.heroku.com/gugsgunqfrrzftoxsyphiwkmhhae',
       section_lines: 'https://dataclips.heroku.com/xefureocdynlarxzelcpwlzjzmyn-section_lines',
       stations: 'https://dataclips.heroku.com/nsdgftlpvsnevtphlkuwbnzzglrt-stations',
       station_lines: 'https://dataclips.heroku.com/ooanimulqmfdefqsbcqqsdzsijet-station_lines'
@@ -18,7 +18,7 @@ class Data extends Component {
   }
 
   formats() {
-    return ['xls', 'csv']
+    return ['json', 'csv']
   }
 
   sendGAEvent(e) {

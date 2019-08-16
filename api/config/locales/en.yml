@@ -168,7 +168,7 @@ data:
   cities: Cities
   systems: Systems
   lines: Lines
-  features: Tracks
+  features: Sections
   stations: Stations
   section_lines: Tracks' lines
   station_lines: Stations' lines
