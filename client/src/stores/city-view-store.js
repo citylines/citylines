@@ -188,6 +188,12 @@ const CityViewStore = Object.assign({}, Store, {
 
   unClickFeatures(urlName) {
     const cityData = this.cityData[urlName];
+
+    //This method may be called when we are unmounting the city
+    //and there are open popups. In these cases, cityData may be already
+    //deleted (via the #unload method), so we check if it exists.
+    if (!cityData) return;
+
     cityData.mouseEvents.unClickFeatures();
     this.emitChangeEvent();
   },
