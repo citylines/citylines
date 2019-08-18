@@ -86,8 +86,28 @@ class Map extends Component {
     });
   }
 
+  // taken/inspired from https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/
+  getUniqueFeatures(array) {
+    const existingFeatureKeys = {};
+    // Because features come from tiled vector data, feature geometries may be split
+    // or duplicated across tile boundaries and, as a result, features may appear
+    // multiple times in query results.
+    const uniqueFeatures = array.filter((el) => {
+      const key = el.properties.klass + '-' + el.properties.id;
+      if (existingFeatureKeys[key]) {
+        return false;
+      } else {
+        existingFeatureKeys[key] = true;
+        return true;
+      }
+    });
+
+    return uniqueFeatures;
+  }
+
   queryRenderedFeatures(point){
-    return this.map.queryRenderedFeatures(point, {layers: this.props.mouseEventsLayerNames});
+    const features = this.map.queryRenderedFeatures(point, {layers: this.props.mouseEventsLayerNames});
+    return this.getUniqueFeatures(features);
   }
 
   componentDidMount(){
