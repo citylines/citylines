@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import CityViewStore from '../../stores/city-view-store';
+import YearControl from './year-control';
 import YearConfig from './year-config';
 
 class Year extends PureComponent {
@@ -17,9 +18,13 @@ class Year extends PureComponent {
     CityViewStore.toggleAnimation(this.props.urlName);
   }
 
-  yearChange(e) {
-    let year = parseInt(e.target.value);
+  handleSlideChange(event) {
+    let year = parseInt(event.target.value);
     if (Number.isNaN(year)) year = 0;
+    this.handleYearChange(year);
+  }
+
+  handleYearChange(year) {
     CityViewStore.setYear(this.props.urlName, year);
   }
 
@@ -38,31 +43,21 @@ class Year extends PureComponent {
 
     return (
     <div className="year-container">
-      <div className="c-input-group c-input-group--right year-group">
-        <div className="o-field">
-          <input ref="currentYear"
-                 className="c-field"
-                 type="number"
-                 min={this.props.min}
-                 max={this.props.max}
-                 onChange={this.yearChange.bind(this)}
-                 value={this.props.year || ""}/>
-        </div>
-        <button ref="action"
-                className="c-button c-button--ghost"
-                onClick={this.toggleAnimation.bind(this)}>
-          <span className={`fa ${icon}`}></span>
-        </button>
-        <button className={`c-button c-button--ghost ${this.state.showConfigPanel ? 'c-button--active' : ''}`} onClick={this.toggleConfigPanel.bind(this)}>
-          <span className="fa fa-sliders-h"></span>
-        </button>
-      </div>
+      <YearControl
+        year={this.props.year}
+        min={this.props.min}
+        max={this.props.max}
+        showSettings={this.state.showConfigPanel}
+        onYearChange={this.handleYearChange.bind(this)}
+        onToggleAnimation={this.toggleAnimation.bind(this)}
+        onToggleSettings={this.toggleConfigPanel.bind(this)}
+      />
       <input ref="slider"
              type="range"
              className="c-range"
              min={this.props.min}
              max={this.props.max}
-             onChange={this.yearChange.bind(this)}
+             onChange={this.handleSlideChange.bind(this)}
              value={this.props.year || 0} />
       {this.state.showConfigPanel &&
         <YearConfig
