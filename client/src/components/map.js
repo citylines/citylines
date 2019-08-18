@@ -44,7 +44,8 @@ class Map extends Component {
       center: props.center,
       zoom: props.zoom,
       bearing: props.bearing,
-      pitch: props.pitch
+      pitch: props.pitch,
+      customAttribution: '&copy; Citylines.co contributors'
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
