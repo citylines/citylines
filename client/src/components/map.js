@@ -358,7 +358,7 @@ class Draw extends Component {
       this.draw.set(nextProps.features);
     }
 
-    if (nextProps.selectedFeatureById != this.props.selectedFeatureById) {
+    if (nextProps.selectedFeatureById && nextProps.selectedFeatureById != this.props.selectedFeatureById) {
       this.draw.changeMode('simple_select', {featureIds: [nextProps.selectedFeatureById]});
     }
 
