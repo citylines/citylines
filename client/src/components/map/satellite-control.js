@@ -47,7 +47,7 @@ class SatelliteControl {
 
   switchBaseMap() {
     const currentData = this.fetchSourcesAndLayers();
-    this._map.setStyle(this.targetStyle());
+    this._map.setStyle(this.targetStyle(), {diff: false});
     this.setIcon();
     this._map.once('styledata', () => {
       this.restoreSourcesAndLayers(currentData.sources, currentData.layers);
