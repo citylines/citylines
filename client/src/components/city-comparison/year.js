@@ -1,18 +1,9 @@
 import React, {PureComponent} from 'react';
 
 class Year extends PureComponent {
-  handleKeyPress(event) {
-    if (event.key !== 'Enter') return;
-
-    let year = parseInt(event.target.value);
-    if (year < this.props.min) year = this.props.min;
-    if (year > this.props.max) year = this.props.max;
-
-    this.props.onYearChange(year);
-  };
-
   handleYearChange(event) {
-    const year = parseInt(event.target.value);
+    let year = parseInt(event.target.value);
+    if (Number.isNaN(year)) year = 0;
     this.props.onYearChange(year);
   };
 
@@ -32,7 +23,6 @@ class Year extends PureComponent {
                  type="number"
                  min={this.props.min}
                  max={this.props.max}
-                 onKeyPress={this.handleKeyPress.bind(this)}
                  onChange={this.handleYearChange.bind(this)}
                  value={this.props.year || ""}/>
         </div>

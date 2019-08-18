@@ -19,20 +19,12 @@ class Year extends PureComponent {
 
   yearChange(e) {
     let year = parseInt(e.target.value);
+    if (Number.isNaN(year)) year = 0;
     CityViewStore.setYear(this.props.urlName, year);
   }
 
   handleTransportModesChange(e) {
     CityViewStore.setShowTransportModes(this.props.urlName, e.target.checked);
-  }
-
-  onKeyPress(e) {
-    if (e.key !== 'Enter') return;
-
-    let year = parseInt(e.target.value);
-    if (year < this.props.min) year = this.props.min
-    if (year > this.props.max) year = this.props.max
-    CityViewStore.setYear(this.props.urlName, year);
   }
 
   componentDidUpdate() {
@@ -53,7 +45,6 @@ class Year extends PureComponent {
                  type="number"
                  min={this.props.min}
                  max={this.props.max}
-                 onKeyPress={this.onKeyPress.bind(this)}
                  onChange={this.yearChange.bind(this)}
                  value={this.props.year || ""}/>
         </div>
