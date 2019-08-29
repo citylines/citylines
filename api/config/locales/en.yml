@@ -170,8 +170,8 @@ data:
   lines: Lines
   features: Sections
   stations: Stations
-  section_lines: Tracks' lines
-  station_lines: Stations' lines
+  section_lines: Section lines
+  station_lines: Station lines
   transport_modes: Transport modes
   all_data: All data
   data_by_city: Data by city
