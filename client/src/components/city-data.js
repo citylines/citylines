@@ -65,8 +65,8 @@ class CityData extends Component {
         <select className="c-field" value={this.state.city} onChange={this.onCityChange.bind(this)}>
           <Translate component="option" content="data.select_city" />
           {this.state.cities && this.state.cities
-            .filter(city => city.length > 0)
-            .sort((city1, city2) => city2.length - city1.length)
+            .filter(city => city.contributors_count > 0)
+            .sort((city1, city2) => (city1.name > city2.name ? 1 : -1))
             .map(city => <option key={city.url} value={city.url}>{`${city.name}, ${city.country}`}</option>)}
         </select>
         </p>
