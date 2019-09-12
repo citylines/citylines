@@ -89,6 +89,7 @@ editor:
       closure: Fermeture
       osm_id: ID OSM
       osm_tags: Tags OSM
+      osm_metadata: Metadata OSM
   modified_features:
     title: Fonctionnalités modifiées
     no_features_modified: Aucune fonctionnalité modifiée

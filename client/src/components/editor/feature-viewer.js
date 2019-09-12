@@ -15,7 +15,7 @@ class FeatureViewer extends PureComponent {
   }
 
   visibleFields() {
-    return ['opening', 'buildstart', 'closure', 'name', 'osm_id', 'osm_tags'];
+    return ['opening', 'buildstart', 'closure', 'name', 'osm_id', 'osm_tags', 'osm_metadata'];
   }
 
   editableFields() {
