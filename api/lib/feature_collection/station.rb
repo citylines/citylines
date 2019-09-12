@@ -25,6 +25,7 @@ module FeatureCollection
                         'name', name,
                         'osm_id', osm_id,
                         'osm_tags', osm_tags,
+                        'osm_metadata', osm_metadata,
                         'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
                         'closure', coalesce(closure, #{FUTURE}),
@@ -36,7 +37,7 @@ module FeatureCollection
           )
       )::text
       from (
-        select id, name, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
+        select id, name, geometry, osm_id, osm_tags, osm_metadata, opening, buildstart, closure, lines
         from stations
         left join lateral (
           select

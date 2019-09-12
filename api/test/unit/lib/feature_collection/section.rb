@@ -14,7 +14,7 @@ describe FeatureCollection::Section do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name:'test-line')
 
-    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags", city_id: @city.id)
+    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: 'tags', osm_metadata: 'metadata', city_id: @city.id)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 
@@ -23,13 +23,13 @@ describe FeatureCollection::Section do
     @city.reload
   end
 
-  it "should return a featuer collection of raw features" do
+  it "should return a feature collection of raw features" do
     feature_collection = JSON.parse(FeatureCollection::Section.by_city(@city.id), symbolize_names: true)
     assert_equal "FeatureCollection", feature_collection[:type]
     assert_equal 1, feature_collection[:features].count
   end
 
-  it "should return a featuer collection of formatted features" do
+  it "should return a feature collection of formatted features" do
     feature_collection = JSON.parse(FeatureCollection::Section.by_city(@city.id, formatted: true), symbolize_names: true)
     assert_equal "FeatureCollection", feature_collection[:type]
     assert_equal 1, feature_collection[:features].count
@@ -76,6 +76,7 @@ describe FeatureCollection::Section do
                              buildstart: @section.buildstart,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
+                             osm_metadata: @section.osm_metadata,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]
@@ -102,6 +103,7 @@ describe FeatureCollection::Section do
                              buildstart: @section.buildstart,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
+                             osm_metadata: @section.osm_metadata,
                              closure: FeatureCollection::Section::FUTURE}
 
       assert_equal expected_properties, feature[:properties]
@@ -127,6 +129,7 @@ describe FeatureCollection::Section do
                              buildstart: @section.opening,
                              osm_id: @section.osm_id,
                              osm_tags: @section.osm_tags,
+                             osm_metadata: @section.osm_metadata,
                              closure: @section.closure}
 
       assert_equal expected_properties, feature[:properties]
