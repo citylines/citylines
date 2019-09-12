@@ -46,7 +46,7 @@ describe OSMHelpers do
         .returns(instance)
 
       bbox2=[s,w,n,e].join(',');
-      query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out body;"
+      query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out meta;"
 
       instance
         .expects(:query)
@@ -122,13 +122,13 @@ describe OSMHelpers do
 
   describe "build_osm_feature" do
     it "should build a Point feature from a node" do
-      node = {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}}
+      node = {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station"}, version: 2}
 
       feature = build_osm_feature(node)
 
       expected_feature = {
         type: "Feature",
-        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station"},
+        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station", osm_metadata: {version: 2}.to_json},
         geometry: {
           type: "Point",
           coordinates: [-58.4059239, -34.6065585]
@@ -142,13 +142,13 @@ describe OSMHelpers do
       way = {type: "way", id: 26192812, nodes: [
               {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
               {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-            ], tags: {electrified: "contact_line"}}
+            ], tags: {electrified: "contact_line"}, version: 2}
 
       feature = build_osm_feature(way)
 
       expected_feature = {
         type: "Feature",
-        properties: {osm_id: 26192812, osm_tags: {electrified: "contact_line"}.to_json},
+        properties: {osm_id: 26192812, osm_tags: {electrified: "contact_line"}.to_json, osm_metadata: {version: 2}.to_json},
         geometry: {
           type: "LineString",
           coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -164,10 +164,10 @@ describe OSMHelpers do
 
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}, version: 1},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946], version: 2}
         ]
       }
 
@@ -178,7 +178,7 @@ describe OSMHelpers do
     expected_features = [
       {
         type: "Feature",
-        properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station"},
+        properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station", osm_metadata: {version: 1}.to_json},
         geometry: {
           type: "Point",
           coordinates: [-58.4059239, -34.6065585]
@@ -186,7 +186,7 @@ describe OSMHelpers do
       },
       {
         type: "Feature",
-        properties: {osm_id: 26192812, osm_tags: "null"},
+        properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 2}.to_json},
         geometry: {
           type: "LineString",
           coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -215,7 +215,7 @@ describe OSMHelpers do
           {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
-          {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
+          {type: "way",  id: 26192812, nodes: [81551276, 81869946], version: 1}
         ]
       }
 
@@ -226,7 +226,7 @@ describe OSMHelpers do
       expected_features = [
         {
           type: "Feature",
-          properties: {osm_id: 26192812, osm_tags: "null"},
+          properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 1}.to_json},
           geometry: {
             type: "LineString",
             coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -247,7 +247,7 @@ describe OSMHelpers do
 
       response = {
         elements: [
-          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}},
+          {type: "node", id: 81551275, lat: -34.6065585, lon: -58.4059239, tags: {name: "Test Station", public_transport: "stop_position"}, version: 2},
           {type: "node", id: 81551276, lat: -34.6077615, lon: -58.4061094},
           {type: "node", id: 81869946, lat: -34.5855604, lon: -58.4620776},
           {type: "way",  id: 26192812, nodes: [81551276, 81869946]}
@@ -261,7 +261,7 @@ describe OSMHelpers do
       expected_features = [
         {
           type: "Feature",
-          properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station"},
+          properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station", osm_metadata: {version: 2}.to_json},
           geometry: {
             type: "Point",
             coordinates: [-58.4059239, -34.6065585]
