@@ -16,7 +16,7 @@ You are encouraged to contribute by improving or adding new data through our onl
 Contact
 =======
 
-Chat with the community at [Gitter](https://gitter.im/citylines/Lobby), send an email to info at citylines.co, to me, or tweet at [@citylines_co](https://twitter.com/citylines_co).
+Chat with the community at [Gitter](https://gitter.im/citylines/Lobby), send an email to info at citylines.co, or tweet at [@citylines_co](https://twitter.com/citylines_co).
 
 License
 =======
