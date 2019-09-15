@@ -14,7 +14,7 @@ describe FeatureCollection::Station do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name: 'a-url-name')
 
-    @station = Station.new(buildstart: 1980, opening:1985, closure: 1999, name: 'Some station', osm_id: 456, osm_tags: 'tags', city_id: @city.id)
+    @station = Station.new(buildstart: 1980, opening:1985, closure: 1999, name: 'Some station', osm_id: 456, osm_tags: 'tags', osm_metadata: 'metadata', city_id: @city.id)
     @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
     @station.save
 
@@ -65,13 +65,13 @@ describe FeatureCollection::Station do
       inner_width: @line.width - 2,
       buildstart_end: @station.opening,
       line_url_name: @station.lines.first.url_name,
-    ).reject!{|f| [:osm_tags, :osm_id].include?(f)}
+    ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata].include?(f)}
 
     formatted_feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
     assert_equal expected_feature, formatted_feature
   end
 
-  it "should return the right feature, without osm fields because it is raw" do
+  it "should return the right feature, with osm fields because it is raw" do
     feature = FeatureCollection::Station.by_feature(@station.id).first
 
     assert_equal 'Feature', feature[:type]
@@ -92,6 +92,7 @@ describe FeatureCollection::Station do
                            buildstart: @station.buildstart,
                            osm_id: @station.osm_id,
                            osm_tags: @station.osm_tags,
+                           osm_metadata: @station.osm_metadata,
                            closure: @station.closure,
     }
 

@@ -24,6 +24,7 @@ module FeatureCollection
                         'length', length,
                         'osm_id', osm_id,
                         'osm_tags', osm_tags,
+                        'osm_metadata', osm_metadata,
                         'opening', coalesce(opening, #{FUTURE}),
                         'buildstart', coalesce(buildstart, opening),
                         'closure', coalesce(closure, #{FUTURE}),
@@ -35,7 +36,7 @@ module FeatureCollection
           )
       )::text
       from (
-        select id, length, geometry, osm_id, osm_tags, opening, buildstart, closure, lines
+        select id, length, geometry, osm_id, osm_tags, osm_metadata, opening, buildstart, closure, lines
         from sections
         left join lateral (
           select section_id, json_agg(json_build_object('line', lines.name,'line_url_name',lines.url_name, 'system', coalesce(systems.name,''))) as lines

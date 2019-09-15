@@ -90,6 +90,7 @@ editor:
       closure: Cierre
       osm_id: Id de OSM
       osm_tags: Tags de OSM
+      osm_metadata: Metadata de OSM
   modified_features:
     title: Elementos modificados
     no_features_modified: Ningún elemento modificado

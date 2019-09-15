@@ -31,7 +31,7 @@ module OSMHelpers
     overpass = OverpassAPI::QL.new(options)
 
     bbox2=[bbox[:s], bbox[:w], bbox[:n], bbox[:e]].join(',');
-    query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out body;"
+    query ="rel['route'='#{route}'];(way(r)(#{bbox2}); node(r)(#{bbox2}););(._;>;); out meta;"
 
     response = overpass.query(query)
 
@@ -61,7 +61,8 @@ module OSMHelpers
 
     properties = {
       osm_id: element[:id],
-      osm_tags: element[:tags].to_json
+      osm_tags: element[:tags].to_json,
+      osm_metadata: {version: element[:version]}.to_json
     }
 
     if type == "node" && element[:tags] && element[:tags][:name]

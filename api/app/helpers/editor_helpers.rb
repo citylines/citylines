@@ -40,6 +40,7 @@ module EditorHelpers
     # osm properties
     feature.osm_tags = properties[:osm_tags]
     feature.osm_id = properties[:osm_id]
+    feature.osm_metadata = properties[:osm_metadata]
 
     feature.save
   end
