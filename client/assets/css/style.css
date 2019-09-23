@@ -614,3 +614,7 @@ table .narrow {
 .city-systems-toggle.show-less {
   box-shadow: 0 -3px 0px rgba(0,0,0,0.1);
 }
+
+.u-letter-box--large.letter-with-footer {
+  padding-bottom:4em;
+}

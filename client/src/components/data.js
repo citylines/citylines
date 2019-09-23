@@ -32,7 +32,7 @@ class Data extends Component {
     return (
         <div className="o-container o-container--medium">
           <Tags title="data.title" />
-          <div className="u-letter-box--large">
+          <div className="u-letter-box--large letter-with-footer">
             <Translate component="h1" className="c-heading" content="data.title" />
 
             <p><Translate content="data.license" unsafe />. <Translate content="data.see_terms_1" /> <Translate component={Link} className="c-link" to="/terms" content="data.see_terms_2" />.</p>
