@@ -1,0 +1,18 @@
+module DataHelpers
+  def city_lines_data(city)
+    lines = city.lines.map do |line|
+      transport_mode = line.transport_mode
+      system = line.system
+      {
+        name: line.name,
+        url_name: line.url_name,
+        color: line.color,
+        system: system.name,
+        transport_mode_id: transport_mode.id,
+        transport_mode_name: transport_mode.name
+      }
+    end
+
+    Naturally.sort_by(lines){|line| line[:name]}
+  end
+end
