@@ -45,13 +45,17 @@ class CityData extends Component {
     const urlName = this.state.city.substr(1);
 
     let url;
+    let extension;
+
     if (type == 'lines_systems_and_modes') {
+      extension = 'json';
       url = `/api/data/${urlName}/${type}`;
     } else {
+      extension = 'geojson';
       url = `/api/${urlName}/raw_source/${type}`;
     }
 
-    const label = `${urlName}_${type}.geojson`;
+    const label = `${urlName}_${type}.${extension}`;
 
     return {
       url: url,
