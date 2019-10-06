@@ -58,7 +58,7 @@ describe FeatureCollection::Station do
     assert_empty feature[:properties][:lines]
   end
 
-  it "formatted_feature should add width and buildstart_end to raw_feature, and remove osm fields" do
+  it "formatted_feature should add width, buildstart_end and transport_mode_name to raw_feature, and remove osm fields" do
     expected_feature = FeatureCollection::Station.by_feature(@station.id).first
     expected_feature[:properties].merge!(
       width: @line.width,
@@ -66,6 +66,8 @@ describe FeatureCollection::Station do
       buildstart_end: @station.opening,
       line_url_name: @station.lines.first.url_name,
     ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata].include?(f)}
+
+    expected_feature[:properties][:lines].first[:transport_mode_name] = @line.transport_mode[:name]
 
     formatted_feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
     assert_equal expected_feature, formatted_feature
@@ -81,7 +83,6 @@ describe FeatureCollection::Station do
       line: @line.name,
       line_url_name: @line.url_name,
       system: @system.name,
-      transport_mode_name: @line.transport_mode[:name]
     }]
 
     expected_properties = {id: @station.id,

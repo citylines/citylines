@@ -42,11 +42,10 @@ module FeatureCollection
         left join lateral (
           select
             station_id,
-            json_agg(json_build_object('line',lines.name,'line_url_name',lines.url_name,'system',coalesce(systems.name,''),'transport_mode_name',transport_modes.name)) as lines
+            json_agg(json_build_object('line',lines.name,'line_url_name',lines.url_name,'system',coalesce(systems.name,''))) as lines
           from station_lines
             left join lines on lines.id = station_lines.line_id
             left join systems on systems.id = system_id
-            left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
           group by station_id
          ) as lines_data on station_id = stations.id
