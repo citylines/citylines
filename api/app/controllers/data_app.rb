@@ -14,13 +14,13 @@ class DataApp < App
     cache_control :no_cache
   end
 
-  get '/:url_name/lines' do |url_name|
+  get '/:url_name/lines_systems_and_modes' do |url_name|
     @city = City[url_name: url_name]
 
     halt 404 unless @city
 
     last_modified last_modified_base_data(@city)
 
-    city_lines_data(@city).to_json
+    city_lines_systems_and_modes(@city).to_json
   end
 end

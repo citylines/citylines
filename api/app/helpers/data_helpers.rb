@@ -1,5 +1,5 @@
 module DataHelpers
-  def city_lines_data(city)
+  def city_lines_systems_and_modes(city)
     lines = city.lines.map do |line|
       transport_mode = line.transport_mode
       system = line.system
