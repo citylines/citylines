@@ -43,8 +43,19 @@ class CityData extends Component {
 
   currentCityLink(type) {
     const urlName = this.state.city.substr(1);
-    const url = `/api/${urlName}/raw_source/${type}`;
-    const label = `${urlName}_${type}.geojson`;
+
+    let url;
+    let extension;
+
+    if (type == 'lines_systems_and_modes') {
+      extension = 'json';
+      url = `/api/data/${urlName}/${type}`;
+    } else {
+      extension = 'geojson';
+      url = `/api/${urlName}/raw_source/${type}`;
+    }
+
+    const label = `${urlName}_${type}.${extension}`;
 
     return {
       url: url,
@@ -80,7 +91,7 @@ class CityData extends Component {
         { this.currentCity() &&
           <div>
             {
-              ['sections', 'stations' ].map(type =>
+              ['sections', 'stations', 'lines_systems_and_modes'].map(type =>
                 <p key={this.currentCityLink(type).label}>
                   <a
                     className="c-link"
