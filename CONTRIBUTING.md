@@ -29,6 +29,11 @@ Install Docker and docker-compose
 
 ### DB
 
+- Start the containers:
+```
+docker-compose up
+```
+
 - Enter to the psql shell:
 ```
 docker exec -it citylines_db_1 psql -U postgres
