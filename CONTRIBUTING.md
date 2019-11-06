@@ -78,11 +78,15 @@ create extension postgis;
 
 ### Building
 
+- To build the backend:
 ```
 tools/build
 ```
 
-This command also runs migrations and builds the frontend (`rake db:migrate`, `yarn install` and `yarn build`).
+- To build the frontend:
+```
+tools/build_frontend
+```
 
 Go to localhost:8080 and you should have Citylines running in your machine.
 
@@ -96,11 +100,6 @@ docker exec citylines_db_1 pg_restore --verbose --clean --no-acl --no-owner -U c
 - Connect to the local console
 ```
 tools/local_console
-```
-
-- Re-build the frontend
-```
-tools/build_frontend
 ```
 
 ### Testing
