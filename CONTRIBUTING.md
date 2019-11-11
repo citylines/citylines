@@ -27,61 +27,16 @@ Install Docker and docker-compose
 - Get a `google_client_id` for the Google Login from the Google console
 - Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the attributes. The `secret` should be a secret random string
 
-### DB
-
-- Start the containers:
-```
-docker-compose up
-```
-
-- Enter to the psql shell:
-```
-docker exec -it citylines_db_1 psql -U postgres
-```
-
-- Create the `citylines` db:
-```
-create database citylines;
-```
-
-- Create the role:
-```
-create user citylines with password 'citylines';
-```
-
-- Enter the DB:
-```
-\c citylines;
-```
-
-- Grant permissions:
-```
-grant  CREATE,CONNECT on database citylines to citylines;
-```
-
-- Create schema:
-```
-create schema citylines;
-```
-
-- Grant permissions to schema:
-```
-grant SELECT,INSERT,UPDATE on all tables in schema citylines to citylines;
-```
-
-- Create the postgis extension
-```
-create extension postgis;
-```
-
-- Import a dump. See instructions below.
-
 ### Building
 
-- To build the backend:
+- To build the backend (and run it):
 ```
 tools/build
 ```
+
+- To simply run it:
+
+`tools/run`
 
 - To build the frontend:
 ```
@@ -89,9 +44,15 @@ tools/build_frontend
 ```
 
 Go to localhost:8080 and you should have Citylines running in your machine.
+If you are using Docker Toolbox, the host will probably be something like 192.168.99.100.
+
+Note: Probably in the first run, the server will be broken because migrations are not run. So you can run migrations (see below), and restart the server (`tools/run`)
 
 ### Other tasks
-
+- Run migrations:
+```
+docker exec -it citylines_web_1 bundle exec rake db:migrate
+```
 - Import a dump
 ```
 docker exec citylines_db_1 pg_restore --verbose --clean --no-acl --no-owner -U citylines -d citylines <DUMP_PATH>
@@ -102,6 +63,11 @@ docker exec citylines_db_1 pg_restore --verbose --clean --no-acl --no-owner -U c
 tools/local_console
 ```
 
+- Load some cities:
+
+```
+docker exec -it -e FILENAME=tools/load_cities/infoplease_cities_formatted.csv citylines_web_1 bundle exec ruby tools/load_cities/load.rb
+```
 ### Testing
 
 #### API
