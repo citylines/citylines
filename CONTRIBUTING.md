@@ -36,7 +36,9 @@ tools/build
 
 - To simply run it:
 
-`tools/run`
+```
+tools/run
+```
 
 - To build the frontend:
 ```
