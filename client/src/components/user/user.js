@@ -93,7 +93,7 @@ class User extends Component {
         <div className="u-letter-box--large">
           <h1 className="c-heading">
             <Avatar initials={this.state.initials}/>
-            <Nickname name={this.state.name}/>
+            <Nickname name={this.state.name} myProfile={this.myProfile()}/>
           </h1>
 
           { this.anyCity() &&
@@ -155,7 +155,9 @@ class Nickname extends Component {
   }
 
   toggleEdit() {
-    this.setState({edit: !this.state.edit});
+    this.setState({edit: !this.state.edit}, () => {
+      if (this.state.edit) this.editInput.focus();
+    });
   }
 
   calcInputWidth(text) {
@@ -168,12 +170,19 @@ class Nickname extends Component {
     return (
     <div style={{display:'inline'}}>
       {this.state.edit ?
-      <input className="c-field user-page-username user-avatar-input" value={this.state.name} onChange={this.handleInputChange.bind(this)} style={{width: this.state.inputWidth}}></input> :
+      <input
+        ref={(input) => { this.editInput = input; }}
+        className="c-field user-page-username user-avatar-input"
+        value={this.state.name}
+        onChange={this.handleInputChange.bind(this)}
+        style={{width: this.state.inputWidth}}
+        ></input> :
       <div className="user-page-username">
         {this.props.name}
       </div>
       }
-      <a className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)}>{this.state.edit ? 'Save' : 'Edit'}</a>
+      {this.props.myProfile &&
+      <a className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)}>{this.state.edit ? 'Save' : 'Edit'}</a>}
     </div>
     )
   }
