@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
-import Tags from './tags';
-import {formatNumber} from '../lib/number-tools';
+import Tags from '../tags';
+import {formatNumber} from '../../lib/number-tools';
 
-import MainStore from '../stores/main-store';
-import UserStore from '../stores/user-store';
+import MainStore from '../../stores/main-store';
+import UserStore from '../../stores/user-store';
 
 class User extends Component {
   constructor(props, context) {
