@@ -89,7 +89,14 @@ class User extends Component {
           interpolations={{name: this.state.name}}
         /> }
         <div className="u-letter-box--large">
-          <h1 className="c-heading">{this.state.name}</h1>
+          <h1 className="c-heading">
+            <div className="c-avatar main-user-avatar">
+              <img className="c-avatar__img" alt="placeholder" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"></img>
+            </div>
+            <div className="username">
+              {this.state.name}
+            </div>
+          </h1>
 
           { this.anyCity() &&
           <h2 className="c-heading">{ this.myProfile() ? <Translate content="user.my_cities" /> : <Translate content="user.cities_of_user" with={{name: this.state.name}} />}</h2>

@@ -618,3 +618,13 @@ table .narrow {
 .u-letter-box--large.letter-with-footer {
   padding-bottom:4em;
 }
+
+/*  Avatar */
+.main-user-avatar {
+  top: 20px;
+}
+
+.main-user-avatar + .username {
+  margin-left: 20px;
+  display:inline;
+}
