@@ -661,3 +661,16 @@ table .narrow {
   margin-left: 20px;
   display:inline;
 }
+
+.user-avatar-input {
+  display: inline;
+  border:0;
+  outline:0;
+  width: 250px;
+  padding:0;
+}
+
+.user-avatar-edit {
+  font-size: initial;
+  margin-left:10px;
+}

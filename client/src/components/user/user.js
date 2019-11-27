@@ -93,9 +93,7 @@ class User extends Component {
         <div className="u-letter-box--large">
           <h1 className="c-heading">
             <Avatar initials={this.state.initials}/>
-            <div className="user-page-username">
-              {this.state.name}
-            </div>
+            <Nickname name={this.state.name}/>
           </h1>
 
           { this.anyCity() &&
@@ -138,4 +136,46 @@ class User extends Component {
   }
 }
 
+class Nickname extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      edit: false,
+      name: this.props.name,
+      inputWidth: this.calcInputWidth(this.props.name)
+    }
+  }
+
+  handleInputChange(e) {
+    const newName = e.target.value;
+    this.setState({
+      name: newName,
+      inputWidth: this.calcInputWidth(newName)
+    })
+  }
+
+  toggleEdit() {
+    this.setState({edit: !this.state.edit});
+  }
+
+  calcInputWidth(text) {
+    let length = text.length * 0.5;
+    if (length < 4) length = 4;
+    return length + 'ch';
+  }
+
+  render() {
+    return (
+    <div style={{display:'inline'}}>
+      {this.state.edit ?
+      <input className="c-field user-page-username user-avatar-input" value={this.state.name} onChange={this.handleInputChange.bind(this)} style={{width: this.state.inputWidth}}></input> :
+      <div className="user-page-username">
+        {this.props.name}
+      </div>
+      }
+      <a className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)}>{this.state.edit ? 'Save' : 'Edit'}</a>
+    </div>
+    )
+  }
+}
 export default User
