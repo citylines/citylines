@@ -624,7 +624,7 @@ table .narrow {
   top: 20px;
 }
 
-.main-user-avatar + .username {
+.user-page-username {
   margin-left: 20px;
   display:inline;
 }

@@ -7,6 +7,8 @@ import {formatNumber} from '../../lib/number-tools';
 import MainStore from '../../stores/main-store';
 import UserStore from '../../stores/user-store';
 
+import Avatar from './avatar';
+
 class User extends Component {
   constructor(props, context) {
     super(props, context);
@@ -90,10 +92,8 @@ class User extends Component {
         /> }
         <div className="u-letter-box--large">
           <h1 className="c-heading">
-            <div className="c-avatar main-user-avatar">
-              <img className="c-avatar__img" alt="placeholder" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"></img>
-            </div>
-            <div className="username">
+            <Avatar />
+            <div className="user-page-username">
               {this.state.name}
             </div>
           </h1>
