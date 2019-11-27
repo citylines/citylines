@@ -48,7 +48,7 @@ class Main extends Component {
     const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
 
-    if (json.username) {
+    if (json.userid) {
       MainStore.setUser(json);
     }
   }
@@ -75,7 +75,7 @@ class Main extends Component {
               <Link to="/" className="c-nav__item c-text--loud">
                 <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
-              { this.state.username ?
+              { this.state.userid ?
               <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials}/></Link>  :
               <Link to="/auth" className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
               <Link to="/terms" className="c-nav__item c-nav__item--right">

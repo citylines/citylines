@@ -33,7 +33,6 @@ const MainStore = Object.assign({}, Store, {
   },
 
   setUser(data) {
-    this.state.username = data.username;
     this.state.userid = data.userid;
     this.state.initials = data.initials;
 
@@ -43,9 +42,8 @@ const MainStore = Object.assign({}, Store, {
 
   getUser() {
     return {
-      name: this.state.username,
       intials: this.state.initials,
-      id: this.state.userid
+      userid: this.state.userid
     }
   },
 
@@ -60,7 +58,7 @@ const MainStore = Object.assign({}, Store, {
   },
 
   userLoggedIn() {
-    return !!this.state.username;
+    return !!this.state.userid;
   },
 
   setLoading() {

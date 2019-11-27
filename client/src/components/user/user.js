@@ -69,7 +69,7 @@ class User extends Component {
   }
 
   myProfile() {
-    return parseInt(this.userId) === MainStore.getUser().id;
+    return parseInt(this.userId) === MainStore.getUser().userid;
   }
 
   anyCity() {
