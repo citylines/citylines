@@ -176,7 +176,7 @@ class Cities extends Component {
           <div className="u-letter-box--large" style={{textAlign: 'center'}}>
             <Translate component="h2" className="c-heading" content="cities.top_systems" />
             <div className="top-systems-list">
-              <ol className="c-list c-list--ordered">
+              <ol className="c-list">
                 {this.state.topSystems.map(system =>
                     <li key={`tsystem-${system.url}`} className="c-list__item"><Link to={system.url} className="c-link">{system.name} - {system.city_name}</Link> {formatNumber(system.length)} km</li>
                   )}

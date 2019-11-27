@@ -514,6 +514,14 @@ button.save-system {
   padding-bottom: 5px;
 }
 
+.top-systems-list .c-list {
+  list-style-position: inside;
+}
+
+.contributors-list a, .top-systems-list a {
+  margin-right: 10px;
+  margin-left: 10px;
+}
 ul.auth {
   list-style-type: none;
   padding: 0;
@@ -638,7 +646,6 @@ table .narrow {
 .avatar-inline-list {
   top: 10px;
   margin-right: 10px;
-  margin-left: 5px;
 }
 
 .avatar-initials {
