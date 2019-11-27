@@ -624,6 +624,9 @@ table .narrow {
 }
 
 /*  Avatar */
+.c-avatar {
+  background-color: rgb(36,125,173);
+}
 .avatar-main {
   top: 20px;
 }
