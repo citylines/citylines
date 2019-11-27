@@ -34,7 +34,7 @@ class Auth < App
                         expires: Time.at(expiration_time),
                         httponly: true)
 
-    {username: user.name,
+    {username: user.nickname,
      initials: user.initials,
      userid: user.id,
      msg: "Login succesful"}.to_json
@@ -48,7 +48,7 @@ class Auth < App
 
     reject_if_banned(user)
 
-    {username: user.name,
+    {username: user.nickname,
      initials: user.initials,
      userid: user.id,
      msg: "User fetched succesfully"}.to_json

@@ -1,6 +1,10 @@
 class User < Sequel::Model
   plugin :timestamps, :update_on_create => true
 
+  def nickname
+    self.name.split(" ").first
+  end
+
   def initials
     parts = self.name.split(" ")
     res = unless parts[1].blank?

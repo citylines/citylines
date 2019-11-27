@@ -74,7 +74,7 @@ module UserHelpers
                             .left_join(:users,
                                        :created_features__user_id => :users__id)
                             .exclude(length: nil)
-              .select_group(:user_id, :users__name).select_append{sum(:length).as(sum)}
+              .select_group(:user_id).select_append{sum(:length).as(sum)}
               .order(Sequel.desc(:sum))
 
     if last_month
@@ -84,7 +84,9 @@ module UserHelpers
 
     dataset.limit(10).map do |row|
       h = row.values
-      h[:name] = h[:name].split(' ').first
+      user = User.where(id: h[:user_id]).first
+      h[:name] = user.nickname
+      h[:initials] = user.initials
       h[:sum] = h[:sum] / 1000
       h
     end

@@ -289,7 +289,7 @@ class Api < App
     user = User[user_id]
 
     {
-      name: user.name.split(" ")[0],
+      name: user.nickname,
       initials: user.initials,
       cities: user_cities(user_id)
     }.to_json
