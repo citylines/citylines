@@ -92,7 +92,7 @@ class User extends Component {
         /> }
         <div className="u-letter-box--large">
           <h1 className="c-heading">
-            <Avatar />
+            <Avatar initials={this.state.initials}/>
             <div className="user-page-username">
               {this.state.name}
             </div>

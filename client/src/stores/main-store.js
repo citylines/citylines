@@ -35,6 +35,7 @@ const MainStore = Object.assign({}, Store, {
   setUser(data) {
     this.state.username = data.username;
     this.state.userid = data.userid;
+    this.state.initials = data.initials;
 
     this.state = Object.assign({}, this.state);
     this.emitChangeEvent();
@@ -43,6 +44,7 @@ const MainStore = Object.assign({}, Store, {
   getUser() {
     return {
       name: this.state.username,
+      intials: this.state.initials,
       id: this.state.userid
     }
   },

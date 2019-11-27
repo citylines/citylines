@@ -193,7 +193,9 @@ class Cities extends Component {
               <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />
               <ol className="c-list">
                 {this.state.topContributors.map(contributor =>
-                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list"/> {contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
+                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item">
+                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
+                    </li>
                   )}
               </ol>
             </div>
@@ -202,7 +204,9 @@ class Cities extends Component {
               <Translate component="h3" className="c-heading" content="cities.contributors.list.last_month" />
               <ol className="c-list">
                 {this.state.monthTopContributors.map(contributor =>
-                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list"/> {contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
+                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item">
+                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
+                    </li>
                   )}
               </ol>
             </div>

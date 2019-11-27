@@ -17,7 +17,11 @@ class Avatar extends PureComponent {
 
     return (
       <div className={`c-avatar ${extraClasses}`}>
-      <img className="c-avatar__img" alt="placeholder" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"></img>
+      { (this.props.img) ?
+       <img className="c-avatar__img" alt="placeholder" src={this.props.img}></img>
+        :
+       <div className="avatar-initials">{this.props.initials}</div>
+      }
       </div>
     )
   }

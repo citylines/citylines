@@ -638,6 +638,15 @@ table .narrow {
   margin-left: 5px;
 }
 
+.avatar-initials {
+  overflow: hidden;
+  text-align: center;
+  vertical-align: bottom;
+  line-height: 200%;
+  font-size: 1.5em;
+  height:100%;
+}
+
 .user-page-username {
   margin-left: 20px;
   display:inline;
