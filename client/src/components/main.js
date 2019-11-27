@@ -5,6 +5,7 @@ import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
 import Tags from './tags';
+import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
 class Main extends Component {
@@ -75,7 +76,7 @@ class Main extends Component {
                 <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
               { this.state.username ?
-              <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right">{this.state.username}</Link>  :
+              <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><Avatar inline={true}/></Link>  :
               <Link to="/auth" className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
               <Link to="/terms" className="c-nav__item c-nav__item--right">
                 <Translate content="terms.title" />

@@ -620,8 +620,12 @@ table .narrow {
 }
 
 /*  Avatar */
-.main-user-avatar {
+.avatar-main {
   top: 20px;
+}
+
+.avatar-inline {
+  top: 12%;
 }
 
 .user-page-username {
