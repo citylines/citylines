@@ -497,6 +497,10 @@ button.save-system {
   vertical-align: top;
 }
 
+.contributors-list .c-list {
+  text-align: left;
+}
+
 .contributors-list li {
   padding-bottom: 5px;
 }
@@ -626,6 +630,12 @@ table .narrow {
 
 .avatar-inline {
   top: 17%;
+}
+
+.avatar-inline-list {
+  top: 10px;
+  margin-right: 10px;
+  margin-left: 5px;
 }
 
 .user-page-username {

@@ -6,6 +6,7 @@ import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
 import {formatNumber} from '../lib/number-tools';
+import Avatar from './user/avatar';
 
 class CityItem extends Component {
   constructor(props, context) {
@@ -190,18 +191,18 @@ class Cities extends Component {
 
             <div className="contributors-list">
               <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />
-              <ol className="c-list c-list--ordered">
+              <ol className="c-list">
                 {this.state.topContributors.map(contributor =>
-                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
+                    <li key={`tcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list"/> {contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
                   )}
               </ol>
             </div>
 
             <div className="contributors-list">
               <Translate component="h3" className="c-heading" content="cities.contributors.list.last_month" />
-              <ol className="c-list c-list--ordered">
+              <ol className="c-list">
                 {this.state.monthTopContributors.map(contributor =>
-                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link">{contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
+                    <li key={`mcontrib-${contributor.user_id}`} className="c-list__item"><Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list"/> {contributor.name}</Link> {formatNumber(contributor.sum)} km</li>
                   )}
               </ol>
             </div>
