@@ -294,4 +294,19 @@ class Api < App
       cities: user_cities(user_id)
     }.to_json
   end
+
+  put '/user/:user_id/nickname' do |user_id|
+    protect
+
+    user = User[user_id]
+    args = JSON.parse(request.body.read, symbolize_names: true)
+    user.custom_name = args[:nickname]
+    user.save
+
+    {
+      name: user.nickname,
+      initials: user.initials,
+      cities: user_cities(user_id)
+    }.to_json
+  end
 end

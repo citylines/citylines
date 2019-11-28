@@ -17,6 +17,15 @@ const UserStore = Object.assign({}, Store, {
 
   getState() {
     return this.userData;
+  },
+
+  async updateUserNickname(user_id, nickname) {
+    const url = `/api/user/${user_id}/nickname`;
+    const body = JSON.stringify({nickname: nickname});
+    const response = await fetch(url, {method:'PUT', body: body, credentials: 'same-origin'});
+    const json = await response.json();
+    this.userData = json;
+    this.emitChangeEvent();
   }
 });
 

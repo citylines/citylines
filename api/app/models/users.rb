@@ -6,7 +6,7 @@ class User < Sequel::Model
   end
 
   def nickname
-    default_nickname
+    self.custom_name.blank? ? default_nickname : self.custom_name
   end
 
   def initials

@@ -34,7 +34,7 @@ class Nickname extends Component {
         this.editInput.focus();
       } else {
         if (!cancel) {
-        // TODO: save
+          this.props.onChange(name)
         }
       }
     });

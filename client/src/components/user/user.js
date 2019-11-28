@@ -82,6 +82,10 @@ class User extends Component {
     return created ? formatNumber(created) : null;
   }
 
+  handleNicknameChange(name) {
+    UserStore.updateUserNickname(this.userId, name)
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -94,7 +98,7 @@ class User extends Component {
         <div className="u-letter-box--large">
           <h1 className="c-heading">
             <Avatar initials={this.state.initials}/>
-            <Nickname name={this.state.name} myProfile={this.myProfile()}/>
+            <Nickname name={this.state.name} myProfile={this.myProfile()} onChange={this.handleNicknameChange.bind(this)}/>
           </h1>
 
           { this.anyCity() &&
