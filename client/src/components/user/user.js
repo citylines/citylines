@@ -8,7 +8,7 @@ import MainStore from '../../stores/main-store';
 import UserStore from '../../stores/user-store';
 
 import Avatar from './avatar';
-import Nickname from './nickname';
+import UserConfig from './user-config';
 
 class User extends Component {
   constructor(props, context) {
@@ -106,7 +106,7 @@ class User extends Component {
         <div className="u-letter-box--large">
           <h1 className="c-heading">
             <Avatar initials={this.state.initials} img={this.state.img}/>
-            <Nickname
+            <UserConfig
               name={this.state.name}
               myProfile={this.myProfile()}
               onNicknameChange={this.handleNicknameChange.bind(this)}

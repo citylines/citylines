@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
 
-class Nickname extends Component {
+class UserConfig extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -85,4 +85,4 @@ class Nickname extends Component {
   }
 }
 
-export default Nickname
+export default UserConfig
