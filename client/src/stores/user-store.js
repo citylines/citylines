@@ -27,7 +27,7 @@ const UserStore = Object.assign({}, Store, {
     const json = await response.json();
     this.userData = {...this.userData, ...json};
     this.emitChangeEvent();
-    MainStore.setUser({userid: userId, initials: json.initials});
+    MainStore.setUser({...MainStore.getUser(), initials: json.initials});
   }
 });
 
