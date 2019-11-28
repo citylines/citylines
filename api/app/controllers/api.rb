@@ -283,30 +283,4 @@ class Api < App
 
     get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
-
-  get '/user' do
-    user_id = params[:user_id]
-    user = User[user_id]
-
-    {
-      name: user.nickname,
-      img: user.img_url,
-      initials: user.initials,
-      cities: user_cities(user_id)
-    }.to_json
-  end
-
-  put '/user/:user_id/nickname' do |user_id|
-    protect
-
-    user = User[user_id]
-    args = JSON.parse(request.body.read, symbolize_names: true)
-    user.custom_name = args[:nickname]
-    user.save
-
-    {
-      name: user.nickname,
-      initials: user.initials,
-    }.to_json
-  end
 end
