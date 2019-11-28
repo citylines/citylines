@@ -41,7 +41,7 @@ class Nickname extends Component {
         this.editInput.focus();
       } else {
         if (!cancel) {
-          this.props.onChange(name)
+          this.props.onNicknameChange(name)
         }
       }
     });
@@ -53,7 +53,11 @@ class Nickname extends Component {
         <div className='user-page-username'>
         {this.state.edit &&
             <div className="user-gravatar">
-              <a className="c-link">Fetch avatar from Gravatar</a> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a>
+              {this.props.img ?
+              <a className="c-link" onClick={this.props.onRemoveGravatar}>Remove avatar</a>
+                :
+              <span><a className="c-link" onClick={this.props.onSetGravatar}>Fetch avatar from Gravatar</a> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a></span>
+              }
             </div>}
         {this.state.edit ?
         <input
