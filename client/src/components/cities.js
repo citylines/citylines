@@ -221,7 +221,7 @@ class Cities extends Component {
               <span className="contact-icon"><a target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a></span>
               <span className="contact-icon"><a target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a></span>
             </p>
-            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /></a></p>
+            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /> <i className="fab fa-gitter"/></a></p>
           </div>
         </div>
       </div>
