@@ -1,11 +1,11 @@
 require File.expand_path '../../../test_config', __FILE__
 
 describe User do
-  describe 'initials and nickname' do
-    before do
-      @user = User.create(name: 'Pepe Grillo', email: 'pepe.grillo@disney.com')
-    end
+  before do
+    @user = User.create(name: 'Pepe Grillo', email: 'pepe.grillo@disney.com')
+  end
 
+  describe 'initials and nickname' do
     it 'should return the default initials and nickname' do
       assert_equal 'Pepe', @user.nickname
       assert_equal 'PG', @user.initials
