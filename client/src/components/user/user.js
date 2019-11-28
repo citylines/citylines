@@ -83,15 +83,15 @@ class User extends Component {
   }
 
   handleNicknameChange(name) {
-    UserStore.updateUserNickname(this.userId, name)
+    UserStore.updateUserNickname(this.userId, name);
   }
 
   handleSetGravatar() {
-
+    UserStore.setGravatar(this.userId);
   }
 
   handleRemoveGravatar() {
-
+    UserStore.removeGravatar(this.userId);
   }
 
   render() {

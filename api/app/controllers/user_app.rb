@@ -38,4 +38,28 @@ class UserApp < App
       initials: user.initials,
     }.to_json
   end
+
+  put '/:user_id/gravatar' do |user_id|
+    protect
+
+    user = User[user_id]
+    user.set_gravatar_img
+    user.save
+
+    {
+      img: user.img_url
+    }.to_json
+  end
+
+  delete '/:user_id/gravatar' do |user_id|
+    protect
+
+    user = User[user_id]
+    user.img_url = nil
+    user.save
+
+    {
+      img: nil
+    }.to_json
+  end
 end

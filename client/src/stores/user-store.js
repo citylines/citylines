@@ -28,6 +28,23 @@ const UserStore = Object.assign({}, Store, {
     this.userData = {...this.userData, ...json};
     this.emitChangeEvent();
     MainStore.setUser({...MainStore.getUser(), initials: json.initials});
+  },
+
+  async setGravatar(userId) {
+    this.updateGravatar(userId, 'put');
+  },
+
+  async removeGravatar(userId) {
+    this.updateGravatar(userId, 'delete');
+  },
+
+  async updateGravatar(userId, verb) {
+    const url = `/api/user/${userId}/gravatar`;
+    const response = await fetch(url, {method: verb, credentials: 'same-origin'});
+    const json = await response.json();
+    this.userData = {...this.userData, ...json};
+    this.emitChangeEvent();
+    MainStore.setUser({...MainStore.getUser(), img: json.img});
   }
 });
 
