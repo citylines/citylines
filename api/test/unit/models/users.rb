@@ -27,4 +27,12 @@ describe User do
       assert_equal 'PI', @user.initials
     end
   end
+
+  describe 'gravatar' do
+    it 'should set an avatar URL' do
+      refute @user.img_url
+      @user.set_gravatar_img
+      assert @user.img_url
+    end
+  end
 end
