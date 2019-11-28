@@ -45,6 +45,10 @@ class Nickname extends Component {
     return (
       <div style={{display:'inline'}}>
         <div className='user-page-username'>
+        {this.state.edit &&
+            <div className="user-gravatar">
+              <a className="c-link">Fetch avatar from Gravatar</a> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a>
+            </div>}
         {this.state.edit ?
         <input
           ref={(input) => { this.editInput = input; }}
@@ -62,7 +66,7 @@ class Nickname extends Component {
         </div>
       </div>
 
-      {this.props.myProfile &&
+      {this.props.myProfile && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
       <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.nickname.${this.state.edit ? 'save' : 'edit'}`} />}
       {this.state.edit &&
       <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.nickname.cancel' />}

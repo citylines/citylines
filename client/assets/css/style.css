@@ -670,7 +670,16 @@ table .narrow {
 .user-current-nickname {
   display:inline-block;
 }
+
 .user-avatar-edit {
   font-size: initial;
   margin-left:10px;
+}
+
+.user-gravatar {
+  position: absolute;
+  left: 0;
+  top: 45px;
+  font-size: 0.45em;
+  width: 300px;
 }
