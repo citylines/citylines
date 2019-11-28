@@ -194,7 +194,7 @@ class Cities extends Component {
               <ol className="c-list">
                 {this.state.topContributors.map(contributor =>
                     <li key={`tcontrib-${contributor.user_id}`} className="c-list__item">
-                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
+                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials} img={contributor.img}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
                     </li>
                   )}
               </ol>
@@ -205,7 +205,7 @@ class Cities extends Component {
               <ol className="c-list">
                 {this.state.monthTopContributors.map(contributor =>
                     <li key={`mcontrib-${contributor.user_id}`} className="c-list__item">
-                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
+                      <Link to={`/user/${contributor.user_id}`} className="c-link"> <Avatar size="inline-list" initials={contributor.initials} img={contributor.img}/> {contributor.name}</Link> {formatNumber(contributor.sum)} km
                     </li>
                   )}
               </ol>

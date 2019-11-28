@@ -35,6 +35,7 @@ class Auth < App
                         httponly: true)
 
     {initials: user.initials,
+     img: user.img_url,
      userid: user.id,
      msg: "Login succesful"}.to_json
   end
@@ -48,6 +49,7 @@ class Auth < App
     reject_if_banned(user)
 
     {initials: user.initials,
+     img: user.img_url,
      userid: user.id,
      msg: "User fetched succesfully"}.to_json
   end

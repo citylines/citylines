@@ -97,7 +97,7 @@ class User extends Component {
         /> }
         <div className="u-letter-box--large">
           <h1 className="c-heading">
-            <Avatar initials={this.state.initials}/>
+            <Avatar initials={this.state.initials} img={this.state.img}/>
             <Nickname name={this.state.name} myProfile={this.myProfile()} onChange={this.handleNicknameChange.bind(this)}/>
           </h1>
 

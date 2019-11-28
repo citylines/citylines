@@ -290,6 +290,7 @@ class Api < App
 
     {
       name: user.nickname,
+      img: user.img_url,
       initials: user.initials,
       cities: user_cities(user_id)
     }.to_json

@@ -87,6 +87,7 @@ module UserHelpers
       user = User.where(id: h[:user_id]).first
       h[:name] = user.nickname
       h[:initials] = user.initials
+      h[:img] = user.img_url
       h[:sum] = h[:sum] / 1000
       h
     end

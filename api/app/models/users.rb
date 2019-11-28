@@ -1,3 +1,5 @@
+require 'digest'
+
 class User < Sequel::Model
   plugin :timestamps, :update_on_create => true
 
@@ -24,5 +26,12 @@ class User < Sequel::Model
           end
 
     res.upcase
+  end
+
+  def set_gravatar_img
+    hashed_email = Digest::MD5.hexdigest(self.email.strip.downcase)
+    size=120
+    url = "https://www.gravatar.com/avatar/#{hashed_email}?s=#{size}"
+    self.img_url = url
   end
 end

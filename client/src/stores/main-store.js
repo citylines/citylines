@@ -33,16 +33,14 @@ const MainStore = Object.assign({}, Store, {
   },
 
   setUser(data) {
-    this.state.userid = data.userid;
-    this.state.initials = data.initials;
-
-    this.state = Object.assign({}, this.state);
+    this.state = {...this.state, ...data};
     this.emitChangeEvent();
   },
 
   getUser() {
     return {
       intials: this.state.initials,
+      img: this.state.img,
       userid: this.state.userid
     }
   },
