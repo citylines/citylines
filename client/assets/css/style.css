@@ -653,16 +653,23 @@ table .narrow {
 .user-page-username {
   margin-left: 20px;
   display:inline;
+  position:relative;
 }
 
-.user-avatar-input {
+.user-nickname-input {
   display: inline;
   border:0;
   outline:0;
   width: 250px;
   padding:0;
+  position: absolute;
+  top:0;
+  bottom:0;
 }
 
+.user-current-nickname {
+  display:inline-block;
+}
 .user-avatar-edit {
   font-size: initial;
   margin-left:10px;
