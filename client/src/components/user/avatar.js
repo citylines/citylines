@@ -9,10 +9,10 @@ class Avatar extends PureComponent {
         extraClasses = 'avatar-inline-list u-xsmall';
         break;
       case 'inline':
-        extraClasses = 'avatar-inline u-xsmall';
+        extraClasses = 'u-xsmall';
         break;
       default:
-        extraClasses = 'avatar-main';
+        extraClasses = '';
     }
 
     return (

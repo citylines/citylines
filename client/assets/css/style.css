@@ -634,17 +634,10 @@ table .narrow {
 /*  Avatar */
 .c-avatar {
   background-color: rgb(36,125,173);
-}
-.avatar-main {
-  top: 20px;
-}
-
-.avatar-inline {
-  top: 17%;
+  vertical-align: middle;
 }
 
 .avatar-inline-list {
-  top: 10px;
   margin-right: 3px;
 }
 
