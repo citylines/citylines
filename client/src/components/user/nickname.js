@@ -10,6 +10,12 @@ class Nickname extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.name != this.state.name) {
+      this.setState({name: nextProps.name});
+    }
+  }
+
   handleInputChange(e) {
     const newName = e.target.value;
     this.setState({
