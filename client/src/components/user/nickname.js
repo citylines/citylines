@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Translate from 'react-translate-component';
 
 class Nickname extends Component {
   constructor(props, context) {
@@ -62,9 +63,9 @@ class Nickname extends Component {
       </div>
 
       {this.props.myProfile &&
-      <a className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)}>{this.state.edit ? 'Save' : 'Edit'}</a>}
+      <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.nickname.${this.state.edit ? 'save' : 'edit'}`} />}
       {this.state.edit &&
-      <a className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)}>Cancel</a>}
+      <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.nickname.cancel' />}
     </div>
     )
   }

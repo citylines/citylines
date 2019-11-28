@@ -185,6 +185,10 @@ data:
   data_by_city: Données par ville
   select_city: Sélectionner une ville
 user:
+  nickname:
+    edit: Modifier
+    save: Enregistrer
+    cancel: Annuler
   my_cities: Mes villes
   cities_of_user: Villes de %(name)s
   table:
