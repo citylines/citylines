@@ -306,7 +306,6 @@ class Api < App
     {
       name: user.nickname,
       initials: user.initials,
-      cities: user_cities(user_id)
     }.to_json
   end
 end
