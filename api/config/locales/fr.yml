@@ -185,10 +185,13 @@ data:
   data_by_city: Données par ville
   select_city: Sélectionner une ville
 user:
-  nickname:
+  config:
     edit: Modifier
     save: Enregistrer
     cancel: Annuler
+    gravatar:
+      set: Utiliser l'avatar de Gravatar
+      unset: Supprimer l'avatar
   my_cities: Mes villes
   cities_of_user: Villes de %(name)s
   table:

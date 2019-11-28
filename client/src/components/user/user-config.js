@@ -54,9 +54,11 @@ class UserConfig extends Component {
         {this.state.edit &&
             <div className="user-gravatar">
               {this.props.img ?
-              <a className="c-link" onClick={this.props.onRemoveGravatar}>Remove avatar</a>
+              <Translate component="a" className="c-link" onClick={this.props.onRemoveGravatar} content="user.config.gravatar.unset" />
                 :
-              <span><a className="c-link" onClick={this.props.onSetGravatar}>Fetch avatar from Gravatar</a> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a></span>
+              <span>
+                <Translate component="a" className="c-link" onClick={this.props.onSetGravatar} content="user.config.gravatar.set" /> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a>
+              </span>
               }
             </div>}
         {this.state.edit ?
@@ -77,9 +79,9 @@ class UserConfig extends Component {
       </div>
 
       {this.props.myProfile && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
-      <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.nickname.${this.state.edit ? 'save' : 'edit'}`} />}
+      <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.config.${this.state.edit ? 'save' : 'edit'}`} />}
       {this.state.edit &&
-      <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.nickname.cancel' />}
+      <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.config.cancel' />}
     </div>
     )
   }
