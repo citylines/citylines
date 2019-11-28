@@ -57,7 +57,7 @@ class UserConfig extends Component {
               <Translate component="a" className="c-link" onClick={this.props.onRemoveGravatar} content="user.config.gravatar.unset" />
                 :
               <span>
-                <Translate component="a" className="c-link" onClick={this.props.onSetGravatar} content="user.config.gravatar.set" /> <a className="c-link" target="_blank" href="https://es.gravatar.com/support/what-is-gravatar/"><i className="fas fa-info-circle"></i></a>
+                <Translate component="a" className="c-link" onClick={this.props.onSetGravatar} content="user.config.gravatar.set" /> <a className="c-link" target="_blank" href="https://gravatar.com"><i className="fas fa-info-circle"></i></a>
               </span>
               }
             </div>}
