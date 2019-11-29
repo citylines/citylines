@@ -19,8 +19,11 @@ class UserConfig extends Component {
   handleInputChange(e) {
     const newName = e.target.value;
     this.setState({
-      name: newName,
-      inputWidth: this.nameDiv.offsetWidth
+      name: newName
+    }, () => {
+      this.setState({
+        inputWidth: this.nameDiv.offsetWidth
+      })
     })
   }
 
