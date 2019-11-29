@@ -96,9 +96,9 @@ describe UserHelpers do
       contributors = top_contributors
 
       [
-        {user_id: @jorge.id, name:'Jorge', sum: 5},
-        {user_id: @pepe.id, name: 'Pepe', sum: 4},
-        {user_id: @juan.id, name: 'Juan', sum: 3}
+        {user_id: @jorge.id, name:'Jorge', initials: 'JR', sum: 5, img: nil},
+        {user_id: @pepe.id, name: 'Pepe', initials: 'PM', sum: 4, img: nil},
+        {user_id: @juan.id, name: 'Juan', initials: 'JP', sum: 3, img: nil}
       ].each_with_index do |expected, index|
         assert_equal expected, contributors[index]
       end
@@ -108,8 +108,8 @@ describe UserHelpers do
       contributors = top_contributors(last_month: true)
 
       [
-        {user_id: @pepe.id, name: 'Pepe', sum: 4},
-        {user_id: @juan.id, name: 'Juan', sum: 3}
+        {user_id: @pepe.id, name: 'Pepe', initials: 'PM', sum: 4, img: nil},
+        {user_id: @juan.id, name: 'Juan', initials: 'JP', sum: 3, img: nil}
       ].each_with_index do |expected, index|
         assert_equal expected, contributors[index]
       end

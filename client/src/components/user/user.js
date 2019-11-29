@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Translate from 'react-translate-component';
-import Tags from './tags';
-import {formatNumber} from '../lib/number-tools';
+import Tags from '../tags';
+import {formatNumber} from '../../lib/number-tools';
 
-import MainStore from '../stores/main-store';
-import UserStore from '../stores/user-store';
+import MainStore from '../../stores/main-store';
+import UserStore from '../../stores/user-store';
+
+import Avatar from './avatar';
+import UserConfig from './user-config';
 
 class User extends Component {
   constructor(props, context) {
@@ -67,7 +70,7 @@ class User extends Component {
   }
 
   myProfile() {
-    return parseInt(this.userId) === MainStore.getUser().id;
+    return parseInt(this.userId) === MainStore.getUser().userid;
   }
 
   anyCity() {
@@ -77,6 +80,18 @@ class User extends Component {
   stationsCreated(city) {
     const created = city.created_features && city.created_features.station_count;
     return created ? formatNumber(created) : null;
+  }
+
+  handleNicknameChange(name) {
+    UserStore.updateUserNickname(this.userId, name);
+  }
+
+  handleSetGravatar() {
+    UserStore.setGravatar(this.userId);
+  }
+
+  handleRemoveGravatar() {
+    UserStore.removeGravatar(this.userId);
   }
 
   render() {
@@ -89,7 +104,17 @@ class User extends Component {
           interpolations={{name: this.state.name}}
         /> }
         <div className="u-letter-box--large">
-          <h1 className="c-heading">{this.state.name}</h1>
+          <h1 className="c-heading">
+            <Avatar initials={this.state.initials} img={this.state.img}/>
+            <UserConfig
+              name={this.state.name}
+              myProfile={this.myProfile()}
+              onNicknameChange={this.handleNicknameChange.bind(this)}
+              img={this.state.img}
+              onRemoveGravatar={this.handleRemoveGravatar.bind(this)}
+              onSetGravatar={this.handleSetGravatar.bind(this)}
+            />
+          </h1>
 
           { this.anyCity() &&
           <h2 className="c-heading">{ this.myProfile() ? <Translate content="user.my_cities" /> : <Translate content="user.cities_of_user" with={{name: this.state.name}} />}</h2>

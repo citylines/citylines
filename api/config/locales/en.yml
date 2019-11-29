@@ -178,6 +178,13 @@ data:
   data_by_city: Data by city
   select_city: Select city
 user:
+  config:
+    edit: Edit
+    save: Save
+    cancel: Cancel
+    gravatar:
+      set: Fetch avatar from Gravatar
+      unset: Remove avatar
   my_cities: My cities
   cities_of_user: Cities of %(name)s
   table:

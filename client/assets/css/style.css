@@ -497,6 +497,10 @@ button.save-system {
   vertical-align: top;
 }
 
+.contributors-list .c-list {
+  text-align: left;
+}
+
 .contributors-list li {
   padding-bottom: 5px;
 }
@@ -504,12 +508,17 @@ button.save-system {
 .top-systems-list {
   display: inline-block;
   vertical-align: top;
+  text-align:left;
 }
 
 .top-systems-list li {
   padding-bottom: 5px;
 }
 
+.contributors-list a, .top-systems-list a {
+  margin-right: 10px;
+  margin-left: 10px;
+}
 ul.auth {
   list-style-type: none;
   padding: 0;
@@ -617,4 +626,57 @@ table .narrow {
 
 .u-letter-box--large.letter-with-footer {
   padding-bottom:4em;
+}
+
+/*  Avatar */
+.c-avatar {
+  background-color: rgb(205,152,59);
+  vertical-align: middle;
+}
+
+.avatar-inline-list {
+  margin-right: 3px;
+}
+
+.avatar-initials {
+  overflow: hidden;
+  text-align: center;
+  vertical-align: bottom;
+  line-height: 200%;
+  font-size: 1.5em;
+  height:100%;
+}
+
+.user-page-username {
+  margin-left: 20px;
+  display:inline;
+  position:relative;
+}
+
+.user-nickname-input {
+  display: inline;
+  border:0;
+  outline:0;
+  width: 250px;
+  padding:0;
+  position: absolute;
+  top:0;
+  bottom:0;
+}
+
+.user-current-nickname {
+  display:inline-block;
+}
+
+.user-avatar-edit {
+  font-size: initial;
+  margin-left:10px;
+}
+
+.user-gravatar {
+  position: absolute;
+  left: 0;
+  top: 45px;
+  font-size: 0.45em;
+  width: 300px;
 }

@@ -11,7 +11,7 @@ import Editor from './components/editor';
 import Auth from './components/auth';
 import Terms from './components/terms';
 import Data from './components/data';
-import User from './components/user';
+import User from './components/user/user';
 import Error from './components/error';
 import CityComparison from './components/city-comparison';
 

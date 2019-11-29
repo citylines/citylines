@@ -33,17 +33,15 @@ const MainStore = Object.assign({}, Store, {
   },
 
   setUser(data) {
-    this.state.username = data.username;
-    this.state.userid = data.userid;
-
-    this.state = Object.assign({}, this.state);
+    this.state = {...this.state, ...data};
     this.emitChangeEvent();
   },
 
   getUser() {
     return {
-      name: this.state.username,
-      id: this.state.userid
+      intials: this.state.initials,
+      img: this.state.img,
+      userid: this.state.userid
     }
   },
 
@@ -58,7 +56,7 @@ const MainStore = Object.assign({}, Store, {
   },
 
   userLoggedIn() {
-    return !!this.state.username;
+    return !!this.state.userid;
   },
 
   setLoading() {

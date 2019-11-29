@@ -283,14 +283,4 @@ class Api < App
 
     get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
-
-  get '/user' do
-    user_id = params[:user_id]
-    user = User[user_id]
-
-    {
-      name: user.name.split(" ")[0],
-      cities: user_cities(user_id)
-    }.to_json
-  end
 end
