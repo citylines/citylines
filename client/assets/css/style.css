@@ -508,14 +508,11 @@ button.save-system {
 .top-systems-list {
   display: inline-block;
   vertical-align: top;
+  text-align:left;
 }
 
 .top-systems-list li {
   padding-bottom: 5px;
-}
-
-.top-systems-list .c-list {
-  list-style-position: inside;
 }
 
 .contributors-list a, .top-systems-list a {
