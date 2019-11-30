@@ -23,10 +23,12 @@ class User extends Component {
 
   componentWillMount() {
     UserStore.addChangeListener(this.bindedOnChange);
+    MainStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
     UserStore.removeChangeListener(this.bindedOnChange);
+    MainStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
@@ -95,7 +97,7 @@ class User extends Component {
   }
 
   render() {
-    if (!this.state) return null;
+    if (!this.state || Object.entries(this.state).length === 0) return null;
 
     return (
       <div className="o-container o-container--medium">
@@ -108,7 +110,7 @@ class User extends Component {
             <Avatar initials={this.state.initials} img={this.state.img}/>
             <UserConfig
               name={this.state.name}
-              myProfile={this.myProfile()}
+              editable={this.myProfile()}
               onNicknameChange={this.handleNicknameChange.bind(this)}
               img={this.state.img}
               onRemoveGravatar={this.handleRemoveGravatar.bind(this)}

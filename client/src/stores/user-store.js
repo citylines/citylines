@@ -26,7 +26,6 @@ const UserStore = Object.assign({}, Store, {
     const response = await fetch(url, {method:'PUT', body: body, credentials: 'same-origin'});
     const json = await response.json();
     this.userData = {...this.userData, ...json};
-    this.emitChangeEvent();
     MainStore.setUser({...MainStore.getUser(), initials: json.initials});
   },
 
@@ -43,7 +42,6 @@ const UserStore = Object.assign({}, Store, {
     const response = await fetch(url, {method: verb, credentials: 'same-origin'});
     const json = await response.json();
     this.userData = {...this.userData, ...json};
-    this.emitChangeEvent();
     MainStore.setUser({...MainStore.getUser(), img: json.img});
   }
 });

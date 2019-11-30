@@ -81,7 +81,7 @@ class UserConfig extends Component {
         </div>
       </div>
 
-      {this.props.myProfile && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
+      {this.props.editable && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
       <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.config.${this.state.edit ? 'save' : 'edit'}`} />}
       {this.state.edit &&
       <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.config.cancel' />}
