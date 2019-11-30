@@ -42,7 +42,7 @@ class City extends CityBase {
     return {cityName: this.state && this.state.name};
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
     CityViewStore.addChangeListener(this.bindedOnChange);
