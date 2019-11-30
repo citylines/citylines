@@ -39,7 +39,7 @@ class CityComparison extends CityBase {
     this.bindedOnChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     CityStore.addChangeListener(this.bindedOnChange);
     CityViewStore.addChangeListener(this.bindedOnChange);
     CitiesStore.addChangeListener(this.bindedOnChange);
