@@ -1,6 +1,8 @@
 class AssetsProvider {
-  paths = {}
-  cdn = "//cdn.citylines.co";
+  constructor() {
+    this.paths = {};
+    this.cdn = "//cdn.citylines.co";
+  }
 
   // Sets Sprocket's manifest paths map
   loadPaths(paths) {
