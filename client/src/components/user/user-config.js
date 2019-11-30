@@ -10,7 +10,7 @@ class UserConfig extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.name != this.state.name) {
       this.setState({name: nextProps.name});
     }

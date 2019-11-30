@@ -40,7 +40,7 @@ class User extends Component {
     UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.params.user_id == this.props.params.user_id) return;
 
     MainStore.setLoading();

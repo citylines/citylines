@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import YearControl from '../city/year-control';
 
 class Year extends PureComponent {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.year != this.props.year && this.props.onUpdate) {
       this.props.onUpdate();
     }

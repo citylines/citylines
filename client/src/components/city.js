@@ -62,7 +62,7 @@ class City extends CityBase {
     CityStore.load(this.urlName, this.params());
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (nextState && nextState.error) {
       MainStore.unsetLoading();
       browserHistory.push(`/error?path=${this.urlName}`);
