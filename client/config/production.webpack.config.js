@@ -2,7 +2,9 @@ var path = require('path');
 var webpack = require("webpack");
 
 module.exports = {
-  entry: ['babel-polyfill', path.resolve(__dirname, '../src/index.jsx')],
+  entry: path.resolve(__dirname, '../src/index.jsx'),
+
+  mode: 'production',
 
   node: {
     fs: "empty"
@@ -14,19 +16,19 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
     {
+      loader: 'babel-loader',
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
-      query: { presets: ['es2015', 'react', 'stage-2'], babelrc: false }
+      options: { presets: [['@babel/preset-env', {useBuiltIns: 'usage', corejs:3}], '@babel/preset-react'], babelrc: false }
     },
     { test: /\.json$/, loader: 'json' }
     ]
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
 
   plugins: [
@@ -34,7 +36,6 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    }),
-    new webpack.optimize.UglifyJsPlugin()
+    })
   ]
 };
