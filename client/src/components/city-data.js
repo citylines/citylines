@@ -14,7 +14,7 @@ class CityData extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
   }
 
