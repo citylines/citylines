@@ -197,7 +197,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   min-width:21px;
   text-align:center;
   border-radius:2px;
-  height:20px;
+  min-height:20px;
   line-height:12px;
   vertical-align:top;
 }
