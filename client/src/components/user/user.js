@@ -21,7 +21,7 @@ class User extends Component {
     this.bindedOnChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     UserStore.addChangeListener(this.bindedOnChange);
     MainStore.addChangeListener(this.bindedOnChange);
   }
