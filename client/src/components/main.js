@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Switch, Route, Link } from 'react-router-dom';
 import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
@@ -7,6 +7,15 @@ import Translate from 'react-translate-component';
 import Tags from './tags';
 import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
+
+import Cities from './cities';
+import City from './city';
+import Auth from './auth';
+import Terms from './terms';
+import Data from './data';
+import User from './user/user';
+import Error from './error';
+import CityComparison from './city-comparison';
 
 class Main extends Component {
   constructor(props, context) {
@@ -89,7 +98,16 @@ class Main extends Component {
               </Link>
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
-            {this.props.children}
+            <Switch>
+              <Route exact path="/" component={Cities} />
+              <Route path="/auth" component={Auth} />
+              <Route path="/terms" component={Terms} />
+              <Route path="/data" component={Data} />
+              <Route path="/error" component={Error} />
+              <Route path="/compare" component={CityComparison} />
+              <Route path="/user/:user_id" component={User} />
+              <Route path="/:city_url_name" component={City} />
+            </Switch>
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>

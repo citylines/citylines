@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {browserHistory} from 'react-router';
+import {Switch, Route, browserHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
@@ -18,11 +18,14 @@ import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
+import CityView from './city/city-view';
+import Editor from './editor';
+
 class City extends CityBase {
   constructor(props, context) {
     super(props, context);
 
-    this.urlName = this.props.params.city_url_name;
+    this.urlName = this.props.match.params.city_url_name;
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
@@ -148,6 +151,12 @@ class City extends CityBase {
     return style;
   }
 
+  requireAuth() {
+    if (!MainStore.userLoggedIn()) {
+      //browserHistory.push('/auth');
+    }
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -165,7 +174,10 @@ class City extends CityBase {
               urlName={this.urlName}
               loading={this.state.main.loading}
             />
-            { this.props.children }
+            <Switch>
+              <Route exact path="/:city_url_name" component={CityView} />
+-             <Route path="/:city_url_name/edit" component={Editor} onEnter={this.requireAuth} />
+            </Switch>
           </div>
           <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
           <Map

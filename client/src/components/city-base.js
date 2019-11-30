@@ -1,9 +1,10 @@
 import {PureComponent} from 'react';
 import {browserHistory} from 'react-router';
+import queryString from 'query-string';
 
 class CityBase extends PureComponent {
   params() {
-    return this.props.location.query;
+    return queryString.parse(this.props.location.search)
   }
 
   updateParams(newParams) {

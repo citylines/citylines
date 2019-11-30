@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import MainStore from '../stores/main-store';
 import {browserHistory} from 'react-router';
 import GoogleLogin from 'react-google-login';

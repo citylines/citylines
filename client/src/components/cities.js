@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import Diacritics from 'diacritics';
 import CitiesStore from '../stores/cities-store';
 import MainStore from '../stores/main-store';

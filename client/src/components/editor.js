@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 import Translate from 'react-translate-component';
 
@@ -27,7 +27,7 @@ class Editor extends CityBase {
 
     this.currentMode = this.modes.EDIT_FEATURES;
 
-    this.urlName = this.props.params.city_url_name;
+    this.urlName = this.props.match.params.city_url_name;
     this.state = EditorStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);

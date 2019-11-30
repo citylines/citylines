@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Tags from '../tags';
 import {formatNumber} from '../../lib/number-tools';
@@ -14,9 +14,7 @@ class User extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = null;
-
-    this.userId = this.props.params.user_id;
+    this.userId = this.props.match.params.user_id;
 
     this.bindedOnChange = this.onChange.bind(this);
   }
@@ -41,7 +39,7 @@ class User extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.params.user_id == this.props.params.user_id) return;
+    if (nextProps.match.params.user_id == this.props.match.params.user_id) return;
 
     MainStore.setLoading();
     this.userId = nextProps.params.user_id;
