@@ -17,7 +17,7 @@ class Main extends Component {
     this.bindedOnChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     MainStore.addChangeListener(this.bindedOnChange);
   }
 

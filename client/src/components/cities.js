@@ -78,7 +78,7 @@ class Cities extends Component {
     this.state = CitiesStore.getState();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
   }
 
