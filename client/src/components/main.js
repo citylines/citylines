@@ -9,13 +9,13 @@ import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
 import Cities from './cities';
-import City from './city';
+const City = React.lazy(() => import('./city'));
+const CityComparison = React.lazy(()=> import('./city-comparison'));
 import Auth from './auth';
 import Terms from './terms';
 import Data from './data';
 import User from './user/user';
 import Error from './error';
-import CityComparison from './city-comparison';
 
 class Main extends Component {
   constructor(props, context) {
@@ -98,16 +98,18 @@ class Main extends Component {
               </Link>
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
-            <Switch>
-              <Route exact path="/" component={Cities} />
-              <Route path="/auth" component={Auth} />
-              <Route path="/terms" component={Terms} />
-              <Route path="/data" component={Data} />
-              <Route path="/error" component={Error} />
-              <Route path="/compare" component={CityComparison} />
-              <Route path="/user/:user_id" component={User} />
-              <Route path="/:city_url_name" component={City} />
-            </Switch>
+            <React.Suspense fallback={<SuspenseLoader />}>
+              <Switch>
+                <Route exact path="/" component={Cities} />
+                <Route path="/auth" component={Auth} />
+                <Route path="/terms" component={Terms} />
+                <Route path="/data" component={Data} />
+                <Route path="/error" component={Error} />
+                <Route path="/compare" component={CityComparison} />
+                <Route path="/user/:user_id" component={User} />
+                <Route path="/:city_url_name" component={City} />
+              </Switch>
+            </React.Suspense>
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>
@@ -117,6 +119,20 @@ class Main extends Component {
             />}
         </div>
       )
+  }
+}
+
+class SuspenseLoader extends Component {
+  componentDidMount() {
+    MainStore.setLoading();
+  }
+
+  componentWillUnmount() {
+    MainStore.unsetLoading();
+  }
+
+  render(){
+    return null;
   }
 }
 

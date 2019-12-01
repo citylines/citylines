@@ -12,6 +12,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../assets'),
+    publicPath: 'https://cdn.citylines.co/assets/',
     filename: 'bundle.js'
   },
 
