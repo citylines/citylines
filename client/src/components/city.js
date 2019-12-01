@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {Switch, Redirect, Route, browserHistory} from 'react-router-dom';
+import {Switch, Redirect, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
@@ -68,7 +68,7 @@ class City extends CityBase {
   UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (nextState && nextState.error) {
       MainStore.unsetLoading();
-      browserHistory.push(`/error?path=${this.urlName}`);
+      this.props.history.push(`/error?path=${this.urlName}`);
     }
   }
 
