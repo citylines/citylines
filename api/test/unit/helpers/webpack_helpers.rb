@@ -5,9 +5,8 @@ describe WebpackHelpers do
 
   describe 'webpack_asset_path' do
     it 'should return the actual path from the manifest' do
-      stub_const(:WEBPACK_MANIFEST, {'main.js':'theactual/path.js'}) do
-        assert_equal 'theactual/path.js', webpack_asset_path('main.js')
-      end
+      stubs(:webpack_manifest).return({'main.js':'theactual/path.js'})
+      assert_equal 'theactual/path.js', webpack_asset_path('main.js')
     end
 
     it 'should return nil if the manifest is missing' do
