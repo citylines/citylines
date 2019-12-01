@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../../public/assets'),
     publicPath: 'https://cdn.citylines.co/assets/',
-    filename: 'bundle.[contenthash].js',
+    filename: '[name].[contenthash].js',
     chunkFilename: 'chunk.[name].[contenthash].js'
   },
 
