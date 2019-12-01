@@ -1,4 +1,5 @@
 var path = require('path');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.jsx'),
@@ -12,9 +13,10 @@ module.exports = {
   devtool: 'source-map',
 
   output: {
-    path: path.resolve(__dirname, '../assets'),
+    path: path.resolve(__dirname, '../../public/assets'),
     publicPath: '/assets/',
-    filename: 'bundle.js'
+    filename: 'bundle.[contenthash].js',
+    chunkFilename: 'chunk.[name].[contenthash].js'
   },
 
   module: {
@@ -31,5 +33,11 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx']
-  }
+  },
+
+  plugins: [
+    new ManifestPlugin({
+      fileName: 'webpack.manifest.json'
+    })
+  ]
 };

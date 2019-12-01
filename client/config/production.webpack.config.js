@@ -11,9 +11,10 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(__dirname, '../assets'),
+    path: path.resolve(__dirname, '../../public/assets'),
     publicPath: 'https://cdn.citylines.co/assets/',
-    filename: 'bundle.js'
+    filename: 'bundle.[contenthash].js',
+    chunkFilename: 'chunk.[name].[contenthash].js'
   },
 
   module: {
@@ -37,6 +38,9 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
+    }),
+    new ManifestPlugin({
+      fileName: 'webpack.manifest.json'
     })
   ]
 };
