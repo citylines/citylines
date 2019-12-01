@@ -25,13 +25,8 @@ module.exports = {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       options: { presets: [['@babel/preset-env', {useBuiltIns: 'usage', corejs:3}], '@babel/preset-react'], babelrc: false }
-    },
-    { test: /\.json$/, loader: 'json' }
+    }
     ]
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx']
   },
 
   plugins: [
