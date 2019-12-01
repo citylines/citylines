@@ -1,4 +1,11 @@
 require 'json'
-file = File.read('public/assets/webpack.manifest.json')
-WEBPACK_MANIFEST = data_hash = JSON.parse(file)
+
+manifest_path = 'public/assets/webpack.manifest.json'
+data_hash = if File.exist?(manifest_path)
+              JSON.parse(File.read(manifest_path))
+            else
+              {}
+            end
+
+WEBPACK_MANIFEST = data_hash
 
