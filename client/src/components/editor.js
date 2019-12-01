@@ -45,7 +45,7 @@ class Editor extends CityBase {
     this.bindedOnImportFromOSMClick = this.onImportFromOSMClick.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     EditorStore.addChangeListener(this.bindedOnChange);
     CityStore.addChangeListener(this.bindedOnChange);
   }
