@@ -5,7 +5,7 @@ describe WebpackHelpers do
 
   describe 'webpack_asset_path' do
     it 'should return the actual path from the manifest' do
-      stubs(:webpack_manifest).return({'main.js':'theactual/path.js'})
+      stubs(:webpack_manifest).returns({'main.js':'theactual/path.js'})
       assert_equal 'theactual/path.js', webpack_asset_path('main.js')
     end
 
