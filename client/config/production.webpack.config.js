@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require("webpack");
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.jsx'),
