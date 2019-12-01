@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Switch, Route, Link } from 'react-router-dom';
 import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
@@ -8,6 +8,15 @@ import Tags from './tags';
 import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
+const Cities = React.lazy(() => import('./cities'));
+const City = React.lazy(() => import('./city'));
+const CityComparison = React.lazy(() => import('./city-comparison'));
+const Auth = React.lazy(() => import('./auth'));
+const Terms = React.lazy(() => import('./terms'));
+const Data = React.lazy(() => import('./data'));
+const User = React.lazy(() => import('./user/user'));
+const Error = React.lazy(() => import('./error'));
+
 class Main extends Component {
   constructor(props, context) {
     super(props, context);
@@ -15,10 +24,14 @@ class Main extends Component {
     this.state = {};
 
     this.bindedOnChange = this.onChange.bind(this);
-  }
 
-  componentWillMount() {
-    MainStore.addChangeListener(this.bindedOnChange);
+    this.previousPathname = null;
+    this.props.history.listen( loc =>  {
+      if (loc.pathname != this.previousPathname) {
+        this.previousPathname = loc.pathname;
+        ga("send", "pageview", loc.pathname);
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -26,6 +39,8 @@ class Main extends Component {
   }
 
   componentDidMount() {
+    MainStore.addChangeListener(this.bindedOnChange);
+
     this.checkAuth();
     this.checkCookieAdviceCookie();
   }
@@ -89,7 +104,18 @@ class Main extends Component {
               </Link>
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
-            {this.props.children}
+            <React.Suspense fallback={<SuspenseLoader />}>
+              <Switch>
+                <Route exact path="/" component={Cities} />
+                <Route path="/auth" component={Auth} />
+                <Route path="/terms" component={Terms} />
+                <Route path="/data" component={Data} />
+                <Route path="/error" component={Error} />
+                <Route path="/compare" component={CityComparison} />
+                <Route path="/user/:user_id" component={User} />
+                <Route path="/:city_url_name" component={City} />
+              </Switch>
+            </React.Suspense>
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>
@@ -99,6 +125,20 @@ class Main extends Component {
             />}
         </div>
       )
+  }
+}
+
+class SuspenseLoader extends Component {
+  componentDidMount() {
+    MainStore.setLoading();
+  }
+
+  componentWillUnmount() {
+    MainStore.unsetLoading();
+  }
+
+  render(){
+    return null;
   }
 }
 

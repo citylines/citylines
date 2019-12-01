@@ -1,5 +1,5 @@
 import React, {Component, PureComponent} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 
 class PanelHeader extends PureComponent {

@@ -1,9 +1,9 @@
 import {PureComponent} from 'react';
-import {browserHistory} from 'react-router';
+import queryString from 'query-string';
 
 class CityBase extends PureComponent {
   params() {
-    return this.props.location.query;
+    return queryString.parse(this.props.location.search)
   }
 
   updateParams(newParams) {
@@ -16,7 +16,7 @@ class CityBase extends PureComponent {
     // browser history
     if (JSON.stringify(params) === JSON.stringify(this.params())) return;
 
-    browserHistory.push({...this.props.location, query: params});
+    this.props.history.push({...this.props.location, search: '?' + queryString.stringify(params)});
   }
 }
 

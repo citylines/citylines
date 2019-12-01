@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {browserHistory} from 'react-router';
+import {Switch, Redirect, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
@@ -18,11 +18,14 @@ import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
+import CityView from './city/city-view';
+const Editor = React.lazy(() => import('./editor'));
+
 class City extends CityBase {
   constructor(props, context) {
     super(props, context);
 
-    this.urlName = this.props.params.city_url_name;
+    this.urlName = this.props.match.params.city_url_name;
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnMapMove = this.onMapMove.bind(this);
@@ -42,13 +45,6 @@ class City extends CityBase {
     return {cityName: this.state && this.state.name};
   }
 
-  componentWillMount() {
-    MainStore.addChangeListener(this.bindedOnChange);
-    CityStore.addChangeListener(this.bindedOnChange);
-    CityViewStore.addChangeListener(this.bindedOnChange);
-    EditorStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     CityStore.unload(this.urlName);
     MainStore.removeChangeListener(this.bindedOnChange);
@@ -58,14 +54,19 @@ class City extends CityBase {
   }
 
   componentDidMount() {
+    MainStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
+    EditorStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     CityStore.load(this.urlName, this.params());
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (nextState && nextState.error) {
       MainStore.unsetLoading();
-      browserHistory.push(`/error?path=${this.urlName}`);
+      this.props.history.push(`/error?path=${this.urlName}`);
     }
   }
 
@@ -165,7 +166,12 @@ class City extends CityBase {
               urlName={this.urlName}
               loading={this.state.main.loading}
             />
-            { this.props.children }
+            <Switch>
+              <Route exact path="/:city_url_name" component={CityView} />
+              <Route path="/:city_url_name/edit">
+                { MainStore.userLoggedIn() ? <Editor city_url_name={this.urlName} /> : <Redirect to="/auth" /> }
+              </Route>
+            </Switch>
           </div>
           <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
           <Map

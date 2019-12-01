@@ -1,32 +1,32 @@
 var path = require('path');
 var webpack = require("webpack");
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', path.resolve(__dirname, '../src/index.jsx')],
+  entry: path.resolve(__dirname, '../src/index.jsx'),
+
+  mode: 'production',
 
   node: {
     fs: "empty"
   },
 
   output: {
-    path: path.resolve(__dirname, '../assets'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '../../public/assets'),
+    publicPath: 'https://cdn.citylines.co/assets/',
+    filename: '[name].[contenthash].js',
+    chunkFilename: 'chunk.[name].[contenthash].js'
   },
 
   module: {
-    loaders: [
+    rules: [
     {
+      loader: 'babel-loader',
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
-      query: { presets: ['es2015', 'react', 'stage-2'], babelrc: false }
-    },
-    { test: /\.json$/, loader: 'json' }
+      options: { presets: [['@babel/preset-env', {useBuiltIns: 'usage', corejs:3}], '@babel/preset-react'], babelrc: false }
+    }
     ]
-  },
-
-  resolve: {
-    extensions: ['', '.js', '.jsx']
   },
 
   plugins: [
@@ -35,6 +35,8 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin()
+    new ManifestPlugin({
+      fileName: 'webpack.manifest.json'
+    })
   ]
 };

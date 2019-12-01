@@ -17,6 +17,7 @@ require_relative 'mapbox'
 require_relative 'auth'
 require_relative 'cache'
 require_relative 'i18n'
+require_relative 'webpack'
 
 Dir[File.join(APP_ROOT, "lib", "**/*.rb")].each {|file| require file}
 Dir[File.join(APP_ROOT, "app", "helpers", "*.rb")].each {|file| require file}

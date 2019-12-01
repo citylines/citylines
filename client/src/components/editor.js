@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 import Translate from 'react-translate-component';
 
@@ -27,7 +27,7 @@ class Editor extends CityBase {
 
     this.currentMode = this.modes.EDIT_FEATURES;
 
-    this.urlName = this.props.params.city_url_name;
+    this.urlName = this.props.city_url_name;
     this.state = EditorStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);
@@ -43,11 +43,6 @@ class Editor extends CityBase {
     this.bindedOnCreateSystem = this.onCreateSystem.bind(this);
     this.bindedOnSystemDelete = this.onSystemDelete.bind(this);
     this.bindedOnImportFromOSMClick = this.onImportFromOSMClick.bind(this);
-  }
-
-  componentWillMount() {
-    EditorStore.addChangeListener(this.bindedOnChange);
-    CityStore.addChangeListener(this.bindedOnChange);
   }
 
   componentWillUnmount() {
@@ -66,6 +61,9 @@ class Editor extends CityBase {
   }
 
   componentDidMount() {
+    EditorStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     EditorStore.load(this.urlName).then(() => {
       MainStore.unsetLoading();

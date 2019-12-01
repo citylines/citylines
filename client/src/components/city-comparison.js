@@ -39,12 +39,6 @@ class CityComparison extends CityBase {
     this.bindedOnChange = this.onChange.bind(this);
   }
 
-  componentWillMount() {
-    CityStore.addChangeListener(this.bindedOnChange);
-    CityViewStore.addChangeListener(this.bindedOnChange);
-    CitiesStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     this.activeUrlNames().map(urlName => {
       CityViewStore.unload(urlName);
@@ -56,6 +50,10 @@ class CityComparison extends CityBase {
   }
 
   componentDidMount() {
+    CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
+    CitiesStore.addChangeListener(this.bindedOnChange);
+
     this.activeUrlNames().map(urlName => {
       this.loadCity(urlName);
     });

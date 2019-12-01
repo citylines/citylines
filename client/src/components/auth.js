@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import MainStore from '../stores/main-store';
-import {browserHistory} from 'react-router';
 import GoogleLogin from 'react-google-login';
 import Translate from 'react-translate-component';
 
@@ -36,7 +35,7 @@ class Auth extends Component {
 
     MainStore.setUser(json);
 
-    browserHistory.push(`/user/${json.userid}`);
+    this.props.history.push(`/user/${json.userid}`);
   }
 
   render() {

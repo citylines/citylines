@@ -105,7 +105,7 @@ class AllLinesItem extends PureComponent {
     this.setState({checked: !this.state.checked});
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.allLinesHidden(nextProps)) {
       this.setState({checked: false});
     }

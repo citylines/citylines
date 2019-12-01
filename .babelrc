@@ -2,5 +2,5 @@
 // `babelrc:false` option in the webpack config files
 
 {
-  "presets": ["es2015", "stage-2"]
+  "presets": ['@babel/preset-env']
 }

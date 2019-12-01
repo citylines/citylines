@@ -15,7 +15,7 @@ class CityView extends CityBase {
   constructor(props, context) {
     super(props, context);
 
-    this.urlName = this.props.params.city_url_name;
+    this.urlName = this.props.match.params.city_url_name;
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnYearChange = this.onYearChange.bind(this);
@@ -28,11 +28,9 @@ class CityView extends CityBase {
     this.setState(CityViewStore.getState(this.urlName));
   }
 
-  componentWillMount() {
-    CityViewStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentDidMount() {
+    CityViewStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     CityViewStore.load(this.urlName, this.params()).then(() => {
       MainStore.unsetLoading();

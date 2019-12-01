@@ -22,7 +22,7 @@ class FeatureViewer extends PureComponent {
     return ['opening', 'buildstart', 'closure', 'name'];
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     this.setState(this.buildState(props));
   }
 

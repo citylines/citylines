@@ -1,7 +1,10 @@
 var path = require('path');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', path.resolve(__dirname, '../src/index.jsx')],
+  entry: path.resolve(__dirname, '../src/index.jsx'),
+
+  mode: 'development',
 
   node: {
     fs: "empty"
@@ -10,23 +13,26 @@ module.exports = {
   devtool: 'source-map',
 
   output: {
-    path: path.resolve(__dirname, '../assets'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '../../public/assets'),
+    publicPath: '/assets/',
+    filename: '[name].js',
+    chunkFilename: 'chunk.[name].js'
   },
 
   module: {
-    loaders: [
+    rules: [
     {
+      loader: 'babel-loader',
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
-      query: { presets: ['es2015', 'react', 'stage-2'], babelrc: false }
-    },
-    { test: /\.json$/, loader: 'json' }
+      options: { presets: [['@babel/preset-env', {useBuiltIns: 'usage', corejs:3}], '@babel/preset-react'], babelrc: false }
+    }
     ]
   },
 
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  }
+  plugins: [
+    new ManifestPlugin({
+      fileName: 'webpack.manifest.json'
+    })
+  ]
 };
