@@ -8,14 +8,14 @@ import Tags from './tags';
 import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
-import Cities from './cities';
+const Cities = React.lazy(() => import('./cities'));
 const City = React.lazy(() => import('./city'));
-const CityComparison = React.lazy(()=> import('./city-comparison'));
-import Auth from './auth';
-import Terms from './terms';
-import Data from './data';
-import User from './user/user';
-import Error from './error';
+const CityComparison = React.lazy(() => import('./city-comparison'));
+const Auth = React.lazy(() => import('./auth'));
+const Terms = React.lazy(() => import('./terms'));
+const Data = React.lazy(() => import('./data'));
+const User = React.lazy(() => import('./user/user'));
+const Error = React.lazy(() => import('./error'));
 
 class Main extends Component {
   constructor(props, context) {
