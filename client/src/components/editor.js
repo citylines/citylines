@@ -45,11 +45,6 @@ class Editor extends CityBase {
     this.bindedOnImportFromOSMClick = this.onImportFromOSMClick.bind(this);
   }
 
-  UNSAFE_componentWillMount() {
-    EditorStore.addChangeListener(this.bindedOnChange);
-    CityStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     MainStore.unsetPanelFullWidth();
     EditorStore.unload(this.urlName);
@@ -66,6 +61,9 @@ class Editor extends CityBase {
   }
 
   componentDidMount() {
+    EditorStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     EditorStore.load(this.urlName).then(() => {
       MainStore.unsetLoading();

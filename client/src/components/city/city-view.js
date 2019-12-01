@@ -28,11 +28,9 @@ class CityView extends CityBase {
     this.setState(CityViewStore.getState(this.urlName));
   }
 
-  UNSAFE_componentWillMount() {
-    CityViewStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentDidMount() {
+    CityViewStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     CityViewStore.load(this.urlName, this.params()).then(() => {
       MainStore.unsetLoading();

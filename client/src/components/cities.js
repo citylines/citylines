@@ -78,10 +78,6 @@ class Cities extends Component {
     this.state = CitiesStore.getState();
   }
 
-  UNSAFE_componentWillMount() {
-    CitiesStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     CitiesStore.removeChangeListener(this.bindedOnChange);
   }
@@ -91,6 +87,8 @@ class Cities extends Component {
   }
 
   componentDidMount() {
+    CitiesStore.addChangeListener(this.bindedOnChange);
+
     CitiesStore.fetchCities();
     CitiesStore.fetchContributors();
     CitiesStore.fetchTopSystems();

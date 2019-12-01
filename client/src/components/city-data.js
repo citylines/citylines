@@ -14,10 +14,6 @@ class CityData extends Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
-    CitiesStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     CitiesStore.removeChangeListener(this.bindedOnChange);
   }
@@ -29,6 +25,7 @@ class CityData extends Component {
   }
 
   componentDidMount() {
+    CitiesStore.addChangeListener(this.bindedOnChange);
     CitiesStore.fetchCities();
   }
 

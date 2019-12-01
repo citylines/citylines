@@ -19,11 +19,6 @@ class User extends Component {
     this.bindedOnChange = this.onChange.bind(this);
   }
 
-  UNSAFE_componentWillMount() {
-    UserStore.addChangeListener(this.bindedOnChange);
-    MainStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     UserStore.removeChangeListener(this.bindedOnChange);
     MainStore.removeChangeListener(this.bindedOnChange);
@@ -34,6 +29,9 @@ class User extends Component {
   }
 
   componentDidMount() {
+    UserStore.addChangeListener(this.bindedOnChange);
+    MainStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }

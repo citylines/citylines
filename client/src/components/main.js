@@ -34,15 +34,13 @@ class Main extends Component {
     });
   }
 
-  UNSAFE_componentWillMount() {
-    MainStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     MainStore.removeChangeListener(this.bindedOnChange);
   }
 
   componentDidMount() {
+    MainStore.addChangeListener(this.bindedOnChange);
+
     this.checkAuth();
     this.checkCookieAdviceCookie();
   }

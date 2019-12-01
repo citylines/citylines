@@ -157,7 +157,7 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
-  UNSAFE_componentWillMount(){
+  componentDidMount(){
     this.map = this.context.map;
     this.load();
   }

@@ -45,13 +45,6 @@ class City extends CityBase {
     return {cityName: this.state && this.state.name};
   }
 
-  UNSAFE_componentWillMount() {
-    MainStore.addChangeListener(this.bindedOnChange);
-    CityStore.addChangeListener(this.bindedOnChange);
-    CityViewStore.addChangeListener(this.bindedOnChange);
-    EditorStore.addChangeListener(this.bindedOnChange);
-  }
-
   componentWillUnmount() {
     CityStore.unload(this.urlName);
     MainStore.removeChangeListener(this.bindedOnChange);
@@ -61,6 +54,11 @@ class City extends CityBase {
   }
 
   componentDidMount() {
+    MainStore.addChangeListener(this.bindedOnChange);
+    CityStore.addChangeListener(this.bindedOnChange);
+    CityViewStore.addChangeListener(this.bindedOnChange);
+    EditorStore.addChangeListener(this.bindedOnChange);
+
     MainStore.setLoading();
     CityStore.load(this.urlName, this.params());
   }
