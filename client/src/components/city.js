@@ -19,7 +19,7 @@ import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
 import CityView from './city/city-view';
-import Editor from './editor';
+const Editor = React.lazy(() => import('./editor'));
 
 class City extends CityBase {
   constructor(props, context) {
