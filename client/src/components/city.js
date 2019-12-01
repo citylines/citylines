@@ -1,7 +1,7 @@
 import React from 'react';
 import CityBase from './city-base';
 
-import {Switch, Route, browserHistory} from 'react-router-dom';
+import {Switch, Redirect, Route, browserHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
@@ -151,12 +151,6 @@ class City extends CityBase {
     return style;
   }
 
-  requireAuth() {
-    if (!MainStore.userLoggedIn()) {
-      //browserHistory.push('/auth');
-    }
-  }
-
   render() {
     if (!this.state) return null;
 
@@ -176,7 +170,9 @@ class City extends CityBase {
             />
             <Switch>
               <Route exact path="/:city_url_name" component={CityView} />
--             <Route path="/:city_url_name/edit" component={Editor} onEnter={this.requireAuth} />
+              <Route path="/:city_url_name/edit">
+                { MainStore.userLoggedIn() ? <Editor city_url_name={this.urlName} /> : <Redirect to="/auth" /> }
+              </Route>
             </Switch>
           </div>
           <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">

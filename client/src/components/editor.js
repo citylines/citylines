@@ -27,7 +27,7 @@ class Editor extends CityBase {
 
     this.currentMode = this.modes.EDIT_FEATURES;
 
-    this.urlName = this.props.match.params.city_url_name;
+    this.urlName = this.props.city_url_name;
     this.state = EditorStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);
