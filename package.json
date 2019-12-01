@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build_production"
   },
   "author": "Bruno Salerno",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "browser-cookies": "^1.1.0",
