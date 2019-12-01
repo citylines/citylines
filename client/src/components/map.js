@@ -7,10 +7,6 @@ import CutLineControl from './map/cut-line-control';
 import SatelliteControl from './map/satellite-control';
 
 class Map extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   getChildContext() {
     return {map: this.map};
   }
@@ -157,8 +153,10 @@ Map.childContextTypes = {
 }
 
 class Source extends Component {
-  componentDidMount(){
-    this.map = this.context.map;
+  constructor(props, context) {
+    super(props, context);
+
+    this.map = context.map;
     this.load();
   }
 
