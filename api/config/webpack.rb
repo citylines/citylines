@@ -8,4 +8,3 @@ data_hash = if File.exist?(manifest_path)
             end
 
 WEBPACK_MANIFEST = data_hash
-
