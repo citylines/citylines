@@ -24,6 +24,14 @@ class Main extends Component {
     this.state = {};
 
     this.bindedOnChange = this.onChange.bind(this);
+
+    this.previousPathname = null;
+    this.props.history.listen( loc =>  {
+      if (loc.pathname != this.previousPathname) {
+        this.previousPathname = loc.pathname;
+        ga("send", "pageview", loc.pathname);
+      }
+    });
   }
 
   UNSAFE_componentWillMount() {
