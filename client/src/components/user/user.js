@@ -42,7 +42,7 @@ class User extends Component {
     if (nextProps.match.params.user_id == this.props.match.params.user_id) return;
 
     MainStore.setLoading();
-    this.userId = nextProps.params.user_id;
+    this.userId = nextProps.match.params.user_id;
     UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
