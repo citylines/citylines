@@ -47,7 +47,7 @@ class CityItem extends Component {
                 <div
                   className={`c-link city-systems-toggle ${this.showAllClass()}`}
                   onClick={this.toggleShow.bind(this)}>
-                    {this.state.showAll ? '-' : '+'}
+                    <span className={`fas ${this.state.showAll ? 'fa-angle-up' : 'fa-angle-down'}`}/>
                 </div> : null
               }
             </div>

@@ -109,8 +109,8 @@ class DetailedData extends Component {
           { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li> : ''}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
-          <span className="show-more">+</span>
-          <span className="show-less">−</span>
+          <span className="show-more"><span className="fas fa-angle-down"/></span>
+          <span className="show-less"><span className="fas fa-angle-up"/></span>
         </label>
       </div>
     )
