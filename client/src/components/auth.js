@@ -50,7 +50,7 @@ class Auth extends Component {
                 attributes={{buttonText: "auth.log_in_with_google"}}
                 fetchBasicProfile={true}
                 autoLoad={true}
-                onSuccess={this.onGoogleResponse} /></li>
+                onSuccess={this.onGoogleResponse.bind(this)} /></li>
             }
             <li><Translate content="auth.log_in_with_twitter" component="a" href="/api/auth/twitter" className="twitter"/></li>
             </ul>
