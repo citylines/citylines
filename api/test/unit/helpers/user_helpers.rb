@@ -79,7 +79,7 @@ describe UserHelpers do
 
   describe "#top_contributors" do
     before do
-      @juan = User.create(name: "Juan Pérez", email: 'juan@test.com')
+      @juan = User.create(name: "Juan Pérez", email: 'juan@test.co', custom_name: 'Pepito', img_url: 'pepito.png')
       @pepe = User.create(name: "Pepe Martínez", email: 'pepe@test.com')
       @jorge = User.create(name: "Jorge Rodríguez", email: 'jorge@test.com')
 
@@ -98,7 +98,7 @@ describe UserHelpers do
       [
         {user_id: @jorge.id, name:'Jorge', initials: 'JR', sum: 5, img: nil},
         {user_id: @pepe.id, name: 'Pepe', initials: 'PM', sum: 4, img: nil},
-        {user_id: @juan.id, name: 'Juan', initials: 'JP', sum: 3, img: nil}
+        {user_id: @juan.id, name: 'Pepito', initials: 'PE', sum: 3, img: 'pepito.png'}
       ].each_with_index do |expected, index|
         assert_equal expected, contributors[index]
       end
@@ -109,7 +109,7 @@ describe UserHelpers do
 
       [
         {user_id: @pepe.id, name: 'Pepe', initials: 'PM', sum: 4, img: nil},
-        {user_id: @juan.id, name: 'Juan', initials: 'JP', sum: 3, img: nil}
+        {user_id: @juan.id, name: 'Pepito', initials: 'PE', sum: 3, img: 'pepito.png'}
       ].each_with_index do |expected, index|
         assert_equal expected, contributors[index]
       end

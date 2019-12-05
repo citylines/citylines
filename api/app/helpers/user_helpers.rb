@@ -68,28 +68,28 @@ module UserHelpers
   end
 
   def top_contributors(last_month: false)
-    dataset = CreatedFeature.left_join(:sections,
-                                       :created_features__feature_id => :sections__id,
-                                       :created_features__feature_class => 'Section')
-                            .left_join(:users,
-                                       :created_features__user_id => :users__id)
-                            .exclude(length: nil)
-              .select_group(:user_id).select_append{sum(:length).as(sum)}
-              .order(Sequel.desc(:sum))
+    dataset = User.join(:created_features,
+                        :created_features__user_id => :users__id)
+      .join(:sections,
+            :created_features__feature_id => :sections__id,
+            :created_features__feature_class => 'Section')
+      .exclude(length: nil)
+      .select_group(:users__id,:name, :img_url, :custom_name).select_append{sum(:length).as(sum)}
+      .order(Sequel.desc(:sum))
 
     if last_month
       range = (Date.today - 30..Date.today + 1)
       dataset = dataset.where(created_features__created_at: range)
     end
 
-    dataset.limit(10).map do |row|
-      h = row.values
-      user = User.where(id: h[:user_id]).first
-      h[:name] = user.nickname
-      h[:initials] = user.initials
-      h[:img] = user.img_url
-      h[:sum] = h[:sum] / 1000
-      h
+    dataset.limit(10).all.map do |row|
+      {
+        user_id: row.id,
+        name: row.nickname,
+        initials: row.initials,
+        img: row.img_url,
+        sum: row[:sum] / 1000
+      }
     end
   end
 end
