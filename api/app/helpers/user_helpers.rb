@@ -84,6 +84,7 @@ module UserHelpers
 
     dataset.limit(10).all.map do |row|
       {
+        user_id: row.id,
         name: row.nickname,
         initials: row.initials,
         img: row.img_url,
