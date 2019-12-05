@@ -126,23 +126,21 @@ module CityHelpers
   def top_systems
     today = Time.now.year
 
-    query = Section.
-      left_join(:section_lines, section_id: :id).
-      left_join(:lines, id: :line_id).
-      left_join(:systems, id: :system_id).
-      where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}.
-      select(:system_id).select_append{sum(:length)}.
-      group_by(:system_id).order(Sequel.desc(:sum))
+    query = System
+      .join(:lines, system_id: :systems__id)
+      .join(:section_lines, line_id: :lines__id)
+      .join(:sections, id: :section_id)
+      .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
+      .select_group(:systems__id, :systems__name, :systems__city_id)
+      .select_append{sum(:length).as(:sum)}
+      .order(Sequel.desc(:sum))
 
-    query.first(10).map do |row|
-      system = System[row[:system_id]]
-      length = (row[:sum] / 1000).to_i
-
+    query.limit(10).all.map do |row|
       {
-        name: system.name,
-        url: system.url,
-        length: length,
-        city_name: system.city.name
+        name: row.name,
+        url: row.url,
+        length: (row[:sum] / 1000).to_i,
+        city_name: row.city.name
       }
     end
   end
