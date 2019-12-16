@@ -14,7 +14,7 @@ GEM
     concurrent-ruby (1.0.3)
     dalli (2.7.6)
     database_cleaner (1.5.3)
-    excon (0.60.0)
+    excon (0.71.0)
     execjs (2.7.0)
     fog-aws (2.0.0)
       fog-core (~> 1.38)
