@@ -42,16 +42,22 @@ class Style {
     }
 
     if (type === 'sections') {
-      style['line-offset'] = {
-        type: "identity",
-        property: "offset"
-      };
+      style['line-offset'] = [
+       'interpolate', ['linear'], ['zoom'],
+        7, ['/', ['number', ['get', 'offset'], 0], 3],
+        10, ['/', ['number', ['get', 'offset'], 0], 1.5],
+        12, ['number', ['get', 'offset'], 0],
+        20, ['number', ['get', 'offset'], 0],
+      ]
     }
 
-    style[widthCategory] = {
-      type: "identity",
-      property: "width"
-    }
+    style[widthCategory] = [
+       'interpolate', ['linear'], ['zoom'],
+        7, ['/', ['number', ['get', 'width'], 0], 3],
+        10, ['/', ['number', ['get', 'width'], 0], 1.5],
+        12, ['number', ['get', 'width'], 0],
+        20, ['number', ['get', 'width'], 0],
+      ]
 
     if (operation == 'opening'){
       const stops = [];
@@ -72,10 +78,13 @@ class Style {
       style[opacityCategory] = style['opacity'];
       delete style['opacity'];
     } else if (operation === 'inner') {
-      style["circle-radius"] = {
-        type: "identity",
-        property: "inner_width"
-      }
+      style["circle-radius"] = [
+       'interpolate', ['linear'], ['zoom'],
+        7, ['/', ['number', ['get', 'inner_width'], 0], 3],
+        10, ['/', ['number', ['get', 'inner_width'], 0], 1.5],
+        12, ['number', ['get', 'inner_width'], 0],
+        20, ['number', ['get', 'inner_width'], 0],
+      ]
     }
 
     return style;
