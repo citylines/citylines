@@ -42,22 +42,10 @@ class Style {
     }
 
     if (type === 'sections') {
-      style['line-offset'] = [
-       'interpolate', ['linear'], ['zoom'],
-        7, ['/', ['number', ['get', 'offset'], 0], 3],
-        10, ['/', ['number', ['get', 'offset'], 0], 1.5],
-        12, ['number', ['get', 'offset'], 0],
-        20, ['number', ['get', 'offset'], 0],
-      ]
+      style['line-offset'] = this.zoomInterpolation('offset');
     }
 
-    style[widthCategory] = [
-       'interpolate', ['linear'], ['zoom'],
-        7, ['/', ['number', ['get', 'width'], 0], 3],
-        10, ['/', ['number', ['get', 'width'], 0], 1.5],
-        12, ['number', ['get', 'width'], 0],
-        20, ['number', ['get', 'width'], 0],
-      ]
+    style[widthCategory] = this.zoomInterpolation('width');
 
     if (operation == 'opening'){
       const stops = [];
@@ -78,16 +66,24 @@ class Style {
       style[opacityCategory] = style['opacity'];
       delete style['opacity'];
     } else if (operation === 'inner') {
-      style["circle-radius"] = [
-       'interpolate', ['linear'], ['zoom'],
-        7, ['/', ['number', ['get', 'inner_width'], 0], 4],
-        10, ['/', ['number', ['get', 'inner_width'], 0], 1.5],
-        12, ['number', ['get', 'inner_width'], 0],
-        20, ['number', ['get', 'inner_width'], 0],
-      ]
+      style["circle-radius"] = this.zoomInterpolation('inner_width');
     }
 
     return style;
+  }
+
+  zoomInterpolation(property) {
+    const zoomFactors = {
+      7: property == 'inner_width' ? 4 : 3,
+      10: 1.5
+    }
+
+    return [
+         'interpolate', ['linear'], ['zoom'],
+          7, ['/', ['number', ['get', property], 0], zoomFactors[7]],
+          10, ['/', ['number', ['get', property], 0], zoomFactors[10]],
+          12, ['number', ['get', property], 0],
+        ]
   }
 
   lineColor(lineUrlName) {
