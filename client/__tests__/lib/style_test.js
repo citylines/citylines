@@ -92,10 +92,7 @@ describe("calculate", () => {
       const expectedStyle = {
         'line-color': '#000',
         'line-opacity': 0.4,
-        'line-offset': {
-          type: 'identity',
-          property: 'offset'
-        },
+        'line-offset': style.zoomInterpolation('offset'),
         'line-width': style.zoomInterpolation('width')
       }
 
@@ -107,10 +104,7 @@ describe("calculate", () => {
 
       const expectedStyle = {
         'line-color': '#A4A4A4',
-        'line-offset': {
-          type: 'identity',
-          property: 'offset'
-        },
+        'line-offset': style.zoomInterpolation('offset'),
         'line-width': style.zoomInterpolation('width')
       }
 
