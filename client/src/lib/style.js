@@ -80,7 +80,7 @@ class Style {
     } else if (operation === 'inner') {
       style["circle-radius"] = [
        'interpolate', ['linear'], ['zoom'],
-        7, ['/', ['number', ['get', 'inner_width'], 0], 3],
+        7, ['/', ['number', ['get', 'inner_width'], 0], 4],
         10, ['/', ['number', ['get', 'inner_width'], 0], 1.5],
         12, ['number', ['get', 'inner_width'], 0],
         20, ['number', ['get', 'inner_width'], 0],
