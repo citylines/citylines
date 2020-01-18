@@ -42,16 +42,10 @@ class Style {
     }
 
     if (type === 'sections') {
-      style['line-offset'] = {
-        type: "identity",
-        property: "offset"
-      };
+      style['line-offset'] = this.zoomInterpolation('offset');
     }
 
-    style[widthCategory] = {
-      type: "identity",
-      property: "width"
-    }
+    style[widthCategory] = this.zoomInterpolation('width');
 
     if (operation == 'opening'){
       const stops = [];
@@ -72,13 +66,24 @@ class Style {
       style[opacityCategory] = style['opacity'];
       delete style['opacity'];
     } else if (operation === 'inner') {
-      style["circle-radius"] = {
-        type: "identity",
-        property: "inner_width"
-      }
+      style["circle-radius"] = this.zoomInterpolation('inner_width');
     }
 
     return style;
+  }
+
+  zoomInterpolation(property) {
+    const zoomFactors = {
+      7: property == 'inner_width' ? 4 : 3,
+      10: 1.5
+    }
+
+    return [
+         'interpolate', ['linear'], ['zoom'],
+          7, ['/', ['number', ['get', property], 0], zoomFactors[7]],
+          10, ['/', ['number', ['get', property], 0], zoomFactors[10]],
+          12, ['number', ['get', property], 0],
+        ]
   }
 
   lineColor(lineUrlName) {
