@@ -27,16 +27,13 @@ class Api < App
     get '/list' do
       last_modified last_modified_city_date
 
-      contributors_by_city = contributors
-      city_length = lengths
-
       cities = City.all.map do |city|
         {name: city.name,
          state: city.country_state,
          country: city.country,
-         length: city_length[city.id] || 0,
+         length: city.length,
          systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
-         contributors_count: contributors_by_city[city.id] || 0,
+         contributors_count: city.contributors,
          url: city.url}
       end
 
