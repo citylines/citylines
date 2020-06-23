@@ -113,6 +113,22 @@ module CityHelpers
     cities
   end
 
+  def city_length(city, to_km: true)
+    today = Time.now.year
+    total = Section.
+      where(city_id: city.id).
+      exclude(opening: nil).
+      where{opening <= today}.
+      where{Sequel.|({closure: nil}, (closure > today))}.
+      sum(:length)
+
+    if to_km
+      total = total / 1000
+    end
+
+    total
+  end
+
   def lengths
     today = Time.now.year
 
