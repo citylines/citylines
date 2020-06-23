@@ -88,9 +88,9 @@ module EditorHelpers
 
     if change[:removed]
       remove_lines_from_feature(feature)
-      update_city_metadata(city)
       DeletedFeature.push(user, feature)
       feature.delete
+      update_city_metadata(city)
       return
     end
 
