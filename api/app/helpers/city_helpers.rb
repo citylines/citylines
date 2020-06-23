@@ -85,6 +85,13 @@ module CityHelpers
     klass.by_city(city.id)
   end
 
+  def city_contributors(city)
+    ModifiedFeatureProps.where(city_id: city.id).select(:user_id).union(
+      ModifiedFeatureGeo.where(city_id: city.id).select(:user_id)).union(
+        CreatedFeature.where(city_id: city.id).select(:user_id)).union(
+          DeletedFeature.where(city_id: city.id).select(:user_id)).count(:user_id)
+  end
+
   def contributors
     query = %{
       select city_id, count(user_id) from
