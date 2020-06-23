@@ -92,27 +92,6 @@ module CityHelpers
           DeletedFeature.where(city_id: city.id).select(:user_id)).count(:user_id)
   end
 
-  def contributors
-    query = %{
-      select city_id, count(user_id) from
-        (select distinct city_id, user_id from
-          (select city_id, user_id from modified_features_props union
-           select city_id, user_id from created_features union
-           select city_id, user_id from deleted_features union
-           select city_id, user_id from modified_features_geo) as modifications
-        ) as different
-      group by (city_id)
-    }
-
-    cities = {}
-
-    DB.fetch(query).each do |register|
-      cities[register[:city_id]] = register[:count]
-    end
-
-    cities
-  end
-
   def city_length(city, to_km: true)
     today = Time.now.year
     total = Section.
@@ -127,23 +106,6 @@ module CityHelpers
     end
 
     total
-  end
-
-  def lengths
-    today = Time.now.year
-
-    query = %{
-      select sum(length), city_id from sections where
-        sections.opening is not null and sections.opening <= #{today} and (sections.closure is null or sections.closure > #{today})
-      group by city_id}
-
-    cities = {}
-
-    DB.fetch(query).each do |register|
-      cities[register[:city_id]] = (register[:sum] / 1000).to_i
-    end
-
-    cities
   end
 
   def top_systems
