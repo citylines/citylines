@@ -3,6 +3,7 @@ require 'accentless'
 
 class City < Sequel::Model(:cities)
     using Accentless
+    include CityHelpers
 
     one_to_many :lines
     one_to_many :systems
@@ -39,5 +40,10 @@ class City < Sequel::Model(:cities)
       if self.start_year.nil?
         self.start_year = Time.now.year
       end
+    end
+
+    def generate_length_and_contributors
+      self.length = city_length(self)
+      self.contributors = city_contributors(self)
     end
 end
