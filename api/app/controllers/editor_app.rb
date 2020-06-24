@@ -44,8 +44,7 @@ class EditorApp < App
     line.color = args[:color]
     line.name = args[:name]
 
-    new_system = nil
-    prev_system = nil
+    new_system = prev_system = nil
 
     if args[:system_id] != line.system_id
       prev_system = line.system
@@ -59,10 +58,8 @@ class EditorApp < App
 
     line.save
 
-    # We update the systems length in case they changed
-    [prev_system, new_system].each do |system|
-      update_metadata(systems: [system]) if system
-    end
+    # We update the systems length if they changed
+    update_metadata(systems: [prev_system, new_system].compact)
 
     city_lines(@city).to_json
   end
