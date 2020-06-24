@@ -24,4 +24,12 @@ class Section < Sequel::Model(:sections)
       coords.all?{|el| valid_linestring?(el)}
     end
   end
+
+  def before_save
+    super
+
+    if changed_columns.include?(:geometry)
+      self.set_length(self.geometry)
+    end
+  end
 end

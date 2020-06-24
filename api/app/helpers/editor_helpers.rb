@@ -48,11 +48,6 @@ module EditorHelpers
   def update_feature_geometry(feature, geometry)
     feature.set_geometry_from_geojson(geometry)
     feature.save
-
-    if feature.is_a?(Section)
-      feature.set_length
-      feature.save
-    end
   end
 
   def update_metadata(systems: nil, city: nil)
