@@ -36,7 +36,7 @@ describe FeatureCollection::Section do
   end
 
   it "should return an empty set of features collection" do
-    @section.delete
+    @section.destroy
 
     feature_collection = JSON.parse(FeatureCollection::Section.by_city(@city.id), symbolize_names: true)
     assert_equal "FeatureCollection", feature_collection[:type]
@@ -48,8 +48,8 @@ describe FeatureCollection::Section do
   end
 
   it "should return empty lines if no lines data is available" do
-    SectionLine.where(line_id: @line.id).delete
-    @line.delete
+    SectionLine.where(line_id: @line.id).destroy
+    @line.destroy
 
     feature = FeatureCollection::Section.by_feature(@section.id).first
     assert_empty feature[:properties][:lines]

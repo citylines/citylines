@@ -95,7 +95,7 @@ class EditorApp < App
     halt if line.city_id != @city.id
 
     line.backup!
-    line.delete
+    line.destroy
 
     city_lines(@city).to_json
   end
@@ -143,7 +143,7 @@ class EditorApp < App
     halt if system.city_id != @city.id
 
     system.backup!
-    system.delete
+    system.destroy
 
     city_systems(@city).to_json
   end

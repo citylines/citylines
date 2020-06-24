@@ -13,4 +13,9 @@ class Station < Sequel::Model(:stations)
   def self.valid_geometry?(geom)
     true
   end
+
+  def before_destroy
+    StationLine.where(station_id: feature.id).map(&:destroy)
+    super
+  end
 end

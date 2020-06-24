@@ -26,10 +26,39 @@ class Section < Sequel::Model(:sections)
   end
 
   def before_save
-    super
-
     if changed_columns.include?(:geometry)
       self.set_length(self.geometry)
+      @changed_geometry = true
+    end
+
+    super
+  end
+
+  def before_destroy
+    SectionLine.where(section_id: self.id).map(&:destroy)
+    super
+  end
+
+  def after_destroy
+    super
+
+    self.city.compute_length if self.length
+    self.city.compute_contributors
+    self.city.save
+  end
+
+  def after_save
+    super
+
+    if defined?(@changed_geometry)
+      self.systems.map do |system|
+        system.compute_length
+        system.save
+      end
+
+      self.city.compute_length if self.length
+      self.city.compute_contributors
+      self.city.save
     end
   end
 end

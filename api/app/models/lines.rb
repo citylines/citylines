@@ -22,7 +22,7 @@ class Line < Sequel::Model(:lines)
     klass = feature.is_a?(Section) ? SectionLine : StationLine
     attr = feature.is_a?(Section) ? :section_id : :station_id
 
-    klass.where(attr => feature.id, :line_id => id).first.delete
+    klass.where(attr => feature.id, :line_id => id).first.destroy
   end
 
   def add_to_feature(feature)
