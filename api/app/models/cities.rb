@@ -42,8 +42,11 @@ class City < Sequel::Model(:cities)
       end
     end
 
-    def generate_length_and_contributors
+    def compute_length
       self.length = city_length(self)
+    end
+
+    def compute_contributors
       self.contributors = city_contributors(self)
     end
 end

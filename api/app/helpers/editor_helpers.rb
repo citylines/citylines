@@ -55,8 +55,9 @@ module EditorHelpers
     end
   end
 
-  def update_city_metadata(city)
-    city.generate_length_and_contributors
+  def update_metadata(city)
+    city.compute_length
+    city.compute_contributors
     city.save
   end
 
@@ -74,7 +75,7 @@ module EditorHelpers
       new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature.reload, change[:feature][:geometry])
-      update_city_metadata(city)
+      update_metadata(city)
       CreatedFeature.push(user, new_feature.reload)
       return
     end
@@ -90,7 +91,7 @@ module EditorHelpers
       remove_lines_from_feature(feature)
       DeletedFeature.push(user, feature)
       feature.delete
-      update_city_metadata(city)
+      update_metadata(city)
       return
     end
 
@@ -104,6 +105,6 @@ module EditorHelpers
       ModifiedFeatureGeo.push(user, feature)
     end
 
-    update_city_metadata(city)
+    update_metadata(city)
   end
 end
