@@ -55,7 +55,7 @@ module EditorHelpers
     end
   end
 
-  def update_metadata(systems = nil, city = nil)
+  def update_metadata(systems: nil, city: nil)
     if systems
       systems.map do |system|
         system.compute_length
@@ -84,7 +84,7 @@ module EditorHelpers
       new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature.reload, change[:feature][:geometry])
-      update_metadata(new_feature.systems, city)
+      update_metadata(systems: new_feature.systems, city: city)
       CreatedFeature.push(user, new_feature.reload)
       return
     end
@@ -101,7 +101,7 @@ module EditorHelpers
       remove_lines_from_feature(feature)
       DeletedFeature.push(user, feature)
       feature.delete
-      update_metadata(systems, city)
+      update_metadata(systems: systems, city: city)
       return
     end
 
@@ -115,6 +115,6 @@ module EditorHelpers
       ModifiedFeatureGeo.push(user, feature)
     end
 
-    update_metadata(feature.systems, city)
+    update_metadata(systems: feature.systems, city: city)
   end
 end

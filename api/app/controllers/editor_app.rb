@@ -61,9 +61,7 @@ class EditorApp < App
 
     # We update the systems length in case they changed
     [prev_system, new_system].each do |system|
-      next unless system
-      system.compute_length
-      system.save
+      update_metadata(systems: [system]) if system
     end
 
     city_lines(@city).to_json
