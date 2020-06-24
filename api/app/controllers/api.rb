@@ -32,7 +32,7 @@ class Api < App
          state: city.country_state,
          country: city.country,
          length: city.length,
-         systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
+         systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
          contributors_count: city.contributors,
          url: city.url}
       end
