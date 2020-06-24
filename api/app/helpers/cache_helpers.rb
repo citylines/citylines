@@ -5,6 +5,10 @@ module CacheHelpers
       max(:max)
   end
 
+  def last_modified_system
+    System.select(Sequel.function(:max,:updated_at)).first[:max]
+  end
+
   def last_modified_city_date
     Section.select(Sequel.function(:max,:updated_at)).
       union(DeletedFeature.where(feature_class: 'Section').select(Sequel.function(:max,:created_at)), all: true).

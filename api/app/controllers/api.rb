@@ -52,7 +52,7 @@ class Api < App
     end
 
     get'/top_systems' do
-      last_modified last_modified_city_date
+      last_modified last_modified_system
 
       systems = System.order(Sequel.desc(:length)).limit(10).all.map do |system|
         {
