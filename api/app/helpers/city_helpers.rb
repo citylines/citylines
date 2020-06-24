@@ -108,25 +108,18 @@ module CityHelpers
     total
   end
 
-  def top_systems
+  def system_length(system, to_km: true)
     today = Time.now.year
-
-    query = System
-      .join(:lines, system_id: :systems__id)
+    total = Line.where(system_id: system.id)
       .join(:section_lines, line_id: :lines__id)
       .join(:sections, id: :section_id)
       .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
-      .select_group(:systems__id, :systems__name, :systems__city_id)
-      .select_append{sum(:length).as(:sum)}
-      .order(Sequel.desc(:sum))
+      .sum(:length)
 
-    query.limit(10).all.map do |row|
-      {
-        name: row.name,
-        url: row.url,
-        length: (row[:sum] / 1000).to_i,
-        city_name: row.city.name
-      }
+    if to_km
+      total = total / 1000
     end
+
+    total
   end
 end

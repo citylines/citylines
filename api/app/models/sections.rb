@@ -1,5 +1,6 @@
 class Section < Sequel::Model(:sections)
   plugin :timestamps, :update_on_create => true
+  plugin :many_through_many
 
   include Length
   include StartYear
@@ -7,6 +8,9 @@ class Section < Sequel::Model(:sections)
 
   many_to_many :lines, join_table: :section_lines
   many_to_one :city
+  many_through_many :systems, [[:section_lines, :section_id, :line_id], [:lines, :id, :system_id]] do |ds|
+    ds.distinct(:id)
+  end
 
   plugin :geometry
 

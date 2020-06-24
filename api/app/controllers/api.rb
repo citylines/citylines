@@ -54,8 +54,17 @@ class Api < App
     get'/top_systems' do
       last_modified last_modified_city_date
 
+      systems = System.order(Sequel.desc(:length)).limit(10).all.map do |system|
+        {
+          name: system.name,
+          url: system.url,
+          length: system.length,
+          city_name: system.city.name
+        }
+      end
+
       {
-        top_systems: top_systems
+        top_systems: systems
       }.to_json
     end
   end
