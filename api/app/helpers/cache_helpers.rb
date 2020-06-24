@@ -1,5 +1,5 @@
 module CacheHelpers
-  def last_modified_city_global_info
+  def last_modified_city_or_system
       City.select(Sequel.function(:max,:updated_at)).
       union(System.select(Sequel.function(:max,:updated_at)), all: true).
       max(:max)

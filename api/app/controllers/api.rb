@@ -25,7 +25,7 @@ class Api < App
 
   namespace '/cities' do
     get '/list' do
-      last_modified last_modified_city_global_info
+      last_modified last_modified_city_or_system
 
       cities = City.all.map do |city|
         {name: city.name,
