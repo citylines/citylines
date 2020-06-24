@@ -43,13 +43,28 @@ class EditorApp < App
     line.backup!
     line.color = args[:color]
     line.name = args[:name]
-    line.system_id = args[:system_id]
+
+    new_system = nil
+    prev_system = nil
+
+    if args[:system_id] != line.system_id
+      prev_system = line.system
+      line.system_id = args[:system_id]
+      new_system = line.system
+    end
 
     unless args[:transport_mode_id].blank?
       line.transport_mode_id = args[:transport_mode_id]
     end
 
     line.save
+
+    # We update the systems length in case they changed
+    [prev_system, new_system].each do |system|
+      next unless system
+      system.compute_length
+      system.save
+    end
 
     city_lines(@city).to_json
   end
