@@ -21,7 +21,7 @@ namespace :stats do
     city_ids.each do |city_id|
       city = City[city_id]
 
-      puts.debug "Updating #{city.name} [#{city_id}]"
+      puts "Updating #{city.name} [#{city_id}]"
 
       city.systems.map do |system|
         system.length = system_length(system)
