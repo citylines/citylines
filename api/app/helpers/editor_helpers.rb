@@ -21,14 +21,6 @@ module EditorHelpers
     end
   end
 
-  def remove_lines_from_feature(feature)
-    if feature.is_a?(Section)
-      SectionLine.where(section_id: feature.id).map(&:delete)
-    else
-      StationLine.where(station_id: feature.id).map(&:delete)
-    end
-  end
-
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
 
@@ -50,21 +42,6 @@ module EditorHelpers
     feature.save
   end
 
-  def update_metadata(systems: nil, city: nil)
-    if systems
-      systems.map do |system|
-        system.compute_length
-        system.save
-      end
-    end
-
-    if city
-      city.compute_length
-      city.compute_contributors
-      city.save
-    end
-  end
-
   def update_create_or_delete_feature(city, user, change)
     klass = Object.const_get(change[:klass])
 
@@ -79,7 +56,6 @@ module EditorHelpers
       new_feature = klass.new(city_id: city.id)
       update_feature_properties(new_feature, change[:feature][:properties])
       update_feature_geometry(new_feature.reload, change[:feature][:geometry])
-      update_metadata(systems: new_feature.systems, city: city)
       CreatedFeature.push(user, new_feature.reload)
       return
     end
@@ -92,11 +68,8 @@ module EditorHelpers
     logger.debug "Feature to modify #{klass} ##{id}: #{change.inspect}"
 
     if change[:removed]
-      systems = feature.systems
-      remove_lines_from_feature(feature)
       DeletedFeature.push(user, feature)
-      feature.delete
-      update_metadata(systems: systems, city: city)
+      feature.destroy
       return
     end
 
@@ -109,7 +82,5 @@ module EditorHelpers
       update_feature_geometry(feature, change[:feature][:geometry])
       ModifiedFeatureGeo.push(user, feature)
     end
-
-    update_metadata(systems: feature.systems, city: city)
   end
 end

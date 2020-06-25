@@ -36,7 +36,7 @@ describe FeatureCollection::Station do
   end
 
   it "should return an empty set of features collection" do
-    @station.delete
+    @station.destroy
 
     feature_collection = JSON.parse(FeatureCollection::Station.by_city(@city.id), symbolize_names: true)
     assert_equal "FeatureCollection", feature_collection[:type]
@@ -48,8 +48,8 @@ describe FeatureCollection::Station do
   end
 
   it "should return empty lines if no lines data is available" do
-    StationLine.where(line_id: @line.id).delete
-    @line.delete
+    StationLine.where(line_id: @line.id).destroy
+    @line.destroy
 
     feature = FeatureCollection::Station.by_feature(@station.id).first
     assert_empty feature[:properties][:lines]
