@@ -18,19 +18,21 @@ namespace :stats do
 
     puts "=> #{city_ids.count} cities to update"
 
-    city_ids.each do |city_id|
-      city = City[city_id]
+    DB.transaction do
+      city_ids.each do |city_id|
+        city = City[city_id]
 
-      puts "=> Updating #{city.name} [#{city_id}]"
+        puts "=> Updating #{city.name} [#{city_id}]"
 
-      city.systems.each do |system|
-        system.length = system_length(system)
-        system.save
+        city.systems.each do |system|
+          system.length = system_length(system)
+          system.save
+        end
+
+        city.length = city_length(city)
+        city.contributors = city_contributors(city)
+        city.save
       end
-
-      city.length = city_length(city)
-      city.contributors = city_contributors(city)
-      city.save
     end
   end
 end
