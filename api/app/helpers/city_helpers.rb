@@ -92,7 +92,7 @@ module CityHelpers
           DeletedFeature.where(city_id: city.id).select(:user_id)).count(:user_id)
   end
 
-  def city_length(city, to_km: true)
+  def city_length(city)
     today = Time.now.year
     total = Section.
       where(city_id: city.id).
@@ -101,24 +101,16 @@ module CityHelpers
       where{Sequel.|({closure: nil}, (closure > today))}.
       sum(:length)
 
-    if to_km
-      total = total / 1000
-    end
-
     total
   end
 
-  def system_length(system, to_km: true)
+  def system_length(system)
     today = Time.now.year
     total = Line.where(system_id: system.id)
       .join(:section_lines, line_id: :lines__id)
       .join(:sections, id: :section_id)
       .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
       .sum(:length)
-
-    if to_km
-      total = total / 1000
-    end
 
     total
   end
