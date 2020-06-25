@@ -60,6 +60,8 @@ class Section < Sequel::Model(:sections)
       self.city.compute_length if self.length
       self.city.compute_contributors
       self.city.save
+
+      remove_instance_variable :@changed_geometry
     end
   end
 end
