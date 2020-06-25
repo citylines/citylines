@@ -101,7 +101,7 @@ module CityHelpers
       where{Sequel.|({closure: nil}, (closure > today))}.
       sum(:length)
 
-    total
+    total.to_i
   end
 
   def system_length(system)
@@ -112,6 +112,6 @@ module CityHelpers
       .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
       .sum(:length)
 
-    total
+    total.to_i
   end
 end
