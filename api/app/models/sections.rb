@@ -7,6 +7,7 @@ class Section < Sequel::Model(:sections)
   include FeatureBackup
 
   many_to_many :lines, join_table: :section_lines
+  one_to_many :section_lines
   many_to_one :city
   many_through_many :systems, [[:section_lines, :section_id, :line_id], [:lines, :id, :system_id]] do |ds|
     ds.distinct(:id)
@@ -35,7 +36,7 @@ class Section < Sequel::Model(:sections)
   end
 
   def before_destroy
-    SectionLine.where(section_id: self.id).map(&:destroy)
+    self.section_lines.map(&:destroy)
     super
   end
 
@@ -50,7 +51,7 @@ class Section < Sequel::Model(:sections)
   def after_save
     super
 
-    if defined?(@changed_geometry)
+    if @changed_geometry
       self.systems.map do |system|
         system.compute_length
         system.save

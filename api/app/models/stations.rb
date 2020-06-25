@@ -5,6 +5,7 @@ class Station < Sequel::Model(:stations)
   include FeatureBackup
 
   many_to_many :lines, join_table: :station_lines
+  one_to_many :station_lines
   many_to_one :city
 
   plugin :geometry
@@ -15,7 +16,7 @@ class Station < Sequel::Model(:stations)
   end
 
   def before_destroy
-    StationLine.where(station_id: feature.id).map(&:destroy)
+    self.station_lines.map(&:destroy)
     super
   end
 end
