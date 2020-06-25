@@ -10,6 +10,7 @@ namespace :stats do
     city_ids = Section.where{updated_at > time_limit}.select(:city_id).
       union(SectionLine.where{updated_at > time_limit}.select(:city_id)).
       union(Line.where{updated_at > time_limit}.select(:city_id)).
+      union(DeletedFeature.where(feature_class: 'Section').where{created_at > time_limit}.select(:city_id)).
       distinct(:city_id).all.map(&:city_id)
 
     city_ids.each do |city_id|
