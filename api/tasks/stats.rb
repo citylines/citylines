@@ -11,13 +11,12 @@ namespace :stats do
 
     time_limit = Time.now - time_frame * 60
     city_ids = Section.where{updated_at > time_limit}.select(:city_id).
-      union(SectionLine.where{updated_at > time_limit}.select(:city_id)).
       union(Line.where{updated_at > time_limit}.select(:city_id)).
       union(DeletedFeature.where(feature_class: 'Section').where{created_at > time_limit}.select(:city_id)).
       distinct(:city_id).all.map(&:city_id)
 
-    # Note: we don't have to check for removed section_lines, because the Editor updates the feature when chaning
-    # lines. Actually, maybe the check for the updated SectionLine is not necessary either
+    # Note: we don't have to check for modified or removed section_lines, because the Editor updates the feature 
+    # when changing lines.
 
     puts "=> #{city_ids.count} cities to update"
 
