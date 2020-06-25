@@ -9,9 +9,6 @@ class Section < Sequel::Model(:sections)
   many_to_many :lines, join_table: :section_lines
   one_to_many :section_lines
   many_to_one :city
-  many_through_many :systems, [[:section_lines, :section_id, :line_id], [:lines, :id, :system_id]] do |ds|
-    ds.distinct(:id)
-  end
 
   plugin :geometry
 
