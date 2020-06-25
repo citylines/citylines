@@ -33,7 +33,7 @@ Sequel.migration do
       group by city_id}
 
     DB.fetch(query).each do |register|
-      data[register[:city_id]][:length] = (register[:sum] / 1000).to_i
+      data[register[:city_id]][:length] = register[:sum]
     end
 
     data.each_pair do |city_id, data|

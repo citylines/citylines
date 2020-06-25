@@ -17,7 +17,7 @@ Sequel.migration do
     }
 
     DB.fetch(query).each do |r|
-      from(:systems).where(id: r[:system_id]).update(length: (r[:sum] / 1000).to_i)
+      from(:systems).where(id: r[:system_id]).update(length: r[:sum])
     end
   end
 

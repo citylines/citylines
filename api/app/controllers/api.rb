@@ -31,7 +31,7 @@ class Api < App
         {name: city.name,
          state: city.country_state,
          country: city.country,
-         length: city.length,
+         length: (city.length / 1000).to_i,
          systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
          contributors_count: city.contributors,
          url: city.url}
@@ -58,7 +58,7 @@ class Api < App
         {
           name: system.name,
           url: system.url,
-          length: system.length,
+          length: (system.length / 1000).to_i,
           city_name: system.city.name
         }
       end
