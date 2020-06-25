@@ -8,6 +8,7 @@ namespace :stats do
 
     time_limit = Time.now - time_frame * 60
     city_ids = Section.where{updated_at > time_limit}.select(:city_id).
+      union(SectionLine.where{updated_at > time_limit}.select(:city_id)).
       union(Line.where{updated_at > time_limit}.select(:city_id)).
       distinct(:city_id).all.map(&:city_id)
 
