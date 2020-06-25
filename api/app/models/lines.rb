@@ -39,22 +39,4 @@ class Line < Sequel::Model(:lines)
   def min_width
     transport_mode.min_width
   end
-
-  def change_system(new_system_id)
-    @old_system = self.system
-    self.system_id = new_system_id
-    @new_system = self.system
-  end
-
-  def after_save
-    super
-
-    [@old_system, @new_system].compact.map do |sys|
-      sys.compute_length
-      sys.save
-    end
-
-    remove_instance_variable :@old_system
-    remove_instance_variable :@new_system
-  end
 end

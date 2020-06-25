@@ -29,7 +29,6 @@ class Section < Sequel::Model(:sections)
   def before_save
     if changed_columns.include?(:geometry)
       self.set_length(self.geometry)
-      @changed_geometry = true
     end
 
     super
@@ -38,30 +37,5 @@ class Section < Sequel::Model(:sections)
   def before_destroy
     self.section_lines.map(&:destroy)
     super
-  end
-
-  def after_destroy
-    super
-
-    self.city.compute_length if self.length
-    self.city.compute_contributors
-    self.city.save
-  end
-
-  def after_save
-    super
-
-    if @changed_geometry
-      self.systems.map do |system|
-        system.compute_length
-        system.save
-      end
-
-      self.city.compute_length if self.length
-      self.city.compute_contributors
-      self.city.save
-
-      remove_instance_variable :@changed_geometry
-    end
   end
 end

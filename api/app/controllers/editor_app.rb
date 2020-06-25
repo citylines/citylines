@@ -43,10 +43,7 @@ class EditorApp < App
     line.backup!
     line.color = args[:color]
     line.name = args[:name]
-
-    if args[:system_id] != line.system_id
-      line.change_system(args[:system_id])
-    end
+    line.system_id = args[:system_id]
 
     unless args[:transport_mode_id].blank?
       line.transport_mode_id = args[:transport_mode_id]
