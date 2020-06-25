@@ -49,7 +49,7 @@ describe FeatureCollection::Station do
 
   it "should return empty lines if no lines data is available" do
     StationLine.where(line_id: @line.id).destroy
-    @line.delete
+    @line.destroy
 
     feature = FeatureCollection::Station.by_feature(@station.id).first
     assert_empty feature[:properties][:lines]
