@@ -54,7 +54,7 @@ class LinesEditorItem extends Component {
     return (
       (this.state.values.name && this.state.values.name !== this.props.name) ||
       (this.state.values.color && this.state.values.color !== this.props.color) ||
-      (this.state.values.transport_mode_id && this.state.values.transport_mode_id != this.props.transport_mode_id)
+      (this.state.values.transport_mode_id != this.props.transport_mode_id)
     ) && this.state.values.name && this.state.values.name.length > 0;
   }
 
