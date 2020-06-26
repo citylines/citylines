@@ -1,3 +1,5 @@
+require 'overpass_api_ruby'
+
 module OSMHelpers
   def get_osm_features_collection(city,route,s,n,w,e)
     elements = fetch_osm_elements(route,s,n,w,e)
@@ -20,13 +22,14 @@ module OSMHelpers
   end
 
   def fetch_osm_elements(route,s,n,w,e)
-    require 'overpass_api_ruby'
-
     bbox = {s: s, n: n, w: w, e: e}
 
-    options={bbox: bbox,
-             timeout: 900,
-             maxsize: 1073741824}
+    options={
+      bbox: bbox,
+      timeout: 900,
+      maxsize: 1073741824,
+      endpoint: 'https://z.overpass-api.de/api/interpreter'
+    }
 
     overpass = OverpassAPI::QL.new(options)
 
