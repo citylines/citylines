@@ -33,8 +33,6 @@ describe OSMHelpers do
 
       options = {
         bbox: {s: s, n: n, w: w, e: e},
-        timeout: 900,
-        maxsize: 1073741824,
         endpoint: endpoint
       }
 

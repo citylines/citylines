@@ -26,8 +26,6 @@ module OSMHelpers
 
     options={
       bbox: bbox,
-      timeout: 900,
-      maxsize: 1073741824,
       endpoint: 'https://z.overpass-api.de/api/interpreter'
     }
 
