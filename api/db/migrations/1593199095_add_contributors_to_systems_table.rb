@@ -22,7 +22,20 @@ Sequel.migration do
           select system_id, user_id from lines
             inner join section_lines on section_lines.line_id = lines.id
             inner join created_features on feature_id = section_id
-            where feature_class = 'Section'
+            where feature_class = 'Section' union
+
+          select system_id, user_id from lines
+            inner join station_lines on station_lines.line_id = lines.id
+            inner join modified_features_props on feature_id = station_id
+            where feature_class = 'Station' union
+          select system_id, user_id from lines
+            inner join station_lines on station_lines.line_id = lines.id
+            inner join modified_features_geo on feature_id = station_id
+            where feature_class = 'Station' union
+          select system_id, user_id from lines
+            inner join station_lines on station_lines.line_id = lines.id
+            inner join created_features on feature_id = station_id
+            where feature_class = 'Station'
         ) as modifications
       group by (system_id);
     }
