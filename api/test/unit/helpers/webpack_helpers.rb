@@ -10,6 +10,7 @@ describe WebpackHelpers do
     end
 
     it 'should return nil if the manifest is missing' do
+      stubs(:webpack_manifest).returns({})
       refute webpack_asset_path('main.js')
     end
   end

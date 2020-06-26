@@ -14,7 +14,7 @@ describe Section do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name:'test-line')
 
-    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: "tags", city_id: @city.id)
+    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, osm_id: 555, osm_tags: "tags", city_id: @city.id)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 
@@ -54,12 +54,8 @@ describe Section do
     assert_equal 1951, @city.reload.start_year
   end
 
-  it "should set it's length properly" do
-    @section.set_length
-    @section.save
-
-    refute_equal 1001, @section.length
-    assert (@section.length > 0)
+  it "should have set it's length properly" do
+    assert @section.length > 0
   end
 
   it "should return the right city" do

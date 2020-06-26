@@ -85,63 +85,63 @@ module CityHelpers
     klass.by_city(city.id)
   end
 
-  def contributors
-    query = %{
-      select city_id, count(user_id) from
-        (select distinct city_id, user_id from
-          (select city_id, user_id from modified_features_props union
-           select city_id, user_id from created_features union
-           select city_id, user_id from deleted_features union
-           select city_id, user_id from modified_features_geo) as modifications
-        ) as different
-      group by (city_id)
-    }
-
-    cities = {}
-
-    DB.fetch(query).each do |register|
-      cities[register[:city_id]] = register[:count]
-    end
-
-    cities
+  def city_contributors(city)
+    ModifiedFeatureProps.where(city_id: city.id).select(:user_id).union(
+      ModifiedFeatureGeo.where(city_id: city.id).select(:user_id)).union(
+        CreatedFeature.where(city_id: city.id).select(:user_id)).union(
+          DeletedFeature.where(city_id: city.id).select(:user_id)).count(:user_id)
   end
 
-  def lengths
+  def city_length(city)
     today = Time.now.year
+    total = Section.
+      where(city_id: city.id).
+      exclude(opening: nil).
+      where{opening <= today}.
+      where{Sequel.|({closure: nil}, (closure > today))}.
+      sum(:length)
 
-    query = %{
-      select sum(length), city_id from sections where
-        sections.opening is not null and sections.opening <= #{today} and (sections.closure is null or sections.closure > #{today})
-      group by city_id}
-
-    cities = {}
-
-    DB.fetch(query).each do |register|
-      cities[register[:city_id]] = (register[:sum] / 1000).to_i
-    end
-
-    cities
+    total.to_i
   end
 
-  def top_systems
-    today = Time.now.year
+  def system_contributors(system)
+    #sections
+    Line.where(system_id: system.id).
+      left_join(:section_lines, line_id: :id).
+      left_join(:modified_features_props, feature_id: :section_lines__section_id).
+      where(feature_class: 'Section').select(:user_id).union(
+        Line.where(system_id: system.id).
+        left_join(:section_lines, line_id: :id).
+        left_join(:modified_features_geo, feature_id: :section_lines__section_id).
+        where(feature_class: 'Section').select(:user_id)).union(
+        Line.where(system_id: system.id).
+        left_join(:section_lines, line_id: :id).
+        left_join(:created_features, feature_id: :section_lines__section_id).
+        where(feature_class: 'Section').select(:user_id)).union(
+          #stations
+        Line.where(system_id: system.id).
+        left_join(:station_lines, line_id: :id).
+        left_join(:modified_features_props, feature_id: :station_lines__station_id).
+        where(feature_class: 'Station').select(:user_id)).union(
+        Line.where(system_id: system.id).
+        left_join(:station_lines, line_id: :id).
+        left_join(:modified_features_geo, feature_id: :station_lines__station_id).
+        where(feature_class: 'Station').select(:user_id)).union(
+        Line.where(system_id: system.id).
+        left_join(:station_lines, line_id: :id).
+        left_join(:created_features, feature_id: :station_lines__station_id).
+        where(feature_class: 'Station').select(:user_id)).
+      select(Sequel.function(:count, :user_id).distinct).first[:count]
+  end
 
-    query = System
-      .join(:lines, system_id: :systems__id)
+  def system_length(system)
+    today = Time.now.year
+    total = Line.where(system_id: system.id)
       .join(:section_lines, line_id: :lines__id)
       .join(:sections, id: :section_id)
       .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
-      .select_group(:systems__id, :systems__name, :systems__city_id)
-      .select_append{sum(:length).as(:sum)}
-      .order(Sequel.desc(:sum))
+      .sum(:length)
 
-    query.limit(10).all.map do |row|
-      {
-        name: row.name,
-        url: row.url,
-        length: (row[:sum] / 1000).to_i,
-        city_name: row.city.name
-      }
-    end
+    total.to_i
   end
 end

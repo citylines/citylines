@@ -39,5 +39,7 @@ class City < Sequel::Model(:cities)
       if self.start_year.nil?
         self.start_year = Time.now.year
       end
+
+      super
     end
 end

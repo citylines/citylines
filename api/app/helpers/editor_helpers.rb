@@ -21,14 +21,6 @@ module EditorHelpers
     end
   end
 
-  def remove_lines_from_feature(feature)
-    if feature.is_a?(Section)
-      SectionLine.where(section_id: feature.id).map(&:delete)
-    else
-      StationLine.where(station_id: feature.id).map(&:delete)
-    end
-  end
-
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
 
@@ -48,11 +40,6 @@ module EditorHelpers
   def update_feature_geometry(feature, geometry)
     feature.set_geometry_from_geojson(geometry)
     feature.save
-
-    if feature.is_a?(Section)
-      feature.set_length
-      feature.save
-    end
   end
 
   def update_create_or_delete_feature(city, user, change)
@@ -81,9 +68,8 @@ module EditorHelpers
     logger.debug "Feature to modify #{klass} ##{id}: #{change.inspect}"
 
     if change[:removed]
-      remove_lines_from_feature(feature)
       DeletedFeature.push(user, feature)
-      feature.delete
+      feature.destroy
       return
     end
 

@@ -93,7 +93,7 @@ module FeatureCollection
         select
           sections.id as section_id,
           geometry,
-          length,
+          sections.length as length,
           opening,
           buildstart,
           closure,

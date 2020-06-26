@@ -89,8 +89,8 @@ describe CityHelpers do
     end
   end
 
-  describe "#length" do
-    it "should return the total km opened by city" do
+  describe "length" do
+    it "should return the total opened km by city" do
       city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
       city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
 
@@ -104,15 +104,11 @@ describe CityHelpers do
       Section.create(city_id: city2.id, length: 35000, opening: 1995)
       Section.create(city_id: city2.id, length: 40000, opening: 1990, closure: 1993)
 
-      result = lengths
-
-      assert_equal 25, result[city1.id]
-      assert_equal 65, result[city2.id]
+      assert_equal 25000, city_length(city1)
+      assert_equal 65000, city_length(city2)
     end
-  end
 
-  describe "top systems" do
-    it "should return the top systems" do
+    it "should return the total opened km by system" do
       city = City.create(name: 'Trulalá', url_name: 'trulala', start_year: 2017)
 
       system1 = System.create(name: "Metro", city_id: city.id)
@@ -137,17 +133,71 @@ describe CityHelpers do
          SectionLine.create(section_id: section.id, line_id: line2.id, city_id: city.id)
        end
 
-       results = top_systems
+       assert_equal 25000, system_length(system1)
+       assert_equal 65000, system_length(system2)
+    end
+  end
 
-       assert_equal system2.name, results.first[:name]
-       assert_equal system2.url, results.first[:url]
-       assert_equal system2.city.name, results.first[:city_name]
-       assert_equal 65, results.first[:length]
+  describe "contributors" do
+    before do
+      @city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
+      @city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
 
-       assert_equal system1.name, results.last[:name]
-       assert_equal system1.url, results.last[:url]
-       assert_equal system1.city.name, results.last[:city_name]
-       assert_equal 25, results.last[:length]
+      @juan = User.create(name: "Juan Pérez", email: 'juan@test.co', custom_name: 'Pepito', img_url: 'pepito.png')
+      @pepe = User.create(name: "Pepe Martínez", email: 'pepe@test.com')
+      @jorge = User.create(name: "Jorge Rodríguez", email: 'jorge@test.com')
+    end
+
+    it "should return the cities contributors" do
+=begin
+      section = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section2 = Section.create(city_id: @city2.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section3 = Section.create(city_id: @city2.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+=end
+      # City 1
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Section', city_id: @city1.id)
+      ModifiedFeatureProps.create(user_id: @juan.id, feature_class: 'Section', city_id: @city1.id)
+
+      # City 2
+      CreatedFeature.create(user_id: @pepe.id, feature_class: 'Section', city_id: @city2.id)
+      ModifiedFeatureGeo.create(user_id: @pepe.id, feature_class: 'Section', city_id: @city2.id)
+      CreatedFeature.create(user_id: @jorge.id, feature_class: 'Section', city_id: @city2.id)
+      DeletedFeature.create(user_id: @jorge.id, feature_class: 'Section', city_id: @city2.id)
+
+      assert_equal 1, city_contributors(@city1)
+      assert_equal 2, city_contributors(@city2)
+    end
+
+    it "should return the systems contributors" do
+      system1 = System.create(name: "Metro", city_id: @city1.id)
+      system2 = System.create(name: "Train", city_id: @city1.id)
+
+      line1 = Line.create(name: "A", city_id: @city1.id, system_id: system1.id)
+      line2 = Line.create(name: "1", city_id: @city1.id, system_id: system2.id)
+
+      section = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section.id, line_id: line1.id, city_id: @city1.id)
+
+      section2 = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section2.id, line_id: line2.id, city_id: @city1.id)
+      section3 = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section3.id, line_id: line2.id, city_id: @city1.id)
+
+      station = Station.create(city_id: @city1.id)
+      StationLine.create(station_id: station.id, line_id: line2.id, city_id: @city1.id)
+
+      # System 1
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Section', feature_id: section.id)
+      ModifiedFeatureProps.create(user_id: @juan.id, feature_class: 'Section', feature_id: section.id)
+
+      # System 2
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Station', feature_id: station.id)
+      CreatedFeature.create(user_id: @pepe.id, feature_class: 'Section', feature_id: section2.id)
+      ModifiedFeatureGeo.create(user_id: @pepe.id, feature_class: 'Section', feature_id: section2.id)
+      CreatedFeature.create(user_id: @jorge.id, feature_class: 'Section', feature_id: section3.id)
+
+      assert_equal 1, system_contributors(system1)
+      assert_equal 3, system_contributors(system2)
     end
   end
 end

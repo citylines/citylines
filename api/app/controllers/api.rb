@@ -10,8 +10,6 @@ class Api < App
   helpers CityHelpers
   helpers UserHelpers
   helpers CacheHelpers
-  helpers OSMHelpers
-  helpers EditorHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -27,18 +25,15 @@ class Api < App
 
   namespace '/cities' do
     get '/list' do
-      last_modified last_modified_city_date
-
-      contributors_by_city = contributors
-      city_length = lengths
+      last_modified last_modified_city_or_system
 
       cities = City.all.map do |city|
         {name: city.name,
          state: city.country_state,
          country: city.country,
-         length: city_length[city.id] || 0,
-         systems: city.systems.map(&:name).reject{|s| s.nil? || s == ''},
-         contributors_count: contributors_by_city[city.id] || 0,
+         length: (city.length / 1000).to_i,
+         systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
+         contributors_count: city.contributors,
          url: city.url}
       end
 
@@ -57,7 +52,16 @@ class Api < App
     end
 
     get'/top_systems' do
-      last_modified last_modified_city_date
+      last_modified last_modified_system
+
+      top_systems = System.order(Sequel.desc(:length)).limit(10).all.map do |system|
+        {
+          name: system.name,
+          url: system.url,
+          length: (system.length / 1000).to_i,
+          city_name: system.city.name
+        }
+      end
 
       {
         top_systems: top_systems
@@ -131,156 +135,5 @@ class Api < App
     last_modified last_modified_source(@city, type)
 
     lines_features_collection(@city, type)
-  end
-
-  get '/editor/:url_name/data' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-
-    { lines: city_lines(@city),
-      systems: city_systems(@city),
-      transport_modes: TransportMode.summary
-    }.to_json
-  end
-
-  put '/editor/:url_name/features' do |url_name|
-    payload, header = protect
-    user = User[payload['user']['user_id']]
-
-    @city = City[url_name: url_name]
-    changes = JSON.parse(request.body.read, symbolize_names: true)
-
-    DB.transaction do
-      changes.each do |change|
-        update_create_or_delete_feature(@city, user, change);
-      end
-    end
-
-    status 200
-  end
-
-  put '/editor/:url_name/line' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    line = Line.where(url_name: args[:line_url_name]).first
-
-    halt if line.city_id != @city.id
-
-    line.backup!
-    line.color = args[:color]
-    line.name = args[:name]
-    line.system_id = args[:system_id]
-
-    unless args[:transport_mode_id].blank?
-      line.transport_mode_id = args[:transport_mode_id]
-    end
-
-    line.save
-
-    city_lines(@city).to_json
-  end
-
-  post '/editor/:url_name/line' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    opts = {city_id: @city.id, name: args[:name], color: args[:color], system_id: args[:system_id]}
-
-    unless args[:transport_mode_id].blank?
-      opts.merge!(transport_mode_id: args[:transport_mode_id])
-    end
-
-    line = Line.new(opts)
-    line.save
-    line.reload.generate_url_name
-    line.save
-
-    city_lines(@city).to_json
-  end
-
-  delete '/editor/:url_name/line' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    line = Line.where(url_name: args[:line_url_name]).first
-
-    halt if line.city_id != @city.id
-
-    line.backup!
-    line.delete
-
-    city_lines(@city).to_json
-  end
-
-  put '/editor/:url_name/system' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    system = System[args[:id]]
-
-    halt if system.city_id != @city.id
-
-    system.backup!
-    system.name = args[:name]
-    system.save
-
-    city_systems(@city).to_json
-  end
-
-  post '/editor/:url_name/system' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    system = System.new(city_id: @city.id, name: args[:name])
-    system.save
-
-    city_systems(@city).to_json
-  end
-
-  delete '/editor/:url_name/system' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-
-    args = JSON.parse(request.body.read, symbolize_names: true)
-
-    system = System[args[:id]]
-
-    halt if system.city_id != @city.id
-
-    system.backup!
-    system.delete
-
-    city_systems(@city).to_json
-  end
-
-  get '/editor/:url_name/osm' do |url_name|
-    protect
-
-    @city = City[url_name: url_name]
-
-    route = params[:route]
-    s = params[:s]
-    n = params[:n]
-    w = params[:w]
-    e = params[:e]
-
-    halt unless (route && s && n && w && e)
-
-    get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
 end
