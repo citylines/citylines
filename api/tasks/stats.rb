@@ -26,6 +26,7 @@ namespace :stats do
 
         city.systems.each do |system|
           system.length = system_length(system)
+          system.contributors = system_contributors(system)
           system.save
         end
 
