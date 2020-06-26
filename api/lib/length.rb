@@ -1,7 +1,5 @@
 module Length
-    def set_length(geom=nil)
-      geom ||= 'geometry'
-
+    def set_length(geom = 'geometry')
       self.length = if city.srid
                       Sequel.lit("ST_Length(ST_Transform(#{geom}, #{city.srid}))::int")
                     else
