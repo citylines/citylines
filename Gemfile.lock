@@ -36,7 +36,7 @@ GEM
       jwt
       multi_json
     http-accept (1.7.0)
-    httpi (2.4.2)
+    httpi (2.4.4)
       rack
       socksify
     ipaddress (0.8.3)
@@ -57,15 +57,15 @@ GEM
       mini_portile2 (~> 2.4.0)
     oauth (0.5.3)
     oj (3.7.1)
-    overpass-api-ruby (0.2)
-      httpi (~> 2.4.0)
+    overpass-api-ruby (0.3.1)
+      httpi (~> 2.4)
     pg (0.19.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (3.0.2)
-    rack (1.6.12)
+    rack (1.6.13)
     rack-cache (1.7.0)
       rack (>= 0.4)
     rack-protection (1.5.5)
@@ -144,4 +144,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.17.1
+   1.17.3
