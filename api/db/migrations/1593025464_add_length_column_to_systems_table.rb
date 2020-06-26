@@ -4,6 +4,10 @@ Sequel.migration do
       add_column :length, :Bignum, default: 0
     end
 
+    alter_table :system_backups do
+      add_column :length, :Bignum, default: 0
+    end
+
     today = Time.now.year
 
     query = %{
@@ -23,6 +27,10 @@ Sequel.migration do
 
   down do
     alter_table :systems do
+      drop_column :length
+    end
+
+    alter_table :system_backups do
       drop_column :length
     end
   end
