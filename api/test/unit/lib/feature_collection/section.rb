@@ -14,7 +14,7 @@ describe FeatureCollection::Section do
 
     @line = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line', url_name:'test-line')
 
-    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, length: 1001, osm_id: 555, osm_tags: 'tags', osm_metadata: 'metadata', city_id: @city.id)
+    @section = Section.new(buildstart: 1980, opening:1985, closure: 1999, osm_id: 555, osm_tags: 'tags', osm_metadata: 'metadata', city_id: @city.id)
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 
@@ -70,7 +70,7 @@ describe FeatureCollection::Section do
 
       expected_properties = {id: @section.id,
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
@@ -97,7 +97,7 @@ describe FeatureCollection::Section do
 
       expected_properties = {id: @section.id,
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              lines: expected_lines,
                              opening: FeatureCollection::Section::FUTURE,
                              buildstart: @section.buildstart,
@@ -123,7 +123,7 @@ describe FeatureCollection::Section do
 
       expected_properties = {id: @section.id,
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              lines: expected_lines,
                              opening: @section.opening,
                              buildstart: @section.opening,
@@ -159,7 +159,7 @@ describe FeatureCollection::Section do
 
       expected_properties = {id: "#{@section.id}-#{@line.url_name}",
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              line: @line.name,
                              line_url_name: @line.url_name,
                              transport_mode_name: @line.transport_mode[:name],
@@ -190,7 +190,7 @@ describe FeatureCollection::Section do
 
       expected_properties1 = {id: "#{@section.id}-#{@line.url_name}",
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              line: @line.name,
                              line_url_name: @line.url_name,
                              transport_mode_name: @line.transport_mode[:name],
@@ -206,7 +206,7 @@ describe FeatureCollection::Section do
 
       expected_properties2 = {id: "#{@section.id}-#{@line2.url_name}",
                              klass: "Section",
-                             length: 1001,
+                             length: @section.length,
                              line: @line2.name,
                              line_url_name: @line2.url_name,
                              transport_mode_name: @line.transport_mode[:name],
