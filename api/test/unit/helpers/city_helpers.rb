@@ -90,7 +90,7 @@ describe CityHelpers do
   end
 
   describe "#length" do
-    it "should return the total km opened by city" do
+    it "should return the total opened km by city" do
       city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
       city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
 
@@ -104,15 +104,11 @@ describe CityHelpers do
       Section.create(city_id: city2.id, length: 35000, opening: 1995)
       Section.create(city_id: city2.id, length: 40000, opening: 1990, closure: 1993)
 
-      result = lengths
-
-      assert_equal 25, result[city1.id]
-      assert_equal 65, result[city2.id]
+      assert_equal 25000, city_length(city1)
+      assert_equal 65000, city_length(city2)
     end
-  end
 
-  describe "top systems" do
-    it "should return the top systems" do
+    it "should return the total opened km by system" do
       city = City.create(name: 'Trulalá', url_name: 'trulala', start_year: 2017)
 
       system1 = System.create(name: "Metro", city_id: city.id)
@@ -137,17 +133,8 @@ describe CityHelpers do
          SectionLine.create(section_id: section.id, line_id: line2.id, city_id: city.id)
        end
 
-       results = top_systems
-
-       assert_equal system2.name, results.first[:name]
-       assert_equal system2.url, results.first[:url]
-       assert_equal system2.city.name, results.first[:city_name]
-       assert_equal 65, results.first[:length]
-
-       assert_equal system1.name, results.last[:name]
-       assert_equal system1.url, results.last[:url]
-       assert_equal system1.city.name, results.last[:city_name]
-       assert_equal 25, results.last[:length]
+       assert_equal 25000, system_length(system1)
+       assert_equal 65000, system_length(system2)
     end
   end
 end
