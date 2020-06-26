@@ -29,11 +29,15 @@ describe OSMHelpers do
       n = 2
       w = 3
       e = 4
+      endpoint = 'https://z.overpass-api.de/api/interpreter'
 
-      options={:bbox => {s: s, n: n,
-                         w: w, e: e},
-                         :timeout => 900,
-                         :maxsize => 1073741824}
+      options = {
+        bbox: {s: s, n: n, w: w, e: e},
+        timeout: 900,
+        maxsize: 1073741824,
+        endpoint: endpoint
+      }
+
       route = "subway"
 
       response = {elements: []}
