@@ -281,10 +281,6 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: default;
 }
 
-.editor-delete-warning-text {
-  padding:5px 10px 5px 5px;
-}
-
 .year-container {
   padding-bottom: 8px;
 }
