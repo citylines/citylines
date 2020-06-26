@@ -108,15 +108,15 @@ module CityHelpers
     Line.where(system_id: system.id).
       left_join(:section_lines, line_id: :id).
       left_join(:modified_features_props, feature_id: :section_lines__section_id).
-      where(feature_class: 'Section').select(:user_id).union(
+      select(:user_id).union(
         Line.where(system_id: system.id).
         left_join(:section_lines, line_id: :id).
         left_join(:modified_features_geo, feature_id: :section_lines__section_id).
-        where(feature_class: 'Section').select(:user_id)).union(
+        select(:user_id)).union(
         Line.where(system_id: system.id).
         left_join(:section_lines, line_id: :id).
         left_join(:created_features, feature_id: :section_lines__section_id).
-        where(feature_class: 'Section').select(:user_id)
+        select(:user_id)
       ).
       select(Sequel.function(:count, :user_id).distinct).first[:count]
   end
