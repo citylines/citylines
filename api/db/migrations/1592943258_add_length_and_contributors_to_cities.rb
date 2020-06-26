@@ -8,13 +8,11 @@ Sequel.migration do
     # Contributors
     # ============
     query = %{
-      select city_id, count(user_id) from
-        (select distinct city_id, user_id from
-          (select city_id, user_id from modified_features_props union
-           select city_id, user_id from created_features union
-           select city_id, user_id from deleted_features union
-           select city_id, user_id from modified_features_geo) as modifications
-        ) as different
+      select city_id, count(distinct user_id) from (
+        select city_id, user_id from modified_features_props union
+        select city_id, user_id from created_features union
+        select city_id, user_id from deleted_features union
+        select city_id, user_id from modified_features_geo) as modifications
       group by (city_id)
     }
 
