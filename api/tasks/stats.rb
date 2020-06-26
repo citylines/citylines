@@ -10,21 +10,19 @@ namespace :stats do
     puts "=> Using time frame of #{time_frame} minutes"
 
     time_limit = Time.now - time_frame * 60
-    city_ids = Section.where{updated_at > time_limit}.select(:city_id).
+    cities = Section.where{updated_at > time_limit}.select(:city_id).
       union(Line.where{updated_at > time_limit}.select(:city_id)).
       union(DeletedFeature.where(feature_class: 'Section').where{created_at > time_limit}.select(:city_id)).
-      distinct(:city_id).all.map(&:city_id)
+      distinct(:city_id).all.map(&:city)
 
     # Note: we don't have to check for modified or removed section_lines, because the Editor updates the feature 
     # when changing lines.
 
-    puts "=> #{city_ids.count} cities to update"
+    puts "=> #{cities.count} cities to update"
 
     DB.transaction do
-      city_ids.each do |city_id|
-        city = City[city_id]
-
-        puts "=> Updating #{city.name} [#{city_id}]"
+      cities.each do |city|
+        puts "=> Updating #{city.name} [#{city.id}]"
 
         city.systems.each do |system|
           system.length = system_length(system)
