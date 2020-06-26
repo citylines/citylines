@@ -89,7 +89,7 @@ describe CityHelpers do
     end
   end
 
-  describe "#length" do
+  describe "length" do
     it "should return the total opened km by city" do
       city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
       city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
@@ -135,6 +135,69 @@ describe CityHelpers do
 
        assert_equal 25000, system_length(system1)
        assert_equal 65000, system_length(system2)
+    end
+  end
+
+  describe "contributors" do
+    before do
+      @city1 = City.create(name: 'City 1', url_name: 'city-1', start_year: 2017)
+      @city2 = City.create(name: 'City 2', url_name: 'city-2', start_year: 2017)
+
+      @juan = User.create(name: "Juan Pérez", email: 'juan@test.co', custom_name: 'Pepito', img_url: 'pepito.png')
+      @pepe = User.create(name: "Pepe Martínez", email: 'pepe@test.com')
+      @jorge = User.create(name: "Jorge Rodríguez", email: 'jorge@test.com')
+    end
+
+    it "should return the cities contributors" do
+=begin
+      section = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section2 = Section.create(city_id: @city2.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      section3 = Section.create(city_id: @city2.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+=end
+      # City 1
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Section', city_id: @city1.id)
+      ModifiedFeatureProps.create(user_id: @juan.id, feature_class: 'Section', city_id: @city1.id)
+
+      # City 2
+      CreatedFeature.create(user_id: @pepe.id, feature_class: 'Section', city_id: @city2.id)
+      ModifiedFeatureGeo.create(user_id: @pepe.id, feature_class: 'Section', city_id: @city2.id)
+      CreatedFeature.create(user_id: @jorge.id, feature_class: 'Section', city_id: @city2.id)
+      DeletedFeature.create(user_id: @jorge.id, feature_class: 'Section', city_id: @city2.id)
+
+      assert_equal 1, city_contributors(@city1)
+      assert_equal 2, city_contributors(@city2)
+    end
+
+    it "should return the systems contributors" do
+      system1 = System.create(name: "Metro", city_id: @city1.id)
+      system2 = System.create(name: "Train", city_id: @city1.id)
+
+      line1 = Line.create(name: "A", city_id: @city1.id, system_id: system1.id)
+      line2 = Line.create(name: "1", city_id: @city1.id, system_id: system2.id)
+
+      section = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section.id, line_id: line1.id, city_id: @city1.id)
+
+      section2 = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section2.id, line_id: line2.id, city_id: @city1.id)
+      section3 = Section.create(city_id: @city1.id, geometry: Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)"))
+      SectionLine.create(section_id: section3.id, line_id: line2.id, city_id: @city1.id)
+
+      station = Station.create(city_id: @city1.id)
+      StationLine.create(station_id: station.id, line_id: line2.id, city_id: @city1.id)
+
+      # System 1
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Section', feature_id: section.id)
+      ModifiedFeatureProps.create(user_id: @juan.id, feature_class: 'Section', feature_id: section.id)
+
+      # System 2
+      CreatedFeature.create(user_id: @juan.id, feature_class: 'Station', feature_id: station.id)
+      CreatedFeature.create(user_id: @pepe.id, feature_class: 'Section', feature_id: section2.id)
+      ModifiedFeatureGeo.create(user_id: @pepe.id, feature_class: 'Section', feature_id: section2.id)
+      CreatedFeature.create(user_id: @jorge.id, feature_class: 'Section', feature_id: section3.id)
+
+      assert_equal 1, system_contributors(system1)
+      assert_equal 3, system_contributors(system2)
     end
   end
 end
