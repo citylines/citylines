@@ -7,7 +7,7 @@ This is the source code of [citylines.co](https://www.citylines.co), a collabora
 
 The data stored in [citylines.co](https://www.citylines.co) is open and can be downloaded in different formats and scales from [citylines.co/data](https://www.citylines.co/data).
 
-![](https://user-images.githubusercontent.com/6061036/69900076-b3f99f80-136f-11ea-9e5a-850c87ead508.png)
+![](https://user-images.githubusercontent.com/6061036/85913793-0fa8e000-b80e-11ea-89f0-7544d8e07a96.png)
 
 Contributing
 ===========
