@@ -1,4 +1,4 @@
-![citylines.co](https://user-images.githubusercontent.com/6061036/33101609-a6c7569a-cef7-11e7-8a49-1846b3ccf852.png)
+![citylines.co](https://cdn.citylines.co/assets/img/citylines-main-aec6d0c73bba3874859021b2e2189296024498d29abc866eacffb5a76c74f3f6.svg)
 ---
 [![CircleCI](https://circleci.com/gh/citylines/citylines/tree/master.svg?style=svg)](https://circleci.com/gh/citylines/citylines/tree/master)
 [![Gitter](https://badges.gitter.im/citylines/Lobby.svg)](https://gitter.im/citylines/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
