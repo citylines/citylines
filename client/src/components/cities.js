@@ -140,7 +140,7 @@ class Cities extends Component {
         <div className="o-container o-container--medium">
           <div className="u-letter-box--super">
             <div className="landing-image"><img src={assets.path('img/citylines-main.svg')}/></div>
-            <Translate component="h2" content="cities.title" className="c-heading c-heading--medium landing-title"/>
+            <Translate component="h2" content="cities.title" className="c-heading c-heading--medium landing-title" unsafe/>
           </div>
         </div>
 
@@ -164,7 +164,7 @@ class Cities extends Component {
                            target="_blank"
                            className="c-link c-link--primary"
                            href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
-                           content="cities.request_city.request_it" />
+                           content="cities.request_city.request_it" />.
               </small>
             </p>
           </div>
@@ -219,7 +219,7 @@ class Cities extends Component {
               <span className="contact-icon"><a target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a></span>
               <span className="contact-icon"><a target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a></span>
             </p>
-            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /> <i className="fab fa-gitter"/></a></p>
+            <p><Translate content="cities.support" /> <a className="c-link" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><Translate content="cities.support_link" /> <i className="fab fa-gitter"/></a>.</p>
           </div>
         </div>
       </div>

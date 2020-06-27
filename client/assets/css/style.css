@@ -433,6 +433,10 @@ button.save-system {
   max-width: 200px
 }
 
+.contact-icon {
+  font-size: 1.1em;
+}
+
 .contact-icon + .contact-icon {
   margin-left: 20px;
 }

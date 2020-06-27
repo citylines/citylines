@@ -1,6 +1,6 @@
 ---
 cities:
-  title: Construisons les réseaux de transports du monde
+  title: Construisons les réseaux de transports du monde.
   search: Entrez une ville ou un pays
   contributors:
     one: "%(contributors)s contributeur"

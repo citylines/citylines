@@ -1,6 +1,6 @@
 ---
 cities:
-  title: We want to map all the transit systems of the world
+  title: We want to map all the transit systems of the world.
   search: Enter a city or a country
   contributors:
     one: "%(contributors)s contributor"
