@@ -27,16 +27,23 @@ class CityItem extends Component {
     return this.state.showAll ? 'show-more' : 'show-less';
   }
 
+  isCity() {
+    return !this.props.city_name;
+  }
+
   componentDidMount() {
-    this.setState({systemsDivHeight: this.systemsDiv.clientHeight});
+    if (this.isCity()) {
+      this.setState({systemsDivHeight: this.systemsDiv.clientHeight});
+    }
   }
 
   render() {
     return (
-      <div className="c-card">
+      <div className="c-card" style={!this.isCity() ? {backgroundColor:'rgba(0,0,0,0.04)'} : null}>
         <header className="c-card__header">
           <h3 className="c-heading">
-            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {!this.isCity() ? `${this.props.city_name},` : ''} {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            {this.isCity() &&
             <div className="city-systems-container">
               <div
                 ref={ (el) => this.systemsDiv = el}
@@ -50,7 +57,7 @@ class CityItem extends Component {
                     <span className={`fas ${this.state.showAll ? 'fa-angle-up' : 'fa-angle-down'}`}/>
                 </div> : null
               }
-            </div>
+            </div> }
           </h3>
         </header>
         <div className="c-card__body">
@@ -73,9 +80,9 @@ class Cities extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.bindedSortCities = this.sortCities.bind(this);
     this.bindedOnChange = this.onChange.bind(this);
     this.state = CitiesStore.getState();
+    this.searchTimeout = null;
   }
 
   componentWillUnmount() {
@@ -95,45 +102,35 @@ class Cities extends Component {
   }
 
   onInputChange(e) {
-    CitiesStore.setValue(e.target.value)
-  }
-
-  filterCities() {
-    if (this.state.value == '') {
-      return this.state.cities;
+    const searchTerm = e.target.value;
+    if (!searchTerm || searchTerm.length > 2) {
+      this.resetSearchTimeout();
     }
-
-    const regex = new RegExp(Diacritics.remove(this.state.value), 'i');
-    return this.state.cities.filter((city) =>
-        regex.test(Diacritics.remove(city.name)) ||
-        (city.state && regex.test(Diacritics.remove(city.state))) ||
-        regex.test(Diacritics.remove(city.country))
-        );
+    CitiesStore.setSearchTerm(searchTerm);
   }
 
-  cityIndex(city) {
-    return city.length;
-  }
-
-  sortCities(a,b) {
-    return this.cityIndex(a) > this.cityIndex(b) ? -1 : 1
+  resetSearchTimeout() {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout)
+    }
+    this.searchTimeout = setTimeout(() => {
+      CitiesStore.fetchCities();
+    }, 1000);
   }
 
   render() {
-    const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
-      return (
-        <CityItem
-          key={`${city.name}-${city.state}-${city.country}`}
-          name={city.name}
-          state={city.state}
-          country={city.country}
-          length={city.length}
-          systems={city.systems}
-          contributors_count={city.contributors_count}
-          url={city.url}
+    const cities = this.state.cities.map(item => <CityItem
+          key={`${item.name}-${item.state}-${item.country}`}
+          name={item.name}
+          city_name={item.city_name}
+          state={item.state}
+          country={item.country}
+          length={item.length}
+          systems={item.systems}
+          contributors_count={item.contributors_count}
+          url={item.url}
         />
-      )
-    });
+      );
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
@@ -147,7 +144,7 @@ class Cities extends Component {
         <div className="o-container o-container--small cities-search-container">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
-              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
+              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange.bind(this)} />
               <i className="fa fa-fw fa-search c-icon"></i>
             </div>
 
