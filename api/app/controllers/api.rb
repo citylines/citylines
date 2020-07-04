@@ -6,6 +6,7 @@ class Api < App
   DEFAULT_ZOOM = 11
   DEFAULT_BEARING = 0
   DEFAULT_PITCH = 0
+  PAGE_SIZE = 5
 
   helpers CityHelpers
   helpers UserHelpers
@@ -27,18 +28,26 @@ class Api < App
     get '/list' do
       last_modified last_modified_city_or_system
 
-      cities = City.all.map do |city|
-        {name: city.name,
-         state: city.country_state,
-         country: city.country,
-         length: (city.length / 1000).to_i,
-         systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
-         contributors_count: city.contributors,
-         url: city.url}
-      end
+      page = params[:page] || 1
+      term = params[:term]
+
+      results = if term
+                  search_city_or_system_by_term(term, page, PAGE_SIZE)
+                else
+                  City.dataset.order(Sequel.desc(:length)).
+                    paginate(page, PAGE_SIZE).all.map do |city|
+                    {name: city.name,
+                     state: city.country_state,
+                     country: city.country,
+                     length: (city.length / 1000).to_i,
+                     systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
+                     contributors_count: city.contributors,
+                     url: city.url}
+                  end
+                end
 
       Oj.dump({
-        cities: cities
+        cities: results
       })
     end
 
