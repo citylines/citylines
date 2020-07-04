@@ -144,4 +144,32 @@ module CityHelpers
 
     total.to_i
   end
+
+  def search_city_or_system_by_term(term)
+    opts = {
+      from_self: false
+    }
+
+    query = City.where(Sequel.ilike(:name, "%#{term}%")).
+      or(Sequel.ilike(:country, "%#{term}%")).
+      select(:id,:name,:length,:contributors,Sequel.function(:concat,'/',:url_name).as(:url),:country,:country_state, Sequel.expr(nil).as(:city_name)).
+      union(
+        System.where(Sequel.ilike(:systems__name, "%#{term}%")).
+        left_join(:cities, :id => :city_id).
+        select(:systems__id,:systems__name,:systems__length,:systems__contributors,Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name), opts)
+
+    query.all.map do |res|
+      is_city = !res[:city_name]
+      {
+        name: res.name,
+        city_name: res[:city_name],
+        state: res.country_state,
+        country: res.country,
+        length: (res.length / 1000).to_i,
+        systems: is_city ? res.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''} : nil,
+        contributors_count: res.contributors,
+        url: res[:url]
+      }
+    end
+  end
 end
