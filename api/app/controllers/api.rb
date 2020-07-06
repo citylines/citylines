@@ -34,7 +34,7 @@ class Api < App
       results = if term
                   search_city_or_system_by_term(term, page, PAGE_SIZE)
                 else
-                  City.dataset.order(Sequel.desc(:length)).
+                  City.dataset.order(Sequel.desc(:length), :name).
                     paginate(page, PAGE_SIZE).all.map do |city|
                     {name: city.name,
                      state: city.country_state,

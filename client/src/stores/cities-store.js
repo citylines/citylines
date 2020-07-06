@@ -5,6 +5,7 @@ const CitiesStore = Object.assign({}, Store, {
   cities: [],
   searchTerm: '',
   searchPage: 1,
+  thereAreMoreResults: true,
   topContributors: [],
   monthTopContributors: [],
   topSystems: [],
@@ -20,9 +21,10 @@ const CitiesStore = Object.assign({}, Store, {
     const json = await response.json();
 
     if (this.searchPage == 1) {
-      this.cities = []
+      this.cities = [];
     }
 
+    this.thereAreMoreResults = json.cities.length === 5;
     this.cities = [...this.cities, ...json.cities];
     this.emitChangeEvent();
   },
@@ -61,7 +63,8 @@ const CitiesStore = Object.assign({}, Store, {
       cities: this.cities,
       topContributors: this.topContributors,
       monthTopContributors: this.monthTopContributors,
-      topSystems: this.topSystems
+      topSystems: this.topSystems,
+      thereAreMoreResults: this.thereAreMoreResults
     }
   }
 });

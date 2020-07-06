@@ -134,7 +134,7 @@ class Cities extends Component {
   }
 
   render() {
-    const cities = [...this.state.cities.map(item => <CityItem
+    let cities = this.state.cities.map(item => <CityItem
           key={`${item.name}-${item.state}-${item.country}`}
           name={item.name}
           city_name={item.city_name}
@@ -145,7 +145,11 @@ class Cities extends Component {
           contributors_count={item.contributors_count}
           url={item.url}
         />
-      ), <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />];
+      );
+
+    if (this.state.thereAreMoreResults) {
+      cities = [...cities, <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />];
+    }
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">

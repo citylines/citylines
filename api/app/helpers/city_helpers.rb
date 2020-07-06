@@ -158,7 +158,7 @@ module CityHelpers
         left_join(:cities, :id => :city_id).
         select(:systems__id,:systems__name,:systems__length,:systems__contributors,Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name), opts)
 
-    query.order(Sequel.desc(:length)).
+    query.order(Sequel.desc(:length), :name).
       paginate(page, page_size).all.map do |res|
       is_city = !res[:city_name]
       {
