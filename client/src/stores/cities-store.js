@@ -18,8 +18,18 @@ const CitiesStore = Object.assign({}, Store, {
 
     const response = await fetch(url);
     const json = await response.json();
-    this.cities = json.cities;
+
+    if (this.searchPage == 1) {
+      this.cities = []
+    }
+
+    this.cities = [...this.cities, ...json.cities];
     this.emitChangeEvent();
+  },
+
+  fetchMoreCities() {
+    this.searchPage++;
+    this.fetchCities();
   },
 
   async fetchContributors() {

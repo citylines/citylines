@@ -76,6 +76,14 @@ class CityItem extends Component {
   }
 }
 
+const FetchMoreLink = (props) => {
+  return <div className="c-card">
+      <div className="c-card__body" style={{textAlign:'center'}}>
+        <a className="c-link c-link--primary" onClick={props.onClick}>Cargar mas</a>
+      </div>
+    </div>;
+}
+
 class Cities extends Component {
   constructor(props, context) {
     super(props, context);
@@ -120,8 +128,13 @@ class Cities extends Component {
     }, 750);
   }
 
+  fetchMore(e) {
+    e.preventDefault();
+    CitiesStore.fetchMoreCities();
+  }
+
   render() {
-    const cities = this.state.cities.map(item => <CityItem
+    const cities = [...this.state.cities.map(item => <CityItem
           key={`${item.name}-${item.state}-${item.country}`}
           name={item.name}
           city_name={item.city_name}
@@ -132,7 +145,7 @@ class Cities extends Component {
           contributors_count={item.contributors_count}
           url={item.url}
         />
-      );
+      ), <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />];
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
