@@ -28,7 +28,7 @@ class Api < App
     get '/list' do
       last_modified last_modified_city_or_system
 
-      page = params[:page] || 1
+      page = params[:page].blank? ? 1 : params[:page].to_i
       term = params[:term]
 
       results = if term

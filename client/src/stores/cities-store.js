@@ -4,15 +4,16 @@ import 'whatwg-fetch';
 const CitiesStore = Object.assign({}, Store, {
   cities: [],
   searchTerm: '',
+  searchPage: 1,
   topContributors: [],
   monthTopContributors: [],
   topSystems: [],
 
   async fetchCities() {
-    let url = '/api/cities/list';
+    let url = `/api/cities/list?page=${this.searchPage}`;
 
     if (this.searchTerm) {
-      url += '?term=' + this.searchTerm;
+      url += `&term=${this.searchTerm}`;
     }
 
     const response = await fetch(url);
@@ -39,13 +40,14 @@ const CitiesStore = Object.assign({}, Store, {
   },
 
   setSearchTerm(value) {
+    this.searchPage = 1;
     this.searchTerm = value;
     this.emitChangeEvent();
   },
 
   getState() {
     return {
-      value: this.value,
+      searchTerm: this.searchTerm,
       cities: this.cities,
       topContributors: this.topContributors,
       monthTopContributors: this.monthTopContributors,

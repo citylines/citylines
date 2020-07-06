@@ -102,8 +102,10 @@ class Cities extends Component {
   }
 
   onInputChange(e) {
-    const searchTerm = e.target.value;
-    if (!searchTerm || searchTerm.length > 2) {
+    const searchTerm = e.target.value.trim();
+
+    if (searchTerm != this.state.searchTerm &&
+      (!searchTerm || searchTerm.length > 2)) {
       this.resetSearchTimeout();
     }
     CitiesStore.setSearchTerm(searchTerm);
@@ -115,7 +117,7 @@ class Cities extends Component {
     }
     this.searchTimeout = setTimeout(() => {
       CitiesStore.fetchCities();
-    }, 1000);
+    }, 750);
   }
 
   render() {
