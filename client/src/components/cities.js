@@ -84,6 +84,20 @@ const FetchMoreLink = (props) => {
     </div>;
 }
 
+const RequestCity = () => {
+  return <div className="c-card">
+      <div className="c-card__body" style={{textAlign:'center'}}>
+        <Translate content="cities.request_city.cant_find"/>
+        {' '}
+        <Translate component="a"
+                   target="_blank"
+                   className="c-link c-link--primary"
+                   href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
+                   content="cities.request_city.request_it" />.
+      </div>
+    </div>;
+}
+
 class Cities extends Component {
   constructor(props, context) {
     super(props, context);
@@ -147,9 +161,13 @@ class Cities extends Component {
         />
       );
 
-    if (this.state.thereAreMoreResults) {
-      cities = [...cities, <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />];
-    }
+    const finalSearchElement = (this.state.thereAreMoreResults) ?
+      <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />
+    :
+      <RequestCity key='request-city' />
+    ;
+
+    cities = [...cities, finalSearchElement];
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
@@ -172,17 +190,6 @@ class Cities extends Component {
               { cities }
               </div>
             </div>
-            <p className="request-city">
-              <small>
-                <Translate content="cities.request_city.cant_find"/>
-                {' '}
-                <Translate component="a"
-                           target="_blank"
-                           className="c-link c-link--primary"
-                           href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
-                           content="cities.request_city.request_it" />.
-              </small>
-            </p>
           </div>
         </div>
 
