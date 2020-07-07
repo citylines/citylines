@@ -2,6 +2,7 @@
 cities:
   title: Queremos mapear todos los<br>sistemas de transporte urbano del mundo.
   search: Ingresa un sistema, una ciudad o un país
+  load_more: Cargar más
   contributors:
     one: "%(contributors)s colaborador"
     other: "%(contributors)s colaboradores"

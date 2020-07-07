@@ -2,6 +2,7 @@
 cities:
   title: We want to map all the transit systems of the world.
   search: Enter a system, a city, or a country
+  load_more: Load more
   contributors:
     one: "%(contributors)s contributor"
     other: "%(contributors)s contributors"

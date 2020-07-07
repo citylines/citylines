@@ -79,7 +79,7 @@ class CityItem extends Component {
 const FetchMoreLink = (props) => {
   return <div className="c-card">
       <div className="c-card__body" style={{textAlign:'center'}}>
-        <a className="c-link c-link--primary" onClick={props.onClick}>Cargar mas</a>
+        <Translate component="a" className="c-link c-link--primary" onClick={props.onClick} content="cities.load_more"/>
       </div>
     </div>;
 }

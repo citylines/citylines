@@ -2,6 +2,7 @@
 cities:
   title: Construisons les réseaux de transports du monde.
   search: Entrez un système, une ville ou un pays
+  load_more: Charger plus
   contributors:
     one: "%(contributors)s contributeur"
     other: "%(contributors)s contributeurs"
