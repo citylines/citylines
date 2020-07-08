@@ -149,7 +149,7 @@ class Cities extends Component {
 
   render() {
     let cities = this.state.cities.map(item => <CityItem
-          key={`${item.name}-${item.state}-${item.country}`}
+          key={item.url}
           name={item.name}
           city_name={item.city_name}
           state={item.state}
