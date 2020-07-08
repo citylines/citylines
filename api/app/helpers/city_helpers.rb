@@ -150,15 +150,17 @@ module CityHelpers
       from_self: false
     }
 
-    query = City.where(Sequel.ilike(:name, "%#{term}%")).
-      or(Sequel.ilike(:country, "%#{term}%")).
-      select(:id,:name,:length,:contributors,Sequel.function(:concat,'/',:url_name).as(:url),:country,:country_state, Sequel.expr(nil).as(:city_name)).
+    query = City.where(Sequel.lit('? %> ?',:name, term)).
+      or(Sequel.lit('? %> ?',:country, term)).
+      select(:id,:name,:length,:contributors,Sequel.function(:concat,'/',:url_name).as(:url),:country,:country_state, Sequel.expr(nil).as(:city_name),
+             Sequel.function(:greatest, Sequel.function(:word_similarity, :name, term),Sequel.function(:word_similarity, :country, term)).as(:sml)).
       union(
-        System.where(Sequel.ilike(:systems__name, "%#{term}%")).
+        System.where(Sequel.lit('? %> ?',:systems__name, term)).
         left_join(:cities, :id => :city_id).
-        select(:systems__id,:systems__name,:systems__length,:systems__contributors,Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name), opts)
+        select(:systems__id,:systems__name,:systems__length,:systems__contributors,Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name,
+               Sequel.function(:word_similarity, :systems__name, term).as(:sml)), opts)
 
-    query.order(Sequel.desc(:length), :name).
+    query.order(Sequel.desc(:sml)).
       paginate(page, page_size).all.map do |res|
       is_city = !res[:city_name]
       {
