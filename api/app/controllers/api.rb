@@ -31,9 +31,7 @@ class Api < App
       page = params[:page].blank? ? 1 : params[:page].to_i
       term = params[:term]
 
-      results = if term
-                  search_city_or_system_by_term(term, page, PAGE_SIZE)
-                else
+      results = if term.blank?
                   City.dataset.order(Sequel.desc(:length), :name).
                     paginate(page, PAGE_SIZE).all.map do |city|
                     {name: city.name,
@@ -44,6 +42,8 @@ class Api < App
                      contributors_count: city.contributors,
                      url: city.url}
                   end
+                else
+                  search_city_or_system_by_term(term, page, PAGE_SIZE)
                 end
 
       Oj.dump({
