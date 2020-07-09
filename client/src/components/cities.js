@@ -8,7 +8,7 @@ import assets from '../lib/assets-provider';
 import {formatNumber} from '../lib/number-tools';
 import Avatar from './user/avatar';
 
-class CityItem extends Component {
+class ResultItem extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -118,7 +118,7 @@ class Cities extends Component {
   componentDidMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
 
-    CitiesStore.fetchCities();
+    CitiesStore.fetchResults();
     CitiesStore.fetchContributors();
     CitiesStore.fetchTopSystems();
   }
@@ -138,17 +138,17 @@ class Cities extends Component {
       clearTimeout(this.searchTimeout)
     }
     this.searchTimeout = setTimeout(() => {
-      CitiesStore.fetchCities();
+      CitiesStore.fetchResults();
     }, 750);
   }
 
   fetchMore(e) {
     e.preventDefault();
-    CitiesStore.fetchMoreCities();
+    CitiesStore.fetchMoreResults();
   }
 
   render() {
-    let cities = this.state.cities.map(item => <CityItem
+    let searchResults = this.state.searchResults.map(item => <ResultItem
           key={item.url}
           name={item.name}
           city_name={item.city_name}
@@ -167,7 +167,7 @@ class Cities extends Component {
       <RequestCity key='request-city' />
     ;
 
-    cities = [...cities, finalSearchElement];
+    searchResults = [...searchResults, finalSearchElement];
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
@@ -187,7 +187,7 @@ class Cities extends Component {
 
             <div className="cities-container">
               <div>
-              { cities }
+              { searchResults }
               </div>
             </div>
           </div>
