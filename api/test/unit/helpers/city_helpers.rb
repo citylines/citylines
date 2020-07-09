@@ -200,4 +200,49 @@ describe CityHelpers do
       assert_equal 3, system_contributors(system2)
     end
   end
+
+  describe "#search_city_or_system_by_term" do
+    before do
+      @buenos_aires = City.create(name: 'Buenos Aires', url_name: 'buenos-aires', country_state: nil, country: 'Argentina', contributors: 7, length: 2000)
+      @new_york = City.create(name: 'New York City', url_name:'ny_city')
+      @subay = City.create(name: 'Subay', url_name: 'subay')
+
+      @subte = System.create(name: 'Subte', length: 1000, city_id: @buenos_aires.id, contributors: 3)
+      @subway = System.create(name: 'Subway', city_id: @new_york.id)
+    end
+
+    it "should return a city" do
+      res = search_city_or_system_by_term('buenos', 1,5)
+      assert_equal 1, res.count
+      assert_equal 'Buenos Aires', res.first[:name]
+      refute res.first[:city_name]
+      refute res.first[:state]
+      assert_equal 'Argentina', res.first[:country]
+      assert_equal 2, res.first[:length]
+      assert_equal ['Subte'], res.first[:systems]
+      assert_equal 7, res.first[:contributors_count]
+      assert_equal '/buenos-aires', res.first[:url]
+    end
+
+    it "should return a system" do
+      res = search_city_or_system_by_term('subte', 1,5)
+      assert_equal 1, res.count
+      assert_equal 'Subte', res.first[:name]
+      assert_equal 'Buenos Aires', res.first[:city_name]
+      refute res.first[:state]
+      assert_equal 'Argentina', res.first[:country]
+      assert_equal 1, res.first[:length]
+      refute res.first[:systems]
+      assert_equal 3, res.first[:contributors_count]
+      assert_equal "/buenos-aires?system_id=#{@subte.id}", res.first[:url]
+    end
+
+    it "should return a city and two systems, sorted by length and name" do
+      res = search_city_or_system_by_term('sub', 1,5)
+      assert_equal 3, res.count
+      assert_equal 'Subte', res.first[:name]
+      assert_equal 'Subay', res[1][:name]
+      assert_equal 'Subway', res[2][:name]
+    end
+  end
 end

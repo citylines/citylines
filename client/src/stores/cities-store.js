@@ -2,18 +2,36 @@ import Store from './store';
 import 'whatwg-fetch';
 
 const CitiesStore = Object.assign({}, Store, {
-  cities: [],
-  value: '',
+  searchResults: [],
+  searchTerm: '',
+  searchPage: 1,
+  thereAreMoreResults: true,
   topContributors: [],
   monthTopContributors: [],
   topSystems: [],
 
-  async fetchCities() {
-    const url = '/api/cities/list';
+  async fetchResults() {
+    let url = `/api/cities/list?page=${this.searchPage}`;
+
+    if (this.searchTerm) {
+      url += `&term=${this.searchTerm}`;
+    }
+
     const response = await fetch(url);
     const json = await response.json();
-    this.cities = json.cities;
+
+    if (this.searchPage == 1) {
+      this.searchResults = [];
+    }
+
+    this.thereAreMoreResults = json.cities.length === 5;
+    this.searchResults = [...this.searchResults, ...json.cities];
     this.emitChangeEvent();
+  },
+
+  fetchMoreResults() {
+    this.searchPage++;
+    this.fetchResults();
   },
 
   async fetchContributors() {
@@ -33,18 +51,20 @@ const CitiesStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  setValue(value) {
-    this.value = value;
+  setSearchTerm(value) {
+    this.searchPage = 1;
+    this.searchTerm = value;
     this.emitChangeEvent();
   },
 
   getState() {
     return {
-      value: this.value,
-      cities: this.cities,
+      searchTerm: this.searchTerm,
+      searchResults: this.searchResults,
       topContributors: this.topContributors,
       monthTopContributors: this.monthTopContributors,
-      topSystems: this.topSystems
+      topSystems: this.topSystems,
+      thereAreMoreResults: this.thereAreMoreResults
     }
   }
 });

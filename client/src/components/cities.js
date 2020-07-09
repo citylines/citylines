@@ -8,7 +8,7 @@ import assets from '../lib/assets-provider';
 import {formatNumber} from '../lib/number-tools';
 import Avatar from './user/avatar';
 
-class CityItem extends Component {
+class ResultItem extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -27,16 +27,23 @@ class CityItem extends Component {
     return this.state.showAll ? 'show-more' : 'show-less';
   }
 
+  isCity() {
+    return !this.props.city_name;
+  }
+
   componentDidMount() {
-    this.setState({systemsDivHeight: this.systemsDiv.clientHeight});
+    if (this.isCity()) {
+      this.setState({systemsDivHeight: this.systemsDiv.clientHeight});
+    }
   }
 
   render() {
     return (
-      <div className="c-card">
+      <div className="c-card" style={!this.isCity() ? {backgroundColor:'rgba(0,0,0,0.04)'} : null}>
         <header className="c-card__header">
           <h3 className="c-heading">
-            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {!this.isCity() ? `${this.props.city_name},` : ''} {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            {this.isCity() &&
             <div className="city-systems-container">
               <div
                 ref={ (el) => this.systemsDiv = el}
@@ -50,7 +57,7 @@ class CityItem extends Component {
                     <span className={`fas ${this.state.showAll ? 'fa-angle-up' : 'fa-angle-down'}`}/>
                 </div> : null
               }
-            </div>
+            </div> }
           </h3>
         </header>
         <div className="c-card__body">
@@ -69,13 +76,35 @@ class CityItem extends Component {
   }
 }
 
+const FetchMoreLink = (props) => {
+  return <div className="c-card">
+      <div className="c-card__body" style={{textAlign:'center'}}>
+        <Translate component="a" className="c-link c-link--primary" onClick={props.onClick} content="cities.load_more"/>
+      </div>
+    </div>;
+}
+
+const RequestCity = () => {
+  return <div className="c-card">
+      <div className="c-card__body" style={{textAlign:'center'}}>
+        <Translate content="cities.request_city.cant_find"/>
+        {' '}
+        <Translate component="a"
+                   target="_blank"
+                   className="c-link c-link--primary"
+                   href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
+                   content="cities.request_city.request_it" />.
+      </div>
+    </div>;
+}
+
 class Cities extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.bindedSortCities = this.sortCities.bind(this);
     this.bindedOnChange = this.onChange.bind(this);
     this.state = CitiesStore.getState();
+    this.searchTimeout = null;
   }
 
   componentWillUnmount() {
@@ -89,51 +118,56 @@ class Cities extends Component {
   componentDidMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
 
-    CitiesStore.fetchCities();
+    CitiesStore.fetchResults();
     CitiesStore.fetchContributors();
     CitiesStore.fetchTopSystems();
   }
 
   onInputChange(e) {
-    CitiesStore.setValue(e.target.value)
-  }
+    const searchTerm = e.target.value.trim();
 
-  filterCities() {
-    if (this.state.value == '') {
-      return this.state.cities;
+    if (searchTerm != this.state.searchTerm &&
+      (!searchTerm || searchTerm.length > 2)) {
+      this.resetSearchTimeout();
     }
-
-    const regex = new RegExp(Diacritics.remove(this.state.value), 'i');
-    return this.state.cities.filter((city) =>
-        regex.test(Diacritics.remove(city.name)) ||
-        (city.state && regex.test(Diacritics.remove(city.state))) ||
-        regex.test(Diacritics.remove(city.country))
-        );
+    CitiesStore.setSearchTerm(searchTerm);
   }
 
-  cityIndex(city) {
-    return city.length;
+  resetSearchTimeout() {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout)
+    }
+    this.searchTimeout = setTimeout(() => {
+      CitiesStore.fetchResults();
+    }, 750);
   }
 
-  sortCities(a,b) {
-    return this.cityIndex(a) > this.cityIndex(b) ? -1 : 1
+  fetchMore(e) {
+    e.preventDefault();
+    CitiesStore.fetchMoreResults();
   }
 
   render() {
-    const cities = this.filterCities().sort(this.bindedSortCities).map((city) => {
-      return (
-        <CityItem
-          key={`${city.name}-${city.state}-${city.country}`}
-          name={city.name}
-          state={city.state}
-          country={city.country}
-          length={city.length}
-          systems={city.systems}
-          contributors_count={city.contributors_count}
-          url={city.url}
+    let searchResults = this.state.searchResults.map(item => <ResultItem
+          key={item.url}
+          name={item.name}
+          city_name={item.city_name}
+          state={item.state}
+          country={item.country}
+          length={item.length}
+          systems={item.systems}
+          contributors_count={item.contributors_count}
+          url={item.url}
         />
-      )
-    });
+      );
+
+    const finalSearchElement = (this.state.thereAreMoreResults) ?
+      <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />
+    :
+      <RequestCity key='request-city' />
+    ;
+
+    searchResults = [...searchResults, finalSearchElement];
 
     return (
       <div className="o-grid__cell o-grid__cell--width-100">
@@ -147,26 +181,15 @@ class Cities extends Component {
         <div className="o-container o-container--small cities-search-container">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
-              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange} />
+              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange.bind(this)} />
               <i className="fa fa-fw fa-search c-icon"></i>
             </div>
 
             <div className="cities-container">
               <div>
-              { cities }
+              { searchResults }
               </div>
             </div>
-            <p className="request-city">
-              <small>
-                <Translate content="cities.request_city.cant_find"/>
-                {' '}
-                <Translate component="a"
-                           target="_blank"
-                           className="c-link c-link--primary"
-                           href={"https://goo.gl/forms/9O5Y1C4r4Tow6UhE2"}
-                           content="cities.request_city.request_it" />.
-              </small>
-            </p>
           </div>
         </div>
 

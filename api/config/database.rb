@@ -28,6 +28,7 @@ rescue => error
 end
 
 DB.extension :pg_json
+DB.extension :pagination
 
 Sequel::Model.plugin :tactical_eager_loading
 
