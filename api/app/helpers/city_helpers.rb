@@ -140,6 +140,7 @@ module CityHelpers
       .join(:section_lines, line_id: :lines__id)
       .join(:sections, id: :section_id)
       .where{(sections__opening !~ nil) & (sections__opening <= today) & ((sections__closure =~ nil) | (sections__closure > today))}
+      .select(:sections__id, :length).group_by(:sections__id)
       .sum(:length)
 
     total.to_i

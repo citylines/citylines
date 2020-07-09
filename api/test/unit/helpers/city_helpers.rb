@@ -136,6 +136,36 @@ describe CityHelpers do
        assert_equal 25000, system_length(system1)
        assert_equal 65000, system_length(system2)
     end
+
+    it "should return the total opened km by system avoiding duplicated sections (multiple lines in same section)" do
+      city = City.create(name: 'Trulalá', url_name: 'trulala', start_year: 2017)
+
+      system = System.create(name: "Metro", city_id: city.id)
+
+      line1 = Line.create(name: "A", city_id: city.id, system_id: system.id)
+      line2 = Line.create(name: "A2", city_id: city.id, system_id: system.id)
+
+      [{length: 5000, buildstart: 2010},
+       {length: 10000, opening: 2010},
+       {length: 15000, opening: 1995},
+       {length: 20000, opening: 1990, closure: 1993}].each do |data|
+         section = Section.create(data.merge(city_id: city.id))
+         SectionLine.create(section_id: section.id, line_id: line1.id, city_id: city.id)
+       end
+
+       # We assign the second line also to the 2nd section
+       section = Section.where(length: 10000).first
+       assert_equal 10000, section.length
+       SectionLine.create(section_id: section.id, line_id: line2.id, city_id: city.id)
+
+       # Naive calculation counts twice the same section
+       assert_equal 35000, system.lines.
+         map{|l| l.sections.select{|s| !s.opening.nil? && s.opening <= Time.now.year && (s.closure.nil? || s.closure >= Time.now.year)}.map(&:length)}.
+         flatten.inject(:+)
+
+       # Correct calculation
+       assert_equal 25000, system_length(system)
+    end
   end
 
   describe "contributors" do
