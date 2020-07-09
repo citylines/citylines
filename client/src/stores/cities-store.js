@@ -4,6 +4,7 @@ import 'whatwg-fetch';
 const CitiesStore = Object.assign({}, Store, {
   searchResults: [],
   searchTerm: '',
+  visibleSearchTerm: '',
   searchPage: 1,
   thereAreMoreResults: true,
   topContributors: [],
@@ -24,6 +25,7 @@ const CitiesStore = Object.assign({}, Store, {
       this.searchResults = [];
     }
 
+    this.visibleSearchTerm = this.searchTerm;
     this.thereAreMoreResults = json.cities.length === 5;
     this.searchResults = [...this.searchResults, ...json.cities];
     this.emitChangeEvent();
@@ -53,13 +55,35 @@ const CitiesStore = Object.assign({}, Store, {
 
   setSearchTerm(value) {
     this.searchPage = 1;
-    this.searchTerm = value;
+    this.visibleSearchTerm = value;
+    const searchTerm = value.trim();
+
+    if (searchTerm != this.searchTerm &&
+      (!searchTerm || searchTerm.length > 2)) {
+      this.searchTerm = searchTerm;
+      this.resetSearchTimeout();
+    }
+
     this.emitChangeEvent();
+  },
+
+  cancelSearchTimeout() {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+  },
+
+  resetSearchTimeout() {
+    this.cancelSearchTimeout();
+    this.searchTimeout = setTimeout(() => {
+      this.fetchResults();
+    }, 750);
   },
 
   getState() {
     return {
       searchTerm: this.searchTerm,
+      visibleSearchTerm: this.visibleSearchTerm,
       searchResults: this.searchResults,
       topContributors: this.topContributors,
       monthTopContributors: this.monthTopContributors,

@@ -104,10 +104,10 @@ class Cities extends Component {
 
     this.bindedOnChange = this.onChange.bind(this);
     this.state = CitiesStore.getState();
-    this.searchTimeout = null;
   }
 
   componentWillUnmount() {
+    CitiesStore.cancelSearchTimeout();
     CitiesStore.removeChangeListener(this.bindedOnChange);
   }
 
@@ -124,22 +124,7 @@ class Cities extends Component {
   }
 
   onInputChange(e) {
-    const searchTerm = e.target.value.trim();
-
-    if (searchTerm != this.state.searchTerm &&
-      (!searchTerm || searchTerm.length > 2)) {
-      this.resetSearchTimeout();
-    }
-    CitiesStore.setSearchTerm(searchTerm);
-  }
-
-  resetSearchTimeout() {
-    if (this.searchTimeout) {
-      clearTimeout(this.searchTimeout)
-    }
-    this.searchTimeout = setTimeout(() => {
-      CitiesStore.fetchResults();
-    }, 750);
+    CitiesStore.setSearchTerm(e.target.value);
   }
 
   fetchMore(e) {
@@ -181,7 +166,7 @@ class Cities extends Component {
         <div className="o-container o-container--small cities-search-container">
           <div className="u-letter-box--large">
             <div className="o-field o-field--icon-right" style={{padding: '5px 1px'}}>
-              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} onChange={this.onInputChange.bind(this)} />
+              <Translate component="input" className="c-field" type="text" attributes={{placeholder: "cities.search"}} value={this.state.visibleSearchTerm} onChange={this.onInputChange.bind(this)} />
               <i className="fa fa-fw fa-search c-icon"></i>
             </div>
 
