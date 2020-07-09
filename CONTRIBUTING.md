@@ -34,13 +34,7 @@ Install Docker and docker-compose
 tools/build
 ```
 
-- The first run, some DB extensions have to be created:
-
-```
-tools/db/create_extensions
-```
-
-- To run the server:
+- To simply run it:
 
 ```
 tools/run

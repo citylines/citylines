@@ -1,7 +1,0 @@
-#! /bin/bash
-# postgis is already created in the db image
-
-docker exec citylines_db_1 psql -v ON_ERROR_STOP=1 --username citylines \
-  -c "\
-  create extension pg_trgm; \
-    "
