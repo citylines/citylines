@@ -7,6 +7,7 @@ const CitiesStore = Object.assign({}, Store, {
   visibleSearchTerm: '',
   searchPage: 1,
   thereAreMoreResults: true,
+  searching: true,
   topContributors: [],
   monthTopContributors: [],
   topSystems: [],
@@ -28,10 +29,13 @@ const CitiesStore = Object.assign({}, Store, {
     this.visibleSearchTerm = this.searchTerm;
     this.thereAreMoreResults = json.cities.length === 5;
     this.searchResults = [...this.searchResults, ...json.cities];
+    this.searching = false;
     this.emitChangeEvent();
   },
 
   fetchMoreResults() {
+    this.searching = true;
+    this.emitChangeEvent();
     this.searchPage++;
     this.fetchResults();
   },
@@ -85,6 +89,7 @@ const CitiesStore = Object.assign({}, Store, {
       searchTerm: this.searchTerm,
       visibleSearchTerm: this.visibleSearchTerm,
       searchResults: this.searchResults,
+      searching: this.searching,
       topContributors: this.topContributors,
       monthTopContributors: this.monthTopContributors,
       topSystems: this.topSystems,

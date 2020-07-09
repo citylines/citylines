@@ -79,7 +79,7 @@ class ResultItem extends Component {
 const FetchMoreLink = (props) => {
   return <div className="c-card">
       <div className="c-card__body" style={{textAlign:'center'}}>
-        <Translate component="a" className="c-link c-link--primary" onClick={props.onClick} content="cities.load_more"/>
+        <Translate component="a" className="c-link c-link--primary" onClick={props.onClick} content="cities.load_more" disabled={props.disabled}/>
       </div>
     </div>;
 }
@@ -147,7 +147,7 @@ class Cities extends Component {
       );
 
     const finalSearchElement = (this.state.thereAreMoreResults) ?
-      <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} />
+      <FetchMoreLink key='fetch-more' onClick={this.fetchMore.bind(this)} disabled={this.state.searching}/>
     :
       <RequestCity key='request-city' />
     ;
