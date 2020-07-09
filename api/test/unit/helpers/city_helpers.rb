@@ -155,7 +155,6 @@ describe CityHelpers do
 
        # We assign the second line also to the 2nd section
        section = Section.where(length: 10000).first
-       assert_equal 10000, section.length
        SectionLine.create(section_id: section.id, line_id: line2.id, city_id: city.id)
 
        # Naive calculation counts twice the same section
