@@ -1,12 +1,12 @@
 Sequel.migration do
   up do
     alter_table :cities do
-      add_index :name, type: :gin, opclass: :gin_trgm_ops
-      add_index :country, type: :gin, opclass: :gin_trgm_ops
+      add_index :name, type: :gist, opclass: :gist_trgm_ops
+      add_index :country, type: :gist, opclass: :gist_trgm_ops
     end
 
     alter_table :systems do
-      add_index :name, type: :gin, opclass: :gin_trgm_ops
+      add_index :name, type: :gist, opclass: :gist_trgm_ops
     end
   end
 
