@@ -160,11 +160,16 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .panel-header-title h3.c-heading {
   display:inline;
+  margin-right:10px;
 }
 
-.panel-header-title a.c-link {
-  margin-left:10px;
+.panel-header-title .commands {
+  display:inline-block;
   font-size:0.9em;
+}
+
+.panel-header-title .commands > a.c-link + a.c-link{
+  margin-left: 10px;
 }
 
 .panel-body {
