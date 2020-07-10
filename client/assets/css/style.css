@@ -624,7 +624,12 @@ table .narrow {
   padding-bottom:4em;
 }
 
-.system-indicator {
+.system-indicator-name {
+  margin-right:10px
+}
+
+.system-indicator-link {
+  display: inline-block;
   font-size: 0.9em;
 }
 
