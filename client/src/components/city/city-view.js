@@ -113,10 +113,12 @@ class CityView extends CityBase {
 
     return  <div style={{margin:'-12px 10px 5px'}}>
               <div className="c-card__item">
-                <div>{system.name}
-                  <a
-                    className="c-link system-indicator"
-                    onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}>Show all systems</a>
+                <div><span>{system.name}</span>
+                  <div>
+                    <a
+                      className="c-link system-indicator"
+                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}>Show all systems</a>
+                  </div>
                 </div>
               </div>
             </div>
