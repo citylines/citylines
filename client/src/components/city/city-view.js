@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate from 'react-translate-component';
 import CityBase from '../city-base';
 import PropTypes from 'prop-types';
 
@@ -115,9 +116,10 @@ class CityView extends CityBase {
               <div className="c-card__item">
                 <div><span className="system-indicator-name">{system.name}</span>
                   <span className="system-indicator-link">
-                    <a
+                    <Translate component="a"
                       className="c-link"
-                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}>Show all systems</a>
+                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}
+                      content="city.show_all_systems" />
                   </span>
                 </div>
               </div>
