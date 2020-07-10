@@ -84,10 +84,13 @@ class CityView extends CityBase {
     CityViewStore.setSpeed(this.urlName, speed);
   }
 
-  systemTitle() {
+  selectedSystem() {
     const systemId = parseInt(this.params().system_id);
-    const system = this.state.systems.find(s => s.id == systemId);
+    return this.state.systems.find(s => s.id == systemId);
+  }
 
+  systemTitle() {
+    const system = this.selectedSystem();
     if (!system) return;
 
     const interpolations = {
@@ -107,7 +110,14 @@ class CityView extends CityBase {
 
     return (
         <PanelBody>
-          {this.params().system_id && this.systemTitle()}<div className="year-and-km-container">
+          { this.params().system_id && this.systemTitle() }
+          { this.params().system_id &&
+            <div style={{fontSize:'0.9em', margin:'-12px 10px 5px'}}>
+              <div className="c-card__item">
+                <div>{this.selectedSystem().name}</div><div><a className="c-link">All systems</a></div>
+              </div>
+            </div> }
+          <div className="year-and-km-container">
             <Year
               urlName={this.urlName}
               min={(this.state.years || {}).start}
