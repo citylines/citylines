@@ -53,6 +53,7 @@ cookie_notice:
 city:
   title: Réseau de transports de %(city)s
   system_title: "%(city)s %(system)s"
+  show_all_systems: Tous les systèmes 
   description: Explorer les systèmes de transport de %(city)s, et leur historique,
     sur citylines.co — la plateforme de cartographie collaborative the collaborative
     des réseaux de transport.

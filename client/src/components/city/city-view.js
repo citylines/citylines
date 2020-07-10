@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate from 'react-translate-component';
 import CityBase from '../city-base';
 import PropTypes from 'prop-types';
 
@@ -84,10 +85,15 @@ class CityView extends CityBase {
     CityViewStore.setSpeed(this.urlName, speed);
   }
 
-  systemTitle() {
+  selectedSystem() {
+    // TODO: shall this be deprecated in favour of the systems param?
+    // (which allow multiple system?)
     const systemId = parseInt(this.params().system_id);
-    const system = this.state.systems.find(s => s.id == systemId);
+    return this.state.systems.find(s => s.id == systemId);
+  }
 
+  systemTitle() {
+    const system = this.selectedSystem();
     if (!system) return;
 
     const interpolations = {
@@ -102,12 +108,32 @@ class CityView extends CityBase {
           />
   }
 
+  systemIndicator() {
+    const system = this.selectedSystem();
+    if (!system) return;
+
+    return  <div style={{margin:'-12px 10px 5px'}}>
+              <div className="c-card__item">
+                <div><span className="system-indicator-name">{system.name}</span>
+                  <span className="system-indicator-link">
+                    <Translate component="a"
+                      className="c-link"
+                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}
+                      content="city.show_all_systems" />
+                  </span>
+                </div>
+              </div>
+            </div>
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <PanelBody>
-          {this.params().system_id && this.systemTitle()}<div className="year-and-km-container">
+          { this.params().system_id && this.systemTitle() }
+          { this.params().system_id && this.systemIndicator() }
+          <div className="year-and-km-container">
             <Year
               urlName={this.urlName}
               min={(this.state.years || {}).start}

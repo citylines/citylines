@@ -160,11 +160,16 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .panel-header-title h3.c-heading {
   display:inline;
+  margin-right:10px;
 }
 
-.panel-header-title a.c-link {
-  margin-left:10px;
+.panel-header-title .commands {
+  display:inline-block;
   font-size:0.9em;
+}
+
+.panel-header-title .commands > a.c-link + a.c-link{
+  margin-left: 10px;
 }
 
 .panel-body {
@@ -622,6 +627,15 @@ table .narrow {
 
 .u-letter-box--large.letter-with-footer {
   padding-bottom:4em;
+}
+
+.system-indicator-name {
+  margin-right:10px
+}
+
+.system-indicator-link {
+  display: inline-block;
+  font-size: 0.9em;
 }
 
 /*  Avatar */
