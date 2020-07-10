@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Diacritics from 'diacritics';
-import CitiesStore from '../stores/cities-store';
+import HomeStore from '../stores/home-store';
 import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
@@ -98,25 +98,25 @@ const RequestCity = () => {
     </div>;
 }
 
-class Cities extends Component {
+class Home extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.bindedOnChange = this.onChange.bind(this);
-    this.state = CitiesStore.getState();
+    this.state = HomeStore.getState();
   }
 
   componentWillUnmount() {
-    CitiesStore.cancelSearchTimeout();
-    CitiesStore.removeChangeListener(this.bindedOnChange);
+    HomeStore.cancelSearchTimeout();
+    HomeStore.removeChangeListener(this.bindedOnChange);
   }
 
   onChange() {
-    this.setState(CitiesStore.getState());
+    this.setState(HomeStore.getState());
   }
 
   componentDidMount() {
-    CitiesStore.addChangeListener(this.bindedOnChange);
+    HomeStore.addChangeListener(this.bindedOnChange);
 
     // If we already have the data in the store, don't
     // reload everything when mounting the component again.
@@ -124,19 +124,19 @@ class Cities extends Component {
     // is loaded again, and elements get duplicated (unless the page
     // is the first one)..
     if (!this.state.searchResults.length) {
-      CitiesStore.fetchResults();
-      CitiesStore.fetchContributors();
-      CitiesStore.fetchTopSystems();
+      HomeStore.fetchResults();
+      HomeStore.fetchContributors();
+      HomeStore.fetchTopSystems();
     }
   }
 
   onInputChange(e) {
-    CitiesStore.setSearchTerm(e.target.value);
+    HomeStore.setSearchTerm(e.target.value);
   }
 
   fetchMore(e) {
     e.preventDefault();
-    CitiesStore.fetchMoreResults();
+    HomeStore.fetchMoreResults();
   }
 
   render() {
@@ -242,4 +242,4 @@ class Cities extends Component {
   }
 }
 
-export default Cities
+export default Home

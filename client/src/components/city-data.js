@@ -26,7 +26,7 @@ class CityData extends Component {
 
   componentDidMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
-    CitiesStore.fetchCities();
+    CitiesStore.fetchCitiesWithContributors();
   }
 
   onCityChange(e) {
@@ -39,7 +39,7 @@ class CityData extends Component {
   }
 
   currentCityLink(type) {
-    const urlName = this.state.city.substr(1);
+    const urlName = this.state.city.split('/')[1];
 
     let url;
     let extension;
@@ -72,10 +72,9 @@ class CityData extends Component {
         <p>
         <select className="c-field" value={this.state.city} onChange={this.onCityChange.bind(this)}>
           <Translate component="option" content="data.select_city" />
-          {this.state.cities && this.state.cities
-            .filter(city => city.contributors_count > 0)
-            .sort((city1, city2) => (city1.name > city2.name ? 1 : -1))
-            .map(city => <option key={city.url} value={city.url}>{`${city.name}, ${city.country}`}</option>)}
+          {this.state.cities && this.state.cities.map(
+            city => <option key={city.url} value={city.url}>{`${city.name}, ${city.country}`}</option>
+          )}
         </select>
         </p>
 

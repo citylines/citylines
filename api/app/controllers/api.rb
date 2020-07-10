@@ -51,6 +51,21 @@ class Api < App
       })
     end
 
+    get '/list_with_contributors' do
+      last_modified last_modified_city_or_system
+
+      results = City.where{contributors > 0}.order(:name).all.map do |city|
+        {name: city.name,
+         systems: city.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''},
+         country: city.country,
+         url: city.url}
+      end
+
+      Oj.dump({
+        cities: results
+      })
+    end
+
     get '/top_contributors' do
       last_modified last_modified_city_date
 

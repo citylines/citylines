@@ -5,13 +5,8 @@ import Translate from 'react-translate-component';
 
 class CityComparisonHeader extends PureComponent {
   cities() {
-    return this.props.citiesList.
-      filter(city => city.length > 0).
-      sort((a,b) => {
-        return a.name > b.name ? 1 : -1;
-      }).
-      map(city => {
-        return {name: city.name, url_name: city.url.split("/")[1]};
+    return this.props.citiesList.map(city => {
+        return {name: city.name, url_name: city.url.split("/")[1], country: city.country};
       });
   }
 
@@ -63,7 +58,7 @@ class CitySelect extends PureComponent {
         <select value={this.props.urlName} onChange={this.handleChange.bind(this)} className="c-field">
           <Translate component="option" value="" content="compare.select_city"/>
           {this.props.cities.map((city, cityIndex) =>
-            <option key={`${city.url_name}-${cityIndex}`} value={city.url_name}>{city.name}</option>
+            <option key={`${city.url_name}-${cityIndex}`} value={city.url_name}>{`${city.name}, ${city.country}`}</option>
           )}
         </select>
         {this.props.urlName && <Link to={`/${this.props.urlName}`} className="c-link c-link--primary">

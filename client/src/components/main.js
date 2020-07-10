@@ -8,7 +8,7 @@ import Tags from './tags';
 import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
-const Cities = React.lazy(() => import('./cities'));
+const Home = React.lazy(() => import('./home'));
 const City = React.lazy(() => import('./city'));
 const CityComparison = React.lazy(() => import('./city-comparison'));
 const Auth = React.lazy(() => import('./auth'));
@@ -106,7 +106,7 @@ class Main extends Component {
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
             <React.Suspense fallback={<SuspenseLoader />}>
               <Switch>
-                <Route exact path="/" component={Cities} />
+                <Route exact path="/" component={Home} />
                 <Route path="/auth" component={Auth} />
                 <Route path="/terms" component={Terms} />
                 <Route path="/data" component={Data} />

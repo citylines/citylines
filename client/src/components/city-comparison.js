@@ -57,7 +57,7 @@ class CityComparison extends CityBase {
     this.activeUrlNames().map(urlName => {
       this.loadCity(urlName);
     });
-    CitiesStore.fetchCities();
+    CitiesStore.fetchCitiesWithContributors();
   }
 
   onChange() {
