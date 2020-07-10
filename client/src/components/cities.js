@@ -118,9 +118,16 @@ class Cities extends Component {
   componentDidMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
 
-    CitiesStore.fetchResults();
-    CitiesStore.fetchContributors();
-    CitiesStore.fetchTopSystems();
+    // If we already have the data in the store, don't
+    // reload everything when mounting the component again.
+    // That also breaks the results list, as the current page
+    // is loaded again, and elements get duplicated (unless the page
+    // is the first one)..
+    if (!this.state.searchResults.length) {
+      CitiesStore.fetchResults();
+      CitiesStore.fetchContributors();
+      CitiesStore.fetchTopSystems();
+    }
   }
 
   onInputChange(e) {
