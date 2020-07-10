@@ -624,6 +624,11 @@ table .narrow {
   padding-bottom:4em;
 }
 
+.system-indicator {
+  font-size: 0.9em;
+  margin-left:10px;
+}
+
 /*  Avatar */
 .c-avatar {
   background-color: rgb(205,152,59);

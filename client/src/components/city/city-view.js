@@ -107,18 +107,28 @@ class CityView extends CityBase {
           />
   }
 
+  systemIndicator() {
+    const system = this.selectedSystem();
+    if (!system) return;
+
+    return  <div style={{margin:'-12px 10px 5px'}}>
+              <div className="c-card__item">
+                <div>{this.selectedSystem().name}
+                  <a
+                    className="c-link system-indicator"
+                    onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}>Show all systems</a>
+                </div>
+              </div>
+            </div>
+  }
+
   render() {
     if (!this.state) return null;
 
     return (
         <PanelBody>
           { this.params().system_id && this.systemTitle() }
-          { this.params().system_id &&
-            <div style={{margin:'-12px 10px 5px'}}>
-              <div className="c-card__item">
-                <div>{this.selectedSystem().name}<a style={{fontSize: '0.9em', marginLeft:'10px'}} className="c-link">Show all systems</a></div>
-              </div>
-            </div> }
+          { this.params().system_id && this.systemIndicator() }
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}

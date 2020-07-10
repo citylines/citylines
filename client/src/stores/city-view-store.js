@@ -168,6 +168,16 @@ const CityViewStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
+  showAllSystems(urlName) {
+    const cityData = this.cityData[urlName];
+    cityData.linesMapper.linesShown = cityData.lines.map((line) => line.url_name);
+
+    cityData.linesMapper.updateLayers();
+    cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
+
+    this.emitChangeEvent();
+  },
+
   hover(urlName, features) {
     const cityData = this.cityData[urlName];
     if (!cityData || !cityData.mouseEvents) return;
