@@ -85,6 +85,8 @@ class CityView extends CityBase {
   }
 
   selectedSystem() {
+    // TODO: shall this be deprecated in favour of the systems param?
+    // (which allow multiple system?)
     const systemId = parseInt(this.params().system_id);
     return this.state.systems.find(s => s.id == systemId);
   }
@@ -112,9 +114,9 @@ class CityView extends CityBase {
         <PanelBody>
           { this.params().system_id && this.systemTitle() }
           { this.params().system_id &&
-            <div style={{fontSize:'0.9em', margin:'-12px 10px 5px'}}>
+            <div style={{margin:'-12px 10px 5px'}}>
               <div className="c-card__item">
-                <div>{this.selectedSystem().name}</div><div><a className="c-link">All systems</a></div>
+                <div>{this.selectedSystem().name}</div><div><a className="c-link">Show all systems</a></div>
               </div>
             </div> }
           <div className="year-and-km-container">
