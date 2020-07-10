@@ -116,7 +116,7 @@ class CityView extends CityBase {
           { this.params().system_id &&
             <div style={{margin:'-12px 10px 5px'}}>
               <div className="c-card__item">
-                <div>{this.selectedSystem().name}</div><div><a style={{fontSize: '0.95em'}}className="c-link">Show all systems</a></div>
+                <div>{this.selectedSystem().name}<a style={{fontSize: '0.9em', marginLeft:'10px'}} className="c-link">Show all systems</a></div>
               </div>
             </div> }
           <div className="year-and-km-container">
