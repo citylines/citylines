@@ -5,7 +5,7 @@ import {formatNumber} from '../../lib/number-tools';
 class KmIndicator extends PureComponent {
   render() {
     return (
-      <div>
+      <div className="km-indicator">
       {this.props.kmOperative ?
         <span className="c-badge c-badge--success">
           <Translate content="city.km_operative" with={{km: formatNumber(this.props.kmOperative)}} />

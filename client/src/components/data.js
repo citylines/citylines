@@ -30,7 +30,7 @@ class Data extends Component {
 
   render() {
     return (
-        <div className="o-container o-container--medium">
+        <div className="o-container o-container--medium u-pillar-box--medium">
           <Tags title="data.title" />
           <div className="u-letter-box--large letter-with-footer">
             <Translate component="h1" className="c-heading" content="data.title" />

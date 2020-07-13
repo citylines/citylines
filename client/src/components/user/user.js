@@ -96,7 +96,7 @@ class User extends Component {
     if (!this.state || Object.entries(this.state).length === 0) return null;
 
     return (
-      <div className="o-container o-container--medium">
+      <div className="o-container o-container--medium u-pillar-box--medium">
         { this.state.name && <Tags
           title="user.cities_of_user"
           interpolations={{name: this.state.name}}
@@ -119,7 +119,7 @@ class User extends Component {
           }
 
           { this.anyCity() &&
-          <table className="c-table c-table--striped">
+          <table className="c-table c-table--striped user_contributions">
             <thead className="c-table__head">
               <tr className="c-table__row c-table__row--heading">
                 <Translate component="th" className="c-table__cell" content="user.table.city" />

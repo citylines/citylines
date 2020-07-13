@@ -303,6 +303,10 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 10px 20px 20px 20px;
 }
 
+.km-indicator .c-badge--success {
+  margin-right: 5px;
+}
+
 .edit-mode-buttons {
   padding: 10px 15px 20px 15px;
 }
@@ -689,6 +693,10 @@ table .narrow {
   top: 45px;
   font-size: 0.45em;
   width: 300px;
+}
+
+.user_contributions td.c-table__cell {
+  display: block;
 }
 
 a[disabled], a[disabled]:hover {

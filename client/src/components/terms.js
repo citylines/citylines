@@ -31,7 +31,7 @@ class Terms extends Component {
 
   render() {
     return (
-        <div className="o-container o-container--medium" style={{textAlign: 'justify'}}>
+        <div className="o-container o-container--medium u-pillar-box--medium" style={{textAlign: 'justify'}}>
           <Tags title="terms.title" />
           <div className="u-letter-box--large letter-with-footer">
             <Translate component="h1" className="c-heading" content="terms.title" />
