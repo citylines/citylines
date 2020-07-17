@@ -10,9 +10,10 @@ module SEOHelpers
     ]
   end
 
-  # As the keys are crafted to be handled by the frontend, they can't be interpolated
-  # by Ruby's i18n gem. That is why we have to hardcodate another interpolate mechanism.
   private
+
+  # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated
+  # by Ruby's i18n gem. That is why we have to implement another interpolate mechanism for the backend.
   def interpolate(text, key, value)
     text.gsub(key, value)
   end
