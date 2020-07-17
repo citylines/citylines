@@ -42,7 +42,6 @@ class BaseApp < App
   get '/*' do
     @locale = set_locale(params, request)
     @i18n = all_translations
-    puts I18n.locale
 
     @title, @description = title_and_description
 
