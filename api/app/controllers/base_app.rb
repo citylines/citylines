@@ -24,7 +24,7 @@ class BaseApp < App
   # Pre-render title and description
   get '/:url_name' do |url_name|
     @locale = set_locale(params, request)
-    @i18n = all_translations
+    @i18n = locale_translations
 
     @city = City[url_name: url_name]
 
@@ -39,7 +39,7 @@ class BaseApp < App
 
   get '/*' do
     @locale = set_locale(params, request)
-    @i18n = all_translations
+    @i18n = locale_translations
 
     @title, @description = title_and_description
 

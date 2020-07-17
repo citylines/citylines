@@ -17,7 +17,7 @@ module I18nHelpers
     I18n.locale = locale_from_params(params) || browser_locale(request) || I18n.default_locale
   end
 
-  def all_translations
+  def locale_translations
     I18n.backend.send(:translations)[I18n.locale]
   end
 end
