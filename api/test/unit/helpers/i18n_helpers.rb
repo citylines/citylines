@@ -3,18 +3,14 @@ require File.expand_path '../../../test_config', __FILE__
 describe I18nHelpers do
   include I18nHelpers
 
-  it "should exist the i18n config" do
-    refute LOCALES.blank?
-    assert DEFAULT_LOCALE
-  end
-
   it "should return the available locales" do
-    assert_equal LOCALES.keys, available_locales
+    assert I18n.available_locales
+    assert I18n.default_locale
   end
 
   describe "browser_locale" do
     it "should return the first available_browser locale" do
-      available_locales.each do |locale|
+      I18n.available_locales.each do |locale|
         request = OpenStruct.new(env: {"HTTP_ACCEPT_LANGUAGE" => "xa-XA,rr-RR,#{locale}-CC,fr-FR"})
         assert_equal locale, browser_locale(request)
       end
@@ -38,7 +34,7 @@ describe I18nHelpers do
 
   describe "locale_from_params" do
     it "should return the locale if it's available" do
-      available_locales.each do |locale|
+      I18n.available_locales.each do |locale|
         assert_equal locale, locale_from_params(locale: locale)
       end
     end
