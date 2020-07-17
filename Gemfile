@@ -34,3 +34,5 @@ group :test do
   gem 'database_cleaner'
   gem 'timecop'
 end
+
+gem "i18n", "~> 1.8"

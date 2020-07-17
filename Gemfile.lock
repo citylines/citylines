@@ -39,6 +39,8 @@ GEM
     httpi (2.4.4)
       rack
       socksify
+    i18n (1.8.3)
+      concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
     jwt (1.5.6)
     kgio (2.11.1)
@@ -121,6 +123,7 @@ DEPENDENCIES
   fog-aws
   google-id-token
   http-accept
+  i18n (~> 1.8)
   jwt
   mime-types
   minitest
@@ -142,6 +145,9 @@ DEPENDENCIES
   sitemap_generator
   timecop
   unicorn
+
+RUBY VERSION
+   ruby 2.3.8p459
 
 BUNDLED WITH
    1.17.3

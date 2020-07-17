@@ -15,14 +15,37 @@ class BaseApp < App
 
   helpers I18nHelpers
   helpers WebpackHelpers
+  helpers SEOHelpers
 
   get '/robots.txt' do
     "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
 
+  # Pre-render title and description
+  get '/:url_name' do |url_name|
+    @locale = set_locale(params, request)
+    @i18n = all_translations
+
+    @city = City[url_name: url_name]
+
+    @title, @description = if @city
+                             city_title_and_description(@city)
+                           else
+                             title_and_description
+                           end
+    if @city
+    end
+
+    erb :index
+  end
+
   get '/*' do
-    @locale = locale_from_params(params) || browser_locale(request) || DEFAULT_LOCALE
-    @i18n = LOCALES[@locale]
+    @locale = set_locale(params, request)
+    @i18n = all_translations
+    puts I18n.locale
+
+    @title, @description = title_and_description
+
     erb :index
   end
 end
