@@ -33,8 +33,6 @@ class BaseApp < App
                            else
                              title_and_description
                            end
-    if @city
-    end
 
     erb :index
   end
