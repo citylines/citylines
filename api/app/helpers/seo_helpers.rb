@@ -5,8 +5,8 @@ module SEOHelpers
 
   def city_title_and_description(city)
     [
-      interpolate(I18n.t('city.title', city: city.name), '%(city)s', city.name),
-      interpolate(I18n.t('city.description', city: city.name), '%(city)s', city.name)
+      interpolate(I18n.t('city.title', city: city.name), {'%(city)s' => city.name}),
+      interpolate(I18n.t('city.description', city: city.name), {'%(city)s' => city.name})
     ]
   end
 
@@ -14,7 +14,10 @@ module SEOHelpers
 
   # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated
   # by Ruby's i18n gem. That is why we have to implement another interpolate mechanism for the backend.
-  def interpolate(text, key, value)
-    text.gsub(key, value)
+  def interpolate(text, dict)
+    dict.each_pair do |key, value|
+      text.gsub!(key, value)
+    end
+    text
   end
 end
