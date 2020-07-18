@@ -154,11 +154,6 @@ class City extends CityBase {
 
     return (
         <div className="o-grid o-panel">
-          { this.state.name && <Tags
-            title="city.title"
-            description="city.description"
-            interpolations={{city: this.state.name}}
-          /> }
           <div id="panel" style={this.panelStyle()}>
             <PanelHeader
               name={this.state.name}

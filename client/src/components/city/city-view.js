@@ -92,6 +92,14 @@ class CityView extends CityBase {
     return this.state.systems.find(s => s.id == systemId);
   }
 
+  cityTitle() {
+    return <Tags
+            title="city.title"
+            description="city.description"
+            interpolations={{city: this.context.cityName}}
+          />
+  }
+
   systemTitle() {
     const system = this.selectedSystem();
     if (!system) return;
@@ -131,7 +139,7 @@ class CityView extends CityBase {
 
     return (
         <PanelBody>
-          { this.params().system_id && this.systemTitle() }
+          { this.params().system_id ? this.systemTitle() : this.cityTitle()}
           { this.params().system_id && this.systemIndicator() }
           <div className="year-and-km-container">
             <Year
