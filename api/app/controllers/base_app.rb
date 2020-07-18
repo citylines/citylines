@@ -21,15 +21,15 @@ class BaseApp < App
     "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
 
-  # Pre-render title and description
+  # Pre-render title and description for cities and systems
   get '/:url_name' do |url_name|
     @locale = set_locale(params, request)
     @i18n = locale_translations
 
-    @city = City[url_name: url_name]
-
-    @title, @description = if @city
-                             city_title_and_description(@city)
+    @title, @description = if params[:system_id] and system = System[params[:system_id]]
+                             system_title_and_description(system)
+                           elsif city = City[url_name: url_name]
+                             city_title_and_description(city)
                            else
                              title_and_description
                            end
