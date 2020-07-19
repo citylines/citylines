@@ -15,16 +15,15 @@ module SEOHelpers
 
   def city_title_and_description(city)
     [
-      title(interpolate(I18n.t('city.title'), {'%(city)s' => city.name})),
-      interpolate(I18n.t('city.description'), {'%(city)s' => city.name})
+      title(interpolate(I18n.t('city.title'), {city: city.name})),
+      interpolate(I18n.t('city.description'), {city: city.name})
     ]
   end
 
   def system_title_and_description(system)
     [
-      title(interpolate(I18n.t('city.system_title'),
-                  {'%(system)s' => system.name,'%(city)s' => system.city.name})),
-      interpolate(I18n.t('city.description'), {'%(city)s' => system.city.name})
+      title(interpolate(I18n.t('city.system_title'), {system: system.name, city: system.city.name})),
+      interpolate(I18n.t('city.description'), {city: system.city.name})
     ]
   end
 
@@ -47,7 +46,7 @@ module SEOHelpers
     title_str = if title_content.blank?
                   I18n.t('compare.short_title')
                 else
-                  interpolate(I18n.t('compare.title'), {'%(cities)s' => title_content})
+                  interpolate(I18n.t('compare.title'), {cities: title_content})
                 end
 
     [
@@ -68,7 +67,7 @@ module SEOHelpers
   # by Ruby's i18n gem. That is why we have to implement another interpolate mechanism for the backend.
   def interpolate(text, dict)
     dict.each_pair do |key, value|
-      text.gsub!(key, value)
+      text.gsub!("%(#{key})s", value)
     end
     text
   end
