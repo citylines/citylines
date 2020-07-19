@@ -56,6 +56,12 @@ module SEOHelpers
     ]
   end
 
+  def data_title_and_description
+    [
+      title(I18n.t('data.title')), I18n.t('main.description')
+    ]
+  end
+
   private
 
   # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated

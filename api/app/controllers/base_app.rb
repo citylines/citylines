@@ -31,6 +31,16 @@ class BaseApp < App
     erb :index
   end
 
+  # Pre-render title and description for Data
+  get '/data' do
+    @locale = set_locale(params, request)
+    @i18n = locale_translations
+
+    @title, @description = data_title_and_description
+
+    erb :index
+  end
+
   # Pre-render title and description for cities and systems
   get '/:url_name' do |url_name|
     @locale = set_locale(params, request)
