@@ -28,6 +28,31 @@ module SEOHelpers
     ]
   end
 
+  def compare_title_and_description(params)
+    title_content = nil
+
+    city_url_names = params[:cities] && params[:cities].split(',')
+    unless city_url_names.blank?
+      cities = City.where(url_name: city_url_names).map(&:name)
+      if cities.count > 1
+        title_content = cities.join(' vs ')
+      elsif cities.count == 1
+        title_content = cities.first
+      end
+    end
+
+    title_str = if title_content.blank?
+                  I18n.t('compare.short_title')
+                else
+                  interpolate(I18n.t('compare.title'), {'%(cities)s' => title_content})
+                end
+
+    [
+      title(title_str),
+      I18n.t('main.description')
+    ]
+  end
+
   private
 
   # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated

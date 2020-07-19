@@ -214,6 +214,12 @@ class CityComparison extends CityBase {
 
     cities = cities.filter(city => !!city);
 
+    if (this.activeUrlNames().length > cities.length) {
+      // This means that the cities are not loaded yet,
+      // so we don't update thte title.
+      return;
+    }
+
     let titleContent = null;
     if (cities.length  > 1) {
       titleContent = cities.join(" vs ");

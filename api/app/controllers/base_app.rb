@@ -21,6 +21,16 @@ class BaseApp < App
     "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
 
+  # Pre-render title and description for compare
+  get '/compare' do
+    @locale = set_locale(params, request)
+    @i18n = locale_translations
+
+    @title, @description = compare_title_and_description(params)
+
+    erb :index
+  end
+
   # Pre-render title and description for cities and systems
   get '/:url_name' do |url_name|
     @locale = set_locale(params, request)
