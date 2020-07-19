@@ -61,6 +61,13 @@ module SEOHelpers
     ]
   end
 
+  def user_title_and_description(user)
+    [
+      title(interpolate(I18n.t('user.cities_of_user'), {name: user.nickname})),
+      I18n.t('main.description')
+    ]
+  end
+
   private
 
   # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated
