@@ -2,7 +2,7 @@ import Store from './store';
 import 'whatwg-fetch';
 
 const CitiesStore = Object.assign({}, Store, {
-  cities: [],
+  citiesWithContributors: [],
 
   async fetchCitiesWithContributors() {
     let url = `/api/cities/list_with_contributors`;
