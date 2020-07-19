@@ -73,6 +73,7 @@ en:
       closure: 'Closure: %(year)s'
       length: 'Approximate length: %(km)s km'
   editor:
+    title: "Edit %(city)s"
     edit_features: Edit features
     edit_lines: Edit lines
     feature_viewer:

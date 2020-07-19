@@ -76,6 +76,7 @@ fr:
       closure: 'Fermeture : %(year)s'
       length: 'Longueur approximative : %(km)s km'
   editor:
+    title: "Modifier %(city)s"
     edit_features: Modifier les fonctionnalités
     edit_lines: Modifier les lignes
     feature_viewer:
