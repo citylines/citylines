@@ -29,6 +29,7 @@ end
 
 DB.extension :pg_json
 DB.extension :pagination
+DB.extension :pg_array
 
 Sequel::Model.plugin :tactical_eager_loading
 

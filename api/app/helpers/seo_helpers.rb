@@ -33,7 +33,10 @@ module SEOHelpers
 
     city_url_names = params[:cities] && params[:cities].split(',')
     unless city_url_names.blank?
-      cities = City.where(url_name: city_url_names).map(&:name)
+      cities = City.join(
+        Sequel.lit('(select * from unnest(?) with ordinality) as c (url_name, ordering)', Sequel.pg_array(city_url_names)),
+          c__url_name: :cities__url_name
+      ).order(:c__ordering).map(:name)
       if cities.count > 1
         title_content = cities.join(' vs ')
       elsif cities.count == 1
