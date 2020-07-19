@@ -214,22 +214,27 @@ class CityComparison extends CityBase {
 
     cities = cities.filter(city => !!city);
 
+    let titleContent = null;
     if (cities.length  > 1) {
-      return cities.join(" vs ");
+      titleContent = cities.join(" vs ");
     } else if (cities.length > 0) {
-      return cities[0];
+      titleContent = cities[0];
+    }
+
+    if (titleContent) {
+      return <Tags
+        title="compare.title"
+        interpolations={{cities: titleContent}}
+        />
     } else {
-      return;
+      return <Tags title="compare.short_title" />
     }
   }
 
   render() {
     return (
       <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
-         { this.title() && <Tags
-           title="compare.title"
-            interpolations={{cities: this.title()}}
-          /> }
+      { this.title() }
       <CityComparisonHeader
         urlNames={this.state.urlNames}
         onChange={this.handleCitiesChange.bind(this)}
