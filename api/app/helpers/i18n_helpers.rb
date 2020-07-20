@@ -9,8 +9,8 @@ module I18nHelpers
   end
 
   def locale_from_params(params)
-    locale = params[:locale]
-    locale if !locale.blank? && I18n.available_locales.include?(locale.to_sym)
+    locale = params[:locale] && params[:locale].to_sym
+    locale if !locale.blank? && I18n.available_locales.include?(locale)
   end
 
   def set_locale(params, request)

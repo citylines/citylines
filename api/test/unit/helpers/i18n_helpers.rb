@@ -35,7 +35,7 @@ describe I18nHelpers do
   describe "locale_from_params" do
     it "should return the locale if it's available" do
       I18n.available_locales.each do |locale|
-        assert_equal locale, locale_from_params(locale: locale)
+        assert_equal locale, locale_from_params(locale: locale.to_s)
       end
     end
 
@@ -45,6 +45,23 @@ describe I18nHelpers do
 
     it "should return nil if the param is not present" do
       refute locale_from_params({})
+    end
+  end
+
+  describe "set_locale" do
+    it "should set and return the default locale" do
+      assert_equal I18n.default_locale, set_locale({}, OpenStruct.new(env: {}))
+      assert_equal I18n.default_locale, I18n.locale
+    end
+
+    it "should set and return the locale from params" do
+      assert_equal :es, set_locale({locale: 'es'}, OpenStruct.new(env: {}))
+      assert_equal :es, I18n.locale
+    end
+
+    it "should set and return the locale from browser" do
+      assert_equal :fr, set_locale({}, OpenStruct.new(env: {"HTTP_ACCEPT_LANGUAGE" => 'fr-FR'}))
+      assert_equal :fr, I18n.locale
     end
   end
 end
