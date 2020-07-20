@@ -4,7 +4,7 @@ describe SEOHelpers do
   include SEOHelpers
 
   describe "canonical_url" do
-    it "should only leave allowed paramss" do
+    it "should only leave allowed params" do
       assert_equal "https://citylines.co?locale=fr", canonical_url("https://citylines.co?locale=fr&geo=56", allowed_params = ["locale"])
       assert_equal "https://citylines.co", canonical_url("https://citylines.co?geo=56", allowed_params = ["locale"])
     end
