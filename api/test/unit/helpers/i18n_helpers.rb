@@ -64,4 +64,10 @@ describe I18nHelpers do
       assert_equal :fr, I18n.locale
     end
   end
+
+  describe "locale_translations" do
+    it "should return all the translations for the current locale" do
+      assert_equal I18n.t('main.title'), locale_translations[:main][:title]
+    end
+  end
 end
