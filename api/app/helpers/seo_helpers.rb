@@ -1,12 +1,6 @@
-module SEOHelpers
-  def title(str)
-    if str == I18n.t('main.title')
-      return str
-    else
-      return [str ,' | ', I18n.t('main.title')].join
-    end
-  end
+require 'addressable/uri'
 
+module SEOHelpers
   def title_and_description
     [
       title(I18n.t('main.title')), I18n.t('main.description')
@@ -68,6 +62,18 @@ module SEOHelpers
     ]
   end
 
+  def canonical_url(url, allowed_params = [])
+    uri = Addressable::URI.parse(url)
+
+    unless (allowed_params.blank? or uri.query_values.blank?)
+      uri.query_values =  uri.query_values.reject do |k,v|
+        !allowed_params.include? k
+      end
+    end
+
+    uri.to_s
+  end
+
   private
 
   # As the original i18n keys are supposed to be handled by the frontend, they can't be interpolated
@@ -77,5 +83,13 @@ module SEOHelpers
       text.gsub!("%(#{key})s", value)
     end
     text
+  end
+
+  def title(str)
+    if str == I18n.t('main.title')
+      return str
+    else
+      return [str ,' | ', I18n.t('main.title')].join
+    end
   end
 end

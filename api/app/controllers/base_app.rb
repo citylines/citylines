@@ -27,6 +27,7 @@ class BaseApp < App
     @i18n = locale_translations
 
     @title, @description = compare_title_and_description(params)
+    @url = canonical_url(request.url, allowed_params = ['cities', 'locale'])
 
     erb :index
   end
@@ -37,6 +38,7 @@ class BaseApp < App
     @i18n = locale_translations
 
     @title, @description = data_title_and_description
+    @url = canonical_url(request.url, allowed_params = ['locale'])
 
     erb :index
   end
@@ -51,6 +53,8 @@ class BaseApp < App
       @title, @description = user_title_and_description(user)
     end
 
+    @url = canonical_url(request.url, allowed_params = ['locale'])
+
     erb :index
   end
 
@@ -58,6 +62,8 @@ class BaseApp < App
   get '/:url_name' do |url_name|
     @locale = set_locale(params, request)
     @i18n = locale_translations
+
+    @url = canonical_url(request.url, allowed_params = ['system_id', 'locale'])
 
     @title, @description = if params[:system_id] and system = System[params[:system_id]]
                              system_title_and_description(system)
@@ -75,6 +81,7 @@ class BaseApp < App
     @i18n = locale_translations
 
     @title, @description = title_and_description
+    @url = canonical_url(request.url, allowed_params = ['locale'])
 
     erb :index
   end
