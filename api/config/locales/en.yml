@@ -50,7 +50,7 @@ en:
         how to see which cookies are installed in your browser, or how to uninstall
         them.
   city:
-    title: "%(city)s Transit System"
+    title: "%(city)s transit systems"
     system_title: "%(city)s %(system)s"
     show_all_systems: Show all systems
     description: Explore the transport systems of %(city)s, and their history, in citylines.co

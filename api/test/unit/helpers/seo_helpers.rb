@@ -15,7 +15,7 @@ describe SEOHelpers do
     it "should return the title and description for a city" do
       city = City.create(name: 'Buenos Aires', url_name: 'buenos-aires')
 
-      expected_title = 'Buenos Aires Transit System | citylines.co'
+      expected_title = 'Buenos Aires transit systems | citylines.co'
       expected_description = I18n.t('city.description').gsub('%(city)s', city.name)
 
       assert_equal [expected_title, expected_description], city_title_and_description(city)
