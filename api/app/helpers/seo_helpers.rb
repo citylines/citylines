@@ -69,6 +69,9 @@ module SEOHelpers
       uri.query_values =  uri.query_values.reject do |k,v|
         !allowed_params.include? k
       end
+      if uri.query_values.empty?
+        uri.query_values = nil
+      end
     end
 
     uri.to_s
