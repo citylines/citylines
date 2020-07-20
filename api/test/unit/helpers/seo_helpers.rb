@@ -72,7 +72,7 @@ describe SEOHelpers do
       assert_equal "https://citylines.co", canonical_url("https://citylines.co?geo=56", allowed_params = ["locale"])
     end
 
-    it "should do nothing if there are now allowed params set" do
+    it "should do nothing if there are no allowed params set" do
       url = "https://citylines.co?locale=fr&geo=56"
       assert_equal url, canonical_url(url)
     end
