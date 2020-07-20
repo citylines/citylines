@@ -4,7 +4,6 @@ import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
-import Tags from './tags';
 import Avatar from './user/avatar';
 import assets from '../lib/assets-provider';
 
@@ -82,7 +81,6 @@ class Main extends Component {
   render() {
     return (
         <div>
-          <Tags title="main.title" description="main.description"/>
           <nav className="c-nav c-nav--inline">
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>

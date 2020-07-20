@@ -1,5 +1,6 @@
 import React from 'react';
 import CityBase from './city-base';
+import PropTypes from 'prop-types';
 
 import {Link} from 'react-router-dom';
 
@@ -15,6 +16,7 @@ import NoLinesAlert from './editor/no-lines-alert';
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
 import MainStore from '../stores/main-store';
+import Tags from './tags';
 
 class Editor extends CityBase {
   constructor(props, context) {
@@ -143,6 +145,7 @@ class Editor extends CityBase {
 
     return (
           <PanelBody>
+            <Tags title={'editor.title'} interpolations={{city: this.context.cityName}} />
             <span className="c-input-group edit-mode-buttons">
               <button name={this.modes.EDIT_FEATURES}
                       className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
@@ -191,6 +194,10 @@ class Editor extends CityBase {
           </PanelBody>
     )
   }
+}
+
+Editor.contextTypes = {
+  cityName: PropTypes.string
 }
 
 export default Editor

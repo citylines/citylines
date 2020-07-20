@@ -1,23 +1,34 @@
 <!doctype html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
         <meta name="robots" content="index/follow" />
 
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@citylines_co">
-        <meta name="twitter:creator" content="@citylines_co">
-        <meta name="twitter:title" content="citylines.co">
-        <meta name="twitter:description" content="citylines.co is a collaborative platform for mapping the transit systems of the world!">
-        <meta name="twitter:image" content="https://cdn.citylines.co/assets/img/favicon-192x192-e0caa2aac0230578c2b154b3a1259f73bf8632fbfc90bea1d33a3ad206904cf6.png">
+        <title><%= @title %></title>
+        <meta name="description" content="<%= @description %>" />
 
-        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-192x192.png')  %>" sizes="192x192">
-        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-16x16.png')  %>" sizes="16x16">
-        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-32x32.png')  %>" sizes="32x32">
+        <meta property="og:title" content="<%= @title %>" />
+        <meta property="og:description" content="<%= @description %>" />
+        <meta property="og:image" content="https://cdn.citylines.co/assets/img/favicon-192x192-e0caa2aac0230578c2b154b3a1259f73bf8632fbfc90bea1d33a3ad206904cf6.png" />
+        <meta property="og:url" content="<%= @url %>" />
+        <meta property="og:site_name" content="citylines.co" />
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@citylines_co" />
+        <meta name="twitter:creator" content="@citylines_co" />
+        <meta name="twitter:title" content="<%= @title %>" />
+        <meta name="twitter:description" content="<%= @description %>" />
+        <meta name="twitter:image" content="https://cdn.citylines.co/assets/img/favicon-192x192-e0caa2aac0230578c2b154b3a1259f73bf8632fbfc90bea1d33a3ad206904cf6.png" />
+
+        <link rel="canonical" href="<%= @url %>" />
+
+        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-192x192.png')  %>" sizes="192x192" />
+        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-16x16.png')  %>" sizes="16x16" />
+        <link rel="icon" type="image/png" href="<%= asset_path('img/favicon-32x32.png')  %>" sizes="32x32" />
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
         <link rel="stylesheet" href="https://unpkg.com/blaze@3.2.0/dist/blaze.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/fontawesome.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />

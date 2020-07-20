@@ -4,6 +4,7 @@ import Diacritics from 'diacritics';
 import HomeStore from '../stores/home-store';
 import MainStore from '../stores/main-store';
 import Translate from 'react-translate-component';
+import Tags from './tags';
 import assets from '../lib/assets-provider';
 import {formatNumber} from '../lib/number-tools';
 import Avatar from './user/avatar';
@@ -40,6 +41,7 @@ class ResultItem extends Component {
   render() {
     return (
       <div className="c-card" style={!this.isCity() ? {backgroundColor:'rgba(0,0,0,0.04)'} : null}>
+        <Tags title="main.title" description="main.description"/>
         <header className="c-card__header">
           <h3 className="c-heading">
             <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {!this.isCity() ? `${this.props.city_name},` : ''} {this.props.state ? `${this.props.state},` : ''} {this.props.country}

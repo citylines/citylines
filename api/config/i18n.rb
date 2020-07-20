@@ -1,9 +1,5 @@
-DEFAULT_LOCALE="en"
+require "i18n"
 
-LOCALES = {}
+I18n.load_path = Dir['api/config/locales/*.yml']
 
-Dir['api/config/locales/*.yml'].each do |file|
-  yaml = YAML::load_file(file)
-  locale = file.split("/").last.split(".").first
-  LOCALES[locale] = yaml
-end
+I18n.default_locale = :en
