@@ -12,12 +12,16 @@ class PanelHeader extends PureComponent {
       <div className="panel-header o-grid__cell o-grid__cell--width-100">
         <div className="panel-header-title">
           <h3 className="c-heading">{this.props.name}</h3>
-          <span className="commands">
+          <div className="commands">
             {!this.props.loading &&
-              <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
+              <Link className="c-link" to={linkTo}><span className="fa fa-pen"></span>{linkLabel}</Link>}
             {!this.props.loading && !editPath &&
-              <Translate className="c-link" component={Link} to={`/compare?cities=${this.props.urlName},`} content="compare.link" />}
-          </span>
+              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-globe-americas"></span><Translate content="compare.link" /></Link>}
+            {!this.props.loading && !editPath &&
+              <Link className="c-link" component={Link} to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-sliders-h"></span>Configuración</Link>}
+            {!this.props.loading && !editPath &&
+              <Link className="c-link" component={Link} to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-share-alt"></span>Compartir</Link>}
+          </div>
         </div>
       </div>
     );

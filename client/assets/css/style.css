@@ -164,12 +164,18 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .panel-header-title .commands {
-  display:inline-block;
-  font-size:0.9em;
+  padding-top:10px;
+  font-size:0.8em;
 }
 
-.panel-header-title .commands > a.c-link + a.c-link{
-  margin-left: 10px;
+.panel-header-title .commands > a > span.fa {
+  margin-right:10px;
+  color: #888;
+}
+
+.panel-header-title .commands > a.c-link {
+  display:inline-block;
+  margin-right: 15px;
 }
 
 .panel-body {
