@@ -1,11 +1,11 @@
 # A sample Gemfile
 source "https://rubygems.org"
-ruby '2.3.8'
+ruby '2.6.6'
 
 gem "rake"
 gem "sinatra"
 gem "sinatra-contrib"
-gem 'sinatra-asset-pipeline', '>= 1.0.2'
+gem 'sinatra-asset-pipeline', '>= 2.2.0'
 gem 'sequel'
 gem 'pg'
 gem 'accentless'
