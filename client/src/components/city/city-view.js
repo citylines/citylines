@@ -124,10 +124,11 @@ class CityView extends CityBase {
               <div className="c-card__item">
                 <div><span className="system-indicator-name">{system.name}</span>
                   <span className="system-indicator-link">
-                    <Translate component="a"
-                      className="c-link"
-                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}
-                      content="city.show_all_systems" />
+                    <a className="c-link"
+                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName);}} >
+                      <span className="fa fa-eye"></span>
+                      <Translate content="city.show_all_systems" />
+                    </a>
                   </span>
                 </div>
               </div>

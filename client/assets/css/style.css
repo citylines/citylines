@@ -165,7 +165,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .panel-header-title .commands {
   padding-top:10px;
-  font-size:0.8em;
+  font-size:0.9em;
 }
 
 .panel-header-title .commands > a > span.fa {
@@ -646,6 +646,11 @@ table .narrow {
 .system-indicator-link {
   display: inline-block;
   font-size: 0.9em;
+}
+
+.system-indicator-link > a > .fa {
+  color: #888;
+  margin-right: 10px;
 }
 
 /*  Avatar */
