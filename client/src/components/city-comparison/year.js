@@ -14,6 +14,7 @@ class Year extends PureComponent {
         year={this.props.year}
         min={this.props.min}
         max={this.props.max}
+        playing={this.props.playing}
         showSettings={this.props.showSettings}
         onYearChange={this.props.onYearChange.bind(this)}
         onToggleAnimation={this.props.toggleAnimation.bind(this)}

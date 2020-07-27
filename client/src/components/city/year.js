@@ -39,14 +39,13 @@ class Year extends PureComponent {
   }
 
   render() {
-    const icon = this.props.playing ? 'fa-pause' : 'fa-play';
-
     return (
     <div className="year-container">
       <YearControl
         year={this.props.year}
         min={this.props.min}
         max={this.props.max}
+        playing={this.props.playing}
         showSettings={this.state.showConfigPanel}
         onYearChange={this.handleYearChange.bind(this)}
         onToggleAnimation={this.toggleAnimation.bind(this)}
