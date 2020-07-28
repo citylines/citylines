@@ -54,16 +54,24 @@ class UserConfig extends Component {
     return (
       <div style={{display:'inline'}}>
         <div className='user-page-username'>
-        {this.state.edit &&
-            <div className="user-gravatar">
-              {this.props.img ?
-              <Translate component="a" className="c-link" onClick={this.props.onRemoveGravatar} content="user.config.gravatar.unset" />
-                :
-              <span>
-                <Translate component="a" className="c-link" onClick={this.props.onSetGravatar} content="user.config.gravatar.set" /> <a className="c-link" target="_blank" href="https://gravatar.com"><i className="fas fa-info-circle"></i></a>
-              </span>
-              }
-            </div>}
+          <span className='user-avatar-edit'>
+            {this.state.edit &&
+              <div className="user-gravatar">
+                {this.props.img ?
+                <Translate component="a" className="c-link" onClick={this.props.onRemoveGravatar} content="user.config.gravatar.unset" />
+                  :
+                <span>
+                  <Translate component="a" className="c-link" onClick={this.props.onSetGravatar} content="user.config.gravatar.set" /> <a className="c-link" target="_blank" href="https://gravatar.com"><i className="fas fa-info-circle"></i></a>
+                </span>
+                }
+              </div>}
+            <div className="user-avatar-edit-controls">
+              {this.props.editable && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
+              <Translate component="a" className="c-link user-avatar-edit-control" onClick={this.toggleEdit.bind(this)} content={`user.config.${this.state.edit ? 'save' : 'edit'}`} />}
+              {this.state.edit &&
+              <Translate component="a" className="c-link user-avatar-edit-control" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.config.cancel' />}
+            </div>
+          </span>
         {this.state.edit ?
         <input
           ref={(input) => { this.editInput = input; }}
@@ -80,11 +88,6 @@ class UserConfig extends Component {
           {this.state.name}
         </div>
       </div>
-
-      {this.props.editable && (!this.state.edit || (this.state.edit && this.state.name != this.props.name)) &&
-      <Translate component="a" className="c-link user-avatar-edit" onClick={this.toggleEdit.bind(this)} content={`user.config.${this.state.edit ? 'save' : 'edit'}`} />}
-      {this.state.edit &&
-      <Translate component="a" className="c-link user-avatar-edit" name="cancel" onClick={this.toggleEdit.bind(this)} content='user.config.cancel' />}
     </div>
     )
   }

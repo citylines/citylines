@@ -686,14 +686,22 @@ table .narrow {
 }
 
 .user-avatar-edit {
+  position:absolute;
+  left:-10px;
+  top:40px;
+}
+
+.user-avatar-edit-controls {
+  line-height:15px;
+}
+
+.user-avatar-edit-control {
   font-size: initial;
   margin-left:10px;
 }
 
 .user-gravatar {
-  position: absolute;
-  left: 0;
-  top: 45px;
+  margin-left: 10px;
   font-size: 0.45em;
   width: 300px;
 }
