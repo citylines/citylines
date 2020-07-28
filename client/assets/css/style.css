@@ -298,7 +298,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .year-container .year-group {
-  padding-bottom: 8px;
+  padding-bottom: 2px;
 }
 
 .year-and-km-container {

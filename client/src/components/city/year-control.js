@@ -13,7 +13,7 @@ class YearControl extends PureComponent {
       <div className="c-input-group c-input-group--right year-group">
         <div className="o-field">
           <input ref="currentYear"
-                 className="c-field c-field--error"
+                 className="c-field"
                  type="number"
                  min={this.props.min}
                  max={this.props.max}
@@ -21,7 +21,7 @@ class YearControl extends PureComponent {
                  value={this.props.year || ""}/>
         </div>
         <button ref="action"
-                className="c-button c-button--error"
+                className="c-button"
                 onClick={this.props.onToggleAnimation}><span className={`fa ${icon}`}></span></button>
       </div>
     )

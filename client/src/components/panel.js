@@ -14,13 +14,13 @@ class PanelHeader extends PureComponent {
           <h3 className="c-heading">{this.props.name}</h3>
           <div className="commands">
             {!this.props.loading &&
-              <Link className="c-link" to={linkTo}><span className="fa fa-pen"></span>{linkLabel}</Link>}
+              <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
             {!this.props.loading && !editPath &&
-              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-globe-americas"></span><Translate content="compare.link" /></Link>}
+              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
             {!this.props.loading && !editPath &&
-              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-sliders-h"></span>Configuración</Link>}
+              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}>Configuración</Link>}
             {!this.props.loading && !editPath &&
-              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><span className="fa fa-share-alt"></span>Compartir</Link>}
+              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}>Compartir</Link>}
           </div>
         </div>
       </div>
