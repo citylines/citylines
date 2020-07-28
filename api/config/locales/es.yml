@@ -55,7 +55,7 @@ es:
   city:
     title: Sistemas de transporte de %(city)s
     system_title: "%(system)s de %(city)s"
-    show_all_systems: Todos los sistemas
+    show_all_systems: Ver todos los sistemas
     description: Explora los sistemas de transporte de %(city)s, y su historia, en citylines.co
       —la plataforma de mapeo colaborativo de los sistemas de transporte urbano del
       mundo.

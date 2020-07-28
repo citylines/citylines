@@ -155,22 +155,19 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .panel-header-title {
-  padding:20px 5px;
+  padding:25px 0 20px 0;
 }
 
-.panel-header-title h3.c-heading {
+.panel-header-title h2.c-heading {
   display:inline;
   margin-right:10px;
+  padding-top:0px;
+  padding-bottom:10px;
 }
 
 .panel-header-title .commands {
   padding-top:10px;
   font-size:0.9em;
-}
-
-.panel-header-title .commands > a > span.fa {
-  margin-right:10px;
-  color: #888;
 }
 
 .panel-header-title .commands > a.c-link {
@@ -185,7 +182,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .editor-cards-container {
-  padding:10px;
+  padding:10px 15px;
 }
 
 #edit-lines-card {
@@ -302,7 +299,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .year-and-km-container {
-  padding: 0 20px 20px 20px;
+  padding: 0 15px 20px 15px;
 }
 
 .km-indicator .c-badge--success {
@@ -635,6 +632,10 @@ table .narrow {
   padding-bottom:4em;
 }
 
+.system-indicator {
+  margin:-5px 15px 15px;
+}
+
 .system-indicator-name {
   margin-right:10px
 }
@@ -642,11 +643,6 @@ table .narrow {
 .system-indicator-link {
   display: inline-block;
   font-size: 0.9em;
-}
-
-.system-indicator-link > a > .fa {
-  color: #888;
-  margin-right: 10px;
 }
 
 /*  Avatar */

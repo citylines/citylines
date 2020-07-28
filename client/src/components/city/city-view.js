@@ -120,17 +120,13 @@ class CityView extends CityBase {
     const system = this.selectedSystem();
     if (!system) return;
 
-    return  <div style={{margin:'-12px 10px 5px'}}>
-              <div className="c-card__item">
-                <div><span className="system-indicator-name">{system.name}</span>
-                  <span className="system-indicator-link">
-                    <a className="c-link"
-                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName);}} >
-                      <span className="fa fa-eye"></span>
-                      <Translate content="city.show_all_systems" />
-                    </a>
-                  </span>
-                </div>
+    return  <div className="system-indicator">
+              <div className="system-indicator-name">{system.name}</div>
+              <div className="system-indicator-link">
+                <a className="c-link"
+                  onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName);}} >
+                  <Translate content="city.show_all_systems" />
+                </a>
               </div>
             </div>
   }
