@@ -289,9 +289,12 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: default;
 }
 
-.year-container .year-config {
-  margin-top: 8px;
-  margin-bottom: 8px;
+.city-settings {
+  margin: 2px 15px 20px 15px;
+}
+
+.city-settings > .c-card__item > .o-form-element {
+  margin: 0 10px;
 }
 
 .year-container .year-group {

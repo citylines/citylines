@@ -1,17 +1,11 @@
 import React, {PureComponent} from 'react';
 import CityViewStore from '../../stores/city-view-store';
 import YearControl from './year-control';
-import YearConfig from './year-config';
 
+// FIXME: pass calls to store to CityView component
 class Year extends PureComponent {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {showConfigPanel: false};
-  }
-
-  toggleConfigPanel() {
-    this.setState({showConfigPanel: !this.state.showConfigPanel});
   }
 
   toggleAnimation() {
@@ -28,10 +22,6 @@ class Year extends PureComponent {
     CityViewStore.setYear(this.props.urlName, year);
   }
 
-  handleTransportModesChange(e) {
-    CityViewStore.setShowTransportModes(this.props.urlName, e.target.checked);
-  }
-
   componentDidUpdate() {
     if (typeof this.props.onYearChange === 'function') {
       this.props.onYearChange();
@@ -46,10 +36,8 @@ class Year extends PureComponent {
         min={this.props.min}
         max={this.props.max}
         playing={this.props.playing}
-        showSettings={this.state.showConfigPanel}
         onYearChange={this.handleYearChange.bind(this)}
         onToggleAnimation={this.toggleAnimation.bind(this)}
-        onToggleSettings={this.toggleConfigPanel.bind(this)}
       />
       <input ref="slider"
              type="range"
@@ -58,13 +46,6 @@ class Year extends PureComponent {
              max={this.props.max}
              onChange={this.handleSlideChange.bind(this)}
              value={this.props.year || 0} />
-      {this.state.showConfigPanel &&
-        <YearConfig
-          speed={this.props.speed}
-          onSpeedChange={this.props.onSpeedChange}
-          showTransportModes={this.props.showTransportModes}
-          onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
-        />}
      </div>
      )
   }

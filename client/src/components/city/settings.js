@@ -2,10 +2,10 @@ import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
 import TimelineSpeedControl from './timeline-speed-control';
 
-class YearConfig extends PureComponent {
+class Settings extends PureComponent {
   render() {
     return (
-      <div className="c-card year-config">
+      <div className="c-card city-settings">
         <div className="c-card__item">
             <TimelineSpeedControl
               speed={this.props.speed}
@@ -15,7 +15,7 @@ class YearConfig extends PureComponent {
               <input
                 type="checkbox"
                 checked={this.props.showTransportModes}
-                onChange={this.props.onShowTransportModesChange.bind(this)}
+                onChange={this.props.onShowTransportModesChange && this.props.onShowTransportModesChange.bind(this)}
               /> <Translate content="city.config.show_transport_modes" />
             </label>
         </div>
@@ -24,4 +24,4 @@ class YearConfig extends PureComponent {
   }
 }
 
-export default YearConfig
+export default Settings

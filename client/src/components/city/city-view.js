@@ -11,6 +11,7 @@ import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 import Tags from '../tags';
+import Settings from './settings';
 
 class CityView extends CityBase {
   constructor(props, context) {
@@ -138,6 +139,7 @@ class CityView extends CityBase {
         <PanelBody>
           { this.params().system_id ? this.systemTitle() : this.cityTitle()}
           { this.params().system_id && this.systemIndicator() }
+          { this.props.displaySettings && <Settings /> }
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}

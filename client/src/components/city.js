@@ -148,6 +148,10 @@ class City extends CityBase {
     return style;
   }
 
+  toggleSettings() {
+    this.setState({displaySettings: !this.state.displaySettings});
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -159,9 +163,11 @@ class City extends CityBase {
               pathName={this.props.location.pathname}
               urlName={this.urlName}
               loading={this.state.main.loading}
+              onToggleSettings={this.toggleSettings.bind(this)}
             />
             <Switch>
-              <Route exact path="/:city_url_name" component={CityView} />
+              <Route exact path="/:city_url_name"
+                render={props => <CityView {...props} displaySettings={this.state.displaySettings} />} />
               <Route path="/:city_url_name/edit">
                 { MainStore.userLoggedIn() ? <Editor city_url_name={this.urlName} /> : <Redirect to="/auth" /> }
               </Route>
