@@ -172,7 +172,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .panel-header-title .commands > a.c-link {
   display:inline-block;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .panel-body {
