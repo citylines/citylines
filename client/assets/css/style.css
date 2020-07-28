@@ -292,10 +292,6 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: default;
 }
 
-.year-container {
-  padding-bottom: 8px;
-}
-
 .year-container .year-config {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -306,7 +302,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .year-and-km-container {
-  padding: 10px 20px 20px 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .km-indicator .c-badge--success {
