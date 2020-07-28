@@ -155,7 +155,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .panel-header-title {
-  padding:20px 0;
+  padding:20px 5px;
 }
 
 .panel-header-title h3.c-heading {
