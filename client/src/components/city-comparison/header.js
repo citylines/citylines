@@ -34,10 +34,16 @@ class CityComparisonHeader extends PureComponent {
             playing={this.props.playing}
           />
           <Link
-            className={`comparison-settings-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+            className={`comparison-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
             to=''
             onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >
               <Translate content="city.config.title" />
+            </Link>
+            <Link
+            className={`comparison-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+            to=''
+            onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >
+              <Translate content="city.share" />
             </Link>
           </span>}
         </div>
