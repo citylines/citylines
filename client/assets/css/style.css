@@ -54,11 +54,11 @@
   padding-left:5px;
 }
 
-#comparison-header > a.c-link:visited {
+#comparison-header a.c-link:visited {
   color:#0c7fda;
 }
 
-#comparison-header > a.c-link.c-link--brand:visited {
+#comparison-header a.c-link.c-link--brand:visited {
   color:#2c3e50;
 }
 
