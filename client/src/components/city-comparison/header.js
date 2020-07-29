@@ -24,21 +24,21 @@ class CityComparisonHeader extends PureComponent {
             onChange={(newUrlName) => {this.props.onChange([newUrlName, this.props.urlNames[1]])}}
           />
         </div>
-        <div className="o-grid__cell o-grid__cell--width-20">
-          {typeof(this.props.year) != "undefined" && <Year
+        <div className="o-grid__cell">
+          {typeof(this.props.year) != "undefined" && <span className="comparison-main-ctrl">
+          <Year
             year={this.props.year}
             onYearChange={this.props.onYearChange}
             onUpdate={this.props.onYearUpdate}
             toggleAnimation={this.props.toggleAnimation}
             playing={this.props.playing}
-          />}
-        </div>
-        <div className="o-grid__cell o-grid__cell--width-20">
-          {typeof(this.props.year) != "undefined" && <Link style={{padding:'4px', verticalAlign:'sub', lineHeight: '36px', fontSize: '0.9em'}}
-            className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+          />
+          <Link
+            className={`comparison-settings-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
             to=''
             onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >
-              Configuración</Link>}
+              Configuración</Link>
+          </span>}
         </div>
         <div className="o-grid__cell">
           <CitySelect
