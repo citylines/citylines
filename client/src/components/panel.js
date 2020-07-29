@@ -22,7 +22,9 @@ class PanelHeader extends PureComponent {
                 to=''
                 onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} ><Translate content="city.config.title" /></Link>}
             {!this.props.loading && !editPath &&
-              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="city.share" /></Link>}
+              <Link className={`c-link ${this.props.displayShare ? 'c-link--brand' : ''}`}
+                to=''
+                onClick={e => {e.preventDefault(); this.props.onToggleShare()}} ><Translate content="city.share" /></Link>}
           </div>
         </div>
       </div>

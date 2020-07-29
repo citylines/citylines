@@ -149,7 +149,11 @@ class City extends CityBase {
   }
 
   toggleSettings() {
-    this.setState({displaySettings: !this.state.displaySettings});
+    this.setState({displaySettings: !this.state.displaySettings, displayShare: false});
+  }
+
+  toggleShare() {
+    this.setState({displaySettings: false, displayShare: !this.state.displayShare});
   }
 
   render() {
@@ -165,10 +169,12 @@ class City extends CityBase {
               loading={this.state.main.loading}
               onToggleSettings={this.toggleSettings.bind(this)}
               displaySettings={this.state.displaySettings}
+              onToggleShare={this.toggleShare.bind(this)}
+              displayShare={this.state.displayShare}
             />
             <Switch>
               <Route exact path="/:city_url_name"
-                render={props => <CityView {...props} displaySettings={this.state.displaySettings} />} />
+                render={props => <CityView {...props} displaySettings={this.state.displaySettings} displayShare={this.state.displayShare} />} />
               <Route path="/:city_url_name/edit">
                 { MainStore.userLoggedIn() ? <Editor city_url_name={this.urlName} /> : <Redirect to="/auth" /> }
               </Route>
