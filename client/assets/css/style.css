@@ -294,7 +294,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .city-settings > .c-card__item > .o-form-element {
-  margin: 0 10px;
+  margin: 0 8px;
 }
 
 .year-container .year-group {
