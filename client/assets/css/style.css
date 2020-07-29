@@ -50,8 +50,9 @@
 }
 
 #comparison-header .see-city {
-  padding-top:10px;
-  padding-left:15px;
+  padding-top:11px;
+  padding-left:10px;
+  font-size:0.9em;
 }
 
 #comparison-header a.c-link:visited {
@@ -73,7 +74,7 @@
 }
 
 .comparison-link + .comparison-link {
-  padding-left:10px;
+  padding-left:10px !important;
 }
 
 .comparison-intro {
