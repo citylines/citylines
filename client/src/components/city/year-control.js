@@ -21,7 +21,7 @@ class YearControl extends PureComponent {
                  value={this.props.year || ""}/>
         </div>
         <button ref="action"
-                className="c-button"
+                className="c-button c-button--ghost"
                 onClick={this.props.onToggleAnimation}><span className={`fa ${icon}`}></span></button>
       </div>
     )
