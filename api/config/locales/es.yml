@@ -63,8 +63,10 @@ es:
     stop_editing: Dejar de editar
     lines: Líneas
     config:
+      title: Ajustes
       timeline_speed: Velocidad de la línea de tiempo
       show_transport_modes: Mostrar modos de transporte
+    share: Compartir
     km_operative: 'Operativos: %(km)s km'
     km_under_construction: 'En construcción: %(km)s km'
     all_lines: Todas las líneas

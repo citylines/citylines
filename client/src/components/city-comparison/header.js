@@ -37,7 +37,8 @@ class CityComparisonHeader extends PureComponent {
             className={`comparison-settings-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
             to=''
             onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >
-              Configuración</Link>
+              <Translate content="city.config.title" />
+            </Link>
           </span>}
         </div>
         <div className="o-grid__cell">
