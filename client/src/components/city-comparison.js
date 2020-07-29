@@ -248,9 +248,9 @@ class CityComparison extends CityBase {
         onYearChange={this.handleYearChange.bind(this)}
         onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
-        toggleSettings={this.handleToggleSettings.bind(this)}
+        onToggleSettings={this.handleToggleSettings.bind(this)}
         playing={this.state.playing}
-        showSettings={this.state.showSettings}
+        displaySettings={this.state.showSettings}
         citiesList={this.state.citiesList}
       />
       {

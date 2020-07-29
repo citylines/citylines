@@ -62,16 +62,17 @@
 }
 
 .comparison-settings {
-  width: 100%;
+  margin-left:-1em;
+  width: calc(100% + 2em);
   max-height:400px;
-  padding: 15px 0;
   overflow: auto;
-  background-color: #f9f9f9;
+  background-color: white;
   position:relative;
   z-index:1000;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 3px 0 0 rgba(0,0,0,0.1);
-  margin-top: 2px;
+}
+
+.comparison-settings > .c-card {
+  margin:5px 15px 10px 15px;
 }
 
 .comparison-settings-timeline-speed-container {
