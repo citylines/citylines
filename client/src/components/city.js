@@ -164,6 +164,7 @@ class City extends CityBase {
               urlName={this.urlName}
               loading={this.state.main.loading}
               onToggleSettings={this.toggleSettings.bind(this)}
+              displaySettings={this.state.displaySettings}
             />
             <Switch>
               <Route exact path="/:city_url_name"

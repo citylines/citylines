@@ -18,7 +18,9 @@ class PanelHeader extends PureComponent {
             {!this.props.loading && !editPath &&
               <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
             {!this.props.loading && !editPath &&
-              <Link className="c-link" to='' onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >Configuración</Link>}
+              <Link className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+                to=''
+                onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >Configuración</Link>}
             {!this.props.loading && !editPath &&
               <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}>Compartir</Link>}
           </div>
