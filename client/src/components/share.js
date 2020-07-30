@@ -27,7 +27,7 @@ class Share extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="share">
         <div className="o-form-element" style={{maxWidth:'500px'}}>
           <div className="c-input-group">
             <div className="o-field">

@@ -487,6 +487,10 @@ button.save-system {
   margin-left: 20px;
 }
 
+.share .contact-icon + .contact-icon {
+  margin-left: 15px;
+}
+
 .contact-icon a {
   margin-left: 5px;
   color: #888;
