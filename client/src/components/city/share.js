@@ -3,7 +3,6 @@ import CityToggleableContainer from './toggleable-container';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class CityShare extends PureComponent {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -28,7 +27,6 @@ class CityShare extends PureComponent {
   }
 
   render() {
-    // TODO: use https://github.com/nygardk/react-share for social buttons
     return (
       <CityToggleableContainer>
         <div className="o-form-element">
