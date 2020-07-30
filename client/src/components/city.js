@@ -4,10 +4,8 @@ import CityBase from './city-base';
 import {Switch, Redirect, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
-
 import {PanelHeader, PanelBody} from './panel';
-import {Map, Source, Popup, Draw} from './map';
+import {Map, Source, Popup} from './map';
 
 import Translate from 'react-translate-component';
 import FeaturePopupContent from './city/feature-popup-content';
@@ -18,7 +16,9 @@ import CityViewStore from '../stores/city-view-store';
 import EditorStore from '../stores/editor-store';
 
 import CityView from './city/city-view';
+
 const Editor = React.lazy(() => import('./editor'));
+const Draw = React.lazy(() => import('./map/draw'));
 
 class City extends CityBase {
   constructor(props, context) {
@@ -205,17 +205,18 @@ class City extends CityBase {
               </div>
               </Popup>) }
               { this.state.drawFeatures &&
-                <Draw
-                  features={this.state.drawFeatures}
-                  onSelectionChange={this.bindedOnSelectionChange}
-                  onFeatureUpdate={this.bindedOnFeatureUpdate}
-                  onFeatureCreate={this.bindedOnFeatureCreate}
-                  onFeatureDelete={this.bindedOnFeatureDelete}
-                  onModeChange={this.bindedOnDrawModeChange}
-                  selectedFeatureById={this.state.drawSelectedFeatureById}
-                  customModes={{cut_line: CutLineMode}}
-                  currentMode={this.state.drawCurrentMode}
-                />
+                <React.Suspense>
+                  <Draw
+                    features={this.state.drawFeatures}
+                    onSelectionChange={this.bindedOnSelectionChange}
+                    onFeatureUpdate={this.bindedOnFeatureUpdate}
+                    onFeatureCreate={this.bindedOnFeatureCreate}
+                    onFeatureDelete={this.bindedOnFeatureDelete}
+                    onModeChange={this.bindedOnDrawModeChange}
+                    selectedFeatureById={this.state.drawSelectedFeatureById}
+                    currentMode={this.state.drawCurrentMode}
+                  />
+                </React.Suspense>
               }
           </Map>
           </main>
