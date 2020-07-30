@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import TimelineSpeedControl from '../city/timeline-speed-control';
+import ComparisonToggleableContainer from './toggleable-container';
 
 class CityComparisonSettings extends PureComponent {
   systems(urlName) {
@@ -19,43 +20,39 @@ class CityComparisonSettings extends PureComponent {
 
   render() {
     return (
-      <div className="comparison-settings">
-        <div className="c-card">
-          <div className="c-card__item">
-            <div className="comparison-settings-timeline-speed-container">
-              <TimelineSpeedControl
-                speed={this.props.speed}
-                onSpeedChange={this.props.onSpeedChange}
-              />
-            </div>
-            <div className="o-grid">
-            {
-              this.props.urlNames.map((urlName) =>
-                <div key={`systems-of-${urlName}`} className="o-grid__cell">
-                  <div className="c-text">{this.cityName(urlName)}</div>
-                  {
-                    this.systems(urlName).map(system =>
-                      <label key={`system-${system.id}`} className="c-toggle">
-                        <input
-                          type="checkbox"
-                          checked={system.show}
-                          onChange={() => this.props.onSystemToggle(urlName,system.id,!system.show)}
-                        >
-                        </input>
-                        <div className="c-toggle__track">
-                          <div className="c-toggle__handle"></div>
-                        </div>
-                        <span>{system.name}</span>
-                      </label>
-                    )
-                  }
-                </div>
-              )
-            }
-            </div>
-          </div>
+      <ComparisonToggleableContainer>
+        <div className="comparison-settings-timeline-speed-container">
+          <TimelineSpeedControl
+            speed={this.props.speed}
+            onSpeedChange={this.props.onSpeedChange}
+          />
         </div>
-      </div>
+        <div className="o-grid">
+        {
+          this.props.urlNames.map((urlName) =>
+            <div key={`systems-of-${urlName}`} className="o-grid__cell">
+              <div className="c-text">{this.cityName(urlName)}</div>
+              {
+                this.systems(urlName).map(system =>
+                  <label key={`system-${system.id}`} className="c-toggle">
+                    <input
+                      type="checkbox"
+                      checked={system.show}
+                      onChange={() => this.props.onSystemToggle(urlName,system.id,!system.show)}
+                    >
+                    </input>
+                    <div className="c-toggle__track">
+                      <div className="c-toggle__handle"></div>
+                    </div>
+                    <span>{system.name}</span>
+                  </label>
+                )
+              }
+            </div>
+          )
+        }
+        </div>
+      </ComparisonToggleableContainer>
     )
   }
 }

@@ -28,7 +28,7 @@ class Share extends PureComponent {
   render() {
     return (
       <div>
-        <div className="o-form-element">
+        <div className="o-form-element" style={{maxWidth:'500px'}}>
           <div className="c-input-group">
             <div className={`o-field ${this.state.copied && 'o-field--icon-left'}`}>
               {this.state.copied &&

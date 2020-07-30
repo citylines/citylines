@@ -40,9 +40,9 @@ class CityComparisonHeader extends PureComponent {
               <Translate content="city.config.title" />
             </Link>
             <Link
-            className={`comparison-link c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+            className={`comparison-link c-link ${this.props.displayShare ? 'c-link--brand' : ''}`}
             to=''
-            onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} >
+            onClick={e => {e.preventDefault(); this.props.onToggleShare()}} >
               <Translate content="city.share" />
             </Link>
           </span>}
