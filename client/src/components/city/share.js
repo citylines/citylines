@@ -12,11 +12,15 @@ class CityShare extends PureComponent {
     };
 
     this.socialMediae = [
-      {icon: 'fa fa-envelope'},
-      {icon: 'fab fa-facebook'},
-      {icon: 'fab fa-reddit'},
-      {icon: 'fab fa-twitter'}
+      {icon: 'fa fa-envelope', target: '_top', hrefFnc: (url, title) => `mailto:?subject=${title}&body=${title}: ${url}`},
+      {icon: 'fab fa-facebook', hrefFnc: (url, title) => `https://www.facebook.com/sharer/sharer.php?t=${title}&u=${url}`},
+      {icon: 'fab fa-reddit', hrefFnc: (url, title) => `http://www.reddit.com/submit?url=${url}&title=${title}`},
+      {icon: 'fab fa-twitter', hrefFnc: (url, title) => `https://twitter.com/intent/tweet?text=${title}&url=${url}`}
     ]
+  }
+
+  title() {
+    return document.title.split('|')[0].trim();
   }
 
   handleInputChange(e) {
@@ -44,8 +48,8 @@ class CityShare extends PureComponent {
         </div>
         <div className="o-form-element">
         {this.socialMediae.map(media =>
-          <span className="contact-icon">
-            <a href="">
+          <span key={media.icon} className="contact-icon">
+            <a target={media.target || '_blank'} href={media.hrefFnc(this.state.url, this.title())}>
               <span className={media.icon}></span>
             </a>
           </span>)
