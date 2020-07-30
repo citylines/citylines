@@ -15,7 +15,7 @@ class CitySettings extends PureComponent {
           <input
             type="checkbox"
             checked={this.props.showTransportModes}
-            onChange={this.props.onShowTransportModesChange && this.props.onShowTransportModesChange.bind(this)}
+            onChange={this.props.onShowTransportModesChange}
           /> <Translate content="city.config.show_transport_modes" />
         </label>
       </CityToggleableContainer>

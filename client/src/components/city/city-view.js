@@ -88,6 +88,10 @@ class CityView extends CityBase {
     CityViewStore.setSpeed(this.urlName, speed);
   }
 
+  handleTransportModesChange(e) {
+    CityViewStore.setShowTransportModes(this.urlName, e.target.checked);
+  }
+
   selectedSystem() {
     // TODO: shall this be deprecated in favour of the systems param?
     // (which allow multiple system?)
@@ -141,7 +145,13 @@ class CityView extends CityBase {
         <PanelBody>
           { this.params().system_id ? this.systemTitle() : this.cityTitle()}
           { this.params().system_id && this.systemIndicator() }
-          { this.props.displaySettings && <CitySettings /> }
+          { this.props.displaySettings &&
+              <CitySettings
+                speed={this.state.speed}
+                onSpeedChange={this.bindedHandleSpeedChange}
+                showTransportModes={this.state.showTransportModes}
+i               onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
+              /> }
           { this.props.displayShare && <CityToggleableContainer><Share /></CityToggleableContainer>}
           <div className="year-and-km-container">
             <Year
@@ -150,9 +160,6 @@ class CityView extends CityBase {
               max={(this.state.years || {}).end}
               year={this.state.currentYear}
               playing={this.state.playing}
-              speed={this.state.speed}
-              onSpeedChange={this.bindedHandleSpeedChange}
-              showTransportModes={this.state.showTransportModes}
               onYearChange={this.bindedOnYearChange}
             />
             <KmIndicator
