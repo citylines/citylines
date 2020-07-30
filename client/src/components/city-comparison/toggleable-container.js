@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 
-
 class ComparisonToggleableContainer extends PureComponent {
   render() {
     return (
