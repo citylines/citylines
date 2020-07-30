@@ -30,7 +30,9 @@ class PanelBody extends Component {
     const headerHeight = panel.children[0].clientHeight;
     const panelHeight = panel.clientHeight;
     const height = panelHeight - headerHeight;
-    this.refs.node.style.setProperty('height', `${height}px`);
+    if (height) {
+      this.refs.node.style.setProperty('height', `${height}px`);
+    }
   }
 
   componentDidMount() {

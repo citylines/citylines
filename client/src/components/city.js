@@ -205,18 +205,16 @@ class City extends CityBase {
               </div>
               </Popup>) }
               { this.state.drawFeatures &&
-                <React.Suspense>
-                  <Draw
-                    features={this.state.drawFeatures}
-                    onSelectionChange={this.bindedOnSelectionChange}
-                    onFeatureUpdate={this.bindedOnFeatureUpdate}
-                    onFeatureCreate={this.bindedOnFeatureCreate}
-                    onFeatureDelete={this.bindedOnFeatureDelete}
-                    onModeChange={this.bindedOnDrawModeChange}
-                    selectedFeatureById={this.state.drawSelectedFeatureById}
-                    currentMode={this.state.drawCurrentMode}
-                  />
-                </React.Suspense>
+                <Draw
+                  features={this.state.drawFeatures}
+                  onSelectionChange={this.bindedOnSelectionChange}
+                  onFeatureUpdate={this.bindedOnFeatureUpdate}
+                  onFeatureCreate={this.bindedOnFeatureCreate}
+                  onFeatureDelete={this.bindedOnFeatureDelete}
+                  onModeChange={this.bindedOnDrawModeChange}
+                  selectedFeatureById={this.state.drawSelectedFeatureById}
+                  currentMode={this.state.drawCurrentMode}
+                />
               }
           </Map>
           </main>
