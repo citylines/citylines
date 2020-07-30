@@ -1,8 +1,7 @@
 import React, {PureComponent} from 'react';
-import CityToggleableContainer from './toggleable-container';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-class CityShare extends PureComponent {
+class Share extends PureComponent {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -28,7 +27,7 @@ class CityShare extends PureComponent {
 
   render() {
     return (
-      <CityToggleableContainer>
+      <div>
         <div className="o-form-element">
           <div className="c-input-group">
             <div className={`o-field ${this.state.copied && 'o-field--icon-left'}`}>
@@ -53,9 +52,9 @@ class CityShare extends PureComponent {
           </span>)
         }
         </div>
-      </CityToggleableContainer>
+      </div>
     )
   }
 }
 
-export default CityShare
+export default Share

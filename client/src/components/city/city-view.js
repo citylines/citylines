@@ -12,7 +12,8 @@ import Year from './year';
 import KmIndicator from './km-indicator';
 import Tags from '../tags';
 import CitySettings from './settings';
-import CityShare from './share';
+import CityToggleableContainer from './toggleable-container';
+import Share from '../share';
 
 class CityView extends CityBase {
   constructor(props, context) {
@@ -141,7 +142,7 @@ class CityView extends CityBase {
           { this.params().system_id ? this.systemTitle() : this.cityTitle()}
           { this.params().system_id && this.systemIndicator() }
           { this.props.displaySettings && <CitySettings /> }
-          { this.props.displayShare && <CityShare /> }
+          { this.props.displayShare && <CityToggleableContainer><Share /></CityToggleableContainer>}
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}
