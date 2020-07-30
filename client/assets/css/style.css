@@ -322,11 +322,12 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: default;
 }
 
-.city-settings {
+.city-toggleable-container {
   margin: 2px 15px 20px 15px;
+  font-size: 0.9em;
 }
 
-.city-settings > .c-card__item > .o-form-element {
+.city-toggleable-container > .c-card__item > .o-form-element {
   margin: 0 8px;
 }
 
