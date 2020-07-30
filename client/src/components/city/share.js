@@ -10,6 +10,13 @@ class CityShare extends PureComponent {
       url: window.location.href,
       copied: false
     };
+
+    this.socialMediae = [
+      {icon: 'fa fa-envelope'},
+      {icon: 'fab fa-facebook'},
+      {icon: 'fab fa-reddit'},
+      {icon: 'fab fa-twitter'}
+    ]
   }
 
   handleInputChange(e) {
@@ -20,16 +27,29 @@ class CityShare extends PureComponent {
     // TODO: use https://github.com/nygardk/react-share for social buttons
     return (
       <CityToggleableContainer>
-        <div className="c-input-group">
-          <div className="o-field">
-            <input className={`c-field ${this.state.copied && 'c-field--success'}`} value={this.state.url} onChange={this.handleInputChange.bind(this)}/>
+        <div className="o-form-element">
+          <div className="c-input-group">
+            <div className={`o-field ${this.state.copied && 'o-field--icon-left'}`}>
+              {this.state.copied &&
+                <i className="fa fa-fw fa-check c-icon"></i>}
+              <input className={`c-field ${this.state.copied && 'c-field--success'}`} value={this.state.url} onChange={this.handleInputChange.bind(this)}/>
+            </div>
+            <CopyToClipboard text={this.state.url}
+              onCopy={() => this.setState({copied: true})}>
+              <button className={`c-button ${this.state.copied ? 'c-button--success' : 'c-button--ghost'}`}>
+                <span className="fa fa-clipboard"></span>
+              </button>
+            </CopyToClipboard>
           </div>
-          <CopyToClipboard text={this.state.url}
-            onCopy={() => this.setState({copied: true})}>
-            <button className={`c-button ${this.state.copied ? 'c-button--success' : 'c-button--ghost'}`}>
-              <span className="fa fa-clipboard"></span>
-            </button>
-          </CopyToClipboard>
+        </div>
+        <div className="o-form-element">
+        {this.socialMediae.map(media =>
+          <span className="contact-icon">
+            <a href="">
+              <span className={media.icon}></span>
+            </a>
+          </span>)
+        }
         </div>
       </CityToggleableContainer>
     )
