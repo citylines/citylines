@@ -163,7 +163,7 @@ class City extends CityBase {
             <Switch>
               <Route exact path="/:city_url_name" component={CityView} />
               <Route path="/:city_url_name/edit">
-                { MainStore.userLoggedIn() ? <Editor city_url_name={this.urlName} /> : <Redirect to="/auth" /> }
+                { MainStore.userLoggedIn() ? <React.Suspense fallback=''><Editor city_url_name={this.urlName} /></React.Suspense> : <Redirect to="/auth" /> }
               </Route>
             </Switch>
           </div>
@@ -205,16 +205,18 @@ class City extends CityBase {
               </div>
               </Popup>) }
               { this.state.drawFeatures &&
-                <Draw
-                  features={this.state.drawFeatures}
-                  onSelectionChange={this.bindedOnSelectionChange}
-                  onFeatureUpdate={this.bindedOnFeatureUpdate}
-                  onFeatureCreate={this.bindedOnFeatureCreate}
-                  onFeatureDelete={this.bindedOnFeatureDelete}
-                  onModeChange={this.bindedOnDrawModeChange}
-                  selectedFeatureById={this.state.drawSelectedFeatureById}
-                  currentMode={this.state.drawCurrentMode}
-                />
+                <React.Suspense fallback=''>
+                  <Draw
+                    features={this.state.drawFeatures}
+                    onSelectionChange={this.bindedOnSelectionChange}
+                    onFeatureUpdate={this.bindedOnFeatureUpdate}
+                    onFeatureCreate={this.bindedOnFeatureCreate}
+                    onFeatureDelete={this.bindedOnFeatureDelete}
+                    onModeChange={this.bindedOnDrawModeChange}
+                    selectedFeatureById={this.state.drawSelectedFeatureById}
+                    currentMode={this.state.drawCurrentMode}
+                  />
+                </React.Suspense>
               }
           </Map>
           </main>
