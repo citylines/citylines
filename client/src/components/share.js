@@ -10,11 +10,18 @@ class Share extends PureComponent {
     };
 
     this.socialMediae = [
-      {icon: 'fa fa-envelope', target: '_top', hrefFnc: (url, title) => `mailto:?subject=${title}&body=${title}: ${url}`},
-      {icon: 'fab fa-facebook', hrefFnc: (url, title) => `https://www.facebook.com/sharer/sharer.php?t=${title}&u=${url}`},
-      {icon: 'fab fa-reddit', hrefFnc: (url, title) => `http://www.reddit.com/submit?url=${url}&title=${title}`},
-      {icon: 'fab fa-twitter', hrefFnc: (url, title) => `https://twitter.com/intent/tweet?text=${title}&url=${url}`}
+      {icon: 'fa fa-envelope', target: '_top', hrefFnc: () => `mailto:?subject=${this.title()}&body=${this.title()}: ${encodeURIComponent(this.URLwithUTMTags('email'))}`},
+      {icon: 'fab fa-facebook', hrefFnc: () => `https://www.facebook.com/sharer/sharer.php?t=${this.title()}&u=${encodeURIComponent(this.URLwithUTMTags('fb'))}`},
+      {icon: 'fab fa-reddit', hrefFnc: () => `http://www.reddit.com/submit?url=${encodeURIComponent(this.URLwithUTMTags('reddit'))}&title=${this.title()}`},
+      {icon: 'fab fa-twitter', hrefFnc: () => `https://twitter.com/intent/tweet?text=${this.title()}&url=${encodeURIComponent(this.URLwithUTMTags('twitter'))}`}
     ]
+  }
+
+  URLwithUTMTags(medium) {
+    const url = this.state.url;
+    const els = `utm_medium=${medium}&utm_source=share_web`;
+    const art = (url.indexOf('?') == -1) ? '?' : '&';
+    return url + art + els;
   }
 
   title() {
@@ -33,7 +40,7 @@ class Share extends PureComponent {
             <div className="o-field">
               <input className={`c-field ${this.state.copied && 'c-field--success'}`} value={this.state.url} onChange={this.handleInputChange.bind(this)}/>
             </div>
-            <CopyToClipboard text={this.state.url}
+            <CopyToClipboard text={this.URLwithUTMTags('url_copied')}
               onCopy={() => this.setState({copied: true})}>
               <button className={`c-button ${this.state.copied ? 'c-button--ghost-success' : 'c-button--ghost'}`}>
                 <span className={`fa ${this.state.copied ? 'fa-check' : 'fa-clipboard'}`}></span>
@@ -44,7 +51,7 @@ class Share extends PureComponent {
         <div className="o-form-element">
         {this.socialMediae.map(media =>
           <span key={media.icon} className="contact-icon">
-            <a target={media.target || '_blank'} href={media.hrefFnc(this.state.url, this.title())}>
+            <a target={media.target || '_blank'} href={media.hrefFnc()}>
               <span className={media.icon}></span>
             </a>
           </span>)
