@@ -11,13 +11,21 @@ class PanelHeader extends PureComponent {
     return (
       <div className="panel-header o-grid__cell o-grid__cell--width-100">
         <div className="panel-header-title">
-          <h3 className="c-heading">{this.props.name}</h3>
-          <span className="commands">
+          <h2 className="c-heading">{this.props.name}</h2>
+          <div className="commands">
             {!this.props.loading &&
               <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
             {!this.props.loading && !editPath &&
-              <Translate className="c-link" component={Link} to={`/compare?cities=${this.props.urlName},`} content="compare.link" />}
-          </span>
+              <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
+            {!this.props.loading && !editPath &&
+              <Link className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
+                to=''
+                onClick={e => {e.preventDefault(); this.props.onToggleSettings()}} ><Translate content="city.config.title" /></Link>}
+            {!this.props.loading && !editPath &&
+              <Link className={`c-link ${this.props.displayShare ? 'c-link--brand' : ''}`}
+                to=''
+                onClick={e => {e.preventDefault(); this.props.onToggleShare()}} ><Translate content="city.share" /></Link>}
+          </div>
         </div>
       </div>
     );

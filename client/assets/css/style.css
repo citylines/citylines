@@ -50,8 +50,31 @@
 }
 
 #comparison-header .see-city {
-  padding-top:10px;
-  padding-left:5px;
+  padding-top:11px;
+  padding-left:10px;
+  font-size:0.9em;
+}
+
+#comparison-header a.c-link:visited {
+  color:#0c7fda;
+}
+
+#comparison-header a.c-link.c-link--brand:visited {
+  color:#2c3e50;
+}
+
+#comparison-header .comparison-main-ctrl {
+  display:flex;
+}
+
+#comparison-header .comparison-main-ctrl .comparison-link {
+  padding:7px 0 0 20px;
+  vertical-align:sub;
+  font-size: 0.9em;
+}
+
+.comparison-link + .comparison-link {
+  padding-left:10px !important;
 }
 
 .comparison-intro {
@@ -62,16 +85,19 @@
 }
 
 .comparison-settings {
-  width: 100%;
+  margin-left:-1em;
+  width: calc(100% + 2em);
   max-height:400px;
-  padding: 15px 0;
   overflow: auto;
-  background-color: #f9f9f9;
+  background-color: white;
   position:relative;
   z-index:1000;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 3px 0 0 rgba(0,0,0,0.1);
-  margin-top: 2px;
+  box-shadow:0 5px 10px 0 rgba(0,0,0,0.1);
+  font-size: 0.9em;
+}
+
+.comparison-settings > .c-card {
+  margin:5px 15px 10px 15px;
 }
 
 .comparison-settings-timeline-speed-container {
@@ -155,21 +181,32 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .panel-header-title {
-  padding:20px 0;
+  padding:25px 0 20px 0;
 }
 
-.panel-header-title h3.c-heading {
+.panel-header-title h2.c-heading {
   display:inline;
   margin-right:10px;
+  padding-top:0px;
+  padding-bottom:10px;
 }
 
 .panel-header-title .commands {
-  display:inline-block;
+  padding-top:10px;
   font-size:0.9em;
 }
 
-.panel-header-title .commands > a.c-link + a.c-link{
-  margin-left: 10px;
+.panel-header-title .commands > a.c-link {
+  display:inline-block;
+  margin-right: 10px;
+}
+
+.panel-header-title .commands > a.c-link:visited {
+  color:#0c7fda;
+}
+
+.panel-header-title .commands > a.c-link.c-link--brand:visited {
+  color:#2c3e50;
 }
 
 .panel-body {
@@ -179,7 +216,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .editor-cards-container {
-  padding:10px;
+  padding:10px 15px;
 }
 
 #edit-lines-card {
@@ -268,14 +305,14 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 2px 0;
 }
 
-.editor-features-lines-item .fa-times {
+.editor-features-lines-item .fa {
   position: absolute;
   right: 30px;
   margin-top:3px;
   color: #888;
 }
 
-.editor-features-lines-item .fa-times:hover {
+.editor-features-lines-item .fa:hover {
   color: #000;
   cursor: pointer;
 }
@@ -286,21 +323,21 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: default;
 }
 
-.year-container {
-  padding-bottom: 8px;
+.city-toggleable-container {
+  margin: 2px 15px 20px 15px;
+  font-size: 0.9em;
 }
 
-.year-container .year-config {
-  margin-top: 8px;
-  margin-bottom: 8px;
+.city-toggleable-container > .c-card__item > .o-form-element {
+  margin: 0 8px;
 }
 
 .year-container .year-group {
-  padding-bottom: 8px;
+  padding-bottom: 2px;
 }
 
 .year-and-km-container {
-  padding: 10px 20px 20px 20px;
+  padding: 0 15px 20px 15px;
 }
 
 .km-indicator .c-badge--success {
@@ -448,6 +485,10 @@ button.save-system {
 
 .contact-icon + .contact-icon {
   margin-left: 20px;
+}
+
+.share .contact-icon + .contact-icon {
+  margin-left: 15px;
 }
 
 .contact-icon a {
@@ -633,6 +674,10 @@ table .narrow {
   padding-bottom:4em;
 }
 
+.system-indicator {
+  margin:-5px 15px 20px;
+}
+
 .system-indicator-name {
   margin-right:10px
 }
@@ -683,14 +728,22 @@ table .narrow {
 }
 
 .user-avatar-edit {
+  position:absolute;
+  left:-10px;
+  top:40px;
+}
+
+.user-avatar-edit-controls {
+  line-height:15px;
+}
+
+.user-avatar-edit-control {
   font-size: initial;
   margin-left:10px;
 }
 
 .user-gravatar {
-  position: absolute;
-  left: 0;
-  top: 45px;
+  margin-left: 10px;
   font-size: 0.45em;
   width: 300px;
 }

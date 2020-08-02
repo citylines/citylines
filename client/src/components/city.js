@@ -148,6 +148,14 @@ class City extends CityBase {
     return style;
   }
 
+  toggleSettings() {
+    this.setState({displaySettings: !this.state.displaySettings, displayShare: false});
+  }
+
+  toggleShare() {
+    this.setState({displaySettings: false, displayShare: !this.state.displayShare});
+  }
+
   render() {
     if (!this.state) return null;
 
@@ -159,9 +167,14 @@ class City extends CityBase {
               pathName={this.props.location.pathname}
               urlName={this.urlName}
               loading={this.state.main.loading}
+              onToggleSettings={this.toggleSettings.bind(this)}
+              displaySettings={this.state.displaySettings}
+              onToggleShare={this.toggleShare.bind(this)}
+              displayShare={this.state.displayShare}
             />
             <Switch>
-              <Route exact path="/:city_url_name" component={CityView} />
+              <Route exact path="/:city_url_name"
+                render={props => <CityView {...props} displaySettings={this.state.displaySettings} displayShare={this.state.displayShare} />} />
               <Route path="/:city_url_name/edit">
                 { MainStore.userLoggedIn() ? <React.Suspense fallback=''><Editor city_url_name={this.urlName} /></React.Suspense> : <Redirect to="/auth" /> }
               </Route>

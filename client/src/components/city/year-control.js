@@ -23,11 +23,6 @@ class YearControl extends PureComponent {
         <button ref="action"
                 className="c-button c-button--ghost"
                 onClick={this.props.onToggleAnimation}><span className={`fa ${icon}`}></span></button>
-        <button type="button"
-                className={`c-button c-button--ghost ${this.props.showSettings ? 'c-button--active' : ''}`}
-                onClick={this.props.onToggleSettings}>
-                  <span className="fa fa-sliders-h"></span>
-        </button>
       </div>
     )
   }

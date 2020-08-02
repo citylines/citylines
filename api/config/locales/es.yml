@@ -55,7 +55,7 @@ es:
   city:
     title: Sistemas de transporte de %(city)s
     system_title: "%(system)s de %(city)s"
-    show_all_systems: Todos los sistemas
+    show_all_systems: Ver todos los sistemas
     description: Explora los sistemas de transporte de %(city)s, y su historia, en citylines.co
       —la plataforma de mapeo colaborativo de los sistemas de transporte urbano del
       mundo.
@@ -63,8 +63,10 @@ es:
     stop_editing: Dejar de editar
     lines: Líneas
     config:
+      title: Ajustes
       timeline_speed: Velocidad de la línea de tiempo
       show_transport_modes: Mostrar modos de transporte
+    share: Compartir
     km_operative: 'Operativos: %(km)s km'
     km_under_construction: 'En construcción: %(km)s km'
     all_lines: Todas las líneas

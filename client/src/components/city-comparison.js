@@ -9,6 +9,8 @@ import FeaturePopupContent from './city/feature-popup-content';
 import CityComparisonHeader from './city-comparison/header';
 import Intro from './city-comparison/intro';
 import CityComparisonSettings from './city-comparison/settings';
+import ComparisonToggleableContainer from './city-comparison/toggleable-container';
+import Share from './share';
 
 import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
@@ -32,8 +34,7 @@ class CityComparison extends CityBase {
       cities: {},
       citiesList: [],
       systems: {},
-      systemsShown: systemsShown,
-      showSettings: false
+      systemsShown: systemsShown
     };
 
     this.bindedOnChange = this.onChange.bind(this);
@@ -152,7 +153,11 @@ class CityComparison extends CityBase {
   }
 
   handleToggleSettings() {
-    this.setState({showSettings: !this.state.showSettings});
+    this.setState({displaySettings: !this.state.displaySettings, displayShare: false});
+  }
+
+  handleToggleShare() {
+    this.setState({displayShare: !this.state.displayShare, displaySettings: false});
   }
 
   handleSystemToggle(urlName, systemId, show) {
@@ -248,13 +253,15 @@ class CityComparison extends CityBase {
         onYearChange={this.handleYearChange.bind(this)}
         onYearUpdate={this.handleYearUpdate.bind(this)}
         toggleAnimation={this.handleToggleAnimation.bind(this)}
-        toggleSettings={this.handleToggleSettings.bind(this)}
+        onToggleSettings={this.handleToggleSettings.bind(this)}
+        onToggleShare={this.handleToggleShare.bind(this)}
         playing={this.state.playing}
-        showSettings={this.state.showSettings}
+        displaySettings={this.state.displaySettings}
+        displayShare={this.state.displayShare}
         citiesList={this.state.citiesList}
       />
       {
-        this.state.showSettings && <CityComparisonSettings
+        this.state.displaySettings && <CityComparisonSettings
           cities={this.state.cities}
           urlNames={this.state.urlNames}
           speed={this.state.speed}
@@ -263,6 +270,11 @@ class CityComparison extends CityBase {
           onSpeedChange={this.handleSpeedChange.bind(this)}
           onSystemToggle={this.handleSystemToggle.bind(this)}
         />
+      }
+      {
+        this.state.displayShare && <ComparisonToggleableContainer>
+            <Share />
+          </ComparisonToggleableContainer>
       }
       {
         !this.activeUrlNames().length && <Intro />

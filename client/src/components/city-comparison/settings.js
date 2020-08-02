@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import TimelineSpeedControl from '../city/timeline-speed-control';
+import ComparisonToggleableContainer from './toggleable-container';
 
 class CityComparisonSettings extends PureComponent {
   systems(urlName) {
@@ -19,7 +20,7 @@ class CityComparisonSettings extends PureComponent {
 
   render() {
     return (
-      <div className="comparison-settings">
+      <ComparisonToggleableContainer>
         <div className="comparison-settings-timeline-speed-container">
           <TimelineSpeedControl
             speed={this.props.speed}
@@ -51,7 +52,7 @@ class CityComparisonSettings extends PureComponent {
           )
         }
         </div>
-      </div>
+      </ComparisonToggleableContainer>
     )
   }
 }

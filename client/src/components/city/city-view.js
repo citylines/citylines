@@ -11,6 +11,9 @@ import LinesTree from './lines-tree';
 import Year from './year';
 import KmIndicator from './km-indicator';
 import Tags from '../tags';
+import CitySettings from './settings';
+import CityToggleableContainer from './toggleable-container';
+import Share from '../share';
 
 class CityView extends CityBase {
   constructor(props, context) {
@@ -85,6 +88,10 @@ class CityView extends CityBase {
     CityViewStore.setSpeed(this.urlName, speed);
   }
 
+  handleTransportModesChange(e) {
+    CityViewStore.setShowTransportModes(this.urlName, e.target.checked);
+  }
+
   selectedSystem() {
     // TODO: shall this be deprecated in favour of the systems param?
     // (which allow multiple system?)
@@ -120,16 +127,13 @@ class CityView extends CityBase {
     const system = this.selectedSystem();
     if (!system) return;
 
-    return  <div style={{margin:'-12px 10px 5px'}}>
-              <div className="c-card__item">
-                <div><span className="system-indicator-name">{system.name}</span>
-                  <span className="system-indicator-link">
-                    <Translate component="a"
-                      className="c-link"
-                      onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName)}}
-                      content="city.show_all_systems" />
-                  </span>
-                </div>
+    return  <div className="system-indicator">
+              <div className="system-indicator-name">{system.name}</div>
+              <div className="system-indicator-link">
+                <a className="c-link"
+                  onClick={(e) => {e.preventDefault(); CityViewStore.showAllSystems(this.urlName);}} >
+                  <Translate content="city.show_all_systems" />
+                </a>
               </div>
             </div>
   }
@@ -141,6 +145,14 @@ class CityView extends CityBase {
         <PanelBody>
           { this.params().system_id ? this.systemTitle() : this.cityTitle()}
           { this.params().system_id && this.systemIndicator() }
+          { this.props.displaySettings &&
+              <CitySettings
+                speed={this.state.speed}
+                onSpeedChange={this.bindedHandleSpeedChange}
+                showTransportModes={this.state.showTransportModes}
+i               onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
+              /> }
+          { this.props.displayShare && <CityToggleableContainer><Share /></CityToggleableContainer>}
           <div className="year-and-km-container">
             <Year
               urlName={this.urlName}
@@ -148,9 +160,6 @@ class CityView extends CityBase {
               max={(this.state.years || {}).end}
               year={this.state.currentYear}
               playing={this.state.playing}
-              speed={this.state.speed}
-              onSpeedChange={this.bindedHandleSpeedChange}
-              showTransportModes={this.state.showTransportModes}
               onYearChange={this.bindedOnYearChange}
             />
             <KmIndicator
