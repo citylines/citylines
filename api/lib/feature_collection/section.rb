@@ -63,8 +63,8 @@ module FeatureCollection
                       'klass', 'Section',
                       'length', length,
                       'opening', coalesce(line_fromyear,opening, #{FUTURE}),
-                      'buildstart', coalesce(buildstart, line_fromyear,opening),
-                      'buildstart_end', coalesce(line_fromyear,opening, closure, #{FUTURE}),
+                      'buildstart', coalesce(buildstart,min_fromyear,opening),
+                      'buildstart_end', coalesce(min_fromyear,opening, closure, #{FUTURE}),
                       'closure', coalesce(line_toyear,closure, #{FUTURE}),
                       'line', line,
                       'line_url_name', line_url_name,
@@ -99,6 +99,7 @@ module FeatureCollection
           closure,
           section_lines.fromyear as line_fromyear,
           section_lines.toyear as line_toyear,
+          all_lines_data.min_fromyear as min_fromyear,
           lines.name as line,
           lines.url_name as line_url_name,
           coalesce(systems.name,'') as system,
@@ -128,6 +129,13 @@ module FeatureCollection
             where section_id = sections.id
             group by section_id, line_group
           ) as lines_data on lines_data.section_id = sections.id and lines_data.line_group = section_lines.line_group
+          left join lateral (
+            select section_id,
+            min(fromyear) as min_fromyear
+            from section_lines
+            where section_id = sections.id
+            group by section_id
+            ) as all_lines_data on all_lines_data.section_id = sections.id
           left join lines
             on line_id = lines.id
           left join systems
