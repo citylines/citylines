@@ -135,7 +135,7 @@ module FeatureCollection
             from section_lines
             where section_id = sections.id
             group by section_id
-            ) as all_lines_data on all_lines_data.section_id = sections.id
+          ) as all_lines_data on all_lines_data.section_id = sections.id
           left join lines
             on line_id = lines.id
           left join systems
