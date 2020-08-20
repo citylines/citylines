@@ -117,6 +117,7 @@ module FeatureCollection
             on section_lines.section_id = sections.id
           left join lateral(
             select section_id,
+              line_group,
               array_agg(line_id) as all_lines,
               count(line_id) as count,
               max(transport_modes.width) as width,
@@ -125,8 +126,8 @@ module FeatureCollection
               left join lines on line_id = lines.id
               left join transport_modes on lines.transport_mode_id = transport_modes.id
             where section_id = sections.id
-            group by section_id
-          ) as lines_data on lines_data.section_id = sections.id
+            group by section_id, line_group
+          ) as lines_data on lines_data.section_id = sections.id and lines_data.line_group = section_lines.line_group
           left join lines
             on line_id = lines.id
           left join systems
