@@ -160,4 +160,18 @@ class Api < App
 
     lines_features_collection(@city, type)
   end
+
+  get '/popup/:features' do |features|
+    # FIXME: right now only sections
+    section_ids = features.split(',').map do |f|
+      f_parts = f.split('-')
+      f_parts.last if f_parts.first == 'Section'
+    end.compact
+
+    SectionLine.where(section_id: section_ids).all.map do |sl|
+      puts sl.values
+    end
+
+    {featuresData: []}.to_json
+  end
 end

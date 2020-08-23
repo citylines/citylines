@@ -38,33 +38,6 @@ class MouseEvents {
       if (setHoverIds && typeof callback === 'function') callback();
   }
 
-  clickFeatures(point, features, callback) {
-    if (features.length == 0) return;
-
-    this.clickedFeatures = {
-      point: point,
-      features: features.map((f) => {
-        if (f.properties.lines) {
-          f.properties.lines = JSON.parse(f.properties.lines);
-          f.properties.lines.map((l) => {
-            l.lineColor = this.style.lineColor(l.line_url_name);
-            l.lineLabelColor = this.style.lineLabelFontColor(l.line_url_name);
-          });
-        } else {
-          f.properties.lineColor = this.style.lineColor(f.properties.line_url_name);
-          f.properties.lineLabelColor = this.style.lineLabelFontColor(f.properties.line_url_name);
-        }
-        return f;
-      })
-    }
-
-    if (typeof callback === 'function') callback();
-  }
-
-  unClickFeatures() {
-    this.clickedFeatures = null;
-  }
-
   calculateLayerNames() {
     const layers = [];
     Object.values(this.mappers).map((mapper) => {

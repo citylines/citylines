@@ -31,6 +31,16 @@ const CityViewStore = Object.assign({}, Store, {
     return json;
   },
 
+  async fetchFeaturesPopupData(featureIds) {
+    const url = `/api/popup/${featureIds.join(',')}`;
+    const response = await fetch(url);
+
+    if (response.status == 404) return;
+
+    const json = await response.json();
+    return json.featuresData;
+  },
+
   async loadKmInfo(urlName, year, lines) {
     const yearsData = await this.fetchCityYearsData(urlName);
 
@@ -102,7 +112,7 @@ const CityViewStore = Object.assign({}, Store, {
       currentYear: cityData.timeline ? cityData.timeline.years.current : null,
       playing: cityData.timeline ? cityData.timeline.playing : false,
       speed: cityData.timeline ? cityData.timeline.speed : null,
-      clickedFeatures: cityData.mouseEvents ? cityData.mouseEvents.clickedFeatures : null,
+      clickedFeatures: cityData.clickedFeatures,
       mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : [],
       kmOperative: cityData.kmInfo ? cityData.kmInfo.kmOperative : null,
       kmUnderConstruction: cityData.kmInfo ? cityData.kmInfo.kmUnderConstruction : null
@@ -187,13 +197,37 @@ const CityViewStore = Object.assign({}, Store, {
     });
   },
 
-  clickFeatures(urlName, point, features) {
+  async clickFeatures(urlName, point, features) {
+    if (features.length == 0) return;
+
     const cityData = this.cityData[urlName];
     if (!cityData || !cityData.mouseEvents) return;
 
-    cityData.mouseEvents.clickFeatures(point, features, () => {
-      this.emitChangeEvent();
+    // This is to display something while the content is fetched
+    cityData.clickedFeatures = {
+      point: point,
+      features: [],
+      loading: true
+    }
+
+    this.emitChangeEvent();
+
+    const featuresIds = features.map(f => {
+      const props = f.properties;
+      const k = props.klass;
+      const id = k == 'Station' ? props.id : props.id.split('-')[0];
+      return [k, id].join('-');
     });
+
+    const featuresData = await this.fetchFeaturesPopupData(featuresIds);
+
+    cityData.clickedFeatures = {
+      point: point,
+      features: featuresData,
+      loading: false
+    }
+
+    this.emitChangeEvent();
   },
 
   unClickFeatures(urlName) {
@@ -204,7 +238,7 @@ const CityViewStore = Object.assign({}, Store, {
     //deleted (via the #unload method), so we check if it exists.
     if (!cityData) return;
 
-    cityData.mouseEvents.unClickFeatures();
+    cityData.clickedFeatures = null;
     this.emitChangeEvent();
   },
 
