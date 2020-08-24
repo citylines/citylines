@@ -249,6 +249,10 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   vertical-align: top;
 }
 
+.line-label-li {
+  padding-top: 5px;
+}
+
 .edit-city-link {
   margin-left:10px;
 }

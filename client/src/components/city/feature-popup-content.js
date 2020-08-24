@@ -115,10 +115,7 @@ class DetailedData extends Component {
             <li className="c-list__item popup-data-title">
               Other lines on the same track
             </li>}
-          { otherLines.length > 0 && otherLines.map(line => <li className="c-list__item popup-data-title">
-              <LineLabel line={line} key={line.url_name} showYears={true} />
-            </li>
-          )}
+          { otherLines.length > 0 && otherLines.map(line => <LineLabel line={line} key={line.url_name} showYears={true} />)}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
           <span className="show-more"><span className="fas fa-angle-down"/></span>
@@ -142,7 +139,7 @@ class LineLabel extends Component {
 
   render() {
     return (
-      <li className="c-list__item">
+      <li className="c-list__item line-label-li">
         <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
         {this.props.strong ?
           <strong className="line-label-system">{this.props.line.system}</strong> :
