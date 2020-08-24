@@ -24,4 +24,35 @@ module PopupHelpers
       Integer(color[i * 2, 2], 16)
     end
   end
+
+  def popup_features_data(features)
+    section_ids = features.split(',').map do |f|
+      f_parts = f.split('-')
+      f_parts.last if f_parts.first == 'Section'
+    end.compact
+
+    features_data = Section.where(id: section_ids).all.map do |section|
+      lines = section.section_lines.map do |sl|
+        line = sl.line
+        {
+          name: line.name,
+          url_name: line.url_name,
+          system: line.system.name,
+          transport_mode_name: line.transport_mode.name,
+          color: line.color,
+          label_font_color: line_label_font_color(line.color),
+          from: sl.fromyear,
+          to: sl.toyear
+        }
+      end
+
+      {
+        buildstart: section.buildstart,
+        buildstart_end: section.opening || section.closure || FeatureCollection::Section::FUTURE,
+        section_closure: section.closure || FeatureCollection::Section::FUTURE,
+        length: section.length,
+        lines: lines
+      }
+    end
+  end
 end
