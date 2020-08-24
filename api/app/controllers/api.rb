@@ -172,7 +172,6 @@ class Api < App
     features_data = Section.where(id: section_ids).all.map do |section|
       lines = section.section_lines.map do |sl|
         line = sl.line
-        # FIXME: add colors
         {
           name: line.name,
           url_name: line.url_name,
