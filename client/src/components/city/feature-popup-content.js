@@ -8,7 +8,7 @@ class FeaturePopupContent extends Component {
   }
 
   lineStyle(p) {
-    return {color: p.lineLabelColor, backgroundColor: p.lineColor, marginLeft: 0, marginRight: 5, boxShadow: (p.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
+    return {color: p.label_font_color, backgroundColor: p.color, marginLeft: 0, marginRight: 5, boxShadow: (p.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
   }
 
   groupedSystems(linesInfo) {
@@ -53,7 +53,7 @@ class FeaturePopupContent extends Component {
               :
             <div>
               <li className="c-list__item">
-                <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{currentLine.name}</span>
+                <span className="c-text--highlight line-label" style={this.lineStyle(currentLine)}>{currentLine.name}</span>
                 <strong>{currentLine.system}</strong>
               </li>
             </div>

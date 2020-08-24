@@ -11,6 +11,7 @@ class Api < App
   helpers CityHelpers
   helpers UserHelpers
   helpers CacheHelpers
+  helpers PopupHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -177,6 +178,8 @@ class Api < App
           url_name: line.url_name,
           system: line.system.name,
           transport_mode_name: line.transport_mode.name,
+          color: line.color,
+          label_font_color: line_label_font_color(line.color),
           from: sl.fromyear,
           to: sl.toyear
         }
