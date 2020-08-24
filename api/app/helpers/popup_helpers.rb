@@ -15,9 +15,9 @@ module PopupHelpers
 
   def hex_to_rgb_array(color)
     if color.length === 3
-      color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
+      color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2]
     elsif (color.length != 6)
-      raise 'Invalid hex color: ' + color;
+      raise 'Invalid hex color: ' + color
     end
 
     3.times.map do |i|
