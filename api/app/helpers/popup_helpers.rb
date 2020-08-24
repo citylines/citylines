@@ -51,7 +51,8 @@ module PopupHelpers
         buildstart_end: section.opening || section.closure || FeatureCollection::Section::FUTURE,
         section_closure: section.closure || FeatureCollection::Section::FUTURE,
         length: section.length,
-        lines: lines
+        lines: lines,
+        section_id: section.id
       }
     end
   end
