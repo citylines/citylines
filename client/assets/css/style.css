@@ -244,6 +244,11 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   vertical-align:top;
 }
 
+.line-label-system {
+  line-height: 18px;
+  vertical-align: top;
+}
+
 .edit-city-link {
   margin-left:10px;
 }

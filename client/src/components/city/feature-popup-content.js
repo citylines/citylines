@@ -143,10 +143,10 @@ class LineLabel extends Component {
       <li className="c-list__item">
         <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
         {this.props.strong ?
-          <strong>{this.props.line.system}</strong> :
-          <span>{this.props.line.system}</span>}
+          <strong className="line-label-system">{this.props.line.system}</strong> :
+          <span className="line-label-system">{this.props.line.system}</span>}
         {this.props.showYears && this.props.line.from &&
-            <span>{` (${this.props.line.from} - ${this.props.line.to ? this.props.line.to : 'Today'})`}</span>
+            <span className="line-label-system">{` (${this.props.line.from} - ${this.props.line.to ? this.props.line.to : 'Today'})`}</span>
         }
       </li>
     )
