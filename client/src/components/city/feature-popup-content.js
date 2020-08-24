@@ -68,6 +68,12 @@ class FeaturePopupContent extends Component {
   }
 }
 
+
+const validFeatureValue = (value) => value !== null && value !== 0 && value !== 999999;
+
+// FIXME: Replace 'Today' with i18n.
+const validOrToday = (value) => validFeatureValue(value) ? value : 'Today';
+
 class DetailedData extends Component {
   transportModes() {
     let allModes = [];
@@ -79,10 +85,6 @@ class DetailedData extends Component {
     }
 
     return [ ...new Set(allModes) ].filter(e => e && e != 'default');
-  }
-
-  validFeatureValue(value) {
-    return (value !== null && value !== 0 && value !== 999999);
   }
 
   render() {
@@ -103,11 +105,11 @@ class DetailedData extends Component {
             { !this.props.isStation && <Translate content="city.popup.track" /> }
           </li>
           { this.props.length && <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
-          { this.validFeatureValue(this.props.buildstart) &&
-            <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${this.props.buildstart_end}`}</li>}
-          { (this.validFeatureValue(this.props.opening) || this.validFeatureValue(this.props.closure)) &&
-              <li className="c-list__item">{`Line operation: ${this.props.opening} - ${this.validFeatureValue(this.props.closure) ? this.props.closure : 'Today'}`}</li>}
-          { this.validFeatureValue(this.props.section_closure) &&
+          { validFeatureValue(this.props.buildstart) &&
+            <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${validOrToday(this.props.buildstart_end)}`}</li>}
+          { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
+              <li className="c-list__item">{`Line operation: ${this.props.opening} - ${validOrToday(this.props.closure)}`}</li>}
+          { validFeatureValue(this.props.section_closure) &&
               <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.section_closure}} /></li> }
           { otherLines.length > 0 &&
             <li className="c-list__item popup-data-title">
@@ -146,7 +148,7 @@ class LineLabel extends Component {
           <strong className="line-label-system">{this.props.line.system}</strong> :
           <span className="line-label-system">{this.props.line.system}</span>}
         {this.props.showYears && this.props.line.from &&
-            <span className="line-label-system">{` (${this.props.line.from} - ${this.props.line.to ? this.props.line.to : 'Today'})`}</span>
+          <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>
         }
       </li>
     )
