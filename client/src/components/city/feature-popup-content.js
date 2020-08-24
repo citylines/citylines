@@ -7,10 +7,6 @@ class FeaturePopupContent extends Component {
     return this.props.feature.properties;
   }
 
-  lineStyle(p) {
-    return {color: p.label_font_color, backgroundColor: p.color, marginLeft: 0, marginRight: 5, boxShadow: (p.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
-  }
-
   groupedSystems(linesInfo) {
     let systems = {};
 
@@ -51,20 +47,18 @@ class FeaturePopupContent extends Component {
               )}
             </div>
               :
-            <div>
-              <li className="c-list__item">
-                <span className="c-text--highlight line-label" style={this.lineStyle(currentLine)}>{currentLine.name}</span>
-                <strong>{currentLine.system}</strong>
-              </li>
-            </div>
+            <LineLabel line={currentLine} strong={true} />
           }
           <DetailedData
             isStation={this.isStation()}
             lines={fProps.lines}
             transport_mode_name={fProps.transport_mode_name}
             buildstart={fProps.buildstart}
+            buildstart_end={fProps.buildstart_end}
+            line_url_name={fProps.line_url_name}
             opening={fProps.opening}
             closure={fProps.closure}
+            section_closure={fProps.section_closure}
             length={fProps.length}
             id={`${fProps.klass}-${fProps.id}`}
           />
@@ -92,6 +86,10 @@ class DetailedData extends Component {
   }
 
   render() {
+    const otherLines = this.props.lines.
+      filter(line => line.url_name != this.props.line_url_name).
+      sort((a,b) => a.fromyear && b.fromyear && a.fromyear > b.fromyear ? 1 : -1);
+
     return (
       <div>
         <input className="popup-data-checkbox" id={this.props.id} type='checkbox'></input>
@@ -104,16 +102,53 @@ class DetailedData extends Component {
           <li className="c-list__item popup-data-title">
             { !this.props.isStation && <Translate content="city.popup.track" /> }
           </li>
-          { this.validFeatureValue(this.props.buildstart) ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: this.props.buildstart}} /></li> : ''}
-          { this.validFeatureValue(this.props.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: this.props.opening}} /></li> : ''}
-          { this.validFeatureValue(this.props.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.closure}} /></li> : ''}
-          { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li> : ''}
+          { this.props.length && <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
+          { this.validFeatureValue(this.props.buildstart) &&
+            <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${this.props.buildstart_end}`}</li>}
+          { (this.validFeatureValue(this.props.opening) || this.validFeatureValue(this.props.closure)) &&
+              <li className="c-list__item">{`Line operation: ${this.props.opening} - ${this.validFeatureValue(this.props.closure) ? this.props.closure : 'Today'}`}</li>}
+          { this.validFeatureValue(this.props.section_closure) &&
+              <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.section_closure}} /></li> }
+          { otherLines.length > 0 &&
+            <li className="c-list__item popup-data-title">
+              Other lines on the same track
+            </li>}
+          { otherLines.length > 0 && otherLines.map(line => <li className="c-list__item popup-data-title">
+              <LineLabel line={line} key={line.url_name} showYears={true} />
+            </li>
+          )}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
           <span className="show-more"><span className="fas fa-angle-down"/></span>
           <span className="show-less"><span className="fas fa-angle-up"/></span>
         </label>
       </div>
+    )
+  }
+}
+
+class LineLabel extends Component {
+  lineStyle() {
+    return {
+      color: this.props.line.label_font_color,
+      backgroundColor: this.props.line.color,
+      marginLeft: 0,
+      marginRight: 5,
+      boxShadow: this.props.line.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null
+    };
+  }
+
+  render() {
+    return (
+      <li className="c-list__item">
+        <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
+        {this.props.strong ?
+          <strong>{this.props.line.system}</strong> :
+          <span>{this.props.line.system}</span>}
+        {this.props.showYears && this.props.line.from &&
+            <span>{` (${this.props.line.from} - ${this.props.line.to ? this.props.line.to : 'Today'})`}</span>
+        }
+      </li>
     )
   }
 }

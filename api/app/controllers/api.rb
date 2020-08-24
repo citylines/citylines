@@ -186,6 +186,9 @@ class Api < App
       end
 
       {
+        buildstart: section.buildstart,
+        buildstart_end: section.opening || section.closure || FeatureCollection::Section::FUTURE,
+        section_closure: section.closure || FeatureCollection::Section::FUTURE,
         length: section.length,
         lines: lines
       }

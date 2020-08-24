@@ -73,7 +73,7 @@ es:
     popup:
       station: Estación %(name)s
       unnamed_station: Estación
-      track: Información del tramo
+      track: Detalles del tramo
       buildstart: 'Comienzo de construcción: %(year)s'
       opening: 'Inauguración: %(year)s'
       closure: 'Cierre: %(year)s'

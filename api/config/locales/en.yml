@@ -69,7 +69,7 @@ en:
     popup:
       station: "%(name)s station"
       unnamed_station: Station
-      track: Track information
+      track: Track details
       buildstart: 'Beginning of construction: %(year)s'
       opening: 'Opening: %(year)s'
       closure: 'Closure: %(year)s'
