@@ -31,7 +31,7 @@ module PopupHelpers
       f_parts.last if f_parts.first == 'Section'
     end.compact
 
-    features_data = Section.where(id: section_ids).all.map do |section|
+    Section.where(id: section_ids).all.map do |section|
       lines = section.section_lines.map do |sl|
         line = sl.line
         {
