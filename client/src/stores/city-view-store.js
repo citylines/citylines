@@ -203,15 +203,6 @@ const CityViewStore = Object.assign({}, Store, {
     const cityData = this.cityData[urlName];
     if (!cityData || !cityData.mouseEvents) return;
 
-    // This is to display something while the content is fetched
-    cityData.clickedFeatures = {
-      point: point,
-      features: [],
-      loading: true
-    }
-
-    this.emitChangeEvent();
-
     const featuresIds = features.map(f => {
       const props = f.properties;
       const k = props.klass;
@@ -223,8 +214,7 @@ const CityViewStore = Object.assign({}, Store, {
 
     cityData.clickedFeatures = {
       point: point,
-      features: featuresData,
-      loading: false
+      features: featuresData
     }
 
     this.emitChangeEvent();
