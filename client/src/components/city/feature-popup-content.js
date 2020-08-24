@@ -47,7 +47,7 @@ class FeaturePopupContent extends Component {
               )}
             </div>
               :
-            <LineLabel line={currentLine} strong={true} />
+            <LineLabel line={currentLine} />
           }
           <DetailedData
             isStation={this.isStation()}
@@ -141,9 +141,7 @@ class LineLabel extends Component {
     return (
       <li className="c-list__item line-label-li">
         <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
-        {this.props.strong ?
-          <strong className="line-label-system">{this.props.line.system}</strong> :
-          <span className="line-label-system">{this.props.line.system}</span>}
+        <strong className="line-label-system">{this.props.line.system}</strong>
         {this.props.showYears && this.props.line.from &&
           <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>
         }
