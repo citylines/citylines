@@ -168,10 +168,26 @@ class Api < App
       f_parts.last if f_parts.first == 'Section'
     end.compact
 
-    SectionLine.where(section_id: section_ids).all.map do |sl|
-      puts sl.values
+    features_data = Section.where(id: section_ids).all.map do |section|
+      lines = section.section_lines.map do |sl|
+        line = sl.line
+        # FIXME: add colors
+        {
+          name: line.name,
+          url_name: line.url_name,
+          system: line.system.name,
+          transport_mode_name: line.transport_mode.name,
+          from: sl.fromyear,
+          to: sl.toyear
+        }
+      end
+
+      {
+        length: section.length,
+        lines: lines
+      }
     end
 
-    {featuresData: []}.to_json
+    {featuresData: features_data}.to_json
   end
 end

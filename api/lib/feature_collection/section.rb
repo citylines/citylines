@@ -61,14 +61,11 @@ module FeatureCollection
                   'properties', json_build_object(
                       'id', concat(section_id,'-',line_url_name),
                       'klass', 'Section',
-                      'length', length,
                       'opening', coalesce(line_fromyear,opening, #{FUTURE}),
                       'buildstart', case when line_fromyear = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
                       'buildstart_end',case when line_fromyear = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
                       'closure', coalesce(line_toyear,closure, #{FUTURE}),
-                      'line', line,
                       'line_url_name', line_url_name,
-                      'transport_mode_name', transport_mode_name,
                       'width', width,
                       'offset', (
                         case count
@@ -82,8 +79,7 @@ module FeatureCollection
                             end
                           )
                         end
-                       ),
-                      'system', system
+                       )
                   )
               )
             ), '[]'::json
@@ -93,17 +89,13 @@ module FeatureCollection
         select
           sections.id as section_id,
           geometry,
-          sections.length as length,
           opening,
           buildstart,
           closure,
           section_lines.fromyear as line_fromyear,
           section_lines.toyear as line_toyear,
           all_lines_data.min_fromyear as min_fromyear,
-          lines.name as line,
           lines.url_name as line_url_name,
-          coalesce(systems.name,'') as system,
-          transport_modes.name as transport_mode_name,
           greatest(lines_data.min_width, (
               case
                 when count = 1 then lines_data.width
@@ -138,10 +130,6 @@ module FeatureCollection
           ) as all_lines_data on all_lines_data.section_id = sections.id
           left join lines
             on line_id = lines.id
-          left join systems
-            on system_id = systems.id
-          left join transport_modes
-            on transport_modes.id = transport_mode_id
           where ?
         ) as sections_data
     }.freeze

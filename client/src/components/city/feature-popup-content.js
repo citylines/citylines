@@ -31,6 +31,7 @@ class FeaturePopupContent extends Component {
 
   render() {
     const fProps = this.fProps();
+    const currentLine = fProps.lines.find(el => el.url_name == fProps.line_url_name);
 
     return (
         <div className="c-text popup-feature-info">
@@ -52,8 +53,8 @@ class FeaturePopupContent extends Component {
               :
             <div>
               <li className="c-list__item">
-                <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{fProps.line}</span>
-                <strong>{fProps.system}</strong>
+                <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{currentLine.name}</span>
+                <strong>{currentLine.system}</strong>
               </li>
             </div>
           }
