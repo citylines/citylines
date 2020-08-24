@@ -210,10 +210,13 @@ const CityViewStore = Object.assign({}, Store, {
       return [k, id].join('-');
     });
 
-    const featuresData = await this.fetchFeaturesPopupData(featuresIds);
+    let featuresData = await this.fetchFeaturesPopupData(featuresIds);
+    featuresData = featuresData.sort((a,b) => a.id > b.id ? 1 : -1);
 
-    features.map((el,idx) => {
-      el.properties = { ...el.properties, ...featuresData[idx]};
+    features.
+      sort((a,b) => a.properties.id > b.properties.id ? 1 : -1).
+      map((el,idx) => {
+        el.properties = { ...el.properties, ...featuresData[idx]};
     });
 
     cityData.clickedFeatures = {
