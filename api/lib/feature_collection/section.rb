@@ -62,8 +62,8 @@ module FeatureCollection
                       'id', concat(section_id,'-',line_url_name),
                       'klass', 'Section',
                       'opening', coalesce(line_fromyear,opening, #{FUTURE}),
-                      'buildstart', case when line_fromyear = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
-                      'buildstart_end',case when line_fromyear = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
+                      'buildstart', case when coalesce(line_fromyear,opening) = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
+                      'buildstart_end',case when coalesce(line_fromyear,opening) = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
                       'closure', coalesce(line_toyear,closure, #{FUTURE}),
                       'line_url_name', line_url_name,
                       'width', width,
@@ -94,7 +94,7 @@ module FeatureCollection
           closure,
           section_lines.fromyear as line_fromyear,
           section_lines.toyear as line_toyear,
-          all_lines_data.min_fromyear as min_fromyear,
+          least(min_fromyear, opening) as min_fromyear,
           lines.url_name as line_url_name,
           greatest(lines_data.min_width, (
               case

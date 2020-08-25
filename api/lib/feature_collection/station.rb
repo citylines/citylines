@@ -63,14 +63,12 @@ module FeatureCollection
                     'type',       'Feature',
                     'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
                     'properties', json_build_object(
-                        'id', id,
+                        'id', concat(station_id,'-',line_group),
                         'klass', 'Station',
-                        'name', name,
-                        'opening', coalesce(opening, #{FUTURE}),
-                        'buildstart', coalesce(buildstart, opening),
-                        'buildstart_end', coalesce(opening, closure, #{FUTURE}),
-                        'closure', coalesce(closure, #{FUTURE}),
-                        'lines', coalesce(lines,'[]'::json),
+                        'opening', coalesce(line_fromyear, opening, #{FUTURE}),
+                        'buildstart', case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
+                        'buildstart_end',case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
+                        'closure', coalesce(line_toyear, closure, #{FUTURE}),
                         'line_url_name', (case
                                             when lines_count > 1 then '#{SHARED_STATION_LINE_URL_NAME}'
                                             else line_url_names[1]
@@ -92,22 +90,42 @@ module FeatureCollection
           )
       )::text
       from (
-        select id, name, geometry, opening, buildstart, closure, lines, width, line_url_names, lines_count
+        select
+          stations.id as station_id,
+          line_group,
+          geometry,
+          opening,
+          buildstart,
+          closure,
+          line_fromyear,
+          line_toyear,
+          least(min_fromyear, opening) as min_fromyear,
+          width,
+          line_url_names,
+          lines_count
         from stations
         left join lateral (
           select
             station_id,
-            json_agg(json_build_object('line',lines.name,'line_url_name',lines.url_name,'system',coalesce(systems.name,''),'transport_mode_name',transport_modes.name)) as lines,
+            min(fromyear) as line_fromyear,
+            max(toyear) as line_toyear,
+            line_group,
             coalesce(max(width), 0) as width,
             array_agg(lines.url_name) as line_url_names,
             count(lines.id) as lines_count
           from station_lines
             left join lines on lines.id = station_lines.line_id
-            left join systems on systems.id = system_id
             left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
-          group by station_id
-         ) as lines_data on station_id = stations.id
+          group by station_id, line_group
+         ) as lines_data on lines_data.station_id = stations.id
+          left join lateral (
+            select station_id,
+            min(fromyear) as min_fromyear
+            from station_lines
+            where station_id = stations.id
+            group by station_id
+          ) as all_lines_data on all_lines_data.station_id = stations.id
         where ?
       ) stations_data
     }.freeze
