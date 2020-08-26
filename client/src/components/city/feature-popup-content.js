@@ -58,7 +58,7 @@ class FeaturePopupContent extends Component {
             line_url_name={fProps.line_url_name}
             opening={fProps.opening}
             closure={fProps.closure}
-            section_closure={fProps.section_closure}
+            feature_closure={fProps.feature_closure}
             length={fProps.length}
             id={`${fProps.klass}-${fProps.id}`}
           />
@@ -109,8 +109,8 @@ class DetailedData extends Component {
             <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${validOrToday(this.props.buildstart_end)}`}</li>}
           { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
               <li className="c-list__item">{`Operation: ${this.props.opening} - ${validOrToday(this.props.closure)}`}</li>}
-          { validFeatureValue(this.props.section_closure) &&
-              <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.section_closure}} /></li> }
+          { validFeatureValue(this.props.feature_closure) &&
+              <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.feature_closure}} /></li> }
           { otherLines.length > 0 &&
             <li className="c-list__item popup-data-title">
               Other lines on the same track
