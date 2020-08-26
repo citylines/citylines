@@ -55,7 +55,7 @@ module PopupHelpers
         end
 
         # We override buildstart and buildstart_end with
-        # section data (not line data). And we add section
+        # feature data (not line data). And we add feature
         # closure data.
         {
           buildstart: feature.buildstart,
