@@ -52,7 +52,7 @@ class FeaturePopupContent extends Component {
           <DetailedData
             isStation={this.isStation()}
             lines={fProps.lines}
-            transport_mode_name={fProps.transport_mode_name}
+            transport_mode_name={currentLine.transport_mode_name}
             buildstart={fProps.buildstart}
             buildstart_end={fProps.buildstart_end}
             line_url_name={fProps.line_url_name}
