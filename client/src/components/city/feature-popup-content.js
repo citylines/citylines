@@ -90,7 +90,7 @@ class DetailedData extends Component {
   render() {
     const otherLines = this.props.lines.
       filter(line => line.url_name != this.props.line_url_name).
-      sort((a,b) => a.fromyear && b.fromyear && a.fromyear > b.fromyear ? 1 : -1);
+      sort((a,b) => a.from && b.from && a.from > b.from ? 1 : -1);
 
     return (
       <div>
@@ -108,14 +108,19 @@ class DetailedData extends Component {
           { validFeatureValue(this.props.buildstart) &&
             <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${validOrToday(this.props.buildstart_end)}`}</li>}
           { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
-              <li className="c-list__item">{`Line operation: ${this.props.opening} - ${validOrToday(this.props.closure)}`}</li>}
+              <li className="c-list__item">{`Operation: ${this.props.opening} - ${validOrToday(this.props.closure)}`}</li>}
           { validFeatureValue(this.props.section_closure) &&
               <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.section_closure}} /></li> }
           { otherLines.length > 0 &&
             <li className="c-list__item popup-data-title">
               Other lines on the same track
             </li>}
-          { otherLines.length > 0 && otherLines.map(line => <LineLabel line={line} key={line.url_name} showYears={true} />)}
+          { otherLines.length > 0 && otherLines.map(line =>
+            <LineLabel
+              line={{...line}}
+              key={line.url_name}
+              showYears={true}
+            />)}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
           <span className="show-more"><span className="fas fa-angle-down"/></span>
@@ -142,7 +147,7 @@ class LineLabel extends Component {
       <li className="c-list__item line-label-li">
         <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
         <strong className="line-label-system">{this.props.line.system}</strong>
-        {this.props.showYears && this.props.line.from &&
+        {this.props.showYears &&
           <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>
         }
       </li>

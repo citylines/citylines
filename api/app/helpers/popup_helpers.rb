@@ -32,6 +32,9 @@ module PopupHelpers
     end.compact
 
     Section.where(id: section_ids).all.map do |section|
+      buildstart_end = section.opening || section.closure || FeatureCollection::Section::FUTURE
+      section_closure = section.closure || FeatureCollection::Section::FUTURE
+
       lines = section.section_lines.map do |sl|
         line = sl.line
         {
@@ -41,15 +44,18 @@ module PopupHelpers
           transport_mode_name: line.transport_mode.name,
           color: line.color,
           label_font_color: line_label_font_color(line.color),
-          from: sl.fromyear,
-          to: sl.toyear
+          from: sl.fromyear || buildstart_end,
+          to: sl.toyear || section_closure
         }
       end
 
+      # We override buildstart and buildstart_end with
+      # section data (not line data). And we add section
+      # closure data.
       {
         buildstart: section.buildstart,
-        buildstart_end: section.opening || section.closure || FeatureCollection::Section::FUTURE,
-        section_closure: section.closure || FeatureCollection::Section::FUTURE,
+        buildstart_end: buildstart_end,
+        section_closure: section_closure,
         length: section.length,
         lines: lines,
         section_id: section.id
