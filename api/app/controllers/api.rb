@@ -163,7 +163,6 @@ class Api < App
   end
 
   get '/popup/:features' do |features|
-    # FIXME: right now only sections
     {featuresData: popup_features_data(features)}.to_json
   end
 end
