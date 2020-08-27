@@ -124,7 +124,7 @@ class DetailedData extends Component {
               <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.feature_closure}} /></li> }
           { otherLines.length > 0 &&
             <li className="c-list__item popup-data-title">
-              Other lines on the same track
+              Other lines on the same {this.props.isStation ? 'station' : 'track'}
             </li>}
           { otherLines.length > 0 && otherLines.map(line =>
             <LineLabel
@@ -149,8 +149,7 @@ class LineLabel extends Component {
         <span className="c-text--highlight line-label" style={lineStyle(this.props.line)}>{this.props.line.name}</span>
         <strong className="line-label-system">{this.props.line.system}</strong>
         {this.props.showYears &&
-          <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>
-        }
+          <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>}
       </li>
     )
   }
