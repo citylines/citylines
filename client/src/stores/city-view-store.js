@@ -217,7 +217,8 @@ const CityViewStore = Object.assign({}, Store, {
     // - First stations
     // - First lower _sort_id
     features.
-      sort((a,b) => (a.properties.klass == 'Station' || a.properties._sort_id <= b.properties._sort_id ) ? -1 : 1).
+      sort((a,b) => (a.properties.klass == 'Station' ||
+        (a.properties.klass == b.properties.klass && a.properties._sort_id <= b.properties._sort_id)) ? -1 : 1).
       map((el,idx) => {
         el.properties = { ...el.properties, ...featuresData[idx]};
     });
