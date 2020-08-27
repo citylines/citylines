@@ -9,33 +9,11 @@ const validFeatureValue = (value) => value !== null && value !== 0 && value !== 
 
 const validOrToday = (value) => validFeatureValue(value) ? value : counterpart('city.popup.today');
 
-const lineStyle = (line) => ({
-  color: line.label_font_color,
-  backgroundColor: line.color,
-  marginLeft: 0,
-  marginRight: 5,
-  boxShadow: line.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null
-});
-
 /*****************/
 
 class FeaturePopupContent extends Component {
   fProps() {
     return this.props.feature.properties;
-  }
-
-  groupedSystems(lines) {
-    const systems = {};
-
-    lines.map((line) => {
-      if (!systems[line.system]) {
-        systems[line.system] = []
-      };
-
-      systems[line.system].push(line)
-    });
-
-    return systems;
   }
 
   isStation() {
@@ -64,13 +42,11 @@ class FeaturePopupContent extends Component {
                   with={{name: this.fProps().name}}
                 />
               </li>
-              { Object.entries(this.groupedSystems(currentLines)).map(([system, lines]) =>
-                <li key={system} className="c-list__item">
-                  {lines.map((line) =>
-                    <span key={line.name} className="c-text--highlight line-label" style={lineStyle(line)}>{line.name}</span>)}
-                  <strong>{system}</strong>
-                </li>
-              ) }
+              { currentLines.map(line =>
+                <LineLabel
+                  line={line}
+                  key={line.url_name}
+                /> )}
             </div>
               :
             <LineLabel line={currentLines[0]} />
@@ -135,7 +111,7 @@ class DetailedData extends Component {
             </li>}
           { otherLines.length > 0 && otherLines.map(line =>
             <LineLabel
-              line={{...line}}
+              line={line}
               key={line.url_name}
               showYears={true}
             />)}
@@ -150,10 +126,23 @@ class DetailedData extends Component {
 }
 
 class LineLabel extends Component {
+
+  lineStyle() {
+    const line = this.props.line;
+
+    return {
+      color: line.label_font_color,
+      backgroundColor: line.color,
+      marginLeft: 0,
+      marginRight: 5,
+      boxShadow: line.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null
+    }
+  }
+
   render() {
     return (
       <li className="c-list__item line-label-li">
-        <span className="c-text--highlight line-label" style={lineStyle(this.props.line)}>{this.props.line.name}</span>
+        <span className="c-text--highlight line-label" style={this.lineStyle()}>{this.props.line.name}</span>
         <strong className="line-label-system">{this.props.line.system}</strong>
         {this.props.showYears &&
           <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>}

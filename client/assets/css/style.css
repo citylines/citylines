@@ -145,7 +145,7 @@
 }
 
 .popup-data-title {
-  padding-top: 5px;
+  padding: 5px 0;
   font-weight: lighter;
 }
 
@@ -250,7 +250,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .line-label-li {
-  padding-top: 5px;
+  padding-top: 2px;
 }
 
 .edit-city-link {
