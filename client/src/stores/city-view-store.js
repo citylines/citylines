@@ -207,15 +207,17 @@ const CityViewStore = Object.assign({}, Store, {
       const props = f.properties;
       const k = props.klass;
       const id = k == 'Station' ? props.id : props.id.split('-')[0];
-      props.section_id = parseInt(id);
+      props._sort_id = parseInt(id);
       return [k, id].join('-');
     });
 
-    let featuresData = await this.fetchFeaturesPopupData(featuresIds);
-    featuresData = featuresData.sort((a,b) => a.section_id > b.section_id ? 1 : -1);
+    const featuresData = await this.fetchFeaturesPopupData(featuresIds);
 
+    // Sorting logic:
+    // - First stations
+    // - First lower _sort_id
     features.
-      sort((a,b) => a.properties.section_id > b.properties.section_id ? 1 : -1).
+      sort((a,b) => (a.properties.klass == 'Station' || a.properties._sort_id <= b.properties._sort_id ) ? -1 : 1).
       map((el,idx) => {
         el.properties = { ...el.properties, ...featuresData[idx]};
     });

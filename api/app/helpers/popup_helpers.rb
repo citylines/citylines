@@ -33,9 +33,10 @@ module PopupHelpers
       ids_by_kind[class_name] << id
     end
 
-    ids_by_kind.each_pair.map do |class_name, ids|
+    ['Station','Section'].map do |class_name|
+      ids = ids_by_kind[class_name]
       klass = Kernel.const_get(class_name)
-      klass.where(id: ids).all.map do |feature|
+      klass.where(id: ids).order(:id).all.map do |feature|
         buildstart_end = feature.opening || feature.closure || FeatureCollection::Section::FUTURE
         feature_closure = feature.closure || FeatureCollection::Section::FUTURE
         lines_join_table_method = "#{class_name.downcase}_lines"
