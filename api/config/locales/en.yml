@@ -67,9 +67,13 @@ en:
     km_under_construction: 'Under construction: %(km)s km'
     all_lines: All the lines
     popup:
-      station: "%(name)s station"
+      named_station: "%(name)s station"
       unnamed_station: Station
-      track: Track details
+      today: Today
+      track_details: Track details
+      station_details: Station details
+      other_lines_track: Other lines on the same track
+      other_lines_station: Other lines in the same station
       buildstart: 'Beginning of construction: %(year)s'
       opening: 'Opening: %(year)s'
       closure: 'Closure: %(year)s'

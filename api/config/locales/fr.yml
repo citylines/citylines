@@ -70,9 +70,13 @@ fr:
     km_under_construction: 'En construction : %(km)s km'
     all_lines: Toutes les lignes
     popup:
-      station: Station %(name)s
+      named_station: Station %(name)s
       unnamed_station: Station
-      track: Information sur la voie
+      today: Aujourd'hui
+      track_details: Information sur la voie
+      station_details: Information sur la station
+      other_lines_track: Autres lignes sur la même voie
+      other_lines_station: Autres lignes sur la même station
       buildstart: 'Début de la construction : %(year)s'
       opening: 'Ouverture : %(year)s'
       closure: 'Fermeture : %(year)s'
