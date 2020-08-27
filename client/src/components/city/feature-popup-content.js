@@ -2,20 +2,37 @@ import React, {Component} from 'react';
 import Translate from 'react-translate-component';
 import {formatNumber} from '../../lib/number-tools';
 
+/**** Helpers ****/
+
+const validFeatureValue = (value) => value !== null && value !== 0 && value !== 999999;
+
+// FIXME: Replace 'Today' with i18n.
+const validOrToday = (value) => validFeatureValue(value) ? value : 'Today';
+
+const lineStyle = (line) => ({
+  color: line.label_font_color,
+  backgroundColor: line.color,
+  marginLeft: 0,
+  marginRight: 5,
+  boxShadow: line.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null
+});
+
+/*****************/
+
 class FeaturePopupContent extends Component {
   fProps() {
     return this.props.feature.properties;
   }
 
-  groupedSystems(linesInfo) {
-    let systems = {};
+  groupedSystems(lines) {
+    const systems = {};
 
-    linesInfo.map((l) => {
-      if (!systems[l.system]) {
-        systems[l.system] = {name: l.system, lines: []}
+    lines.map((line) => {
+      if (!systems[line.system]) {
+        systems[line.system] = []
       };
 
-      systems[l.system].lines.push(l)
+      systems[line.system].push(line)
     });
 
     return systems;
@@ -43,14 +60,13 @@ class FeaturePopupContent extends Component {
               <li className="c-list__item">
                 <Translate className="station-popup" content={`city.popup.${this.fProps().name ? '' : 'unnamed_'}station`} with={{name: this.fProps().name}} />
               </li>
-              {/*Object.entries(this.groupedSystems(this.fProps().lines)).map((e, index) => {
-                  const s = e[1];
-                  return <li key={index} className="c-list__item">
-                    {s.lines.map((l, index2) => <span key={`l-${index2}`} className="c-text--highlight line-label" style={this.lineStyle(l)}>{l.line}</span>)}
-                    <strong>{s.name}</strong>
-                  </li>
-                }
-              )*/}
+              { Object.entries(this.groupedSystems(currentLines)).map(([system, lines]) =>
+                <li key={system} className="c-list__item">
+                  {lines.map((line) =>
+                    <span key={line.name} className="c-text--highlight line-label" style={lineStyle(line)}>{line.name}</span>)}
+                  <strong>{system}</strong>
+                </li>
+              ) }
             </div>
               :
             <LineLabel line={currentLines[0]} />
@@ -73,11 +89,6 @@ class FeaturePopupContent extends Component {
   }
 }
 
-
-const validFeatureValue = (value) => value !== null && value !== 0 && value !== 999999;
-
-// FIXME: Replace 'Today' with i18n.
-const validOrToday = (value) => validFeatureValue(value) ? value : 'Today';
 
 class DetailedData extends Component {
   transportModes() {
@@ -132,20 +143,10 @@ class DetailedData extends Component {
 }
 
 class LineLabel extends Component {
-  lineStyle() {
-    return {
-      color: this.props.line.label_font_color,
-      backgroundColor: this.props.line.color,
-      marginLeft: 0,
-      marginRight: 5,
-      boxShadow: this.props.line.label_font_color === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null
-    };
-  }
-
   render() {
     return (
       <li className="c-list__item line-label-li">
-        <span className="c-text--highlight line-label" style={this.lineStyle(this.props.line)}>{this.props.line.name}</span>
+        <span className="c-text--highlight line-label" style={lineStyle(this.props.line)}>{this.props.line.name}</span>
         <strong className="line-label-system">{this.props.line.system}</strong>
         {this.props.showYears &&
           <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>
