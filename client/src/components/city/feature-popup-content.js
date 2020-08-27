@@ -25,9 +25,15 @@ class FeaturePopupContent extends Component {
     return this.fProps().klass === 'Station';
   }
 
+  currentLines() {
+    const urlNames = Object.keys(this.fProps()).
+      map(k => k.indexOf('url_name') > -1 ? this.fProps()[k] : null).
+      filter(el => !!el);
+    return this.fProps().lines.filter(line => urlNames.indexOf(line.url_name) > -1);
+  }
+
   render() {
-    const fProps = this.fProps();
-    const currentLine = fProps.lines.find(el => el.url_name == fProps.line_url_name);
+    const currentLines = this.currentLines();
 
     return (
         <div className="c-text popup-feature-info">
@@ -35,32 +41,31 @@ class FeaturePopupContent extends Component {
           {this.isStation() ?
             <div>
               <li className="c-list__item">
-                <Translate className="station-popup" content={`city.popup.${fProps.name ? '' : 'unnamed_'}station`} with={{name: fProps.name}} />
+                <Translate className="station-popup" content={`city.popup.${this.fProps().name ? '' : 'unnamed_'}station`} with={{name: this.fProps().name}} />
               </li>
-              {Object.entries(this.groupedSystems(fProps.lines)).map((e, index) => {
+              {/*Object.entries(this.groupedSystems(this.fProps().lines)).map((e, index) => {
                   const s = e[1];
                   return <li key={index} className="c-list__item">
                     {s.lines.map((l, index2) => <span key={`l-${index2}`} className="c-text--highlight line-label" style={this.lineStyle(l)}>{l.line}</span>)}
                     <strong>{s.name}</strong>
                   </li>
                 }
-              )}
+              )*/}
             </div>
               :
-            <LineLabel line={currentLine} />
+            <LineLabel line={currentLines[0]} />
           }
           <DetailedData
             isStation={this.isStation()}
-            lines={fProps.lines}
-            transport_mode_name={currentLine.transport_mode_name}
-            buildstart={fProps.buildstart}
-            buildstart_end={fProps.buildstart_end}
-            line_url_name={fProps.line_url_name}
-            opening={fProps.opening}
-            closure={fProps.closure}
-            feature_closure={fProps.feature_closure}
-            length={fProps.length}
-            id={`${fProps.klass}-${fProps.id}`}
+            lines={this.fProps().lines}
+            currentLines={currentLines}
+            buildstart={this.fProps().buildstart}
+            buildstart_end={this.fProps().buildstart_end}
+            opening={this.fProps().opening}
+            closure={this.fProps().closure}
+            feature_closure={this.fProps().feature_closure}
+            length={this.fProps().length}
+            id={`${this.fProps().klass}-${this.fProps().id}`}
           />
         </ul>
       </div>
@@ -76,20 +81,15 @@ const validOrToday = (value) => validFeatureValue(value) ? value : 'Today';
 
 class DetailedData extends Component {
   transportModes() {
-    let allModes = [];
-
-    if (this.props.isStation) {
-      allModes= this.props.lines.map(l => l.transport_mode_name);
-    } else {
-      allModes.push(this.props.transport_mode_name);
-    }
-
+    const allModes= this.props.currentLines.map(l => l.transport_mode_name);
     return [ ...new Set(allModes) ].filter(e => e && e != 'default');
   }
 
   render() {
+    const currentUrlNames = this.props.currentLines.map(l => l.url_name);
+
     const otherLines = this.props.lines.
-      filter(line => line.url_name != this.props.line_url_name).
+      filter(line => currentUrlNames.indexOf(line.url_name) == -1).
       sort((a,b) => a.from && b.from && a.from > b.from ? 1 : -1);
 
     return (
