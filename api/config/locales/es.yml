@@ -78,8 +78,8 @@ es:
       station_details: Detalles de la estación
       other_lines_track: Otras líneas en el mismo tramo
       other_lines_station: Otras líneas en la misma estación
-      buildstart: 'Comienzo de construcción: %(year)s'
-      opening: 'Inauguración: %(year)s'
+      construction: 'Construcción: %(from)s - %(to)s'
+      operation: 'Operación: %(from)s - %(to)s'
       closure: 'Cierre: %(year)s'
       length: 'Longitud aproximada: %(km)s km'
   editor:

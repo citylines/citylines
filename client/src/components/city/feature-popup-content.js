@@ -124,9 +124,9 @@ class DetailedData extends Component {
           { this.props.length &&
             <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
           { validFeatureValue(this.props.buildstart) &&
-            <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${validOrToday(this.props.buildstart_end)}`}</li>}
+              <li className="c-list__item"><Translate content="city.popup.construction" with={{from: this.props.buildstart, to: validOrToday(this.props.buildstart_end)}} /></li>}
           { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
-              <li className="c-list__item">{`Operation: ${this.props.opening} - ${validOrToday(this.props.closure)}`}</li>}
+              <li className="c-list__item"><Translate content="city.popup.operation" with={{from: this.props.opening, to: validOrToday(this.props.closure)}} /></li>}
           { validFeatureValue(this.props.feature_closure) &&
               <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.feature_closure}} /></li> }
           { otherLines.length > 0 &&

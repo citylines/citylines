@@ -77,8 +77,8 @@ fr:
       station_details: Information sur la station
       other_lines_track: Autres lignes sur la même voie
       other_lines_station: Autres lignes sur la même station
-      buildstart: 'Début de la construction : %(year)s'
-      opening: 'Ouverture : %(year)s'
+      construction: 'Construction: %(from)s - %(to)s'
+      operation: 'Opération: %(from)s - %(to)s'
       closure: 'Fermeture : %(year)s'
       length: 'Longueur approximative : %(km)s km'
   editor:

@@ -74,8 +74,8 @@ en:
       station_details: Station details
       other_lines_track: Other lines on the same track
       other_lines_station: Other lines in the same station
-      buildstart: 'Beginning of construction: %(year)s'
-      opening: 'Opening: %(year)s'
+      construction: 'Construction: %(from)s - %(to)s'
+      operation: 'Operation: %(from)s - %(to)s'
       closure: 'Closure: %(year)s'
       length: 'Approximate length: %(km)s km'
   editor:
