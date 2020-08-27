@@ -58,7 +58,11 @@ class FeaturePopupContent extends Component {
           {this.isStation() ?
             <div>
               <li className="c-list__item">
-                <Translate className="station-popup" content={`city.popup.${this.fProps().name ? '' : 'unnamed_'}station`} with={{name: this.fProps().name}} />
+                <Translate
+                  className="station-popup"
+                  content={`city.popup.${this.fProps().name ? '' : 'unnamed_'}station`}
+                  with={{name: this.fProps().name}}
+                />
               </li>
               { Object.entries(this.groupedSystems(currentLines)).map(([system, lines]) =>
                 <li key={system} className="c-list__item">
@@ -115,7 +119,8 @@ class DetailedData extends Component {
           <li className="c-list__item popup-data-title">
             { !this.props.isStation && <Translate content="city.popup.track" /> }
           </li>
-          { this.props.length && <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
+          { this.props.length &&
+            <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
           { validFeatureValue(this.props.buildstart) &&
             <li className="c-list__item">{`Construction: ${this.props.buildstart} - ${validOrToday(this.props.buildstart_end)}`}</li>}
           { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
