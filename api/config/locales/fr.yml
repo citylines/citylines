@@ -79,8 +79,8 @@ fr:
       other_lines_station: Autres lignes sur la même station
       construction: 'Construction: %(from)s - %(to)s'
       operation: 'Opération: %(from)s - %(to)s'
-      closure: 'Fermeture : %(year)s'
-      length: 'Longueur approximative : %(km)s km'
+      closure: 'Fermeture: %(year)s'
+      length: 'Longueur: %(km)s km'
   editor:
     title: "Modifier %(city)s"
     edit_features: Modifier les fonctionnalités

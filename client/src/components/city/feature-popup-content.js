@@ -89,7 +89,7 @@ class DetailedData extends Component {
       <div>
         <input className="popup-data-checkbox" id={this.props.id} type='checkbox'></input>
         <div className="popup-data">
-          <li className="c-list__item">
+          <li className="c-list__item popup-transport-modes">
             { this.transportModes().map(t =>
                <Translate key={t} className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${t}`} />
             ) }
@@ -145,7 +145,7 @@ class LineLabel extends Component {
         <span className="c-text--highlight line-label" style={this.lineStyle()}>{this.props.line.name}</span>
         <strong className="line-label-system">{this.props.line.system}</strong>
         {this.props.showYears &&
-          <span className="line-label-system">{` (${this.props.line.from} - ${validOrToday(this.props.line.to)})`}</span>}
+          <div className="line-label-system">{`${this.props.line.from} - ${validOrToday(this.props.line.to)}`}</div>}
       </li>
     )
   }

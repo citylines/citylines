@@ -81,7 +81,7 @@ es:
       construction: 'Construcción: %(from)s - %(to)s'
       operation: 'Operación: %(from)s - %(to)s'
       closure: 'Cierre: %(year)s'
-      length: 'Longitud aproximada: %(km)s km'
+      length: 'Longitud: %(km)s km'
   editor:
     title: "Editar %(city)s"
     edit_features: Editar elementos

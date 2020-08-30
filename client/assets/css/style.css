@@ -153,15 +153,10 @@
   width: 100%;
   display: block;
   text-align: right;
-  margin-top: 5px;
 }
 
 .popup-data-checkbox {
   display: none;
-}
-
-.popup-data-toggle > span {
-  font-weight: bold;
 }
 
 .popup-data-toggle > .show-more {
@@ -176,8 +171,8 @@ input.popup-data-checkbox:checked + .popup-data { display: block; }
 input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-more { display: none; }
 input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-less { display: block; }
 
-.panel-header {
-
+.popup-transport-modes {
+  margin-bottom: 5px;
 }
 
 .panel-header-title {
@@ -251,6 +246,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .line-label-li {
   padding-top: 2px;
+  padding-bottom: 5px;
 }
 
 .edit-city-link {
