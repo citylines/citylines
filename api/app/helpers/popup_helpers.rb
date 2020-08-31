@@ -33,6 +33,8 @@ module PopupHelpers
       ids_by_kind[class_name] << id
     end
 
+    data_by_key = {}
+
     ['Station','Section'].map do |class_name|
       ids = ids_by_kind[class_name]
       klass = Kernel.const_get(class_name)
@@ -58,7 +60,7 @@ module PopupHelpers
         # We override buildstart and buildstart_end with
         # feature data (not line data). And we add feature
         # closure data.
-        {
+        data_by_key[[class_name, feature.id].join('-')] = {
           buildstart: feature.buildstart,
           buildstart_end: buildstart_end,
           feature_closure: feature_closure,
@@ -67,6 +69,8 @@ module PopupHelpers
           lines: lines
         }.reject{|k,v| v.blank?}
       end
-    end.flatten
+    end
+
+    data_by_key
   end
 end

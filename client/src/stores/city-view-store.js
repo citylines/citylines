@@ -206,21 +206,16 @@ const CityViewStore = Object.assign({}, Store, {
     const featuresIds = features.map(f => {
       const props = f.properties;
       const k = props.klass;
-      const id = k == 'Station' ? props.id : props.id.split('-')[0];
-      props._sort_id = parseInt(id);
-      return [k, id].join('-');
+      const id = props.id.split('-')[0];
+      props._key = [k, id].join('-');
+      return props._key;
     });
 
     const featuresData = await this.fetchFeaturesPopupData(featuresIds);
 
-    // Sorting logic:
-    // - First stations
-    // - First lower _sort_id
     features.
-      sort((a,b) => (a.properties.klass == 'Station' ||
-        (a.properties.klass == b.properties.klass && a.properties._sort_id <= b.properties._sort_id)) ? -1 : 1).
       map((el,idx) => {
-        el.properties = { ...el.properties, ...featuresData[idx]};
+        el.properties = { ...el.properties, ...featuresData[el.properties._key]};
     });
 
     cityData.clickedFeatures = {
