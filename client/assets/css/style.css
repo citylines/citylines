@@ -179,6 +179,15 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
 }
 
+.year-build-status {
+  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
+  margin-bottom:3px;
+}
+
+.home-status-badge {
+  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
+}
+
 .panel-header-title {
   padding:25px 0 20px 0;
 }
@@ -713,6 +722,10 @@ table .narrow {
   line-height: 200%;
   font-size: 1.5em;
   height:100%;
+}
+
+.avatar-shadow {
+  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
 }
 
 .user-page-username {
