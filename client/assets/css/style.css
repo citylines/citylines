@@ -175,6 +175,10 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   margin-bottom: 5px;
 }
 
+.transport-mode-label {
+  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
+}
+
 .panel-header-title {
   padding:25px 0 20px 0;
 }
