@@ -726,10 +726,6 @@ table .narrow {
   height:100%;
 }
 
-.avatar-shadow {
-  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
-}
-
 .user-page-username {
   margin-left: 20px;
   display:inline;

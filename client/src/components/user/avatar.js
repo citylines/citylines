@@ -16,7 +16,7 @@ class Avatar extends PureComponent {
     }
 
     return (
-      <div className={`c-avatar ${extraClasses} avatar-shadow`}>
+      <div className={`c-avatar ${extraClasses}`}>
       { (this.props.img) ?
        <img className="c-avatar__img" alt="placeholder" src={this.props.img}></img>
         :
