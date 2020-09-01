@@ -134,12 +134,6 @@
   font-size:1.15em;
 }
 
-
-.popup-transport-mode {
-  margin-right: 5px;
-  margin-top:4px;
-}
-
 .popup-data {
   display: none;
 }
@@ -173,6 +167,11 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 
 .popup-transport-modes {
   margin-bottom: 5px;
+}
+
+.popup-transport-modes .c-badge {
+  margin-right: 5px;
+  margin-top:4px;
 }
 
 .transport-mode-label {
