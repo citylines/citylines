@@ -7,11 +7,11 @@ class KmIndicator extends PureComponent {
     return (
       <div className="km-indicator">
       {this.props.kmOperative ?
-        <span className="c-badge c-badge--success year-build-status">
+        <span className="c-badge c-badge--success">
           <Translate content="city.km_operative" with={{km: formatNumber(this.props.kmOperative)}} />
         </span> : null}
       {this.props.kmUnderConstruction ?
-        <span className="c-badge c-badge--brand year-build-status">
+        <span className="c-badge c-badge--brand">
           <Translate content="city.km_under_construction" with={{km: formatNumber(this.props.kmUnderConstruction)}} />
         </span> : null}
       </div>

@@ -179,11 +179,6 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
 }
 
-.year-build-status {
-  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
-  margin-bottom:3px;
-}
-
 .home-status-badge {
   box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
 }
@@ -358,8 +353,16 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 0 15px 20px 15px;
 }
 
+.km-indicator .c-badge {
+  box-shadow: 0 1.5px 0 rgba(0,0,0,0.1);
+}
+
 .km-indicator .c-badge--success {
   margin-right: 5px;
+}
+
+.km-indicator .c-badge + .c-badge {
+  margin-top: 3px;
 }
 
 .edit-mode-buttons {
