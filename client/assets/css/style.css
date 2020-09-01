@@ -329,6 +329,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   margin-left: 7px;
 }
 
+.editor-features-lines-item .line-commands .selected,
 .editor-features-lines-item .line-commands .far:hover {
   color: #000;
   cursor: pointer;

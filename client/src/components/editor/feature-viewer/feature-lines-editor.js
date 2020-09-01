@@ -14,10 +14,6 @@ class FeatureLinesEditor extends PureComponent {
     this.props.onAddLine(newLine);
   }
 
-  onRemove(urlName) {
-    this.props.onRemoveLine(urlName);
-  }
-
   remainingLines() {
     const lines = [];
 
@@ -38,13 +34,12 @@ class FeatureLinesEditor extends PureComponent {
     return (
       <ul className="c-list c-list--unstyled">
         {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
-          <li key={`own-${l.line_url_name}`}className="c-list__item editor-features-lines-item">
-            {l.system ? `${l.line} - ${l.system}` : l.line}
-            <span className="line-commands">
-              <span className="far fa-calendar"></span>
-              <span className="far fa-trash-alt" onClick={() => this.onRemove(l.line_url_name)}></span>
-            </span>
-          </li>
+          <FeatureLine
+            name={l.line}
+            system={l.system}
+            urlName={l.line_url_name}
+            onRemove={this.props.onRemoveLine.bind(this)}
+          />
           )}
         <li className="c-list__item editor-features-lines-item">
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
@@ -55,6 +50,41 @@ class FeatureLinesEditor extends PureComponent {
           </select>
         </li>
       </ul>
+    )
+  }
+}
+
+class FeatureLine extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {displayYears: false};
+  }
+
+  toggleYears() {
+    this.setState({displayYears: !this.state.displayYears});
+  }
+
+  render() {
+    return (
+      <li key={`own-${this.props.urlName}`}className="c-list__item editor-features-lines-item">
+        {this.props.system ? `${this.props.name} - ${this.props.system}` : l.line}
+        <span className="line-commands">
+          <span className={`far fa-calendar ${this.state.displayYears ? 'selected' : ''}`} onClick={() => this.toggleYears(this.props.urlName)}></span>
+          <span className="far fa-trash-alt" onClick={() => this.props.onRemove(this.props.urlName)}></span>
+        </span>
+        {this.state.displayYears &&
+          <div style={{margin:'4px'}}>
+            <div className="c-input-group">
+              <div className="o-field">
+                <input className="c-field u-xsmall" placeholder="From year"/>
+              </div>
+              <div className="o-field">
+                <input className="c-field u-xsmall" placeholder="To year" />
+              </div>
+            </div>
+            <small>These setting are optional. The construction and operation info will fall back on the feature data.</small>
+          </div>}
+      </li>
     )
   }
 }
