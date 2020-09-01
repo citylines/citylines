@@ -317,14 +317,19 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 2px 0;
 }
 
-.editor-features-lines-item .fa {
+.editor-features-lines-item .line-commands {
   position: absolute;
   right: 30px;
   margin-top:3px;
   color: #888;
 }
 
-.editor-features-lines-item .fa:hover {
+.editor-features-lines-item .line-commands .far + .far {
+  margin-right: 2px;
+  margin-left: 7px;
+}
+
+.editor-features-lines-item .line-commands .far:hover {
   color: #000;
   cursor: pointer;
 }
