@@ -35,9 +35,12 @@ class FeatureLinesEditor extends PureComponent {
       <ul className="c-list c-list--unstyled">
         {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
           <FeatureLine
+            key={l.line_url_name}
             name={l.line}
             system={l.system}
             urlName={l.line_url_name}
+            from={l.from}
+            to={l.to}
             onRemove={this.props.onRemoveLine.bind(this)}
           />
           )}
@@ -76,10 +79,10 @@ class FeatureLine extends PureComponent {
           <div className="line-years">
             <div className="c-input-group">
               <div className="o-field">
-                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.from' }}/>
+                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.from' }} value={this.props.from}/>
               </div>
               <div className="o-field">
-                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.to' }}/>
+                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.to' }} value={this.props.to} />
               </div>
             </div>
             <Translate component="small" content="editor.feature_viewer.years.note" />

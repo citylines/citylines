@@ -39,11 +39,13 @@ module FeatureCollection
         select id, length, geometry, osm_id, osm_tags, osm_metadata, opening, buildstart, closure, lines
         from sections
         left join lateral (
-          select section_id, json_agg(json_build_object('line', lines.name,'line_url_name',lines.url_name, 'system', coalesce(systems.name,''))) as lines
-            from section_lines
+          select
+            section_id,
+            json_agg(json_build_object('line', lines.name,'line_url_name',lines.url_name, 'system', coalesce(systems.name,''),'from',fromyear,'to',toyear)) as lines
+          from section_lines
             left join lines on lines.id = section_lines.line_id
             left join systems on systems.id = system_id
-            where section_id = sections.id
+          where section_id = sections.id
           group by section_id
          ) as lines_data on section_id = sections.id
         where ?
