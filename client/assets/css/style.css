@@ -335,6 +335,13 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   cursor: pointer;
 }
 
+.editor-features-lines-item .line-years {
+  padding: 4px;
+  background-color: rgba(0,0,0,0.05);
+  margin: 4px 1px;
+  border-radius: 3px;
+}
+
 .color-picker-container {
   position:absolute;
   z-index:100000;

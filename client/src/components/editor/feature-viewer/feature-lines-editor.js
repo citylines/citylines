@@ -73,7 +73,7 @@ class FeatureLine extends PureComponent {
           <span className="far fa-trash-alt" onClick={() => this.props.onRemove(this.props.urlName)}></span>
         </span>
         {this.state.displayYears &&
-          <div style={{margin:'4px'}}>
+          <div className="line-years">
             <div className="c-input-group">
               <div className="o-field">
                 <input className="c-field u-xsmall" placeholder="From year"/>
