@@ -42,6 +42,7 @@ class FeatureLinesEditor extends PureComponent {
             from={l.from}
             to={l.to}
             onRemove={this.props.onRemoveLine.bind(this)}
+            onChange={this.props.onLineChange.bind(this)}
           />
           )}
         <li className="c-list__item editor-features-lines-item">
@@ -79,10 +80,22 @@ class FeatureLine extends PureComponent {
           <div className="line-years">
             <div className="c-input-group">
               <div className="o-field">
-                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.from' }} value={this.props.from}/>
+                <Translate
+                  component="input"
+                  className="c-field u-xsmall"
+                  attributes={{ placeholder: 'editor.feature_viewer.years.from' }}
+                  value={this.props.from}
+                  onChange={(e) => this.props.onChange(this.props.urlName, 'from', e.target.value)}
+                />
               </div>
               <div className="o-field">
-                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.to' }} value={this.props.to} />
+                <Translate
+                  component="input"
+                  className="c-field u-xsmall"
+                  attributes={{ placeholder: 'editor.feature_viewer.years.to' }}
+                  value={this.props.to}
+                  onChange={(e) => this.props.onChange(this.props.urlName, 'to', e.target.value)}
+                />
               </div>
             </div>
             <Translate component="small" content="editor.feature_viewer.years.note" />
