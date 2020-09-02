@@ -93,7 +93,7 @@ es:
       years:
         from: Desde el año
         to: Hasta el año
-        note: Estos parámetros son opcionales. Por defecto se va a usar la informción del elemento.
+        note: Estos parámetros son opcionales. Por defecto se va a usar la información del elemento.
       fields:
         klasses_id:
           section: Tramo Id:%(id)s
