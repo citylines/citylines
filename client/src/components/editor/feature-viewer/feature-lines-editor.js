@@ -76,13 +76,13 @@ class FeatureLine extends PureComponent {
           <div className="line-years">
             <div className="c-input-group">
               <div className="o-field">
-                <input className="c-field u-xsmall" placeholder="From year"/>
+                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.from' }}/>
               </div>
               <div className="o-field">
-                <input className="c-field u-xsmall" placeholder="To year" />
+                <Translate component="input" className="c-field u-xsmall" attributes={{ placeholder: 'editor.feature_viewer.years.to' }}/>
               </div>
             </div>
-            <small>These setting are optional. The construction and operation info will fall back on the feature data.</small>
+            <Translate component="small" content="editor.feature_viewer.years.note" />
           </div>}
       </li>
     )

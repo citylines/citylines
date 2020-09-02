@@ -86,6 +86,10 @@ en:
       selected_feature: Selected feature
       no_feature_selected: No feature selected
       add_line: Add line
+      years:
+        from: From year
+        to: To year
+        note: These settings are optional. The construction and operation info will fall back on the feature data.
       fields:
         klasses_id:
           section: Track Id:%(id)s

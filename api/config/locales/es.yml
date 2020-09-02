@@ -90,6 +90,10 @@ es:
       selected_feature: Elemento seleccionado
       no_feature_selected: Ningún elemento seleccionado
       add_line: Agregar línea
+      years:
+        from: Desde el año
+        to: Hasta el año
+        note: Estos parámetros son opcionales. Por defecto se va a usar la informción del elemento.
       fields:
         klasses_id:
           section: Tramo Id:%(id)s

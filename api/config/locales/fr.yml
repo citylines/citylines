@@ -89,6 +89,10 @@ fr:
       selected_feature: Fonctionnalité sélectionnée
       no_feature_selected: Aucune fonctionnalité sélectionnée
       add_line: Ajouter une ligne
+      years:
+        from: De l'année
+        to: À l'année
+        note: Ces paramètres sont facultatifs. Les informations de construction et d'exploitation seront basées sur les données des éléments. 
       fields:
         klasses_id:
           section: Voie Id:%(id)s
