@@ -541,6 +541,11 @@ button.save-system {
   margin-left: 10px;
 }
 
+.contributors-list-container {
+  max-width: 32em;
+  text-align: center;
+}
+
 .contributors-list {
   width: 50%;
   display: inline-block;
