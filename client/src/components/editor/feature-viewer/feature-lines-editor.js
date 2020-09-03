@@ -71,7 +71,7 @@ class FeatureLine extends PureComponent {
   render() {
     return (
       <li key={`own-${this.props.urlName}`}className="c-list__item editor-features-lines-item">
-        {this.props.system ? `${this.props.name} - ${this.props.system}` : l.line}
+        <span className="line-name">{this.props.system ? `${this.props.name} - ${this.props.system}` : l.line}</span>
         <span className="line-commands">
           <span className={`far fa-calendar ${this.state.displayYears ? 'selected' : ''}`} onClick={() => this.toggleYears(this.props.urlName)}></span>
           <span className="far fa-trash-alt" onClick={() => this.props.onRemove(this.props.urlName)}></span>

@@ -317,11 +317,15 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding: 2px 0;
 }
 
+.editor-features-lines-item .line-name {
+  max-width: 190px;
+  display: inline-block;
+}
+
 .editor-features-lines-item .line-commands {
-  position: absolute;
-  right: 30px;
-  margin-top:3px;
+  margin-left: 10px;
   color: #888;
+  float: right;
 }
 
 .editor-features-lines-item .line-commands .far + .far {
