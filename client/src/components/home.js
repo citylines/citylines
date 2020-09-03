@@ -201,8 +201,8 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className="o-container o-container--small">
-          <div className="u-letter-box--large" style={{textAlign: 'center'}}>
+        <div className="o-container o-container--small contributors-list-container">
+          <div className="u-letter-box--large">
             <Translate component="h2" className="c-heading" content="cities.contributors.list.title" />
 
             <div className="contributors-list">
