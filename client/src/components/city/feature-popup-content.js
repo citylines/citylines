@@ -126,7 +126,6 @@ class DetailedData extends Component {
 }
 
 class LineLabel extends Component {
-
   lineStyle() {
     const line = this.props.line;
 
