@@ -10,14 +10,27 @@ module EditorHelpers
       feature.save
     end
 
-    # Remove
-    lines_to_remove.map do |url_name|
-      Line[url_name: url_name].remove_from_feature(feature)
+    # Remove
+    Line.where(url_name: lines_to_remove).all.map do |line|
+      line.remove_from_feature(feature)
     end
 
     # Add
-    lines_to_add.map do |url_name|
-      Line[url_name: url_name].add_to_feature(feature)
+    Line.where(url_name: lines_to_add).all.map do |line|
+      line.add_to_feature(feature)
+    end
+
+    # line years
+    modified_lines_hash = Hash[properties[:lines].map {|el| [el[:line_url_name], el]}]
+    relac_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    attr = feature.is_a?(Station) ? :station_id : :section_id
+    relac_klass.where(attr => feature.id).all do |feature_line|
+      modified_line = modified_lines_hash[feature_line.line.url_name]
+      if modified_line[:from] != feature_line.fromyear or modified_line[:to] != feature_line.toyear
+        feature_line.fromyear = modified_line[:from]
+        feature_line.toyear = modified_line[:to]
+        feature_line.save
+      end
     end
   end
 
