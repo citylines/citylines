@@ -19,12 +19,14 @@ module EditorHelpers
     Line.where(url_name: lines_to_add).all.map do |line|
       line.add_to_feature(feature)
     end
+  end
 
-    # line years
+  def update_feature_line_years(feature, properties)
     modified_lines_hash = Hash[properties[:lines].map {|el| [el[:line_url_name], el]}]
-    relac_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
     attr = feature.is_a?(Station) ? :station_id : :section_id
-    relac_klass.where(attr => feature.id).all do |feature_line|
+
+    feature_lines_klass.where(attr => feature.id).all do |feature_line|
       modified_line = modified_lines_hash[feature_line.line.url_name]
       if modified_line[:from] != feature_line.fromyear or modified_line[:to] != feature_line.toyear
         feature_line.fromyear = modified_line[:from]
@@ -36,6 +38,7 @@ module EditorHelpers
 
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
+    update_feature_line_years(feature, properties)
 
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
