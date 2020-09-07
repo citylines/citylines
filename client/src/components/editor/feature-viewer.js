@@ -71,7 +71,7 @@ class FeatureViewer extends PureComponent {
     if (this.props.onFeatureChange) this.props.onFeatureChange(modifiedFeature);
   }
 
-  onLineChange(urlName, attr, value) {
+  onLineYearChange(urlName, attr, value) {
     const modifiedFeature = {...this.props.feature};
 
     const line = modifiedFeature.properties.lines.find(l => l.line_url_name == urlName);
@@ -95,7 +95,7 @@ class FeatureViewer extends PureComponent {
                     systems={this.props.systems}
                     onAddLine={this.onAddLine.bind(this)}
                     onRemoveLine={this.onRemoveLine.bind(this)}
-                    onLineChange={this.onLineChange.bind(this)}
+                    onLineYearChange={this.onLineYearChange.bind(this)}
                   />
                 </td>
               </tr>

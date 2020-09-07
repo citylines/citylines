@@ -42,7 +42,7 @@ class FeatureLinesEditor extends PureComponent {
             from={l.from}
             to={l.to}
             onRemove={this.props.onRemoveLine.bind(this)}
-            onChange={this.props.onLineChange.bind(this)}
+            onYearChange={this.props.onLineYearChange.bind(this)}
           />
           )}
         <li className="c-list__item editor-features-lines-item">
@@ -84,8 +84,9 @@ class FeatureLine extends PureComponent {
                   component="input"
                   className="c-field u-xsmall"
                   attributes={{ placeholder: 'editor.feature_viewer.years.from' }}
-                  value={this.props.from}
-                  onChange={(e) => this.props.onChange(this.props.urlName, 'from', e.target.value)}
+                  type="number"
+                  value={this.props.from || ''}
+                  onChange={(e) => this.props.onYearChange(this.props.urlName, 'from', parseInt(e.target.value))}
                 />
               </div>
               <div className="o-field">
@@ -93,8 +94,9 @@ class FeatureLine extends PureComponent {
                   component="input"
                   className="c-field u-xsmall"
                   attributes={{ placeholder: 'editor.feature_viewer.years.to' }}
-                  value={this.props.to}
-                  onChange={(e) => this.props.onChange(this.props.urlName, 'to', e.target.value)}
+                  type="number"
+                  value={this.props.to || ''}
+                  onChange={(e) => this.props.onYearChange(this.props.urlName, 'to', parseInt(e.target.value))}
                 />
               </div>
             </div>
