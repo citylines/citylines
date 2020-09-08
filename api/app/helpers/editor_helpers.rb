@@ -44,7 +44,7 @@ module EditorHelpers
 
       groups.each_pair do |line_group, group|
         max_line_group = line_group
-        if new_range = overlap?(group[:range], from..to)
+        if new_range = overlapping_range(group[:range], from..to)
           group[:range] = new_range
           group[:feature_lines] << feature_line
           added = true
@@ -130,8 +130,8 @@ module EditorHelpers
 
   private
 
-  def overlap?(range1, range2)
+  def overlapping_range(range1, range2)
     range1.first < range2.last && range2.first < range1.last ?
-      [range1.min, range2.min].min .. [range1.max, range2.max].max : false
+      [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
   end
 end
