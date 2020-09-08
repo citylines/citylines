@@ -1,15 +1,18 @@
 version: 2
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201808-01
     steps:
       - checkout
+      - run:
+          name: Switch to Python 3.7
+          command: pyenv global 3.7.0
       - run:
           name: Install dependencies
           command: |
             set -x
-            sudo apt-get install curl bash python3
-            pyenv global 3.7.0
+            sudo apt-get install curl bash
             pip install docker-compose
       - run:
           name: Backend tests
