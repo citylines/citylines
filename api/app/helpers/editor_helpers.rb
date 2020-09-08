@@ -26,11 +26,39 @@ module EditorHelpers
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
     attr = feature.is_a?(Station) ? :station_id : :section_id
 
+    groups = {}
+
     feature_lines_klass.where(attr => feature.id).all do |feature_line|
       modified_line = modified_lines_hash[feature_line.line.url_name]
       if modified_line[:from] != feature_line.fromyear or modified_line[:to] != feature_line.toyear
         feature_line.fromyear = modified_line[:from]
         feature_line.toyear = modified_line[:to]
+        feature_line.save
+      end
+
+      from = feature_line.fromyear || 0
+      to = feature_line.toyear || FeatureCollection::Section::FUTURE
+
+      added = false
+      max_line_group = -1
+
+      groups.each_pair do |line_group, group|
+        max_line_group = line_group
+        if new_range = overlap?(group[:range], from..to)
+          group[:range] = new_range
+          group[:feature_lines] << feature_line
+          added = true
+        end
+      end
+
+      unless added
+        groups[max_line_group + 1] = {range: from..to, feature_lines: [feature_line]}
+      end
+    end
+
+    groups.each_pair do |line_group, group|
+      group[:feature_lines].each do |feature_line|
+        feature_line.line_group = line_group
         feature_line.save
       end
     end
@@ -98,5 +126,12 @@ module EditorHelpers
       update_feature_geometry(feature, change[:feature][:geometry])
       ModifiedFeatureGeo.push(user, feature)
     end
+  end
+
+  private
+
+  def overlap?(range1, range2)
+    range1.first < range2.last && range2.first < range1.last ?
+      [range1.min, range2.min].min .. [range1.max, range2.max].max : false
   end
 end
