@@ -83,6 +83,39 @@ describe FeatureCollection::Station do
       assert_equal expected_properties, feature[:properties]
     end
 
+    it "should include the station_lines years if they are set" do
+      @station_line.fromyear = 1940
+      @station_line.toyear = 1960
+      @station_line.save
+
+      feature = FeatureCollection::Station.by_feature(@station.id).first
+
+      assert_equal 'Feature', feature[:type]
+      assert feature[:geometry]
+
+      expected_lines = [{
+        line: @line.name,
+        line_url_name: @line.url_name,
+        system: @system.name,
+        from: 1940,
+        to: 1960
+      }]
+
+      expected_properties = {id: @station.id,
+                             klass: "Station",
+                             lines: expected_lines,
+                             name: @station.name,
+                             opening: @station.opening,
+                             buildstart: @station.buildstart,
+                             osm_id: @station.osm_id,
+                             osm_tags: @station.osm_tags,
+                             osm_metadata: @station.osm_metadata,
+                             closure: @station.closure,
+      }
+
+      assert_equal expected_properties, feature[:properties]
+    end
+
     it "should set system name to an empty string if it is null" do
       system = System.create(city_id: @city.id)
 
@@ -161,6 +194,57 @@ describe FeatureCollection::Station do
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
       assert_equal 'a-url-name', feature_props[:line_url_name_1]
       assert_equal 'other-line-url-name', feature_props[:line_url_name_2]
+    end
+
+    it "should handle simultaneous lines first, and a single line afterwards" do
+      # This means that two features should be returned.
+      # - The first one with the `shared_station` attribute, and two lines' url_names
+      # - The second one with just a single line
+
+      # Two simultaneous lines until 1995
+      # #################################
+      # Original line:
+      @station_line.toyear = 1995
+      @station_line.save
+      # default line_group is zero
+
+      # New line before 1995
+      line2 = Line.create(name:'Line 2', city_id: @city.id, url_name:'line2', system_id: @system.id)
+      StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id, toyear: 1995)
+      # default line_group is zero
+
+      # One single line after 1995
+      # ##########################
+      # This line has another line_group.
+      # The line_group is set when updating the feature (see EditorHelpers).
+      line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
+      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995, line_group: 1)
+
+      features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
+
+      assert_equal 2, features.count
+
+      # Before 1995:
+      before_1995 = features.first[:properties]
+      assert_equal "#{@station.id}-0", before_1995[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, before_1995[:line_url_name]
+      assert_equal 'a-url-name', before_1995[:line_url_name_1]
+      assert_equal 'line2', before_1995[:line_url_name_2]
+      assert_equal @station.buildstart, before_1995[:buildstart]
+      assert_equal @station.opening, before_1995[:buildstart_end]
+      assert_equal @station.opening, before_1995[:opening]
+      assert_equal 1995, before_1995[:closure]
+
+      # After 1995:
+      after_1995 = features.last[:properties]
+      assert_equal "#{@station.id}-1", after_1995[:id]
+      assert_equal 'line3', after_1995[:line_url_name]
+      refute after_1995[:line_url_name_1]
+      refute after_1995[:line_url_name_2]
+      assert_equal 0, after_1995[:buildstart]
+      assert_equal 0, after_1995[:buildstart_end]
+      assert_equal 1995, after_1995[:opening]
+      assert_equal @station.closure, after_1995[:closure]
     end
 
     describe "width" do
