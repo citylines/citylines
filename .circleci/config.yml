@@ -1,16 +1,10 @@
 version: 2
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201808-01
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            set -x
-            sudo apt-get install curl bash python3
-            pyenv global 3.7.0
-            pip install docker-compose
       - run:
           name: Backend tests
           command: |
