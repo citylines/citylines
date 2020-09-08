@@ -5,11 +5,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Set Python 3"
+          command: pyenv global 3.7.0
+      - run:
           name: Install docker-compose
           command: |
             set -x
-            sudo apt-get install curl bash python3
-            pip install --upgrade pip
+            sudo apt-get install curl bash
             pip install docker-compose
       - run:
           name: Backend tests
