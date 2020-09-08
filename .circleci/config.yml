@@ -1,16 +1,10 @@
 version: 2
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201808-01
     steps:
       - checkout
-      - run:
-          name: Install docker-compose
-          command: |
-            set -x
-            sudo apt-get install curl bash python3
-            pip install --upgrade pip
-            pip install docker-compose
       - run:
           name: Backend tests
           command: |
