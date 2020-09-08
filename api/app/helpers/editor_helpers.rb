@@ -26,8 +26,6 @@ module EditorHelpers
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
     attr = feature.is_a?(Station) ? :station_id : :section_id
 
-    groups = {}
-
     feature_lines_klass.where(attr => feature.id).all do |feature_line|
       modified_line = modified_lines_hash[feature_line.line.url_name]
       if modified_line[:from] != feature_line.fromyear or modified_line[:to] != feature_line.toyear
@@ -35,7 +33,15 @@ module EditorHelpers
         feature_line.toyear = modified_line[:to]
         feature_line.save
       end
+    end
+  end
 
+  def update_feature_line_groups(feature)
+    feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    attr = feature.is_a?(Station) ? :station_id : :section_id
+    groups = {}
+
+    feature_lines_klass.where(attr => feature.id).all do |feature_line|
       from = feature_line.fromyear || 0
       to = feature_line.toyear || FeatureCollection::Section::FUTURE
 
@@ -58,8 +64,10 @@ module EditorHelpers
 
     groups.each_pair do |line_group, group|
       group[:feature_lines].each do |feature_line|
-        feature_line.line_group = line_group
-        feature_line.save
+        if feature_line.line_group != line_group
+          feature_line.line_group = line_group
+          feature_line.save
+        end
       end
     end
   end
@@ -67,6 +75,7 @@ module EditorHelpers
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
     update_feature_line_years(feature, properties)
+    update_feature_line_groups(feature)
 
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
