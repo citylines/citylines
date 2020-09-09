@@ -27,6 +27,20 @@ class FeaturePopupContent extends Component {
     return this.fProps().lines.filter(line => urlNames.indexOf(line.url_name) > -1);
   }
 
+  groupedSystems(lines) {
+    const systems = {};
+
+    lines.map(line => {
+      if (!systems[line.system]) {
+        systems[line.system] = [];
+      };
+
+      systems[line.system].push(line);
+    });
+
+    return systems;
+  }
+
   render() {
     const currentLines = this.currentLines();
 
@@ -42,14 +56,12 @@ class FeaturePopupContent extends Component {
                   with={{name: this.fProps().name}}
                 />
               </li>
-              { currentLines.map(line =>
-                <LineLabel
-                  line={line}
-                  key={line.url_name}
-                /> )}
+              { Object.entries(this.groupedSystems(currentLines)).map(([system, lines]) =>
+                <LinesLabel lines={lines} key={system} />
+              )}
             </div>
               :
-            <LineLabel line={currentLines[0]} />
+            <LinesLabel lines={currentLines} />
           }
           <DetailedData
             isStation={this.isStation()}
@@ -109,8 +121,8 @@ class DetailedData extends Component {
               <Translate content={`city.popup.other_lines_${i18nFeaturekey}`} />
             </li>}
           { otherLines.length > 0 && otherLines.map(line =>
-            <LineLabel
-              line={line}
+            <LinesLabel
+              lines={[line]}
               key={line.url_name}
               showYears={true}
             />)}
@@ -124,10 +136,13 @@ class DetailedData extends Component {
   }
 }
 
-class LineLabel extends Component {
-  lineStyle() {
-    const line = this.props.line;
-
+/*
+ * This method accepts multiple lines, and displays them this way:
+ * L1 L2 L3 Subway
+ * where the system name refers to the first line. We assume all lines belong to the same system.
+ * */
+class LinesLabel extends Component {
+  lineStyle(line) {
     return {
       color: line.label_font_color,
       backgroundColor: line.color,
@@ -139,10 +154,18 @@ class LineLabel extends Component {
   render() {
     return (
       <li className="c-list__item line-label-li">
-        <span className="c-text--highlight line-label" style={this.lineStyle()}>{this.props.line.name}</span>
-        <strong className="line-label-system">{this.props.line.system}</strong>
-        {this.props.showYears && validFeatureValue(this.props.line.from) &&
-          <div className="line-label-system">{`${this.props.line.from} - ${validOrToday(this.props.line.to)}`}</div>}
+        {this.props.lines.map(line =>
+          <span key={line.name} className="c-text--highlight line-label" style={this.lineStyle(line)}>{line.name}</span>
+        )}
+
+        {/* If there are multiple lines, we assume that they all belong to the same system */}
+        <strong className="line-label-system">{this.props.lines[0].system}</strong>
+
+        {/* We loop through all lines, but we usually use showYears with only one line */}
+        {this.props.showYears && this.props.lines.map(line =>
+          validFeatureValue(line.from) &&
+            <div key={line.name}className="line-label-system">{`${line.from} - ${validOrToday(line.to)}`}</div>
+        )}
       </li>
     )
   }
