@@ -365,10 +365,6 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   margin-right: 5px;
 }
 
-.km-indicator .c-badge + .c-badge {
-  margin-top: 3px;
-}
-
 .edit-mode-buttons {
   padding: 10px 15px 20px 15px;
 }
