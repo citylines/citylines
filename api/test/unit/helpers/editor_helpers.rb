@@ -11,6 +11,7 @@ describe EditorHelpers do
       @system = System.create(name: 'Metro', city_id: @city.id)
       @line1 = Line.create(name:'Line 1', system_id: @system.id, city_id: @city.id, url_name: 'line-1')
       @line2 = Line.create(name:'Line 2', system_id: @system.id, city_id: @city.id, url_name: 'line-2')
+      @line3 = Line.create(name:'Line 3', system_id: @system.id, city_id: @city.id, url_name: 'line-3')
     end
 
     describe "properties" do
@@ -62,6 +63,8 @@ describe EditorHelpers do
 
         @line1.add_to_feature(@section)
 
+        # In this changeset, line1 is missing and line2 is added, which means that
+        # line1 is removed, and line2 is added.
         change = {
           klass: 'Section',
           id: @section.id,
@@ -82,6 +85,48 @@ describe EditorHelpers do
         assert_equal @properties[:osm_tags], @section.osm_tags
         assert_equal @properties[:osm_metadata], @section.osm_metadata
         assert_equal 23232, @section.osm_id
+      end
+
+      it "should update the `from`, `to` and `line_group` attrs of the section_lines" do
+        # The original section has now section_line years
+        @section = Section.create(
+          city_id: @city.id,
+          buildstart: 1950,
+          opening: 1960,
+          closure: 2000
+        )
+
+        @line1.add_to_feature(@section)
+
+        # The line years of Line 1 are modified, and two new lines with
+        # new from and to attrs are added.
+        change = {
+          klass: 'Section',
+          id: @section.id,
+          props: true,
+          feature: {
+            properties: @properties.merge(lines: [
+              {line_url_name: @line1.url_name, from: 1930, to: 1940},
+              {line_url_name: @line2.url_name, from: 1940, to: 1950},
+              {line_url_name: @line3.url_name, from: 1945},
+            ])
+          }
+        }
+
+        update_create_or_delete_feature(@city, @user, change)
+
+        section_lines = SectionLine.where(section_id: @section.id).order(:line_id).all
+
+        assert_equal [@line1, @line2, @line3], @section.lines
+
+        # Overlapping year ranges should have the same line_group
+        [{fromyear: 1930, toyear: 1940, line_group: 0},
+         {fromyear: 1940, toyear: 1950, line_group: 1},
+         {fromyear: 1945, toyear: nil,  line_group: 1}].each_with_index do |section_line, idx|
+           assert_equal section_line[:fromyear], section_lines[idx].fromyear
+           assert_equal section_line[:toyear], section_lines[idx].toyear
+           assert_equal section_line[:line_group], section_lines[idx].line_group
+         end
       end
     end
 
