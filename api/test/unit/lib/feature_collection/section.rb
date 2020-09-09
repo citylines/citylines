@@ -241,7 +241,7 @@ describe FeatureCollection::Section do
       assert_equal expected_properties2, features.last[:properties]
     end
 
-    it "should handle two multiple simultaneous lines first, and a single line after" do
+    it "should handle two simultaneous lines first, and a single line after" do
       # Two simulataneous lines until 1995
       # ##################################
       # Original line
