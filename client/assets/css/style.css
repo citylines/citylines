@@ -233,9 +233,9 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   min-width:21px;
   text-align:center;
   border-radius:2px;
-  min-height:20px;
   line-height:12px;
   vertical-align:top;
+  padding-bottom: 4px;
 }
 
 .line-label-system {
