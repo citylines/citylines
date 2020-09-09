@@ -69,7 +69,6 @@ class FeaturePopupContent extends Component {
   }
 }
 
-
 class DetailedData extends Component {
   transportModes() {
     const allModes= this.props.currentLines.map(l => l.transport_mode_name);
