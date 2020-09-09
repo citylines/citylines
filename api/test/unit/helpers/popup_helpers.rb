@@ -59,6 +59,41 @@ describe PopupHelpers do
       assert_equal expected_data, popup_features_data("Section-#{@section.id}")
     end
 
+    it "should handle multiple lines" do
+      @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Line 2', url_name: 'line2', color: "#ffff33")
+      @section_line2 = SectionLine.create(section_id: @section.id, line_id: @line2.id, city_id: @city.id)
+
+      expected_data = {
+        "Section-#{@section.id}" => {
+          buildstart: @section.buildstart,
+          buildstart_end: @section.opening,
+          feature_closure: @section.closure,
+          length: @section.length,
+          lines: [{
+            name: @line1.name,
+            url_name: @line1.url_name,
+            system: @line1.system.name,
+            transport_mode_name: @line1.transport_mode.name,
+            color: @line1.color,
+            label_font_color: line_label_font_color(@line1.color),
+            from: @section.opening,
+            to:  @section.closure
+          },{
+            name: @line2.name,
+            url_name: @line2.url_name,
+            system: @line2.system.name,
+            transport_mode_name: @line2.transport_mode.name,
+            color: @line2.color,
+            label_font_color: line_label_font_color(@line2.color),
+            from: @section.opening,
+            to:  @section.closure
+          }]
+        }
+      }
+
+      assert_equal expected_data, popup_features_data("Section-#{@section.id}")
+    end
+
     it "should handle an unset opening" do
       @section.opening = nil
       @section.save
@@ -164,10 +199,51 @@ describe PopupHelpers do
 
       assert_equal expected_data, popup_features_data("Section-#{@section.id}")
     end
-=begin
-    it "should handle multiple features at the same time" do
 
+    it "should handle multiple features at the same time" do
+      @station = Station.create(name:'A station', buildstart: 1987, opening: 1988, closure: 1997, city_id: @city.id)
+      @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")
+      @station.save
+
+      @station_line = StationLine.create(station_id: @station.id, line_id: @line1.id, city_id: @city.id)
+
+      expected_data = {
+        "Section-#{@section.id}" => {
+          buildstart: @section.buildstart,
+          buildstart_end: @section.opening,
+          feature_closure: @section.closure,
+          length: @section.length,
+          lines: [{
+            name: @line1.name,
+            url_name: @line1.url_name,
+            system: @line1.system.name,
+            transport_mode_name: @line1.transport_mode.name,
+            color: @line1.color,
+            label_font_color: line_label_font_color(@line1.color),
+            from: @section.opening,
+            to:  @section.closure
+          }]
+        },
+        "Station-#{@station.id}" => {
+          buildstart: @station.buildstart,
+          buildstart_end: @station.opening,
+          feature_closure: @station.closure,
+          name: @station.name,
+          lines: [{
+            name: @line1.name,
+            url_name: @line1.url_name,
+            system: @line1.system.name,
+            transport_mode_name: @line1.transport_mode.name,
+            color: @line1.color,
+            label_font_color: line_label_font_color(@line1.color),
+            from: @station.opening,
+            to:  @station.closure
+          }]
+        }
+      }
+
+      features = "Section-#{@section.id},Station-#{@station.id}"
+      assert_equal expected_data, popup_features_data(features)
     end
-=end
   end
 end
