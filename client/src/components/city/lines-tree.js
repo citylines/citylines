@@ -77,7 +77,7 @@ class LinesTreeItem extends PureComponent {
           </div>
           {this.props.name}
           {this.props.transportMode && this.props.showTransportMode &&
-              <Translate className="c-badge c-badge--ghost transport-mode-label" style={{marginLeft:"10px"}} content={`transport_modes.${this.props.transportMode.name}`} />}
+              <Translate className="c-badge c-badge--ghost" style={{marginLeft:"10px"}} content={`transport_modes.${this.props.transportMode.name}`} />}
         </label>
     )
   }

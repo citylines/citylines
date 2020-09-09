@@ -91,7 +91,7 @@ class DetailedData extends Component {
         <div className="popup-data">
           <li className="c-list__item popup-transport-modes">
             { this.transportModes().map(t =>
-               <Translate key={t} className="c-badge c-badge--ghost transport-mode-label" content={`transport_modes.${t}`} />
+               <Translate key={t} className="c-badge c-badge--ghost" content={`transport_modes.${t}`} />
             ) }
           </li>
           <li className="c-list__item popup-data-title">
@@ -133,8 +133,7 @@ class LineLabel extends Component {
       color: line.label_font_color,
       backgroundColor: line.color,
       marginLeft: 0,
-      marginRight: 5,
-      boxShadow: '0 1.5px 0 rgba(0,0,0,0.1)'
+      marginRight: 5
     }
   }
 

@@ -62,13 +62,11 @@ class ResultItem extends Component {
           </h3>
         </header>
         <div className="c-card__body">
-          { this.props.length ?
-            <span className="c-badge c-badge--success home-status-badge">{`${formatNumber(this.props.length)} km`}</span>
-            : ''}
+          { this.props.length ? <span className="c-badge c-badge--success">{`${formatNumber(this.props.length)} km`}</span> : ''}
           { this.props.contributors_count ?
             <Translate
               component="span"
-              className="c-badge home-status-badge"
+              className="c-badge"
               style={{marginLeft: 5}}
               content={`cities.contributors.${this.props.contributors_count == 1 ? 'one' : 'other'}`}
               with={{contributors: this.props.contributors_count}} />
