@@ -40,6 +40,7 @@ class Main extends Component {
   componentDidMount() {
     MainStore.addChangeListener(this.bindedOnChange);
 
+    MainStore.loadI18n();
     this.checkAuth();
     this.checkCookieAdviceCookie();
   }
