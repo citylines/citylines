@@ -11,6 +11,7 @@ class Api < App
   helpers CityHelpers
   helpers UserHelpers
   helpers CacheHelpers
+  helpers I18nHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -22,6 +23,13 @@ class Api < App
 
   before do
     cache_control :no_cache
+  end
+
+  get '/i18n' do
+    cache_control :no_store
+
+    set_locale(params, nil)
+    locale_translations.to_json
   end
 
   namespace '/cities' do

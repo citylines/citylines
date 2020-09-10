@@ -1,4 +1,5 @@
 import Store from './store';
+import Counterpart from 'counterpart';
 
 const MainStore = Object.assign({}, Store, {
   state: {
@@ -69,6 +70,19 @@ const MainStore = Object.assign({}, Store, {
   unsetLoading() {
     this.state.loading = false;
     this.state = {...this.state};
+
+    this.emitChangeEvent();
+  },
+
+  async loadI18n() {
+    const locale = window.locale;
+    const url = `/api/i18n?locale=${locale}`;
+
+    const response = await fetch(url, {credentials: 'same-origin'});
+    const i18n = await response.json();
+
+    Counterpart.registerTranslations(locale, i18n);
+    Counterpart.setLocale(locale);
 
     this.emitChangeEvent();
   }
