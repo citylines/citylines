@@ -19,7 +19,6 @@ class BaseApp < App
 
   before do
     cache_control :no_store
-
     @locale = set_locale(params, request)
   end
 
