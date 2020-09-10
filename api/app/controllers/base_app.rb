@@ -18,7 +18,7 @@ class BaseApp < App
   helpers SEOHelpers
 
   before do
-    cache_control :public, :must_revalidate, :max_age => 1800
+    cache_control :no_store
   end
 
   get '/robots.txt' do
