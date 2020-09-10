@@ -5,10 +5,10 @@ import Counterpart from 'counterpart';
 
 import Main from './components/main';
 
+Counterpart.setMissingEntryGenerator((key) => '');
+
 import assets from './lib/assets-provider';
 assets.loadPaths(window.assetsPaths);
-
-Counterpart.setMissingEntryGenerator((key) => '');
 
 render(
     <Router>
