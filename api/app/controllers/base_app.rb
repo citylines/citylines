@@ -19,6 +19,8 @@ class BaseApp < App
 
   before do
     cache_control :no_store
+
+    @locale = set_locale(params, request)
   end
 
   get '/robots.txt' do
@@ -27,8 +29,6 @@ class BaseApp < App
 
   # Pre-render title and description for Compare
   get '/compare' do
-    @locale = set_locale(params, request)
-
     @title, @description = compare_title_and_description(params)
     @url = canonical_url(request.url, allowed_params = ['cities', 'locale'])
 
@@ -37,8 +37,6 @@ class BaseApp < App
 
   # Pre-render title and description for Data
   get '/data' do
-    @locale = set_locale(params, request)
-
     @title, @description = data_title_and_description
     @url = canonical_url(request.url, allowed_params = ['locale'])
 
@@ -48,8 +46,6 @@ class BaseApp < App
 
   # Pre-render title and description for User
   get '/user/:user_id' do |user_id|
-    @locale = set_locale(params, request)
-
     if user = User[user_id]
       @title, @description = user_title_and_description(user)
     end
@@ -61,8 +57,6 @@ class BaseApp < App
 
   # Pre-render title and description for cities and systems
   get '/:url_name' do |url_name|
-    @locale = set_locale(params, request)
-
     @url = canonical_url(request.url, allowed_params = ['system_id', 'locale'])
 
     @title, @description = if params[:system_id] and system = System[params[:system_id]]
@@ -77,8 +71,6 @@ class BaseApp < App
   end
 
   get '/*' do
-    @locale = set_locale(params, request)
-
     @title, @description = title_and_description
     @url = canonical_url(request.url, allowed_params = ['locale'])
 
