@@ -5,8 +5,7 @@ import Counterpart from 'counterpart';
 
 import Main from './components/main';
 
-Counterpart.registerTranslations(window.locale, window.i18n);
-Counterpart.setLocale(window.locale);
+Counterpart.setMissingEntryGenerator((key) => '');
 
 import assets from './lib/assets-provider';
 assets.loadPaths(window.assetsPaths);
