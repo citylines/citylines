@@ -17,6 +17,10 @@ class BaseApp < App
   helpers WebpackHelpers
   helpers SEOHelpers
 
+  before do
+    cache_control :public, :must_revalidate, :max_age => 1800
+  end
+
   get '/robots.txt' do
     "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
   end
