@@ -12,6 +12,7 @@ class Api < App
   helpers UserHelpers
   helpers CacheHelpers
   helpers I18nHelpers
+  helpers PopupHelpers
 
   use Rack::Cache,
     :verbose     => true,
@@ -167,5 +168,9 @@ class Api < App
     last_modified last_modified_source(@city, type)
 
     lines_features_collection(@city, type)
+  end
+
+  get '/popup/:features' do |features|
+    {featuresData: popup_features_data(features)}.to_json
   end
 end

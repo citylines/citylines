@@ -70,13 +70,17 @@ fr:
     km_under_construction: 'En construction : %(km)s km'
     all_lines: Toutes les lignes
     popup:
-      station: Station %(name)s
+      named_station: Station %(name)s
       unnamed_station: Station
-      track: Information sur la voie
-      buildstart: 'Début de la construction : %(year)s'
-      opening: 'Ouverture : %(year)s'
-      closure: 'Fermeture : %(year)s'
-      length: 'Longueur approximative : %(km)s km'
+      today: Aujourd'hui
+      track_details: Information sur la voie
+      station_details: Information sur la station
+      other_lines_track: Autres lignes sur la même voie
+      other_lines_station: Autres lignes sur la même station
+      construction: 'Construction: %(from)s - %(to)s'
+      operation: 'Opération: %(from)s - %(to)s'
+      closure: 'Fermeture: %(year)s'
+      length: 'Longueur: %(km)s km'
   editor:
     title: "Modifier %(city)s"
     edit_features: Modifier les fonctionnalités
@@ -85,6 +89,10 @@ fr:
       selected_feature: Fonctionnalité sélectionnée
       no_feature_selected: Aucune fonctionnalité sélectionnée
       add_line: Ajouter une ligne
+      years:
+        from: De l'année
+        to: À l'année
+        note: Ces paramètres sont facultatifs. Les informations de construction et d'exploitation seront basées sur les données des éléments. 
       fields:
         klasses_id:
           section: Voie Id:%(id)s

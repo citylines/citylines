@@ -14,10 +14,6 @@ class FeatureLinesEditor extends PureComponent {
     this.props.onAddLine(newLine);
   }
 
-  onRemove(urlName) {
-    this.props.onRemoveLine(urlName);
-  }
-
   remainingLines() {
     const lines = [];
 
@@ -36,9 +32,18 @@ class FeatureLinesEditor extends PureComponent {
 
   render() {
     return (
-      <ul className="c-list c-list--unstyled">
+      <ul className="c-list c-list--unstyled editor-features-lines-container">
         {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
-          <li key={`own-${l.line_url_name}`}className="c-list__item editor-features-lines-item">{l.system ? `${l.line} - ${l.system}` : l.line}<span className="fa fa-trash-alt" onClick={() => this.onRemove(l.line_url_name)}></span></li>
+          <FeatureLine
+            key={l.line_url_name}
+            name={l.line}
+            system={l.system}
+            urlName={l.line_url_name}
+            from={l.from}
+            to={l.to}
+            onRemove={this.props.onRemoveLine.bind(this)}
+            onYearChange={this.props.onLineYearChange.bind(this)}
+          />
           )}
         <li className="c-list__item editor-features-lines-item">
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
@@ -49,6 +54,55 @@ class FeatureLinesEditor extends PureComponent {
           </select>
         </li>
       </ul>
+    )
+  }
+}
+
+class FeatureLine extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {displayYears: false};
+  }
+
+  toggleYears() {
+    this.setState({displayYears: !this.state.displayYears});
+  }
+
+  render() {
+    return (
+      <li key={`own-${this.props.urlName}`}className="c-list__item editor-features-lines-item">
+        <span className="line-name">{this.props.system ? `${this.props.name} - ${this.props.system}` : l.line}</span>
+        <span className="line-commands">
+          <span className={`far fa-calendar ${this.state.displayYears ? 'selected' : ''}`} onClick={() => this.toggleYears(this.props.urlName)}></span>
+          <span className="far fa-trash-alt" onClick={() => this.props.onRemove(this.props.urlName)}></span>
+        </span>
+        {this.state.displayYears &&
+          <div className="line-years">
+            <div className="c-input-group">
+              <div className="o-field">
+                <Translate
+                  component="input"
+                  className="c-field u-xsmall"
+                  attributes={{ placeholder: 'editor.feature_viewer.years.from' }}
+                  type="number"
+                  value={this.props.from || ''}
+                  onChange={(e) => this.props.onYearChange(this.props.urlName, 'from', parseInt(e.target.value))}
+                />
+              </div>
+              <div className="o-field">
+                <Translate
+                  component="input"
+                  className="c-field u-xsmall"
+                  attributes={{ placeholder: 'editor.feature_viewer.years.to' }}
+                  type="number"
+                  value={this.props.to || ''}
+                  onChange={(e) => this.props.onYearChange(this.props.urlName, 'to', parseInt(e.target.value))}
+                />
+              </div>
+            </div>
+            <Translate component="small" content="editor.feature_viewer.years.note" />
+          </div>}
+      </li>
     )
   }
 }

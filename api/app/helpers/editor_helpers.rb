@@ -10,19 +10,72 @@ module EditorHelpers
       feature.save
     end
 
-    # Remove
-    lines_to_remove.map do |url_name|
-      Line[url_name: url_name].remove_from_feature(feature)
+    # Remove
+    Line.where(url_name: lines_to_remove).all.map do |line|
+      line.remove_from_feature(feature)
     end
 
     # Add
-    lines_to_add.map do |url_name|
-      Line[url_name: url_name].add_to_feature(feature)
+    Line.where(url_name: lines_to_add).all.map do |line|
+      line.add_to_feature(feature)
+    end
+  end
+
+  def update_feature_line_years(feature, properties)
+    modified_lines_hash = Hash[properties[:lines].map {|el| [el[:line_url_name], el]}]
+    feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    attr = feature.is_a?(Station) ? :station_id : :section_id
+
+    feature_lines_klass.where(attr => feature.id).all do |feature_line|
+      modified_line = modified_lines_hash[feature_line.line.url_name]
+      if modified_line[:from] != feature_line.fromyear or modified_line[:to] != feature_line.toyear
+        feature_line.fromyear = modified_line[:from]
+        feature_line.toyear = modified_line[:to]
+        feature_line.save
+      end
+    end
+  end
+
+  def update_feature_line_groups(feature)
+    feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    attr = feature.is_a?(Station) ? :station_id : :section_id
+    groups = {}
+
+    feature_lines_klass.where(attr => feature.id).all do |feature_line|
+      from = feature_line.fromyear || 0
+      to = feature_line.toyear || FeatureCollection::Section::FUTURE
+
+      added = false
+      max_line_group = -1
+
+      groups.each_pair do |line_group, group|
+        max_line_group = line_group
+        if new_range = overlapping_range(group[:range], from..to)
+          group[:range] = new_range
+          group[:feature_lines] << feature_line
+          added = true
+        end
+      end
+
+      unless added
+        groups[max_line_group + 1] = {range: from..to, feature_lines: [feature_line]}
+      end
+    end
+
+    groups.each_pair do |line_group, group|
+      group[:feature_lines].each do |feature_line|
+        if feature_line.line_group != line_group
+          feature_line.line_group = line_group
+          feature_line.save
+        end
+      end
     end
   end
 
   def update_feature_properties(feature, properties)
     update_feature_lines(feature, properties)
+    update_feature_line_years(feature, properties)
+    update_feature_line_groups(feature)
 
     feature.buildstart = properties[:buildstart]
     feature.opening = properties[:opening]
@@ -82,5 +135,12 @@ module EditorHelpers
       update_feature_geometry(feature, change[:feature][:geometry])
       ModifiedFeatureGeo.push(user, feature)
     end
+  end
+
+  private
+
+  def overlapping_range(range1, range2)
+    range1.first < range2.last && range2.first < range1.last ?
+      [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
   end
 end

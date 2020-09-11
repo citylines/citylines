@@ -18,7 +18,7 @@ describe FeatureCollection::Section do
     @section.geometry = Sequel.lit("ST_GeomFromText('LINESTRING(-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932)',4326)")
     @section.save
 
-    SectionLine.create(section_id: @section.id, line_id: @line.id, city_id: @city.id)
+    @section_line = SectionLine.create(section_id: @section.id, line_id: @line.id, city_id: @city.id)
 
     @city.reload
   end
@@ -135,6 +135,38 @@ describe FeatureCollection::Section do
       assert_equal expected_properties, feature[:properties]
     end
 
+    it "should contain feature_line years if present" do
+      @section_line.fromyear = 1956
+      @section_line.toyear = 1999
+      @section_line.save
+
+      feature = FeatureCollection::Section.by_feature(@section.id).first
+
+      assert_equal 'Feature', feature[:type]
+      assert feature[:geometry]
+
+      expected_lines = [{
+          line: @line.name,
+          line_url_name: @line.url_name,
+          system: @system.name,
+          from: 1956,
+          to: 1999
+      }]
+
+      expected_properties = {id: @section.id,
+                             klass: "Section",
+                             length: @section.length,
+                             lines: expected_lines,
+                             opening: @section.opening,
+                             buildstart: @section.buildstart,
+                             osm_id: @section.osm_id,
+                             osm_tags: @section.osm_tags,
+                             osm_metadata: @section.osm_metadata,
+                             closure: @section.closure}
+
+      assert_equal expected_properties, feature[:properties]
+    end
+
     it "should set system name to an empty string if it is null" do
       system = System.create(city_id: @city.id)
 
@@ -159,12 +191,8 @@ describe FeatureCollection::Section do
 
       expected_properties = {id: "#{@section.id}-#{@line.url_name}",
                              klass: "Section",
-                             length: @section.length,
-                             line: @line.name,
                              line_url_name: @line.url_name,
-                             transport_mode_name: @line.transport_mode[:name],
                              width: @line.width,
-                             system: @system.name,
                              offset: 0,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
@@ -174,7 +202,7 @@ describe FeatureCollection::Section do
       assert_equal expected_properties, feature[:properties]
     end
 
-    it "should handle multiple lines" do
+    it "should handle multiple simultaneous lines" do
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
 
@@ -190,12 +218,8 @@ describe FeatureCollection::Section do
 
       expected_properties1 = {id: "#{@section.id}-#{@line.url_name}",
                              klass: "Section",
-                             length: @section.length,
-                             line: @line.name,
                              line_url_name: @line.url_name,
-                             transport_mode_name: @line.transport_mode[:name],
                              width: @line.width * 0.75,
-                             system: @system.name,
                              offset: -2.25,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
@@ -206,12 +230,8 @@ describe FeatureCollection::Section do
 
       expected_properties2 = {id: "#{@section.id}-#{@line2.url_name}",
                              klass: "Section",
-                             length: @section.length,
-                             line: @line2.name,
                              line_url_name: @line2.url_name,
-                             transport_mode_name: @line.transport_mode[:name],
                              width: @line2.width * 0.75,
-                             system: @system.name,
                              offset: 2.25,
                              opening: @section.opening,
                              buildstart: @section.buildstart,
@@ -219,6 +239,73 @@ describe FeatureCollection::Section do
                              closure: @section.closure}
 
       assert_equal expected_properties2, features.last[:properties]
+    end
+
+    it "should handle two simultaneous lines first, and a single line after" do
+      # Two simulataneous lines until 1995
+      # ##################################
+      # Original line
+      @section_line.toyear = 1995
+      @section_line.save
+      # default line_group is zero
+
+      # New line before 1995
+      @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
+      SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id, toyear: 1995)
+      # default line_group is zero
+
+      # One single line after 1995
+      # ##########################
+      # This line has another line_group, in order to show it with another offset
+      # The line_group is set when updating the feature (see EditorHelpers).
+      @line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
+      SectionLine.create(line_id: @line3.id, section_id: @section.id, city_id: @city.id, fromyear: 1995, line_group: 1)
+
+      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+
+      assert 3, features.count
+
+      expected_properties = [
+        {
+          id: "#{@section.id}-#{@line.url_name}",
+          klass: "Section",
+          line_url_name: @line.url_name,
+          width: @line.width * 0.75,
+          offset: -2.25,
+          opening: @section.opening,
+          buildstart: @section.buildstart,
+          buildstart_end: @section.opening,
+          closure: 1995
+        },
+        {
+          id: "#{@section.id}-#{@line2.url_name}",
+          klass: "Section",
+          line_url_name: @line2.url_name,
+          width: @line2.width * 0.75,
+          offset: 2.25,
+          opening: @section.opening,
+          buildstart: @section.buildstart,
+          buildstart_end: @section.opening,
+          closure: 1995
+        },
+        {
+          id: "#{@section.id}-#{@line3.url_name}",
+          klass: "Section",
+          line_url_name: @line3.url_name,
+          width: @line3.width,
+          offset: 0,
+          opening: 1995,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: @section.closure
+        }
+      ]
+
+      features.each_with_index do |feature, idx|
+        assert_equal 'Feature', feature[:type]
+        assert feature[:geometry]
+        assert_equal expected_properties[idx], feature[:properties]
+      end
     end
 
     describe "width" do

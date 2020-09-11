@@ -1,36 +1,48 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 import {formatNumber} from '../../lib/number-tools';
+
+/**** Helpers ****/
+
+const validFeatureValue = (value) => value !== null && value !== 0 && value !== 999999;
+
+const validOrToday = (value) => validFeatureValue(value) ? value : counterpart('city.popup.today');
+
+/*****************/
 
 class FeaturePopupContent extends Component {
   fProps() {
     return this.props.feature.properties;
   }
 
-  lineStyle(p) {
-    return {color: p.lineLabelColor, backgroundColor: p.lineColor, marginLeft: 0, marginRight: 5, boxShadow: (p.lineLabelColor === '#000' ? '0 0 1px rgba(0,0,0,0.5)' : null)};
+  isStation() {
+    return this.fProps().klass === 'Station';
   }
 
-  groupedSystems(linesInfo) {
-    let systems = {};
+  currentLines() {
+    const urlNames = Object.keys(this.fProps()).
+      map(k => k.indexOf('url_name') > -1 ? this.fProps()[k] : null).
+      filter(el => !!el);
+    return this.fProps().lines.filter(line => urlNames.indexOf(line.url_name) > -1);
+  }
 
-    linesInfo.map((l) => {
-      if (!systems[l.system]) {
-        systems[l.system] = {name: l.system, lines: []}
+  groupedSystems(lines) {
+    const systems = {};
+
+    lines.map(line => {
+      if (!systems[line.system]) {
+        systems[line.system] = [];
       };
 
-      systems[l.system].lines.push(l)
+      systems[line.system].push(line);
     });
 
     return systems;
   }
 
-  isStation() {
-    return this.fProps().klass === 'Station';
-  }
-
   render() {
-    const fProps = this.fProps();
+    const currentLines = this.currentLines();
 
     return (
         <div className="c-text popup-feature-info">
@@ -38,34 +50,30 @@ class FeaturePopupContent extends Component {
           {this.isStation() ?
             <div>
               <li className="c-list__item">
-                <Translate className="station-popup" content={`city.popup.${fProps.name ? '' : 'unnamed_'}station`} with={{name: fProps.name}} />
+                <Translate
+                  className="station-popup"
+                  content={`city.popup.${this.fProps().name ? 'named' : 'unnamed'}_station`}
+                  with={{name: this.fProps().name}}
+                />
               </li>
-              {Object.entries(this.groupedSystems(fProps.lines)).map((e, index) => {
-                  const s = e[1];
-                  return <li key={index} className="c-list__item">
-                    {s.lines.map((l, index2) => <span key={`l-${index2}`} className="c-text--highlight line-label" style={this.lineStyle(l)}>{l.line}</span>)}
-                    <strong>{s.name}</strong>
-                  </li>
-                }
+              { Object.entries(this.groupedSystems(currentLines)).map(([system, lines]) =>
+                <LinesLabel lines={lines} key={system} />
               )}
             </div>
               :
-            <div>
-              <li className="c-list__item">
-                <span className="c-text--highlight line-label" style={this.lineStyle(fProps)}>{fProps.line}</span>
-                <strong>{fProps.system}</strong>
-              </li>
-            </div>
+            <LinesLabel lines={currentLines} />
           }
           <DetailedData
             isStation={this.isStation()}
-            lines={fProps.lines}
-            transport_mode_name={fProps.transport_mode_name}
-            buildstart={fProps.buildstart}
-            opening={fProps.opening}
-            closure={fProps.closure}
-            length={fProps.length}
-            id={`${fProps.klass}-${fProps.id}`}
+            lines={this.fProps().lines}
+            currentLines={currentLines}
+            buildstart={this.fProps().buildstart}
+            buildstart_end={this.fProps().buildstart_end}
+            opening={this.fProps().opening}
+            closure={this.fProps().closure}
+            feature_closure={this.fProps().feature_closure}
+            length={this.fProps().length}
+            id={`${this.fProps().klass}-${this.fProps().id}`}
           />
         </ul>
       </div>
@@ -75,44 +83,90 @@ class FeaturePopupContent extends Component {
 
 class DetailedData extends Component {
   transportModes() {
-    let allModes = [];
-
-    if (this.props.isStation) {
-      allModes= this.props.lines.map(l => l.transport_mode_name);
-    } else {
-      allModes.push(this.props.transport_mode_name);
-    }
-
+    const allModes= this.props.currentLines.map(l => l.transport_mode_name);
     return [ ...new Set(allModes) ].filter(e => e && e != 'default');
   }
 
-  validFeatureValue(value) {
-    return (value !== null && value !== 0 && value !== 999999);
-  }
-
   render() {
+    const currentUrlNames = this.props.currentLines.map(l => l.url_name);
+
+    const otherLines = this.props.lines.
+      filter(line => currentUrlNames.indexOf(line.url_name) == -1).
+      sort((a,b) => a.from && b.from && a.from > b.from ? 1 : -1);
+
+    const i18nFeaturekey = this.props.isStation ? 'station' : 'track';
+
     return (
       <div>
         <input className="popup-data-checkbox" id={this.props.id} type='checkbox'></input>
         <div className="popup-data">
-          <li className="c-list__item">
+          <li className="c-list__item popup-transport-modes">
             { this.transportModes().map(t =>
-               <Translate key={t} className="c-badge c-badge--ghost popup-transport-mode" content={`transport_modes.${t}`} />
+               <Translate key={t} className="c-badge c-badge--ghost" content={`transport_modes.${t}`} />
             ) }
           </li>
           <li className="c-list__item popup-data-title">
-            { !this.props.isStation && <Translate content="city.popup.track" /> }
+            <Translate content={`city.popup.${i18nFeaturekey}_details`} />
           </li>
-          { this.validFeatureValue(this.props.buildstart) ? <li className="c-list__item"><Translate content="city.popup.buildstart" with={{year: this.props.buildstart}} /></li> : ''}
-          { this.validFeatureValue(this.props.opening) ? <li className="c-list__item"><Translate content="city.popup.opening" with={{year: this.props.opening}} /></li> : ''}
-          { this.validFeatureValue(this.props.closure) ? <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.closure}} /></li> : ''}
-          { this.props.length ? <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li> : ''}
+          { this.props.length &&
+            <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
+          { validFeatureValue(this.props.buildstart) &&
+              <li className="c-list__item"><Translate content="city.popup.construction" with={{from: this.props.buildstart, to: validOrToday(this.props.buildstart_end)}} /></li>}
+          { (validFeatureValue(this.props.opening) || validFeatureValue(this.props.closure)) &&
+              <li className="c-list__item"><Translate content="city.popup.operation" with={{from: this.props.opening, to: validOrToday(this.props.closure)}} /></li>}
+          { validFeatureValue(this.props.feature_closure) &&
+              <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.feature_closure}} /></li> }
+          { otherLines.length > 0 &&
+            <li className="c-list__item popup-data-title">
+              <Translate content={`city.popup.other_lines_${i18nFeaturekey}`} />
+            </li>}
+          { otherLines.length > 0 && otherLines.map(line =>
+            <LinesLabel
+              lines={[line]}
+              key={line.url_name}
+              showYears={true}
+            />)}
         </div>
         <label htmlFor={this.props.id} className="popup-data-toggle c-link">
           <span className="show-more"><span className="fas fa-angle-down"/></span>
           <span className="show-less"><span className="fas fa-angle-up"/></span>
         </label>
       </div>
+    )
+  }
+}
+
+/*
+ * This method accepts multiple lines, and displays them this way:
+ * L1 L2 L3 Subway
+ * where the system name refers to the first line. We assume all lines belong to the same system.
+ * */
+class LinesLabel extends Component {
+  lineStyle(line) {
+    return {
+      color: line.label_font_color,
+      backgroundColor: line.color,
+      marginLeft: 0,
+      marginRight: 5
+    }
+  }
+
+  render() {
+    return (
+      <li className="c-list__item line-label-li">
+        {this.props.lines.map(line =>
+          <span key={line.name} className="c-text--highlight line-label" style={this.lineStyle(line)}>{line.name}</span>
+        )}
+
+        {/* If there are multiple lines, we assume that they all belong to the same system */}
+        <strong className="line-label-system">{this.props.lines[0].system}</strong>
+
+        {/* We loop through all lines, but we usually use showYears with only one line */}
+        {this.props.showYears && this.props.lines.map(line =>
+          validFeatureValue(line.from) &&
+            <div key={line.name}className="line-label-system">{`${line.from} - ${validOrToday(line.to)}`}</div>
+        )}
+      </li>
     )
   }
 }

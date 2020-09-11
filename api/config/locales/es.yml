@@ -71,13 +71,17 @@ es:
     km_under_construction: 'En construcción: %(km)s km'
     all_lines: Todas las líneas
     popup:
-      station: Estación %(name)s
+      named_station: Estación %(name)s
       unnamed_station: Estación
-      track: Información del tramo
-      buildstart: 'Comienzo de construcción: %(year)s'
-      opening: 'Inauguración: %(year)s'
+      today: Hoy
+      track_details: Detalles del tramo
+      station_details: Detalles de la estación
+      other_lines_track: Otras líneas en el mismo tramo
+      other_lines_station: Otras líneas en la misma estación
+      construction: 'Construcción: %(from)s - %(to)s'
+      operation: 'Operación: %(from)s - %(to)s'
       closure: 'Cierre: %(year)s'
-      length: 'Longitud aproximada: %(km)s km'
+      length: 'Longitud: %(km)s km'
   editor:
     title: "Editar %(city)s"
     edit_features: Editar elementos
@@ -86,6 +90,10 @@ es:
       selected_feature: Elemento seleccionado
       no_feature_selected: Ningún elemento seleccionado
       add_line: Agregar línea
+      years:
+        from: Desde el año
+        to: Hasta el año
+        note: Estos parámetros son opcionales. Por defecto se va a usar la información del elemento.
       fields:
         klasses_id:
           section: Tramo Id:%(id)s

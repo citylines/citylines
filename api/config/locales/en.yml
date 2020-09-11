@@ -67,13 +67,17 @@ en:
     km_under_construction: 'Under construction: %(km)s km'
     all_lines: All the lines
     popup:
-      station: "%(name)s station"
+      named_station: "%(name)s station"
       unnamed_station: Station
-      track: Track information
-      buildstart: 'Beginning of construction: %(year)s'
-      opening: 'Opening: %(year)s'
+      today: Today
+      track_details: Track details
+      station_details: Station details
+      other_lines_track: Other lines on the same track
+      other_lines_station: Other lines in the same station
+      construction: 'Construction: %(from)s - %(to)s'
+      operation: 'Operation: %(from)s - %(to)s'
       closure: 'Closure: %(year)s'
-      length: 'Approximate length: %(km)s km'
+      length: 'Length: %(km)s km'
   editor:
     title: "Edit %(city)s"
     edit_features: Edit features
@@ -82,6 +86,10 @@ en:
       selected_feature: Selected feature
       no_feature_selected: No feature selected
       add_line: Add line
+      years:
+        from: From year
+        to: To year
+        note: These settings are optional. The construction and operation info will fall back on the feature data.
       fields:
         klasses_id:
           section: Track Id:%(id)s

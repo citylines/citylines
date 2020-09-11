@@ -134,34 +134,23 @@
   font-size:1.15em;
 }
 
-
-.popup-transport-mode {
-  margin-right: 5px;
-  margin-top:4px;
-}
-
 .popup-data {
   display: none;
 }
 
 .popup-data-title {
-  padding-top: 5px;
-  font-style: italic;
+  padding: 5px 0;
+  font-weight: lighter;
 }
 
 .popup-data-toggle {
   width: 100%;
   display: block;
   text-align: right;
-  margin-top: 5px;
 }
 
 .popup-data-checkbox {
   display: none;
-}
-
-.popup-data-toggle > span {
-  font-weight: bold;
 }
 
 .popup-data-toggle > .show-more {
@@ -176,8 +165,13 @@ input.popup-data-checkbox:checked + .popup-data { display: block; }
 input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-more { display: none; }
 input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-less { display: block; }
 
-.panel-header {
+.popup-transport-modes {
+  margin-bottom: 5px;
+}
 
+.popup-transport-modes .c-badge {
+  margin-right: 5px;
+  margin-top:4px;
 }
 
 .panel-header-title {
@@ -239,9 +233,19 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   min-width:21px;
   text-align:center;
   border-radius:2px;
-  min-height:20px;
   line-height:12px;
   vertical-align:top;
+  padding-bottom: 4px;
+}
+
+.line-label-system {
+  line-height: 18px;
+  vertical-align: top;
+}
+
+.line-label-li {
+  padding-top: 2px;
+  padding-bottom: 5px;
 }
 
 .edit-city-link {
@@ -301,20 +305,41 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   left:3px;
 }
 
+.editor-features-lines-container {
+  width: 100%;
+}
+
 .editor-features-lines-item {
   padding: 2px 0;
 }
 
-.editor-features-lines-item .fa {
-  position: absolute;
-  right: 30px;
-  margin-top:3px;
-  color: #888;
+.editor-features-lines-item .line-name {
+  max-width: 190px;
+  display: inline-block;
 }
 
-.editor-features-lines-item .fa:hover {
+.editor-features-lines-item .line-commands {
+  margin-left: 10px;
+  color: #888;
+  float: right;
+}
+
+.editor-features-lines-item .line-commands .far + .far {
+  margin-right: 2px;
+  margin-left: 7px;
+}
+
+.editor-features-lines-item .line-commands .selected,
+.editor-features-lines-item .line-commands .far:hover {
   color: #000;
   cursor: pointer;
+}
+
+.editor-features-lines-item .line-years {
+  padding: 4px;
+  background-color: rgba(0,0,0,0.05);
+  margin: 4px 1px;
+  border-radius: 3px;
 }
 
 .color-picker-container {
@@ -614,7 +639,7 @@ span.osm-container {
 select.osm-route {
   display: inline-block;
   border: none;
-  width: auto;
+  width: 105px;
 }
 
 .osm-container .preamble {
