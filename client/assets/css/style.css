@@ -336,10 +336,15 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .editor-features-lines-item .line-years {
-  padding: 4px;
+  padding: 5px;
   background-color: rgba(0,0,0,0.05);
   margin: 4px 1px;
   border-radius: 3px;
+}
+
+.editor-features-lines-item .line-years small {
+  padding: 1px 1px 0 1px;
+  display: block;
 }
 
 .color-picker-container {
