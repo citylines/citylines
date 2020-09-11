@@ -305,6 +305,10 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   left:3px;
 }
 
+.editor-features-lines-container {
+  width: 100%;
+}
+
 .editor-features-lines-item {
   padding: 2px 0;
 }
@@ -635,7 +639,7 @@ span.osm-container {
 select.osm-route {
   display: inline-block;
   border: none;
-  width: auto;
+  width: 105px;
 }
 
 .osm-container .preamble {

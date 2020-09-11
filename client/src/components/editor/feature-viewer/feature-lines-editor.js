@@ -32,7 +32,7 @@ class FeatureLinesEditor extends PureComponent {
 
   render() {
     return (
-      <ul className="c-list c-list--unstyled">
+      <ul className="c-list c-list--unstyled editor-features-lines-container">
         {this.props.featureLines.sort((a, b) => a.line.localeCompare(b.line)).map((l) =>
           <FeatureLine
             key={l.line_url_name}
