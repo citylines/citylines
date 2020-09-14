@@ -27,6 +27,10 @@ class Main extends Component {
     this.previousPathname = null;
     this.props.history.listen( loc =>  {
       if (loc.pathname != this.previousPathname) {
+        // This fixes a bug in Safari:
+        // the scroll is not set to zero when changing routes
+        document.getElementById('main-container').scrollTop=0;
+
         this.previousPathname = loc.pathname;
         ga("send", "pageview", loc.pathname);
       }
