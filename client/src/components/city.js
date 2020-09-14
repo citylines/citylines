@@ -160,7 +160,7 @@ class City extends CityBase {
     if (!this.state) return null;
 
     return (
-        <div className="o-grid o-panel">
+        <>
           <div id="panel" style={this.panelStyle()}>
             <PanelHeader
               name={this.state.name}
@@ -180,7 +180,6 @@ class City extends CityBase {
               </Route>
             </Switch>
           </div>
-          <main className="o-grid__cell o-grid__cell--width-100 o-panel-container">
           <Map
             mapboxAccessToken={this.state.mapbox_access_token}
             mapboxStyle={this.state.mapbox_style}
@@ -229,8 +228,7 @@ class City extends CityBase {
                 </React.Suspense>
               }
           </Map>
-          </main>
-        </div>
+        </>
         );
   }
 }
