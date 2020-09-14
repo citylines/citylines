@@ -25,7 +25,7 @@ class Main extends Component {
     this.bindedOnChange = this.onChange.bind(this);
 
     this.previousPathname = null;
-    this.props.history.listen( loc =>  {
+    this.unlisten = this.props.history.listen( loc =>  {
       if (loc.pathname != this.previousPathname) {
         // This fixes a bug in Safari:
         // the scroll is not set to zero when changing routes
@@ -39,6 +39,7 @@ class Main extends Component {
 
   componentWillUnmount() {
     MainStore.removeChangeListener(this.bindedOnChange);
+    this.unlisten();
   }
 
   componentDidMount() {
