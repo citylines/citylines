@@ -248,6 +248,13 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   direction:rtl;
 }
 
+/* Bugfix to prevent wrong rendering of special characters
+ * when chaning the direction.
+ * Taken from https://stackoverflow.com/a/51616164/3095803*/
+.line-label:after, .line-label:before {
+  content: "\200E";
+}
+
 .line-label-system {
   line-height: 18px;
   vertical-align: top;
