@@ -236,6 +236,16 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   line-height:12px;
   vertical-align:top;
   padding-bottom: 4px;
+  white-space:nowrap;
+  max-width:98%;
+  overflow-x:auto;
+  text-overflow:ellipsis;
+  direction:ltr;
+}
+
+.line-label:hover{
+  text-overflow:unset;
+  direction:rtl;
 }
 
 .line-label-system {
