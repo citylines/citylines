@@ -55,10 +55,10 @@ module PopupHelpers
         line['from'] ||= feature[:buildstart_end]
         line['to'] ||= feature[:feature_closure]
       end
-      data_by_key[id] = feature
+      data_by_key[id] = feature.reject{|k,v| v.blank?}
     end
 
-    data_by_key.reject{|k,v| v.blank?}
+    data_by_key
   end
 
   def feature_popup_query(klass, ids)
