@@ -91,8 +91,6 @@ module PopupHelpers
     if ids = ids_by_kind['Section']
       sections_query = feature_popup_query('Section', ids)
       if query
-        puts query
-        puts sections_query
         query = query.union(sections_query)
       else
         query = sections_query
@@ -100,13 +98,13 @@ module PopupHelpers
     end
 
     query.all.each do |feature|
-      klass = feature.delete(:klass)
+      id = feature.delete(:id)
       feature[:lines].each do |line|
         line['label_font_color'] = line_label_font_color(line['color'])
         line['from'] ||= feature[:buildstart_end]
         line['to'] ||= feature[:feature_closure]
       end
-      data_by_key[[klass, feature[:id]].join('-')] = feature
+      data_by_key[id] = feature
     end
 
     data_by_key.reject{|k,v| v.blank?}
@@ -116,16 +114,16 @@ module PopupHelpers
     table_name = klass == 'Section' ? 'sections' : 'stations'
     aux_table_name = "#{table_name[0..-2]}_lines"
     aux_table_id = "#{table_name[0..-2]}_id"
+    future = FeatureCollection::Section::FUTURE
 
     query = %Q{
       select
-        id,
+        concat('#{klass}','-',id) as id,
         buildstart,
-        coalesce(opening,closure,#{FeatureCollection::Section::FUTURE}) as buildstart_end,
-        coalesce(closure,#{FeatureCollection::Section::FUTURE}) as feature_closure,
+        coalesce(opening,closure,#{future}) as buildstart_end,
+        coalesce(closure,#{future}) as feature_closure,
         #{klass == 'Section' ? 'length' : 'null::int as length'},
         #{klass == 'Station' ? 'name' : 'null as name'},
-        '#{klass}' as klass,
         lines
       from #{table_name}
       left join lateral (
