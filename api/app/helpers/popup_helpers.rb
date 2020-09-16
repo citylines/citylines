@@ -41,10 +41,10 @@ module PopupHelpers
 
     if ids = ids_by_kind['Section']
       sections_query = feature_popup_query('Section', ids)
-      if query
-        query = query.union(sections_query)
+      query = if query
+        query.union(sections_query)
       else
-        query = sections_query
+        sections_query
       end
     end
 
@@ -60,6 +60,8 @@ module PopupHelpers
 
     data_by_key
   end
+
+  private
 
   def feature_popup_query(klass, ids)
     table_name = klass == 'Section' ? 'sections' : 'stations'
