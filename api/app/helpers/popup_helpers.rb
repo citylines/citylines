@@ -82,7 +82,7 @@ module PopupHelpers
       left join lateral (
         select
           #{aux_table_id},
-          jsonb_agg(jsonb_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines
+          json_agg(json_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines
         from #{aux_table_name}
           left join lines on lines.id = #{aux_table_name}.line_id
           left join systems on systems.id = system_id
