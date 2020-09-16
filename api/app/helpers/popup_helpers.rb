@@ -89,7 +89,7 @@ module PopupHelpers
           left join transport_modes on lines.transport_mode_id = transport_modes.id
         where #{aux_table_id} = #{table_name}.id
         group by #{aux_table_id}
-       ) as lines_data on #{aux_table_id} = #{table_name}.id
+       ) as lines_data on true
       where ?
     }
 
