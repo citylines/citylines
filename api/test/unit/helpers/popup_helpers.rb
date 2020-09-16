@@ -44,14 +44,14 @@ describe PopupHelpers do
           feature_closure: @section.closure,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @section.opening,
-            to:  @section.closure
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.opening,
+            'to' => @section.closure
           }]
         }
       }
@@ -70,23 +70,23 @@ describe PopupHelpers do
           feature_closure: @section.closure,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @section.opening,
-            to:  @section.closure
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.opening,
+            'to' => @section.closure
           },{
-            name: @line2.name,
-            url_name: @line2.url_name,
-            system: @line2.system.name,
-            transport_mode_name: @line2.transport_mode.name,
-            color: @line2.color,
-            label_font_color: line_label_font_color(@line2.color),
-            from: @section.opening,
-            to:  @section.closure
+            'name' => @line2.name,
+            'url_name' => @line2.url_name,
+            'system' => @line2.system.name,
+            'transport_mode_name' => @line2.transport_mode.name,
+            'color' => @line2.color,
+            'label_font_color' => line_label_font_color(@line2.color),
+            'from' => @section.opening,
+            'to' => @section.closure
           }]
         }
       }
@@ -105,14 +105,14 @@ describe PopupHelpers do
           feature_closure: @section.closure,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @section.closure,
-            to:  @section.closure
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.closure,
+            'to' => @section.closure
           }]
         }
       }
@@ -131,14 +131,14 @@ describe PopupHelpers do
           feature_closure: FeatureCollection::Section::FUTURE,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @section.opening,
-            to: FeatureCollection::Section::FUTURE
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.opening,
+            'to' => FeatureCollection::Section::FUTURE
           }]
         }
       }
@@ -158,14 +158,14 @@ describe PopupHelpers do
           feature_closure: FeatureCollection::Section::FUTURE,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: FeatureCollection::Section::FUTURE,
-            to: FeatureCollection::Section::FUTURE
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => FeatureCollection::Section::FUTURE,
+            'to' => FeatureCollection::Section::FUTURE
           }]
         }
       }
@@ -185,14 +185,14 @@ describe PopupHelpers do
           feature_closure: @section.closure,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: 1986,
-            to: 1998
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => 1986,
+            'to' => 1998
           }]
         }
       }
@@ -214,14 +214,14 @@ describe PopupHelpers do
           feature_closure: @section.closure,
           length: @section.length,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @section.opening,
-            to:  @section.closure
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.opening,
+            'to' =>  @section.closure
           }]
         },
         "Station-#{@station.id}" => {
@@ -230,14 +230,14 @@ describe PopupHelpers do
           feature_closure: @station.closure,
           name: @station.name,
           lines: [{
-            name: @line1.name,
-            url_name: @line1.url_name,
-            system: @line1.system.name,
-            transport_mode_name: @line1.transport_mode.name,
-            color: @line1.color,
-            label_font_color: line_label_font_color(@line1.color),
-            from: @station.opening,
-            to:  @station.closure
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @station.opening,
+            'to' => @station.closure
           }]
         }
       }
