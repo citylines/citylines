@@ -42,7 +42,7 @@ module PopupHelpers
     if ids = ids_by_kind['Section']
       sections_query = feature_popup_query('Section', ids)
       query = if query
-        query.union(sections_query)
+        query.union(sections_query, all: true)
       else
         sections_query
       end
