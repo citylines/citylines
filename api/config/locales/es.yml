@@ -70,6 +70,9 @@ es:
     km_operative: 'Operativos: %(km)s km'
     km_under_construction: 'En construcción: %(km)s km'
     all_lines: Todas las líneas
+    system_tags:
+      historic: 'Histórico'
+      project: 'Proyecto'
     popup:
       named_station: Estación %(name)s
       unnamed_station: Estación

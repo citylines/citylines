@@ -91,7 +91,7 @@ class System extends Component {
             attributes={{placeholder: "editor.lines_editor.unnamed_system"}} />
           { this.tags().map(tag =>
             <label key={tag} className="c-field c-field--choice editor-system-tag">
-              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} />{tag}
+              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} /> <Translate content={`city.system_tags.${tag}`} />
             </label>) }
           { this.state.displayDeleteWarning ? deleteWarningControl : null }
           { this.state.modified && !this.state.displayDeleteWarning &&
@@ -151,7 +151,7 @@ class NewSystem extends Component {
             attributes={{placeholder:"editor.lines_editor.new_system_placeholder"}} />
           { this.tags().map(tag =>
             <label key={tag} className="c-field c-field--choice editor-system-tag">
-              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} />{tag}
+              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} /> <Translate content={`city.system_tags.${tag}`} />
             </label>) }
           { this.state.name &&
           <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>

@@ -9,9 +9,12 @@ class SystemTags extends PureComponent {
   render() {
     return this.tags().map(tag =>
       this.props.system[tag] &&
-        <span key={tag} className="c-badge c-badge--ghost c-badge--brand system-tag">
-          {tag}
-        </span>
+        <Translate
+          component="span"
+          key={tag}
+          className="c-badge c-badge--ghost c-badge--brand system-tag"
+          content={`city.system_tags.${tag}`}
+        />
     )
   }
 }
