@@ -705,6 +705,15 @@ table .narrow {
   font-size: 0.7em;
 }
 
+.system-tag {
+  margin-left: 7px;
+}
+
+.line-tree-content .c-badge {
+  display: inline;
+  margin-left: 7px;
+}
+
 .city-systems-container {
   display: block;
   position: relative;

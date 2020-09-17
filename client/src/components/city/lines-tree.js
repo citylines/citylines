@@ -17,7 +17,7 @@ class LinesTree extends PureComponent {
 
   onAllLinesItemToggle(checked) {
     if (typeof this.props.onAllLinesToggle === 'function') {
-      this.props.onAllLinesToggle(this.props.systemId, checked);
+      this.props.onAllLinesToggle(this.props.system.id, checked);
     }
   }
 
@@ -32,7 +32,8 @@ class LinesTree extends PureComponent {
     return (
       <ul className="c-tree system-tree">
         <li className={`c-tree__item ${expandClass}`}>
-          <span className="c-link" onClick={this.toggleExpanded.bind(this)}>{this.props.name || <Translate content="city.lines" />} </span>
+          <span className="c-link" onClick={this.toggleExpanded.bind(this)}>{this.props.system.name || <Translate content="city.lines" />}</span>
+          <SystemTags system={this.props.system} />
           <ul className="c-tree" style={{display: this.state.expanded ? 'block' : 'none'}}>
             { lines.length > 1 ?
             <AllLinesItem
@@ -59,6 +60,21 @@ class LinesTree extends PureComponent {
   }
 }
 
+class SystemTags extends PureComponent {
+  tags() {
+    return ['historic', 'project'];
+  }
+
+  render() {
+    return this.tags().map(tag =>
+      this.props.system[tag] &&
+        <span key={tag} className="c-badge c-badge--ghost c-badge--brand system-tag">
+          {tag}
+        </span>
+    )
+  }
+}
+
 class LinesTreeItem extends PureComponent {
   onToggle() {
     if (this.props.onToggle) {
@@ -75,9 +91,11 @@ class LinesTreeItem extends PureComponent {
           <div className="c-toggle__track" style={style}>
             <div className="c-toggle__handle"></div>
           </div>
-          {this.props.name}
-          {this.props.transportMode && this.props.showTransportMode &&
-              <Translate className="c-badge c-badge--ghost" style={{marginLeft:"10px"}} content={`transport_modes.${this.props.transportMode.name}`} />}
+          <div className="line-tree-content" >
+            <span>{this.props.name}</span>
+            {this.props.transportMode && this.props.showTransportMode &&
+                <Translate className="c-badge c-badge--ghost" content={`transport_modes.${this.props.transportMode.name}`} />}
+          </div>
         </label>
     )
   }

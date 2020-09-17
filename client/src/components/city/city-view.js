@@ -172,8 +172,7 @@ i               onShowTransportModesChange={this.handleTransportModesChange.bind
             return systemLines.length ?
             <LinesTree
               key={system.id}
-              systemId={system.id}
-              name={system.name}
+              system={system}
               defaultExpanded={true}
               lines={systemLines}
               linesShown={this.state.linesShown}
