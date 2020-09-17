@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Translate from 'react-translate-component';
 import counterpart from 'counterpart';
 import {formatNumber} from '../../lib/number-tools';
+import SystemTags from './system-tags';
 
 /**** Helpers ****/
 
@@ -24,7 +25,11 @@ class FeaturePopupContent extends Component {
     const urlNames = Object.keys(this.fProps()).
       map(k => k.indexOf('url_name') > -1 ? this.fProps()[k] : null).
       filter(el => !!el);
-    return this.fProps().lines.filter(line => urlNames.indexOf(line.url_name) > -1);
+
+    // We show first non historic or project lines
+    return this.fProps().lines.
+      filter(line => urlNames.indexOf(line.url_name) > -1).
+      sort((a,b) => (a.historic || a.project) ? 1 : -1);
   }
 
   groupedSystems(lines) {
@@ -151,6 +156,16 @@ class LinesLabel extends Component {
     }
   }
 
+  system() {
+    // If there are multiple lines,
+    // we assume that they all belong to the same systemm
+    return {
+      name: this.props.lines[0].system,
+      historic: this.props.lines[0].historic,
+      project: this.props.lines[0].project
+    };
+  }
+
   render() {
     return (
       <li className="c-list__item line-label-li">
@@ -158,13 +173,12 @@ class LinesLabel extends Component {
           <span key={line.name} className="c-text--highlight line-label" style={this.lineStyle(line)}>{line.name}</span>
         )}
 
-        {/* If there are multiple lines, we assume that they all belong to the same system */}
-        <strong className="line-label-system">{this.props.lines[0].system}</strong>
+        <strong className="line-label-system">{this.system().name}</strong><SystemTags system={this.system()} />
 
         {/* We loop through all lines, but we usually use showYears with only one line */}
         {this.props.showYears && this.props.lines.map(line =>
           validFeatureValue(line.from) &&
-            <div key={line.name}className="line-label-system">{`${line.from} - ${validOrToday(line.to)}`}</div>
+            <span key={line.name} className="line-label-year">{`${line.from} - ${validOrToday(line.to)}`}</span>
         )}
       </li>
     )

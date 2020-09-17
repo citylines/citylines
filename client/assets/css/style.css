@@ -258,6 +258,17 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 .line-label-system {
   line-height: 18px;
   vertical-align: top;
+  margin-right: 7px;
+}
+
+.line-label-year {
+  line-height: 18px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.system-tag + .line-label-year {
+  margin-left: 5px;
 }
 
 .line-label-li {
@@ -701,12 +712,21 @@ table .narrow {
   padding-right: 1em;
 }
 
+.system-tree .system-name {
+  margin-right: 7px;
+}
+
 .system-tree .c-badge {
   font-size: 0.7em;
 }
 
-.system-tag {
-  margin-left: 7px;
+.system-tag + .system-tag{
+  margin-left: 5px;
+}
+
+.line-label-li .system-tag{
+  line-height: 12px;
+  vertical-align: top;
 }
 
 .line-tree-content .c-badge {
