@@ -160,12 +160,14 @@ module CityHelpers
 
     query = City.where(Sequel.lit('? %> ?',:name, term)).
       or(Sequel.lit('? %> ?',:country, term)).
-      select(:id,:name,:length,:contributors,Sequel.function(:concat,'/',:url_name).as(:url),:country,:country_state, Sequel.expr(nil).as(:city_name),
+      select(:id,:name,:length,:contributors,Sequel.expr(nil).as(:historic),Sequel.expr(nil).as(:project),Sequel.function(:concat,'/',:url_name).as(:url),
+             :country,:country_state, Sequel.expr(nil).as(:city_name),
              Sequel.function(:greatest, Sequel.function(:word_similarity, :name, term),Sequel.function(:word_similarity, :country, term)).as(:sml)).
       union(
         System.where(Sequel.lit('? %> ?',:systems__name, term)).
         left_join(:cities, :id => :city_id).
-        select(:systems__id,:systems__name,:systems__length,:systems__contributors,Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name,
+        select(:systems__id,:systems__name,:systems__length,:systems__contributors,:systems__historic, :systems__project,
+               Sequel.function(:concat,'/', :cities__url_name,'?system_id=',:systems__id).as(:url),:cities__country,:cities__country_state,:cities__name,
                Sequel.function(:word_similarity, :systems__name, term).as(:sml)), opts)
 
     query.order(Sequel.desc(:length), Sequel.desc(:sml), :name).
@@ -179,8 +181,10 @@ module CityHelpers
         length: (res.length / 1000).to_i,
         systems: is_city ? res.systems.sort_by{|s| s.length}.reverse!.map(&:name).reject{|s| s.nil? || s == ''} : nil,
         contributors_count: res.contributors,
-        url: res[:url]
-      }
+        url: res[:url],
+        historic: res[:historic],
+        project: res[:project]
+      }.reject{|k,v| v.blank?}
     end
   end
 end

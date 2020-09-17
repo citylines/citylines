@@ -412,6 +412,10 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding:10px 1px 10px 1px;
 }
 
+.cities-container .item-location {
+  margin-left: 5px;
+}
+
 .lines-editor-container {
   overflow: initial;
   margin-bottom: 20px !important;
@@ -728,6 +732,10 @@ table .narrow {
 .line-label-li .system-tag{
   line-height: 12px;
   vertical-align: top;
+}
+
+.system-tag + .item-location {
+  margin-left:10px;
 }
 
 .line-tree-content .c-badge {

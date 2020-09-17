@@ -7,6 +7,7 @@ import Tags from './tags';
 import assets from '../lib/assets-provider';
 import {formatNumber} from '../lib/number-tools';
 import Avatar from './user/avatar';
+import SystemTags from './city/system-tags';
 
 class ResultItem extends Component {
   constructor(props, context) {
@@ -43,13 +44,14 @@ class ResultItem extends Component {
         <Tags title="main.title" description="main.description"/>
         <header className="c-card__header">
           <h3 className="c-heading">
-            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link>, {!this.isCity() ? `${this.props.city_name},` : ''} {this.props.state ? `${this.props.state},` : ''} {this.props.country}
+            <Link className="c-link c-link--primary" to={this.props.url}>{this.props.name}</Link> {!this.isCity() && <SystemTags system={this.props.tags} />}
+            <span className="item-location">{!this.isCity() ? `${this.props.city_name},` : ''} {this.props.state ? `${this.props.state},` : ''} {this.props.country}</span>
             {this.isCity() &&
             <div className="city-systems-container">
               <div
                 ref={ (el) => this.systemsDiv = el}
                 className={`c-heading__sub city-systems ${this.showAllClass()}`}>
-                  {this.props.systems.join(', ')}
+                  {this.props.systems && this.props.systems.join(', ')}
               </div>
               {this.bigSystemsDiv() ?
                 <div
@@ -149,6 +151,7 @@ class Home extends Component {
           country={item.country}
           length={item.length}
           systems={item.systems}
+          tags={{historic: item.historic, project: item.project}}
           contributors_count={item.contributors_count}
           url={item.url}
         />
