@@ -126,8 +126,8 @@ class Editor extends CityBase {
     EditorStore.deleteSystem(this.urlName, systemId);
   }
 
-  onCreateSystem(systemName) {
-    EditorStore.createSystem(this.urlName, systemName);
+  onCreateSystem(args) {
+    EditorStore.createSystem(this.urlName, args);
   }
 
   onImportFromOSMClick(route) {

@@ -103,6 +103,8 @@ class EditorApp < App
 
     system.backup!
     system.name = args[:name]
+    system.historic = args[:historic]
+    system.project = args[:project]
     system.save
 
     city_systems(@city).to_json
@@ -115,7 +117,12 @@ class EditorApp < App
 
     args = JSON.parse(request.body.read, symbolize_names: true)
 
-    system = System.new(city_id: @city.id, name: args[:name])
+    system = System.new(
+      city_id: @city.id,
+      name: args[:name],
+      historic: args[:historic],
+      project: args[:project]
+    )
     system.save
 
     city_systems(@city).to_json

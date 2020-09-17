@@ -16,7 +16,14 @@ module CityHelpers
   end
 
   def city_systems(city)
-    systems = city.systems.map{|system| {id: system.id, name: system.name}}
+    systems = city.systems.map do |system|
+      {
+        id: system.id,
+        name: system.name,
+        historic: system.historic,
+        project: system.project
+      }.reject{|k, v| !v}
+    end
     Naturally.sort_by(systems){|system| system[:name]}
   end
 

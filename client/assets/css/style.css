@@ -508,6 +508,15 @@ button.save-system {
   float: right;
 }
 
+.c-field--choice.editor-system-tag {
+  display:inline-block;
+  width:120px;
+}
+
+.system-name + .c-field--choice.editor-system-tag {
+  margin-left: 10px;
+}
+
 .not-dragging-line .draggable-line {
   cursor: move;
   cursor: grab;

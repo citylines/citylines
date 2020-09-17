@@ -9,6 +9,8 @@ class System extends Component {
       display: true,
       modified: false,
       name: props.name || '',
+      historic: props.historic || false,
+      project: props.project || false,
       displayDeleteWarning: false
     };
 
@@ -40,9 +42,13 @@ class System extends Component {
     this.setState(Object.assign({}, this.state, {name: e.target.value, modified: true}));
   }
 
+  onTagChange(tag, value) {
+    this.setState({[tag]: value, modified: true});
+  }
+
   onSave() {
     this.setState(Object.assign({}, this.state, {modified: false}));
-    this.props.onSave({id: this.props.id, name: this.state.name});
+    this.props.onSave({id: this.props.id, name: this.state.name, historic: this.state.historic, project: this.state.project});
   }
 
   onDelete() {
@@ -55,6 +61,10 @@ class System extends Component {
 
   onActualDelete() {
     this.props.onDelete(this.props.id);
+  }
+
+  tags() {
+    return ['historic', 'project'];
   }
 
   render() {
@@ -79,7 +89,10 @@ class System extends Component {
             onChange={this.onChange.bind(this)}
             value={this.state.name}
             attributes={{placeholder: "editor.lines_editor.unnamed_system"}} />
-
+          { this.tags().map(tag =>
+            <label key={tag} className="c-field c-field--choice editor-system-tag">
+              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} />{tag}
+            </label>) }
           { this.state.displayDeleteWarning ? deleteWarningControl : null }
           { this.state.modified && !this.state.displayDeleteWarning &&
             <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
@@ -101,20 +114,28 @@ class NewSystem extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {name: ''};
+    this.state = {name: '', historic: false, project: false};
   }
 
   onChange(e) {
     this.setState({name: e.target.value});
   }
 
+  onTagChange(tag, value) {
+    this.setState({[tag]: value, modified: true});
+  }
+
   onSave() {
-    this.props.onCreate(this.state.name);
+    this.props.onCreate(this.state);
     this.reset();
   }
 
   reset() {
-    this.setState({name: ''});
+    this.setState({name: '', historic: false, project: false});
+  }
+
+  tags() {
+    return ['historic', 'project'];
   }
 
   render() {
@@ -128,7 +149,10 @@ class NewSystem extends Component {
             onChange={this.onChange.bind(this)}
             value={this.state.name}
             attributes={{placeholder:"editor.lines_editor.new_system_placeholder"}} />
-
+          { this.tags().map(tag =>
+            <label key={tag} className="c-field c-field--choice editor-system-tag">
+              <input type="checkbox" checked={this.state[tag]} onChange={(e) => this.onTagChange(tag, e.target.checked)} />{tag}
+            </label>) }
           { this.state.name &&
           <button className="c-button c-button--info save-system" onClick={this.onSave.bind(this)}>
             <Translate content="editor.lines_editor.create" />
