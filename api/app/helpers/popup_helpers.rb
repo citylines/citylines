@@ -54,6 +54,9 @@ module PopupHelpers
         line['label_font_color'] = line_label_font_color(line['color'])
         line['from'] ||= feature[:buildstart_end]
         line['to'] ||= feature[:feature_closure]
+        ['historic', 'project'].each do |tag|
+          line.delete(tag) unless line[tag]
+        end
       end
       data_by_key[id] = feature.reject{|k,v| v.blank?}
     end
