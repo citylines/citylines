@@ -77,9 +77,9 @@ class LinesTreeItem extends PureComponent {
           <div className="c-toggle__track" style={style}>
             <div className="c-toggle__handle"></div>
           </div>
-          <div className="line-tree-content" >
+          <div className="line-tree-content">
             <span>{this.props.name}</span>
-            {this.props.transportMode && this.props.showTransportMode &&
+            {this.props.transportMode && this.props.transportMode.name != 'default' && this.props.showTransportMode &&
                 <Translate className="c-badge c-badge--ghost" content={`transport_modes.${this.props.transportMode.name}`} />}
           </div>
         </label>
