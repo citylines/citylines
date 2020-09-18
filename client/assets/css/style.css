@@ -690,6 +690,12 @@ table .narrow {
 .system-tree {
   margin-left: 1em;
   padding-right: 1em;
+  margin-bottom: 0.2em;
+}
+
+.line-tree-content .c-badge {
+  display: inline;
+  margin-left: 7px;
 }
 
 .system-tree .c-badge {
