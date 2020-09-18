@@ -59,8 +59,8 @@ const CityViewStore = Object.assign({}, Store, {
 
     const style = new Style(cityData.lines);
 
-    cityData.defaultLines = this.defaultLines(cityData);
-    const linesShown = cityData.linesShown || cityData.defaultLines;
+    cityData.defaultLinesShown = this.defaultLinesShown(cityData);
+    const linesShown = cityData.linesShown || cityData.defaultLinesShown;
 
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.years);
@@ -100,10 +100,7 @@ const CityViewStore = Object.assign({}, Store, {
     return cityData;
   },
 
-  defaultLines(cityDataOrUrlName) {
-    const cityData = typeof cityDataOrUrlName == 'String' ?
-      this.cityData[cityDataOrUrlName] : cityDataOrUrlName;
-
+  defaultLinesShown(cityData) {
     // By default, we hide the project systems
     const projectSystems = cityData.systems.filter(system => system.project).map(system => system.id);
     const lines = cityData.lines.filter(line => !projectSystems.includes(line.system_id));
@@ -115,7 +112,7 @@ const CityViewStore = Object.assign({}, Store, {
 
     return {
       lines: cityData.lines,
-      defaultLines: cityData.defaultLines,
+      defaultLinesShown: cityData.defaultLinesShown,
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
