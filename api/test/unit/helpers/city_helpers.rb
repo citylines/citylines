@@ -255,6 +255,23 @@ describe CityHelpers do
       assert_equal '/buenos-aires', res.first[:url]
     end
 
+    it "should return a city without systems" do
+      @subte.delete
+
+      res = search_city_or_system_by_term('buenos', 1,5)
+      assert_equal 1, res.count
+      assert_equal 'Buenos Aires', res.first[:name]
+      refute res.first[:city_name]
+      refute res.first[:state]
+      refute res.first[:historic]
+      refute res.first[:project]
+      assert_equal 'Argentina', res.first[:country]
+      assert_equal 2, res.first[:length]
+      refute res.first[:systems]
+      assert_equal 7, res.first[:contributors_count]
+      assert_equal '/buenos-aires', res.first[:url]
+    end
+
     it "should return a system" do
       res = search_city_or_system_by_term('subte', 1,5)
       assert_equal 1, res.count
