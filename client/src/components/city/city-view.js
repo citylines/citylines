@@ -72,7 +72,7 @@ class CityView extends CityBase {
   onLinesShownChange() {
     let linesShown;
 
-    if (this.state.linesShown.length == this.state.lines.length) {
+    if (JSON.stringify(this.state.linesShown) == JSON.stringify(this.state.defaultLines)) {
       linesShown = null;
     } else {
       linesShown = this.state.linesShown.join(',');

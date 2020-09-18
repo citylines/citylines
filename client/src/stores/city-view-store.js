@@ -59,7 +59,9 @@ const CityViewStore = Object.assign({}, Store, {
 
     const style = new Style(cityData.lines);
 
-    const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
+    cityData.defaultLines = this.defaultLines(cityData);
+    const linesShown = cityData.linesShown || cityData.defaultLines;
+
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
@@ -98,11 +100,22 @@ const CityViewStore = Object.assign({}, Store, {
     return cityData;
   },
 
+  defaultLines(cityDataOrUrlName) {
+    const cityData = typeof cityDataOrUrlName == 'String' ?
+      this.cityData[cityDataOrUrlName] : cityDataOrUrlName;
+
+    // By default, we hide the project systems
+    const projectSystems = cityData.systems.filter(system => system.project).map(system => system.id);
+    const lines = cityData.lines.filter(line => !projectSystems.includes(line.system_id));
+    return lines.map((line) => line.url_name);
+  },
+
   getState(urlName) {
     const cityData = this.cityData[urlName] || {};
 
     return {
       lines: cityData.lines,
+      defaultLines: cityData.defaultLines,
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
