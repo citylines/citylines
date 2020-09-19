@@ -51,5 +51,39 @@ describe DataHelpers do
 
       assert_equal [expected_line1, expected_line2], city_lines_systems_and_modes(city)
     end
+
+    it "should include historic and project tags" do
+      system.historic = true
+      system.project = true
+      system.save
+
+      expected_line1 = {
+        id: line1.id,
+        name: 'L1',
+        url_name: 'l1',
+        color: 'red',
+        system_id: system.id,
+        system_name: 'Tunnelbana',
+        historic: true,
+        project: true,
+        transport_mode_id: 4,
+        transport_mode_name: 'heavy_rail'
+      }
+
+      expected_line2 = {
+        id: line2.id,
+        name: 'L2',
+        url_name: 'l2',
+        color: 'green',
+        system_id: system.id,
+        system_name: 'Tunnelbana',
+        historic: true,
+        project: true,
+        transport_mode_id: 5,
+        transport_mode_name: 'light_rail'
+      }
+
+      assert_equal [expected_line1, expected_line2], city_lines_systems_and_modes(city)
+    end
   end
 end
