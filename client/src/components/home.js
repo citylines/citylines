@@ -151,7 +151,7 @@ class Home extends Component {
           country={item.country}
           length={item.length}
           systems={item.systems}
-          tags={{historic: item.historic, project: item.project}}
+          tags={{historic: item.historic}}
           contributors_count={item.contributors_count}
           url={item.url}
         />

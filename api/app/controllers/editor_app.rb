@@ -104,7 +104,6 @@ class EditorApp < App
     system.backup!
     system.name = args[:name]
     system.historic = args[:historic]
-    system.project = args[:project]
     system.save
 
     city_systems(@city).to_json
@@ -121,7 +120,6 @@ class EditorApp < App
       city_id: @city.id,
       name: args[:name],
       historic: args[:historic],
-      project: args[:project]
     )
     system.save
 

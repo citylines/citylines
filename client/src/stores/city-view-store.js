@@ -101,10 +101,7 @@ const CityViewStore = Object.assign({}, Store, {
   },
 
   defaultLinesShown(cityData) {
-    // By default, we hide the project systems
-    const projectSystems = cityData.systems.filter(system => system.project).map(system => system.id);
-    const lines = cityData.lines.filter(line => !projectSystems.includes(line.system_id));
-    return lines.map((line) => line.url_name);
+    return cityData.lines.map((line) => line.url_name);
   },
 
   getState(urlName) {

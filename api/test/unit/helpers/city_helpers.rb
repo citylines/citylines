@@ -7,11 +7,11 @@ describe CityHelpers do
     it "should return the city's systems, sorted" do
       city = City.create(name: 'A city', url_name:'a-city', start_year: 1920)
       s1 = System.create(name: 'Subway', city_id: city.id)
-      s2 = System.create(name: 'LRT', city_id: city.id, historic: true, project: true)
+      s2 = System.create(name: 'LRT', city_id: city.id, historic: true)
 
       systems = city_systems(city)
 
-      expected_result = [{id: s2.id, name: s2.name, historic: true, project: true}, {id: s1.id, name: s1.name}]
+      expected_result = [{id: s2.id, name: s2.name, historic: true}, {id: s1.id, name: s1.name}]
       assert_equal expected_result, systems
     end
   end
@@ -247,7 +247,6 @@ describe CityHelpers do
       refute res.first[:city_name]
       refute res.first[:state]
       refute res.first[:historic]
-      refute res.first[:project]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 2, res.first[:length]
       assert_equal ['Subte'], res.first[:systems]
@@ -264,7 +263,6 @@ describe CityHelpers do
       refute res.first[:city_name]
       refute res.first[:state]
       refute res.first[:historic]
-      refute res.first[:project]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 2, res.first[:length]
       refute res.first[:systems]
@@ -279,7 +277,6 @@ describe CityHelpers do
       assert_equal 'Buenos Aires', res.first[:city_name]
       refute res.first[:state]
       refute res.first[:historic]
-      refute res.first[:project]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 1, res.first[:length]
       refute res.first[:systems]
@@ -287,9 +284,8 @@ describe CityHelpers do
       assert_equal "/buenos-aires?system_id=#{@subte.id}", res.first[:url]
     end
 
-    it "should return a system with historic and project tags" do
+    it "should return a system with the historic tag" do
       @subte.historic = true
-      @subte.project = true
       @subte.save
 
       res = search_city_or_system_by_term('subte', 1,5)
@@ -298,7 +294,6 @@ describe CityHelpers do
       assert_equal 'Buenos Aires', res.first[:city_name]
       refute res.first[:state]
       assert res.first[:historic]
-      assert res.first[:project]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 1, res.first[:length]
       refute res.first[:systems]

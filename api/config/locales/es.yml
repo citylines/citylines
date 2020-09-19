@@ -72,7 +72,6 @@ es:
     all_lines: Todas las líneas
     system_tags:
       historic: 'Histórico'
-      project: 'Proyecto'
     popup:
       named_station: Estación %(name)s
       unnamed_station: Estación

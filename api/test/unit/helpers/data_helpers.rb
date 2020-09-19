@@ -52,9 +52,8 @@ describe DataHelpers do
       assert_equal [expected_line1, expected_line2], city_lines_systems_and_modes(city)
     end
 
-    it "should include historic and project tags" do
+    it "should include the historic tag" do
       system.historic = true
-      system.project = true
       system.save
 
       expected_line1 = {
@@ -65,7 +64,6 @@ describe DataHelpers do
         system_id: system.id,
         system_name: 'Tunnelbana',
         historic: true,
-        project: true,
         transport_mode_id: 4,
         transport_mode_name: 'heavy_rail'
       }
@@ -78,7 +76,6 @@ describe DataHelpers do
         system_id: system.id,
         system_name: 'Tunnelbana',
         historic: true,
-        project: true,
         transport_mode_id: 5,
         transport_mode_name: 'light_rail'
       }

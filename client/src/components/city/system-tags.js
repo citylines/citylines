@@ -3,7 +3,7 @@ import Translate from 'react-translate-component';
 
 class SystemTags extends PureComponent {
   tags() {
-    return ['historic', 'project'];
+    return ['historic'];
   }
 
   render() {

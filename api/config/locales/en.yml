@@ -68,7 +68,6 @@ en:
     all_lines: All the lines
     system_tags:
       historic: Historical
-      project: Project
     popup:
       named_station: "%(name)s station"
       unnamed_station: Station

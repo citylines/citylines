@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
 
+const TAGS = ['historic'];
+
 class System extends Component {
   constructor(props, context) {
     super(props, context);
@@ -10,7 +12,6 @@ class System extends Component {
       modified: false,
       name: props.name || '',
       historic: props.historic || false,
-      project: props.project || false,
       displayDeleteWarning: false
     };
 
@@ -48,7 +49,7 @@ class System extends Component {
 
   onSave() {
     this.setState(Object.assign({}, this.state, {modified: false}));
-    this.props.onSave({id: this.props.id, name: this.state.name, historic: this.state.historic, project: this.state.project});
+    this.props.onSave({id: this.props.id, name: this.state.name, historic: this.state.historic});
   }
 
   onDelete() {
@@ -64,7 +65,7 @@ class System extends Component {
   }
 
   tags() {
-    return ['historic', 'project'];
+    return TAGS;
   }
 
   render() {
@@ -114,7 +115,7 @@ class NewSystem extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {name: '', historic: false, project: false};
+    this.state = {name: '', historic: false};
   }
 
   onChange(e) {
@@ -131,11 +132,11 @@ class NewSystem extends Component {
   }
 
   reset() {
-    this.setState({name: '', historic: false, project: false});
+    this.setState({name: '', historic: false});
   }
 
   tags() {
-    return ['historic', 'project'];
+    return TAGS;
   }
 
   render() {

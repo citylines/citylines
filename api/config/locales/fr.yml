@@ -71,7 +71,6 @@ fr:
     all_lines: Toutes les lignes
     system_tags:
       historic: Ancien
-      project: Projet
     popup:
       named_station: Station %(name)s
       unnamed_station: Station

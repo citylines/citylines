@@ -200,9 +200,8 @@ describe PopupHelpers do
       assert_equal expected_data, popup_features_data("Section-#{@section.id}")
     end
 
-    it "should return handle historical or project-related systems" do
+    it "should return handle historical system" do
       @system.historic = true
-      @system.project = true
       @system.save
 
       expected_data = {
@@ -220,8 +219,7 @@ describe PopupHelpers do
             'label_font_color' => line_label_font_color(@line1.color),
             'from' => @section.opening,
             'to' => @section.closure,
-            'historic' => true,
-            'project' => true
+            'historic' => true
           }]
         }
       }

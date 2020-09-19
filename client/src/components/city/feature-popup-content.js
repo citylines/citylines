@@ -26,10 +26,10 @@ class FeaturePopupContent extends Component {
       map(k => k.indexOf('url_name') > -1 ? this.fProps()[k] : null).
       filter(el => !!el);
 
-    // We show first non historic or project lines
+    // We show first non historic lines
     return this.fProps().lines.
       filter(line => urlNames.indexOf(line.url_name) > -1).
-      sort((a,b) => (a.historic || a.project) ? 1 : -1);
+      sort((a,b) => a.historic ? 1 : -1);
   }
 
   groupedSystems(lines) {
@@ -161,8 +161,7 @@ class LinesLabel extends Component {
     // we assume that they all belong to the same systemm
     return {
       name: this.props.lines[0].system,
-      historic: this.props.lines[0].historic,
-      project: this.props.lines[0].project
+      historic: this.props.lines[0].historic
     };
   }
 
