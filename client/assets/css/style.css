@@ -725,10 +725,6 @@ table .narrow {
   font-size: 0.7em;
 }
 
-.system-tag + .system-tag{
-  margin-left: 5px;
-}
-
 .line-label-li .system-tag{
   line-height: 12px;
   vertical-align: top;
