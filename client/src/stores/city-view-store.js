@@ -59,9 +59,7 @@ const CityViewStore = Object.assign({}, Store, {
 
     const style = new Style(cityData.lines);
 
-    cityData.defaultLinesShown = this.defaultLinesShown(cityData);
-    const linesShown = cityData.linesShown || cityData.defaultLinesShown;
-
+    const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.years);
     cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
@@ -100,16 +98,11 @@ const CityViewStore = Object.assign({}, Store, {
     return cityData;
   },
 
-  defaultLinesShown(cityData) {
-    return cityData.lines.map((line) => line.url_name);
-  },
-
   getState(urlName) {
     const cityData = this.cityData[urlName] || {};
 
     return {
       lines: cityData.lines,
-      defaultLinesShown: cityData.defaultLinesShown,
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
