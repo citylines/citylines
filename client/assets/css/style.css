@@ -267,10 +267,6 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   display: inline-block;
 }
 
-.system-tag + .line-label-year {
-  margin-left: 5px;
-}
-
 .line-label-li {
   padding-top: 2px;
   padding-bottom: 5px;
@@ -413,7 +409,11 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 }
 
 .cities-container .item-location {
-  margin-left: 5px;
+  margin-left: 3px;
+}
+
+.cities-container .system-tag {
+  margin: 0 5px;
 }
 
 .lines-editor-container {
@@ -728,10 +728,7 @@ table .narrow {
 .line-label-li .system-tag{
   line-height: 12px;
   vertical-align: top;
-}
-
-.system-tag + .item-location {
-  margin-left:10px;
+  margin-right: 5px;
 }
 
 .line-tree-content .c-badge {
