@@ -10,9 +10,10 @@ module DataHelpers
         color: line.color,
         system_id: system.id,
         system_name: system.name,
+        historic: system.historic,
         transport_mode_id: transport_mode.id,
         transport_mode_name: transport_mode.name
-      }
+      }.reject{|k,v| v.blank?}
     end
 
     Naturally.sort_by(lines){|line| line[:name]}

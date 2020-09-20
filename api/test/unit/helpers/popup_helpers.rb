@@ -200,6 +200,33 @@ describe PopupHelpers do
       assert_equal expected_data, popup_features_data("Section-#{@section.id}")
     end
 
+    it "should return handle historical system" do
+      @system.historic = true
+      @system.save
+
+      expected_data = {
+        "Section-#{@section.id}" => {
+          buildstart: @section.buildstart,
+          buildstart_end: @section.opening,
+          feature_closure: @section.closure,
+          length: @section.length,
+          lines: [{
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => @section.opening,
+            'to' => @section.closure,
+            'historic' => true
+          }]
+        }
+      }
+
+      assert_equal expected_data, popup_features_data("Section-#{@section.id}")
+    end
+
     it "should handle multiple features at the same time" do
       @station = Station.create(name:'A station', buildstart: 1987, opening: 1988, closure: 1997, city_id: @city.id)
       @station.geometry = Sequel.lit("ST_GeomFromText('POINT(-71.064544 42.28787)',4326)")

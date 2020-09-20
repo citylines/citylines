@@ -54,6 +54,7 @@ module PopupHelpers
         line['label_font_color'] = line_label_font_color(line['color'])
         line['from'] ||= feature[:buildstart_end]
         line['to'] ||= feature[:feature_closure]
+        line.delete('historic') unless line['historic']
       end
       data_by_key[id] = feature.reject{|k,v| v.blank?}
     end
@@ -82,7 +83,7 @@ module PopupHelpers
       left join lateral (
         select
           #{aux_table_id},
-          json_agg(json_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines
+          json_agg(json_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'historic',systems.historic,'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines
         from #{aux_table_name}
           left join lines on lines.id = #{aux_table_name}.line_id
           left join systems on systems.id = system_id

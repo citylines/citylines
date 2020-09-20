@@ -7,11 +7,11 @@ describe CityHelpers do
     it "should return the city's systems, sorted" do
       city = City.create(name: 'A city', url_name:'a-city', start_year: 1920)
       s1 = System.create(name: 'Subway', city_id: city.id)
-      s2 = System.create(name: 'LRT', city_id: city.id)
+      s2 = System.create(name: 'LRT', city_id: city.id, historic: true)
 
       systems = city_systems(city)
 
-      expected_result = [{id: s2.id, name: s2.name}, {id: s1.id, name: s1.name}]
+      expected_result = [{id: s2.id, name: s2.name, historic: true}, {id: s1.id, name: s1.name}]
       assert_equal expected_result, systems
     end
   end
@@ -246,9 +246,26 @@ describe CityHelpers do
       assert_equal 'Buenos Aires', res.first[:name]
       refute res.first[:city_name]
       refute res.first[:state]
+      refute res.first[:historic]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 2, res.first[:length]
       assert_equal ['Subte'], res.first[:systems]
+      assert_equal 7, res.first[:contributors_count]
+      assert_equal '/buenos-aires', res.first[:url]
+    end
+
+    it "should return a city without systems" do
+      @subte.delete
+
+      res = search_city_or_system_by_term('buenos', 1,5)
+      assert_equal 1, res.count
+      assert_equal 'Buenos Aires', res.first[:name]
+      refute res.first[:city_name]
+      refute res.first[:state]
+      refute res.first[:historic]
+      assert_equal 'Argentina', res.first[:country]
+      assert_equal 2, res.first[:length]
+      refute res.first[:systems]
       assert_equal 7, res.first[:contributors_count]
       assert_equal '/buenos-aires', res.first[:url]
     end
@@ -259,6 +276,24 @@ describe CityHelpers do
       assert_equal 'Subte', res.first[:name]
       assert_equal 'Buenos Aires', res.first[:city_name]
       refute res.first[:state]
+      refute res.first[:historic]
+      assert_equal 'Argentina', res.first[:country]
+      assert_equal 1, res.first[:length]
+      refute res.first[:systems]
+      assert_equal 3, res.first[:contributors_count]
+      assert_equal "/buenos-aires?system_id=#{@subte.id}", res.first[:url]
+    end
+
+    it "should return a system with the historic tag" do
+      @subte.historic = true
+      @subte.save
+
+      res = search_city_or_system_by_term('subte', 1,5)
+      assert_equal 1, res.count
+      assert_equal 'Subte', res.first[:name]
+      assert_equal 'Buenos Aires', res.first[:city_name]
+      refute res.first[:state]
+      assert res.first[:historic]
       assert_equal 'Argentina', res.first[:country]
       assert_equal 1, res.first[:length]
       refute res.first[:systems]

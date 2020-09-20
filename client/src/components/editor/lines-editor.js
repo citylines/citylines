@@ -76,6 +76,7 @@ class LinesEditor extends Component {
               key={system.id}
               id={system.id}
               name={system.name}
+              historic={system.historic}
               onLineDragged={this.onLineSystemChange.bind(this)}
               onSave={this.bindedOnSystemSave}
               onDelete={this.bindedOnSystemDelete}>

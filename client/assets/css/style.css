@@ -258,6 +258,13 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 .line-label-system {
   line-height: 18px;
   vertical-align: top;
+  margin-right: 7px;
+}
+
+.line-label-year {
+  line-height: 18px;
+  vertical-align: top;
+  display: inline-block;
 }
 
 .line-label-li {
@@ -401,6 +408,14 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
   padding:10px 1px 10px 1px;
 }
 
+.cities-container .item-location {
+  margin-left: 3px;
+}
+
+.cities-container .system-tag {
+  margin: 0 5px;
+}
+
 .lines-editor-container {
   overflow: initial;
   margin-bottom: 20px !important;
@@ -506,6 +521,15 @@ input.system-name {
 
 button.save-system {
   float: right;
+}
+
+.c-field--choice.editor-system-tag {
+  display:inline-block;
+  width:120px;
+}
+
+.system-name + .c-field--choice.editor-system-tag {
+  margin-left: 10px;
 }
 
 .not-dragging-line .draggable-line {
@@ -693,13 +717,23 @@ table .narrow {
   margin-bottom: 0.2em;
 }
 
-.line-tree-content .c-badge {
-  display: inline;
-  margin-left: 7px;
+.system-tree .system-name {
+  margin-right: 7px;
 }
 
 .system-tree .c-badge {
   font-size: 0.7em;
+}
+
+.line-label-li .system-tag{
+  line-height: 12px;
+  vertical-align: top;
+  margin-right: 5px;
+}
+
+.line-tree-content .c-badge {
+  display: inline;
+  margin-left: 7px;
 }
 
 .city-systems-container {

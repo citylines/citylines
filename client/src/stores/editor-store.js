@@ -92,9 +92,9 @@ const EditorStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  async createSystem(urlName, systemName) {
+  async createSystem(urlName, args) {
     const url = `/api/editor/${urlName}/system`;
-    const body = JSON.stringify({name: systemName});
+    const body = JSON.stringify(args);
     const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
     const json = await response.json();
 
