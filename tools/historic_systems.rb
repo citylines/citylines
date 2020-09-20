@@ -29,13 +29,13 @@ def historic_systems(update = false)
     if max_year
       if max_year < current_year
         color = 'green'
+        puts colorize("#{system.name} - max year: #{max_year}", color)
         if update
           system.historic = true
           system.save
         end
+        system
       end
-      puts colorize("#{system.name} - max year: #{max_year}", color)
-      system
     end
   end.compact
 end
