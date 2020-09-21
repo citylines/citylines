@@ -139,7 +139,8 @@ es:
       nodes: nodos con
     general_alert:
       title: Atención
-      body: Use fuentes confiables al agregar o modificar datos, y respete el trabajo de otros colaboradores. Además, asegúrese de seguir los términos del colaborador.
+      body: Use fuentes confiables al agregar o modificar datos, y respete el trabajo de otros colaboradores. Además, asegúrese de seguir los
+      link: términos del colaborador
     no_lines_alert: No hay líneas creadas. Los elementos deben tener asignados una línea
       para poder ser guardados
   terms:

@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
+import {Link} from 'react-router-dom';
 
 class GeneralAlert extends PureComponent {
   render() {
@@ -8,7 +9,9 @@ class GeneralAlert extends PureComponent {
         <div className="c-card__item c-card__item--warning">
           <span className="fa fa-info-circle"/><Translate content="editor.general_alert.title"/><span className="fa fa-times" onClick={this.props.onClose}/>
         </div>
-        <Translate component="li" className="c-card__item" content="editor.general_alert.body"/>
+        <li className="c-card__item">
+          <Translate content="editor.general_alert.body"/> <Translate component={Link} content="editor.general_alert.link" to="/terms#contributor" className="c-link"/>.
+        </li>
       </div>
     )
   }

@@ -2,8 +2,6 @@ import React from 'react';
 import CityBase from './city-base';
 import PropTypes from 'prop-types';
 
-import {Link} from 'react-router-dom';
-
 import Translate from 'react-translate-component';
 
 import {PanelHeader, PanelBody} from './panel';
