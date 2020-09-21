@@ -12,6 +12,7 @@ import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
 import OSMImporter from './editor/osm-importer';
 import NoLinesAlert from './editor/no-lines-alert';
+import GeneralAlert from './editor/general-alert';
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -30,7 +31,10 @@ class Editor extends CityBase {
     this.currentMode = this.modes.EDIT_FEATURES;
 
     this.urlName = this.props.city_url_name;
-    this.state = EditorStore.getState(this.urlName);
+    this.state = {
+      displayGeneralAlert: true,
+      ...EditorStore.getState(this.urlName)
+    };
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
@@ -140,6 +144,10 @@ class Editor extends CityBase {
     EditorStore.importFromOSM(this.urlName, route, bounds);
   }
 
+  onCloseGeneralAlert() {
+    this.setState({displayGeneralAlert: false});
+  }
+
   render() {
     if (!this.state.systems) return null;
 
@@ -160,6 +168,7 @@ class Editor extends CityBase {
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
+              { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
               { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
               <FeatureViewer
                 lines={this.state.lines}
