@@ -136,6 +136,9 @@ fr:
       members: 'Membres:'
       ways: chemin
       nodes: noeuds
+    general_alert:
+      title: Attention
+      body: Utilisez des sources fiables lors du téléchargement ou de la modification de données, et respectez le travail des autres contributeurs. Assurez-vous également de suivre les règles des contributeurs.
     no_lines_alert: Il n'y a pas de ligne. Les fonctionnalités doivent être appliquées
       à la ligne avant de pouvoir enregistrer
   terms:

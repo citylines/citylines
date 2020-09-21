@@ -5,10 +5,10 @@ class GeneralAlert extends PureComponent {
   render() {
     return (
       <div className="c-card editor-general-alert">
-        <div className="c-card__item c-card__item--warning">Please note <span style={{float: 'right'}} className="fa fa-times" onClick={this.props.onClose}/></div>
-        <li className="c-card__item">
-          Do Not Random Editing!!! Follow the actual Lines & Station Location at Wiki or OpenStreetMaps. Repect other editors who spent time for editing. Thank you.
-        </li>
+        <div className="c-card__item c-card__item--warning">
+          <span className="fa fa-info-circle"/><Translate content="editor.general_alert.title"/><span className="fa fa-times" onClick={this.props.onClose}/>
+        </div>
+        <Translate component="li" className="c-card__item" content="editor.general_alert.body"/>
       </div>
     )
   }

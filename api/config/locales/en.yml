@@ -133,6 +133,9 @@ en:
       members: 'Members:'
       ways: ways
       nodes: nodes with
+    general_alert:
+      title: Please note
+      body: Use trusted sources when uploading or modyfing data, and respect other contributors work. Also, be sure to follow the contributor terms.
     no_lines_alert: There are no lines. Features must be assigned a line before they
       can be saved
   terms:

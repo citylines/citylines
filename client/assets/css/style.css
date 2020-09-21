@@ -849,8 +849,11 @@ a[disabled], a[disabled]:hover {
    color: #e1e1e1;
 }
 
+.editor-general-alert .fa {
+  margin: 5px;
+}
+
 .editor-general-alert .fa-times {
   float: right;
-  margin: 5px;
   cursor: pointer;
 }
