@@ -24,9 +24,9 @@ class OSMImporter extends PureComponent {
 
   render() {
     return(
-        <ul className="c-card">
-          <li className="c-card__item c-card__item--brand">OpenStreetMap</li>
-          <li className="c-card__item">
+        <div className="c-card">
+          <div className="c-card__item c-card__item--brand">OpenStreetMap</div>
+          <div className="c-card__item">
           {this.props.zoom < 13 ?
             <Translate component="span" content="editor.osm.zoom" className="osm-container" />
               :
@@ -52,8 +52,8 @@ class OSMImporter extends PureComponent {
                        onClick={this.bindedImport}
                        className="c-button"
                        disabled={this.props.savingData || this.props.zoom < 13} />
-          </li>
-        </ul>
+          </div>
+        </div>
         )
   }
 }

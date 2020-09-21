@@ -54,11 +54,11 @@ class ModifiedFeaturesViewer extends PureComponent {
         const idLabel = !feature.created ? `Id: ${feature.id}`: '';
 
         return (
-          <li key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>
+          <div key={id} name={id} className="c-card__item" onClick={this.bindedOnClick}>
             {this.type(feature) && <Translate content={`editor.modified_features.types.${this.type(feature)}`} className="modified-features-list-subitem" />}
             <Translate content={`editor.modified_features.klasses.${feature.klass.toLowerCase()}`} className="modified-features-list-subitem" />
             <span className="modified-features-list-subitem">{idLabel}</span>
-          </li>
+          </div>
         )
       })
       : <div className="c-card__item"><Translate content="editor.modified_features.no_features_modified" /></div>;
@@ -73,17 +73,17 @@ class ModifiedFeaturesViewer extends PureComponent {
         : null;
 
     return (
-      <ul className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
-      <li className="c-card__item c-card__item--brand">
-        <Translate content="editor.modified_features.title" />
-        { this.props.modifiedFeatures ? ` (${this.elementsNumber()})` : '' }
-      </li>
+      <div className={`c-card ${this.props.modifiedFeatures ? "c-card--menu c-card--grouped no-max-height" : ""}`}>
+        <div className="c-card__item c-card__item--brand">
+          <Translate content="editor.modified_features.title" />
+          { this.props.modifiedFeatures ? ` (${this.elementsNumber()})` : '' }
+        </div>
         { content }
         {  this.tooManyElements() ?
-          <Translate component="li" className="c-card__item" content="editor.modified_features.too_many_elements" />
+          <Translate component="div" className="c-card__item" content="editor.modified_features.too_many_elements" />
           : ""}
         { buttons }
-      </ul>
+      </div>
     )
   }
 }
