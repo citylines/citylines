@@ -89,7 +89,7 @@ fr:
     edit_lines: Modifier les lignes
     feature_viewer:
       selected_feature: Fonctionnalité sélectionnée
-      no_feature_selected: Aucune fonctionnalité sélectionnée
+      no_feature_selected: Aucune fonctionnalité sélectionnée.
       add_line: Ajouter une ligne
       years:
         from: De l'année
@@ -108,7 +108,7 @@ fr:
         osm_metadata: Metadata OSM
     modified_features:
       title: Fonctionnalités modifiées
-      no_features_modified: Aucune fonctionnalité modifiée
+      no_features_modified: Aucune fonctionnalité modifiée.
       types:
         geo: "(Geo)"
         props: "(Props)"
@@ -120,7 +120,7 @@ fr:
       save: Enregistrer
       discard: Annuler
       too_many_elements: Trop d'éléments ! Vous ne pouvez pas enregistrer plus de 20
-        éléments à la fois
+        éléments à la fois.
     lines_editor:
       create: Créer
       new_line_placeholder: Nouvelle ligne
@@ -130,7 +130,7 @@ fr:
       delete: Effacer
       cancel: Annuler
     osm:
-      zoom: Import autorisé uniquement à un niveau de zoom de 13 et au-delà
+      zoom: Import autorisé uniquement à un niveau de zoom de 13 et au-delà.
       import_button: Importer
       relation: Relation
       members: 'Membres:'
@@ -141,7 +141,7 @@ fr:
       body: Utilisez des sources fiables lors du téléchargement ou de la modification de données, et respectez le travail des autres contributeurs. Assurez-vous également de suivre les
       link: règles des contributeurs
     no_lines_alert: Il n'y a pas de ligne. Les fonctionnalités doivent être appliquées
-      à la ligne avant de pouvoir enregistrer
+      à la ligne avant de pouvoir enregistrer.
   terms:
     title: Conditions d'utilisation
     license:
