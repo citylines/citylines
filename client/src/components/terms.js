@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Tags from './tags';
 
