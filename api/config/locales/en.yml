@@ -86,7 +86,7 @@ en:
     edit_lines: Edit lines
     feature_viewer:
       selected_feature: Selected feature
-      no_feature_selected: No feature selected
+      no_feature_selected: No feature selected.
       add_line: Add line
       years:
         from: From year
@@ -105,7 +105,7 @@ en:
         osm_metadata: OSM Metadata
     modified_features:
       title: Modified features
-      no_features_modified: No features modified
+      no_features_modified: No features modified.
       types:
         geo: "(Geo)"
         props: "(Props)"
@@ -117,7 +117,7 @@ en:
       save: Save
       discard: Discard
       too_many_elements: Too many elements! You can't save more than 20 elements at
-        the same time
+        the same time.
     lines_editor:
       create: Create
       new_line_placeholder: New line
@@ -127,14 +127,14 @@ en:
       delete: Delete
       cancel: Cancel
     osm:
-      zoom: Import is only allowed in zoom levels bigger than 13
+      zoom: Import is only allowed in zoom levels greater than 13.
       import_button: Import
       relation: Relation
       members: 'Members:'
       ways: ways
       nodes: nodes with
     no_lines_alert: There are no lines. Features must be assigned a line before they
-      can be saved
+      can be saved.
   terms:
     title: Terms of use
     license:

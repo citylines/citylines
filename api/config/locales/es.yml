@@ -90,7 +90,7 @@ es:
     edit_lines: Editar líneas
     feature_viewer:
       selected_feature: Elemento seleccionado
-      no_feature_selected: Ningún elemento seleccionado
+      no_feature_selected: Ningún elemento seleccionado.
       add_line: Agregar línea
       years:
         from: Desde el año
@@ -109,7 +109,7 @@ es:
         osm_metadata: Metadata de OSM
     modified_features:
       title: Elementos modificados
-      no_features_modified: Ningún elemento modificado
+      no_features_modified: Ningún elemento modificado.
       types:
         geo: "(Geo)"
         props: "(Props)"
@@ -121,7 +121,7 @@ es:
       save: Guardar
       discard: Descartar
       too_many_elements: "¡Demasiados elementos! No se pueden guardar más de 20 elementos
-        al mismo tiempo"
+        al mismo tiempo."
     lines_editor:
       create: Crear
       new_line_placeholder: Nueva línea
@@ -131,14 +131,14 @@ es:
       delete: Borrar
       cancel: Cancelar
     osm:
-      zoom: La importación está habilitada sólo para niveles de zoom mayores a 13
+      zoom: La importación está habilitada sólo para niveles de zoom mayores a 13.
       import_button: Importar
       relation: Relación
       members: 'Miembros:'
       ways: vías
       nodes: nodos con
     no_lines_alert: No hay líneas creadas. Los elementos deben tener asignados una línea
-      para poder ser guardados
+      para poder ser guardados.
   terms:
     title: Términos de uso
     license:
