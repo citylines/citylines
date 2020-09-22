@@ -29,10 +29,7 @@ class Editor extends CityBase {
     this.currentMode = this.modes.EDIT_FEATURES;
 
     this.urlName = this.props.city_url_name;
-    this.state = {
-      displayGeneralAlert: true,
-      ...EditorStore.getState(this.urlName)
-    };
+    this.state = EditorStore.getState(this.urlName);
 
     this.bindedOnChange = this.onChange.bind(this);
     this.bindedOnFeaturePropsChange = this.onFeaturePropsChange.bind(this);
@@ -143,7 +140,7 @@ class Editor extends CityBase {
   }
 
   onCloseGeneralAlert() {
-    this.setState({displayGeneralAlert: false});
+    EditorStore.closeGeneralAlert(this.urlName);
   }
 
   render() {
