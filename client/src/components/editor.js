@@ -2,8 +2,6 @@ import React from 'react';
 import CityBase from './city-base';
 import PropTypes from 'prop-types';
 
-import {Link} from 'react-router-dom';
-
 import Translate from 'react-translate-component';
 
 import {PanelHeader, PanelBody} from './panel';
@@ -12,6 +10,7 @@ import ModifiedFeaturesViewer from './editor/modified-features-viewer';
 import LinesEditor from './editor/lines-editor';
 import OSMImporter from './editor/osm-importer';
 import NoLinesAlert from './editor/no-lines-alert';
+import GeneralAlert from './editor/general-alert';
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -140,6 +139,10 @@ class Editor extends CityBase {
     EditorStore.importFromOSM(this.urlName, route, bounds);
   }
 
+  onCloseGeneralAlert() {
+    EditorStore.closeGeneralAlert(this.urlName);
+  }
+
   render() {
     if (!this.state.systems) return null;
 
@@ -160,6 +163,7 @@ class Editor extends CityBase {
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
+              { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
               { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
               <FeatureViewer
                 lines={this.state.lines}

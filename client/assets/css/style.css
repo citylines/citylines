@@ -848,3 +848,12 @@ a[disabled], a[disabled]:hover {
    pointer-events: none;
    color: #e1e1e1;
 }
+
+.editor-general-alert .fa {
+  margin: 5px;
+}
+
+.editor-general-alert .fa-times {
+  float: right;
+  cursor: pointer;
+}

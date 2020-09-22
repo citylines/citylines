@@ -2,6 +2,7 @@ import Store from './store';
 
 import 'whatwg-fetch';
 import {v4 as uuid } from 'uuid';
+import BrowserCookies from 'browser-cookies';
 
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
@@ -128,6 +129,7 @@ const EditorStore = Object.assign({}, Store, {
   async load(urlName) {
     this.cityData[urlName] = await this.fetchCityData(urlName);
     this.cityData[urlName].features = await this.fetchFeatures(urlName);
+    this.cityData[urlName].displayGeneralAlert = !BrowserCookies.get(this.generalAlertCookieName(urlName));
     this.emitChangeEvent();
   },
 
@@ -147,7 +149,8 @@ const EditorStore = Object.assign({}, Store, {
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,
       savingData: cityData.savingData,
-      currentMode: cityData.currentMode
+      currentMode: cityData.currentMode,
+      displayGeneralAlert: cityData.displayGeneralAlert
     }
   },
 
@@ -342,6 +345,16 @@ const EditorStore = Object.assign({}, Store, {
       f.id = `osm_${f.properties.osm_id}`;
       return f;
     }));
+  },
+
+  generalAlertCookieName(urlName) {
+    return `${urlName}-editor-alert-closed`;
+  },
+
+  closeGeneralAlert(urlName) {
+    BrowserCookies.set(this.generalAlertCookieName(urlName), 'yes', {expires: 365});
+    this.cityData[urlName].displayGeneralAlert = false;
+    this.emitChangeEvent();
   }
 });
 

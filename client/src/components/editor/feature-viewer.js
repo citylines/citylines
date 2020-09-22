@@ -125,7 +125,7 @@ class FeatureViewer extends PureComponent {
 
     return (
       <div className="c-card">
-        <li className="c-card__item c-card__item--brand"><Translate content="editor.feature_viewer.selected_feature" /></li>
+        <div className="c-card__item c-card__item--brand"><Translate content="editor.feature_viewer.selected_feature" /></div>
         <div className="c-card__item">
         { content }
         </div>
