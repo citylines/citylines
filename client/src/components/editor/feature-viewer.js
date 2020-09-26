@@ -33,13 +33,15 @@ class FeatureViewer extends PureComponent {
 
     if (!properties) return {};
 
-    Object.entries(properties).map(entry => {
-      const key = entry[0];
-      const value = entry[1];
-
+    Object.entries(properties).map(([key, value]) => {
       if (!this.visibleFields().includes(key)) return;
-
       opts.fields[key] = value;
+    });
+
+    // Add editable fields if missing
+    this.editableFields().map(key => {
+      if (key == 'name' && properties.klass == 'Section') return;
+      opts.fields[key] = opts.fields[key] || '';
     });
 
     return opts;
