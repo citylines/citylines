@@ -7,19 +7,11 @@ class FeatureViewer extends PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    this.VISIBLE_FIELDS = ['name', 'buildstart', 'opening', 'closure', 'osm_id', 'osm_tags', 'osm_metadata'];
+    this.EDITABLE_FIELDS = new Set(['name', 'buildstart', 'opening', 'closure']);
+    this.NUMERIC_FIELDS = new Set(['buildstart', 'opening', 'closure']);
+
     this.state = this.buildState(props);
-  }
-
-  numericField(field) {
-    return ['opening', 'buildstart', 'closure'].includes(field);
-  }
-
-  visibleFields() {
-    return ['opening', 'buildstart', 'closure', 'name', 'osm_id', 'osm_tags', 'osm_metadata'];
-  }
-
-  editableFields() {
-    return ['opening', 'buildstart', 'closure', 'name'];
   }
 
   UNSAFE_componentWillReceiveProps(props) {
@@ -33,15 +25,14 @@ class FeatureViewer extends PureComponent {
 
     if (!properties) return {};
 
-    Object.entries(properties).map(([key, value]) => {
-      if (!this.visibleFields().includes(key)) return;
-      opts.fields[key] = value;
-    });
-
-    // Add editable fields if missing
-    this.editableFields().map(key => {
+    this.VISIBLE_FIELDS.map(key => {
       if (key == 'name' && properties.klass == 'Section') return;
-      opts.fields[key] = opts.fields[key] || '';
+      const value = properties[key];
+      if (value) {
+        opts.fields[key] = value;
+      } else if (this.EDITABLE_FIELDS.has(key)) {
+        opts.fields[key] = ''
+      }
     });
 
     return opts;
@@ -101,22 +92,19 @@ class FeatureViewer extends PureComponent {
                   />
                 </td>
               </tr>
-              { Object.keys(this.state.fields).map((key) => {
-                // We don't show the field at all if it's not editable and has no value
-                if (!this.editableFields().includes(key) && !this.state.fields[key]) return;
-
+              { Object.entries(this.state.fields).map(([key, value]) => {
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
                     <td className="c-table__cell">
-                      { this.editableFields().includes(key) ?
+                      { this.EDITABLE_FIELDS.has(key) ?
                       <input className="c-field"
-                             type={this.numericField(key) ? 'number' : 'text'}
+                             type={this.NUMERIC_FIELDS.has(key) ? 'number' : 'text'}
                              name={key}
                              onChange={this.onValueChange.bind(this)}
-                             value={this.state.fields[key]}/>
+                             value={value}/>
                         :
-                        this.state.fields[key]
+                        value
                       }
                     </td>
                   </tr>
