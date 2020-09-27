@@ -4,6 +4,8 @@ import 'whatwg-fetch';
 import {v4 as uuid } from 'uuid';
 import BrowserCookies from 'browser-cookies';
 
+const undefinedOrDefault = (value) => typeof value == 'undefined' ? '' : value;
+
 const EditorStore = Object.assign({}, Store, {
   cityData: {},
 
@@ -265,9 +267,9 @@ const EditorStore = Object.assign({}, Store, {
       feature.id = feature.id || id;
       feature.properties.id = id;
       feature.properties.klass = klass;
-      feature.properties.opening = feature.properties.opening || '';
-      feature.properties.buildstart = feature.properties.buildstart || '';
-      feature.properties.closure = feature.properties.closure || '';
+      feature.properties.opening = undefinedOrDefault(feature.properties.opening);
+      feature.properties.buildstart = undefinedOrDefault(feature.properties.buildstart);
+      feature.properties.closure = undefinedOrDefault(feature.properties.closure);
       feature.properties.lines = feature.properties.lines || [];
 
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
