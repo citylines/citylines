@@ -82,59 +82,6 @@ describe FeatureCollection::Section do
       assert_equal expected_properties, feature[:properties]
     end
 
-    it "should use FUTURE values if opening or closure are nil" do
-      @section.opening = nil
-      @section.closure = nil
-      @section.save
-
-      feature = FeatureCollection::Section.by_feature(@section.id).first
-
-      expected_lines = [{
-          line: @line.name,
-          line_url_name: @line.url_name,
-          system: @system.name,
-      }]
-
-      expected_properties = {id: @section.id,
-                             klass: "Section",
-                             length: @section.length,
-                             lines: expected_lines,
-                             opening: FeatureCollection::Section::FUTURE,
-                             buildstart: @section.buildstart,
-                             osm_id: @section.osm_id,
-                             osm_tags: @section.osm_tags,
-                             osm_metadata: @section.osm_metadata,
-                             closure: FeatureCollection::Section::FUTURE}
-
-      assert_equal expected_properties, feature[:properties]
-    end
-
-    it "should use opening values if buildstart is not set" do
-      @section.buildstart = nil
-      @section.save
-
-      feature = FeatureCollection::Section.by_feature(@section.id).first
-
-      expected_lines = [{
-          line: @line.name,
-          line_url_name: @line.url_name,
-          system: @system.name,
-      }]
-
-      expected_properties = {id: @section.id,
-                             klass: "Section",
-                             length: @section.length,
-                             lines: expected_lines,
-                             opening: @section.opening,
-                             buildstart: @section.opening,
-                             osm_id: @section.osm_id,
-                             osm_tags: @section.osm_tags,
-                             osm_metadata: @section.osm_metadata,
-                             closure: @section.closure}
-
-      assert_equal expected_properties, feature[:properties]
-    end
-
     it "should contain feature_line years if present" do
       @section_line.fromyear = 1956
       @section_line.toyear = 1999
