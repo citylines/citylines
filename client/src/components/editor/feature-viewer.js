@@ -10,32 +10,6 @@ class FeatureViewer extends PureComponent {
     this.VISIBLE_FIELDS = ['name', 'buildstart', 'opening', 'closure', 'osm_id', 'osm_tags', 'osm_metadata'];
     this.EDITABLE_FIELDS = new Set(['name', 'buildstart', 'opening', 'closure']);
     this.NUMERIC_FIELDS = new Set(['buildstart', 'opening', 'closure']);
-
-    this.state = this.buildState(props);
-  }
-
-  UNSAFE_componentWillReceiveProps(props) {
-    this.setState(this.buildState(props));
-  }
-
-  buildState(props) {
-    const opts = {fields: {}};
-
-    const properties = props.feature ? props.feature.properties : null;
-
-    if (!properties) return {};
-
-    this.VISIBLE_FIELDS.map(key => {
-      if (key == 'name' && properties.klass == 'Section') return;
-      const value = properties[key];
-      if (value) {
-        opts.fields[key] = value;
-      } else if (this.EDITABLE_FIELDS.has(key)) {
-        opts.fields[key] = ''
-      }
-    });
-
-    return opts;
   }
 
   onValueChange(e) {
@@ -83,7 +57,7 @@ class FeatureViewer extends PureComponent {
               <tr className="c-table__row">
                 <td className="c-table__cell" colSpan="2">
                   <FeatureLinesEditor
-                    featureLines={this.props.feature.properties.lines}
+                    featureLines={properties.lines}
                     lines={this.props.lines}
                     systems={this.props.systems}
                     onAddLine={this.onAddLine.bind(this)}
@@ -92,17 +66,22 @@ class FeatureViewer extends PureComponent {
                   />
                 </td>
               </tr>
-              { Object.entries(this.state.fields).map(([key, value]) => {
+              { this.VISIBLE_FIELDS.map(key => {
+                if (key == 'name' && properties.klass == 'Section') return;
+                const editable = this.EDITABLE_FIELDS.has(key);
+                const value = properties[key];
+                if (!editable && !value) return;
+
                 return (
                   <tr key={`${properties.id}_${key}`} className="c-table__row">
                     <td className="c-table__cell"><Translate content={`editor.feature_viewer.fields.${key}`} /></td>
                     <td className="c-table__cell">
-                      { this.EDITABLE_FIELDS.has(key) ?
+                      { editable ?
                       <input className="c-field"
                              type={this.NUMERIC_FIELDS.has(key) ? 'number' : 'text'}
                              name={key}
                              onChange={this.onValueChange.bind(this)}
-                             value={value}/>
+                             value={value || ''}/>
                         :
                         value
                       }
