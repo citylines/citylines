@@ -81,7 +81,7 @@ class FeatureViewer extends PureComponent {
                              type={this.NUMERIC_FIELDS.has(key) ? 'number' : 'text'}
                              name={key}
                              onChange={this.onValueChange.bind(this)}
-                             value={value || ''}/>
+                             value={typeof value == 'undefined' ? '' : value}/>
                         :
                         value
                       }
