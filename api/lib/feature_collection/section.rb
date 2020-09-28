@@ -25,9 +25,9 @@ module FeatureCollection
                         'osm_id', osm_id,
                         'osm_tags', osm_tags,
                         'osm_metadata', osm_metadata,
-                        'opening', coalesce(opening, #{FUTURE}),
-                        'buildstart', coalesce(buildstart, opening),
-                        'closure', coalesce(closure, #{FUTURE}),
+                        'opening', opening,
+                        'buildstart', buildstart,
+                        'closure', closure,
                         'lines', coalesce(lines, '[]'::json)
                     )
                 )
