@@ -24,8 +24,8 @@ Install Docker and docker-compose
 
 ### Google Auth
 
-- Get a `google_client_id` for the Google Login from the Google console
-- Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the attributes. The `secret` should be a secret random string
+- Generate a Google Client ID (OAuth 2.0) from the Google console. Check out the [Create authorization credentials](https://developers.google.com/identity/sign-in/web/sign-in#create_authorization_credentials) section from the docs.
+- Copy `/api/config/auth.yml.sample` to `/api/config/auth.yml` and set the atributes. The `secret` may be any given string.
 
 ### Building
 
