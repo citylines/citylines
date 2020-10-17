@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import MainStore from '../stores/main-store.js';
+import MainStore from '../stores/main-store.js'
 import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
@@ -25,14 +25,14 @@ class Main extends Component {
     this.bindedOnChange = this.onChange.bind(this);
 
     this.previousPathname = null;
-    this.unlisten = this.props.history.listen((loc) => {
+    this.unlisten = this.props.history.listen( loc =>  {
       if (loc.pathname != this.previousPathname) {
         // This fixes a bug in Safari:
         // the scroll is not set to zero when changing routes
         document.getElementById('main-container').scrollTop = 0;
 
         this.previousPathname = loc.pathname;
-        ga('send', 'pageview', loc.pathname);
+        ga("send", "pageview", loc.pathname);
       }
     });
   }
@@ -55,19 +55,17 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !this.props.location.pathname.match(
-      /\/$|\user\/|\/auth|\/data|\/terms|\/compare/
-    );
+    return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms|\/compare/);
   }
 
-  togglePanel() {
+  togglePanel() {
     MainStore.togglePanel();
   }
 
   async checkAuth() {
     const url = '/api/auth/check';
 
-    const response = await fetch(url, { credentials: 'same-origin' });
+    const response = await fetch(url, {credentials: 'same-origin'});
     const json = await response.json();
 
     if (json.userid) {
@@ -184,9 +182,9 @@ class SuspenseLoader extends Component {
     MainStore.unsetLoading();
   }
 
-  render() {
+  render(){
     return null;
   }
 }
 
-export default Main;
+export default Main
