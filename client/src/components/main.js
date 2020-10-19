@@ -98,7 +98,7 @@ class Main extends Component {
               <Link to="/" tabindex={0} className="c-nav__item c-text--loud">
                 <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
-              <Link to="/compare" className="c-nav__item c-nav__item--right">
+              <Link to="/compare" tabindex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="compare.short_title" />
               </Link>
               <Link to="/data" tabindex={0}  className="c-nav__item c-nav__item--right">
