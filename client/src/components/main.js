@@ -87,25 +87,29 @@ class Main extends Component {
   render() {
     return (
         <div>
-          <nav className="c-nav c-nav--inline">
+          <nav className="c-nav c-nav--inline" style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
               </span>
-              <Link to="/" className="c-nav__item c-text--loud">
+              <Link to="/" tabindex={0} className="c-nav__item c-text--loud">
                 <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
-              { this.state.userid ?
-              <Link to={`/user/${this.state.userid}`} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
-              <Link to="/auth" className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
-              <Link to="/terms" className="c-nav__item c-nav__item--right">
-                <Translate content="terms.title" />
-              </Link>
-              <Link to="/data" className="c-nav__item c-nav__item--right">
-                <Translate content="data.short_title" />
-              </Link>
-              <Link to="/compare" className="c-nav__item c-nav__item--right">
+              <Link to="/compare" tabindex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="compare.short_title" />
               </Link>
+              <Link to="/data" tabindex={0}  className="c-nav__item c-nav__item--right">
+                <Translate content="data.short_title" />
+              </Link>
+              <Link to="/terms" tabindex={0}  className="c-nav__item c-nav__item--right">
+                <Translate content="terms.title" />
+              </Link>
+              { this.state.userid ?
+              <Link to={`/user/${this.state.userid}`} tabindex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
+              <Link to="/auth" tabindex={0}  className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
             <React.Suspense fallback={<SuspenseLoader />}>
