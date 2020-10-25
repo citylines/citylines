@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Translate from 'react-translate-component';
 import CitiesStore from '../stores/cities-store';
+import queryString from 'query-string';
 
 class CityData extends Component {
   constructor(props, context) {
@@ -24,13 +25,19 @@ class CityData extends Component {
     );
   }
 
+  getCityFromUrl() {
+    const parsedUrl = queryString.parse(this.props.history.location.search);
+    return parsedUrl.city;
+  }
+
   componentDidMount() {
     CitiesStore.addChangeListener(this.bindedOnChange);
     CitiesStore.fetchCitiesWithContributors();
   }
 
   onCityChange(e) {
-    this.setState({city: e.target.value});
+    this.setState({ city: e.target.value });
+    this.props.history.push(`/data?city=${e.target.value.slice(1)}`);
   }
 
   currentCity() {
@@ -64,6 +71,13 @@ class CityData extends Component {
     const name = e.target.attributes.download.value;
 
     ga('send', 'event', 'data', 'city_download', name);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const city = `/${this.getCityFromUrl()}`;
+    if (city && prevState.city !== city) {
+      this.setState({city})
+    }
   }
 
   render() {
