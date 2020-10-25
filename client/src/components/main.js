@@ -95,22 +95,22 @@ class Main extends Component {
               <span className="c-nav__item" style={{display: this.displayMenu() ? 'inline-block' : 'none'}} onClick={this.togglePanel}>
                   <span className="fa fa-bars"></span>
               </span>
-              <Link to="/" tabindex={0} className="c-nav__item c-text--loud">
+              <Link to="/" tabIndex={0} className="c-nav__item c-text--loud">
                 <img src={assets.path("img/citylines-navbar.svg")} className="navbar-logo" />
               </Link>
               <div style={{ flexGrow: 2 }} />
-              <Link to="/compare" tabindex={0} className="c-nav__item c-nav__item--right">
+              <Link to="/compare" tabIndex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="compare.short_title" />
               </Link>
-              <Link to="/data" tabindex={0}  className="c-nav__item c-nav__item--right">
+              <Link to="/data" tabIndex={0}  className="c-nav__item c-nav__item--right">
                 <Translate content="data.short_title" />
               </Link>
-              <Link to="/terms" tabindex={0}  className="c-nav__item c-nav__item--right">
+              <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
                 <Translate content="terms.title" />
               </Link>
               { this.state.userid ?
-              <Link to={`/user/${this.state.userid}`} tabindex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
-              <Link to="/auth" tabindex={0}  className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
+              <Link to={`/user/${this.state.userid}`} tabIndex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
+              <Link to="/auth" tabIndex={0}  className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
           </nav>
           <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
             <React.Suspense fallback={<SuspenseLoader />}>
