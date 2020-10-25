@@ -54,7 +54,7 @@ fr:
   city:
     title: Réseau de transports de %(city)s
     system_title: "%(city)s %(system)s"
-    show_all_systems: Tous les systèmes 
+    show_all_systems: Tous les systèmes
     description: Explorer les systèmes de transport de %(city)s, et leur historique,
       sur citylines.co — la plateforme de cartographie collaborative the collaborative
       des réseaux de transport.
@@ -62,7 +62,8 @@ fr:
     stop_editing: Arrêter la modification
     lines: Lignes
     config:
-      title: Paramètres 
+      data: Data
+      title: Paramètres
       timeline_speed: Vitesse de défilement
       show_transport_modes: Voir les moyens de transport
     share: Partager
@@ -94,7 +95,7 @@ fr:
       years:
         from: De l'année
         to: À l'année
-        note: Ces paramètres sont facultatifs. Les informations de construction et d'exploitation seront basées sur les données des éléments. 
+        note: Ces paramètres sont facultatifs. Les informations de construction et d'exploitation seront basées sur les données des éléments.
       fields:
         klasses_id:
           section: Voie Id:%(id)s

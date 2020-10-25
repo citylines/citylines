@@ -64,6 +64,7 @@ es:
     lines: Líneas
     config:
       title: Ajustes
+      data: Data
       timeline_speed: Velocidad de la línea de tiempo
       show_transport_modes: Mostrar modos de transporte
     share: Compartir
