@@ -1,10 +1,20 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Tags from './tags';
 import CityData from './city-data';
 
 class Data extends Component {
+  componentDidMount() {
+    this.checkHash();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.location.hash != prevProps.location.hash) {
+      this.checkHash();
+    }
+  }
+
   datasets() {
     return {
       cities: 'wmeilvvkgqrderovlbhfbktsnxlm',
@@ -32,6 +42,12 @@ class Data extends Component {
     ga('send', 'event', 'data', 'download', name);
   }
 
+  checkHash() {
+    if (this.props.location.hash.includes('city')) {
+      ReactDOM.findDOMNode(this.refs.city).scrollIntoView();
+    }
+  }
+
   render() {
     return (
         <div className="o-container o-container--medium u-pillar-box--medium">
@@ -55,8 +71,8 @@ class Data extends Component {
                   )}
               </p>
             )}
-            <Translate component="h2" className="c-heading" content="data.data_by_city" />
-            <CityData />
+            <Translate component="h2" className="c-heading" content="data.data_by_city" ref="city" />
+            <CityData history={this.props.history} />
           </div>
         </div>
         )
