@@ -62,10 +62,10 @@ fr:
     stop_editing: Arrêter la modification
     lines: Lignes
     config:
-      data: Data
       title: Paramètres
       timeline_speed: Vitesse de défilement
       show_transport_modes: Voir les moyens de transport
+      data: Données
     share: Partager
     km_operative: 'En fonctionnement : %(km)s km'
     km_under_construction: 'En construction : %(km)s km'
