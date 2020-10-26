@@ -17,6 +17,7 @@ class PanelHeader extends PureComponent {
               <Link className="c-link" to={linkTo}>{linkLabel}</Link>}
             {!this.props.loading && !editPath &&
               <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
+            {!this.props.loading && <Link className="c-link" to={`/data?city=${this.props.urlName}#city`}><Translate content="city.config.data"/></Link>}
             {!this.props.loading && !editPath &&
               <Link className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
                 to=''
