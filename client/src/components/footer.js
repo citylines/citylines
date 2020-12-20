@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
+import assets from '../lib/assets-provider';
 
 class Footer extends PureComponent {
   render() {
@@ -8,7 +9,9 @@ class Footer extends PureComponent {
 
     return (
         <nav className="footer c-nav c-nav--light c-nav--inline a-nav a-nav--fast">
-          <span className="c-nav__content">&copy; {`2015-${currentYear} citylines.co`}</span>
+          <span className="copyright c-nav__content">&copy; {`2015-${currentYear}`}
+            <img src={assets.path("img/citylines-navbar-textonly.svg")} className="navbar-logo" />
+          </span>
           <span className="c-nav__item c-nav__item--right">
             <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
               <Translate content="terms.title" />
