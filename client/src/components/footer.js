@@ -8,7 +8,7 @@ class Footer extends PureComponent {
 
     return (
         <nav className="footer c-nav c-nav--light c-nav--inline a-nav a-nav--fast">
-          <span className="c-nav__item">&copy; {`2015-${currentYear} citylines.co`}</span>
+          <span className="c-nav__content">&copy; {`2015-${currentYear} citylines.co`}</span>
           <span className="c-nav__item c-nav__item--right">
             <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
               <Translate content="terms.title" />
