@@ -12,8 +12,6 @@ fr:
         total: Depuis le début
         last_month: Mois dernier
     top_systems: Plus grands systèmes
-    support: Rejoignez notre
-    support_link: salon de discussion sur Gitter
     request_city:
       cant_find: Vous ne trouvez pas votre ville?
       request_it: Demandez-le

@@ -106,9 +106,6 @@ class Main extends Component {
               <Link to="/data" tabIndex={0}  className="c-nav__item c-nav__item--right">
                 <Translate content="data.short_title" />
               </Link>
-              <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
-                <Translate content="terms.title" />
-              </Link>
               { this.state.userid ?
               <Link to={`/user/${this.state.userid}`} tabIndex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
               <Link to="/auth" tabIndex={0}  className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }

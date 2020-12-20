@@ -12,8 +12,6 @@ es:
         total: Histórico
         last_month: Último mes
     top_systems: Mayores sistemas
-    support: Únete a nuestra
-    support_link: sala de chat en Gitter
     request_city:
       cant_find: ¿No encuentras tu ciudad?
       request_it: Pide por ella

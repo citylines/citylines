@@ -857,3 +857,14 @@ a[disabled], a[disabled]:hover {
   float: right;
   cursor: pointer;
 }
+
+.footer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.footer a {
+  color: inherit;
+}
