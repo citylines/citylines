@@ -5,6 +5,7 @@ import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
 import Avatar from './user/avatar';
+import Footer from './footer';
 import assets from '../lib/assets-provider';
 
 const Home = React.lazy(() => import('./home'));
@@ -112,7 +113,7 @@ class Main extends Component {
               <Link to={`/user/${this.state.userid}`} tabIndex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
               <Link to="/auth" tabIndex={0}  className="c-nav__item c-nav__item--right"><Translate content="main.log_in" /></Link> }
           </nav>
-          <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`}>
+          <div id="main-container" className={`o-grid o-panel o-panel--nav-top ${this.state.loading ? 'loading' : null}`} style={{flexWrap: "wrap"}}>
             <React.Suspense fallback={<SuspenseLoader />}>
               <Switch>
                 <Route exact path="/" component={Home} />
@@ -125,6 +126,7 @@ class Main extends Component {
                 <Route path="/:city_url_name" component={City} />
               </Switch>
             </React.Suspense>
+          {!this.state.loading && <Footer />}
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>
