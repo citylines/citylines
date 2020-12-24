@@ -12,17 +12,17 @@ class Footer extends PureComponent {
           <span className="copyright c-nav__content">&copy; {`2015-${currentYear}`}
             <img src={assets.path("img/citylines-navbar-textonly.svg")} className="navbar-logo" />
           </span>
-          <span className="c-nav__item c-nav__item--right">
-            <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
+          <Link className="c-nav__item c-nav__item--right" to="/terms" tabIndex={0}>
               <Translate content="terms.title" />
-            </Link>
-          </span>
+          </Link>
+          <a className="c-nav__item" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link">
+            <Translate content="cities.support_link" /> <i className="fab fa-gitter"/>
+          </a>
           <div style={{flexGrow: 2}}></div>
-          <span className="c-nav__item c-nav__item--right"><a target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /></a></span>
-          <span className="c-nav__item c-nav__item--right"><a target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/></a></span>
-          <span className="c-nav__item c-nav__item--right"><a target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a></span>
-          <span className="c-nav__item c-nav__item--right"><a target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a></span>
-          <span className="c-nav__item c-nav__item--right"><a target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><span className="fab fa-gitter"/></a></span>
+          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /></a>
+          <a className="c-nav__item c-nav__item--right" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/></a>
+          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a>
+          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a>
         </nav>
   )
   }
