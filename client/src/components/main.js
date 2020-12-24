@@ -103,7 +103,7 @@ class Main extends Component {
               <Link to="/compare" tabIndex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="compare.short_title" />
               </Link>
-              <Link to="/data" tabIndex={0}  className="c-nav__item c-nav__item--right">
+              <Link to="/data" tabIndex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="data.short_title" />
               </Link>
               { this.state.userid ?
