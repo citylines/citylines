@@ -863,6 +863,7 @@ a[disabled], a[disabled]:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-self: flex-end;
 }
 
 .footer a {
