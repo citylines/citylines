@@ -617,10 +617,12 @@ button.save-system {
   text-align: center;
 }
 
-.contributors-list {
-  width: 50%;
-  display: inline-block;
-  vertical-align: top;
+@media (min-width: 550px) {
+  .contributors-list {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 
 .contributors-list .c-list {
