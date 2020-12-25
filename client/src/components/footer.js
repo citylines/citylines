@@ -18,11 +18,12 @@ class Footer extends PureComponent {
           <a className="c-nav__item" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link">
             <Translate content="cities.support_link" /> <i className="fab fa-gitter"/>
           </a>
-          <div style={{flexGrow: 2}}></div>
-          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /></a>
-          <a className="c-nav__item c-nav__item--right" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/></a>
-          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a>
-          <a className="c-nav__item c-nav__item--right" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a>
+          <div style={{flexGrow: 2}}>
+            <a className="c-nav__item c-nav__item--right" target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /></a>
+            <a className="c-nav__item c-nav__item--right" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/></a>
+            <a className="c-nav__item c-nav__item--right" target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a>
+            <a className="c-nav__item c-nav__item--right" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a>
+          </div>
         </nav>
   )
   }
