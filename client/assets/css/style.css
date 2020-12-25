@@ -861,12 +861,11 @@ a[disabled], a[disabled]:hover {
 }
 
 .footer {
-  margin-top: 30px;
+  margin-top: 80px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-self: flex-end;
-  box-shadow: 0 0 1px 0 rgba(0,0,0,0.3);
 }
 
 @media (max-width: 900px) {
