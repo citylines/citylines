@@ -588,7 +588,7 @@ button.save-system {
 }
 
 .landing-image img {
-  margin-left:-40px;
+  margin-left:-45px;
 }
 
 @media (max-width: 426px){
@@ -597,7 +597,7 @@ button.save-system {
     }
     .landing-image img {
       width: 100%;
-      margin-left:0;
+      margin-left:-10px;
     }
     .landing-title {
       display:none;
