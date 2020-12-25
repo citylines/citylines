@@ -59,6 +59,10 @@ class Main extends Component {
     return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms|\/compare/);
   }
 
+  displayFooter() {
+    return this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms/);
+  }
+
   togglePanel() {
     MainStore.togglePanel();
   }
@@ -123,7 +127,7 @@ class Main extends Component {
                 <Route path="/:city_url_name" component={City} />
               </Switch>
             </React.Suspense>
-          {!this.state.loading && <Footer />}
+          {!this.state.loading && this.displayFooter() && <Footer />}
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>
