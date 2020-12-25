@@ -21,8 +21,8 @@ class Footer extends PureComponent {
           <div style={{flexGrow: 2}}>
             <a className="c-nav__item c-nav__item--right" target="_blank" href="https://twitter.com/citylines_co"><span className="fab fa-twitter" /></a>
             <a className="c-nav__item c-nav__item--right" target="_blank" href="mailto:info@citylines.co"><span className="fa fa-envelope"/></a>
-            <a className="c-nav__item c-nav__item--right" target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a>
             <a className="c-nav__item c-nav__item--right" target="_blank" href="https://www.kaggle.com/citylines/city-lines"><span className="fab fa-kaggle" /></a>
+            <a className="c-nav__item c-nav__item--right" target="_blank" href="https://github.com/citylines/citylines"><span className="fab fa-github" /></a>
           </div>
         </nav>
   )
