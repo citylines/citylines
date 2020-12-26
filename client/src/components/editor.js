@@ -22,8 +22,8 @@ class Editor extends CityBase {
     super(props, context);
 
     this.modes = {
-      EDIT_FEATURES: 'edit-features',
-      EDIT_LINES: 'edit-lines',
+      EDIT_FEATURES: 'edit_features',
+      EDIT_LINES: 'edit_lines',
       DISCUSSION: 'discussion'
     }
 
@@ -152,21 +152,15 @@ class Editor extends CityBase {
           <PanelBody>
             <Tags title={'editor.title'} interpolations={{city: this.context.cityName}} />
             <span className="c-input-group edit-mode-buttons">
-              <button name={this.modes.EDIT_FEATURES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : ''}`}
-                      onClick={this.bindedToggleMode}>
-                <Translate content="editor.edit_features" />
-              </button>
-              <button name={this.modes.EDIT_LINES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : ''}`}
-                      onClick={this.bindedToggleMode}>
-                <Translate content="editor.edit_lines" />
-              </button>
-              <button name={this.modes.DISCUSSION}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.DISCUSSION ? 'c-button--active' : ''}`}
-                      onClick={this.bindedToggleMode}>
-                <Translate content="editor.discussion" />
-              </button>
+              {
+                Object.values(this.modes).map(mode => <button
+                  key={mode}
+                  name={mode}
+                  className={`c-button c-button--ghost-error ${this.currentMode == mode ? 'c-button--active' : ''}`}
+                  onClick={this.bindedToggleMode}>
+                    <Translate content={`editor.${mode}`} />
+                </button>)
+              }
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?
             <div className="editor-cards-container">
