@@ -13,7 +13,7 @@ class Footer extends PureComponent {
           <img src={assets.path("img/citylines-navbar-textonly.svg")} />
         </span>
         <Link className="c-nav__item c-nav__item--right" to="/terms" tabIndex={0}>
-            <Translate content="terms.title" />
+          <Translate content="terms.title" />
         </Link>
         <a className="c-nav__item" target="_blank" href="https://gitter.im/citylines/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link">
           <Translate content="cities.support_link" /> <i className="fab fa-gitter"/>
