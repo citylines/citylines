@@ -23,7 +23,8 @@ class Editor extends CityBase {
 
     this.modes = {
       EDIT_FEATURES: 'edit-features',
-      EDIT_LINES: 'edit-lines'
+      EDIT_LINES: 'edit-lines',
+      DISCUSSION: 'discussion'
     }
 
     this.currentMode = this.modes.EDIT_FEATURES;
@@ -92,13 +93,14 @@ class Editor extends CityBase {
   }
 
   toggleMode(e) {
-    if (e.currentTarget.name === this.currentMode) return;
+    const target = e.currentTarget.name;
 
-    if (this.currentMode === this.modes.EDIT_LINES) {
-      this.currentMode = this.modes.EDIT_FEATURES;
+    if (target === this.currentMode) return;
+
+    this.currentMode = target;
+    if (target === this.modes.EDIT_FEATURES) {
       MainStore.unsetPanelFullWidth();
     } else {
-      this.currentMode = this.modes.EDIT_LINES;
       MainStore.setPanelFullWidth();
     }
 
@@ -151,14 +153,19 @@ class Editor extends CityBase {
             <Tags title={'editor.title'} interpolations={{city: this.context.cityName}} />
             <span className="c-input-group edit-mode-buttons">
               <button name={this.modes.EDIT_FEATURES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : ''}`}
                       onClick={this.bindedToggleMode}>
                 <Translate content="editor.edit_features" />
               </button>
               <button name={this.modes.EDIT_LINES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : ''}`}
                       onClick={this.bindedToggleMode}>
                 <Translate content="editor.edit_lines" />
+              </button>
+              <button name={this.modes.DISCUSSION}
+                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.DISCUSSION ? 'c-button--active' : ''}`}
+                      onClick={this.bindedToggleMode}>
+                <Translate content="editor.discussion" />
               </button>
             </span>
             { this.currentMode === this.modes.EDIT_FEATURES ?

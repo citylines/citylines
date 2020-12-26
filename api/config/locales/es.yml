@@ -87,8 +87,9 @@ es:
       length: 'Longitud: %(km)s km'
   editor:
     title: "Editar %(city)s"
-    edit_features: Editar elementos
-    edit_lines: Editar líneas
+    edit_features: Elementos
+    edit_lines: Líneas
+    discussion: Discusión
     feature_viewer:
       selected_feature: Elemento seleccionado
       no_feature_selected: Ningún elemento seleccionado.
