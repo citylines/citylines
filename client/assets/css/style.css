@@ -857,3 +857,7 @@ a[disabled], a[disabled]:hover {
   float: right;
   cursor: pointer;
 }
+
+.discussion .send-msg {
+  margin: 15px 0;
+}
