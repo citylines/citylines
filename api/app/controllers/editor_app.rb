@@ -6,6 +6,7 @@ class EditorApp < App
   helpers CityHelpers
   helpers OSMHelpers
   helpers EditorHelpers
+  helpers DiscussionHelpers
 
   get '/:url_name/data' do |url_name|
     protect
@@ -169,14 +170,7 @@ class EditorApp < App
 
       @city = City[url_name: url_name]
 
-      DiscussionMessage.where(city_id: @city.id).all.map do |msg|
-        {
-          id: msg.id,
-          content: msg.content,
-          user_id: msg.user_id,
-          timestamp: msg.created_at
-        }
-      end.to_json
+      get_messages_for_city(@city.id).to_json
     end
 
     post '/message' do |url_name|
@@ -190,6 +184,8 @@ class EditorApp < App
         city_id: @city.id,
         user_id: payload['user']['user_id']
       )
+
+      get_messages_for_city(@city.id).to_json
     end
   end
 end

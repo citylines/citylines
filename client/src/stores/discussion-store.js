@@ -21,8 +21,10 @@ const DiscussionStore = {...Store, ...{
       const url = `/api/editor/${urlName}/discussion/message`;
       const body = JSON.stringify({content: content});
       const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
+      const json = await response.json();
+      this.state.msgs = json;
       this.state.newMsg = '';
-      this.getMsgs(urlName);
+      this.emitChangeEvent();
     }
   }
 }
