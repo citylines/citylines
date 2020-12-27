@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import DiscussionStore from '../../stores/discussion-store';
 
 class Discussion extends Component {
@@ -46,7 +47,8 @@ class Discussion extends Component {
           <div>
             { this.state.msgs.map(msg => <Msg
                 key={msg.id}
-                author={msg.author}
+                authorNickname={msg.author_nickname}
+                authorURL={msg.author_url}
                 content={msg.content}
                 timestamp={msg.timestamp}
               />) }
@@ -84,7 +86,11 @@ class Msg extends Component {
     return (
       <div className="c-card">
         <header className="c-card__header">
-          <span className="c-heading__sub">{this.props.author}, {this.localizedTimestamp(this.props.timestamp)}</span>
+          <span className="c-heading__sub">
+            <Link className="c-link" to={this.props.authorURL} target="_blank">
+              {this.props.authorNickname}
+            </Link>, {this.localizedTimestamp(this.props.timestamp)}
+          </span>
         </header>
         <div className="c-card__body">
           <p className="c-paragraph">{this.props.content}</p>
