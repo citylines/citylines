@@ -1,4 +1,8 @@
+require "sinatra/namespace"
+
 class EditorApp < App
+  register Sinatra::Namespace
+
   helpers CityHelpers
   helpers OSMHelpers
   helpers EditorHelpers
@@ -157,5 +161,34 @@ class EditorApp < App
     halt unless (route && s && n && w && e)
 
     get_osm_features_collection(@city, route, s, n, w, e).to_json
+  end
+
+  namespace '/:url_name/discussion' do
+    get '/messages' do |url_name|
+      protect
+
+      @city = City[url_name: url_name]
+
+      DiscussionMessage.where(city_id: @city.id).all.map do |msg|
+        {
+          id: msg.od,
+          content: msg.content,
+          user_id: msg.user_id,
+          timestamp: msg.created_at
+        }
+      end.to_json
+    end
+
+    post '/message' do
+      payload, header = protect
+
+      @city = City[url_name: url_name]
+      args = JSON.parse(request.body.read, symbolize_names: true)
+
+      DiscussionMessage.create(
+        content: args[:content],
+        user_id: payload['user']['user_id']
+      )
+    end
   end
 end
