@@ -75,7 +75,6 @@ class Discussion extends Component {
   }
 }
 
-
 class Msg extends Component {
   localizedTimestamp(timestamp) {
     const localDate = new Date(timestamp);
@@ -95,4 +94,5 @@ class Msg extends Component {
     )
   }
 }
+
 export default Discussion
