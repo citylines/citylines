@@ -171,7 +171,7 @@ class EditorApp < App
 
       DiscussionMessage.where(city_id: @city.id).all.map do |msg|
         {
-          id: msg.od,
+          id: msg.id,
           content: msg.content,
           user_id: msg.user_id,
           timestamp: msg.created_at
@@ -179,7 +179,7 @@ class EditorApp < App
       end.to_json
     end
 
-    post '/message' do
+    post '/message' do |url_name|
       payload, header = protect
 
       @city = City[url_name: url_name]
@@ -187,6 +187,7 @@ class EditorApp < App
 
       DiscussionMessage.create(
         content: args[:content],
+        city_id: @city.id,
         user_id: payload['user']['user_id']
       )
     end

@@ -1,13 +1,43 @@
 import React, {Component} from 'react';
+import DiscussionStore from '../../stores/discussion-store';
 
 class Discussion extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.msgs = [
-      {id:1, author: "Phil", content: "Hi", timestamp: '1997-07-16T19:20:15+00:00'},
-      {id:2, author: "me", content: "This is a msg", timestamp: '1997-07-18T11:20:15+00:00'}
-    ]
+    this.state = {newMsg: '', msgs: []};
+
+    this.boundOnChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    DiscussionStore.addChangeListener(this.boundOnChange);
+    DiscussionStore.getMsgs(this.props.urlName);
+  }
+
+  componentWillUnmount() {
+    DiscussionStore.removeChangeListener(this.boundOnChange);
+  }
+
+  onChange() {
+    this.setState(DiscussionStore.getState());
+  }
+
+  onNewMsgChange(e) {
+    this.setState({newMsg: e.target.value});
+  }
+
+  sendNewMsg() {
+    if (!this.validNewMsg()) return;
+    DiscussionStore.sendMsg(this.props.urlName, this.state.newMsg);
+  }
+
+  validNewMsg() {
+    return this.state.newMsg.trim().length > 0;
+  }
+
+  onNewMsgKeyDown(e) {
+    if (e.key === 'Enter') this.sendNewMsg();
   }
 
   render() {
@@ -15,7 +45,7 @@ class Discussion extends Component {
       <div className="u-letter-box--small discussion">
         <div className="o-grid__cell o-grid__cell--width-100">
           <div>
-            { this.msgs.map(msg => <Msg
+            { this.state.msgs.map(msg => <Msg
                 key={msg.id}
                 author={msg.author}
                 content={msg.content}
@@ -24,9 +54,20 @@ class Discussion extends Component {
           </div>
           <div className="c-input-group send-msg">
             <div className="o-field">
-              <input className="c-field"></input>
+              <input
+                className="c-field"
+                value={this.state.newMsg}
+                onChange={this.onNewMsgChange.bind(this)}
+                onKeyDown={this.onNewMsgKeyDown.bind(this)}
+              ></input>
             </div>
-            <button className="c-button c-button--brand">Send</button>
+            <button
+              className="c-button c-button--brand"
+              disabled={!this.validNewMsg()}
+              onClick={this.sendNewMsg.bind(this)}
+            >
+                <span className="fa fa-paper-plane"></span>
+            </button>
           </div>
         </div>
       </div>

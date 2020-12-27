@@ -198,7 +198,7 @@ class Editor extends CityBase {
                   onSystemDelete={this.bindedOnSystemDelete}
               /> }
             { this.currentMode === this.modes.DISCUSSION &&
-                <Discussion /> }
+                <Discussion urlName={this.urlName} /> }
           </PanelBody>
     )
   }
