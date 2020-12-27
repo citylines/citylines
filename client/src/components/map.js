@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOMServer from 'react-dom/server'
+import counterpart from 'counterpart';
 import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
@@ -39,7 +40,7 @@ class Map extends Component {
       zoom: props.zoom,
       bearing: props.bearing,
       pitch: props.pitch,
-      customAttribution: '&copy; Citylines.co contributors'
+      customAttribution: `<a href="/terms">${counterpart('terms.title')}</a> | &copy; Citylines.co contributors`
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());

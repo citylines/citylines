@@ -226,6 +226,7 @@ input.popup-data-checkbox:checked + .popup-data + .popup-data-toggle > .show-les
 /* To fix a Blace css */
 #main-container {
     margin-top: -1px;
+    flex-wrap: wrap;
 }
 
 .line-label {
@@ -588,7 +589,7 @@ button.save-system {
 }
 
 .landing-image img {
-  margin-left:-40px;
+  margin-left:-45px;
 }
 
 @media (max-width: 426px){
@@ -597,7 +598,7 @@ button.save-system {
     }
     .landing-image img {
       width: 100%;
-      margin-left:0;
+      margin-left:-10px;
     }
     .landing-title {
       display:none;
@@ -617,10 +618,12 @@ button.save-system {
   text-align: center;
 }
 
-.contributors-list {
-  width: 50%;
-  display: inline-block;
-  vertical-align: top;
+@media (min-width: 550px) {
+  .contributors-list {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 
 .contributors-list .c-list {
@@ -856,6 +859,30 @@ a[disabled], a[disabled]:hover {
 .editor-general-alert .fa-times {
   float: right;
   cursor: pointer;
+}
+
+.footer {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-self: flex-end;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    flex-direction: column;
+  }
+}
+
+.footer a {
+  color: inherit;
+}
+
+.footer .copyright img {
+  width: 92px;
+  margin-left: 7px;
+  vertical-align: text-bottom;
 }
 
 .discussion .send-msg {

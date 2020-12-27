@@ -32,7 +32,7 @@ class Terms extends Component {
     return (
         <div className="o-container o-container--medium u-pillar-box--medium" style={{textAlign: 'justify'}}>
           <Tags title="terms.title" />
-          <div className="u-letter-box--large letter-with-footer">
+          <div className="u-letter-box--xlarge letter-with-footer">
             <Translate component="h1" className="c-heading" content="terms.title" />
 
             <Translate component="h3" className="c-heading" content="terms.license.title"/>
