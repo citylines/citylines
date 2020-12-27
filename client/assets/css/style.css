@@ -885,6 +885,10 @@ a[disabled], a[disabled]:hover {
   vertical-align: text-bottom;
 }
 
+.discussion {
+  max-width: 1000px;
+}
+
 .discussion .send-msg {
   margin: 15px 0;
 }
