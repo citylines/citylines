@@ -5,6 +5,7 @@ import CookieNotice from './cookie-notice.js';
 import BrowserCookies from 'browser-cookies';
 import Translate from 'react-translate-component';
 import Avatar from './user/avatar';
+import Footer from './footer';
 import assets from '../lib/assets-provider';
 
 const Home = React.lazy(() => import('./home'));
@@ -58,6 +59,10 @@ class Main extends Component {
     return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms|\/compare/);
   }
 
+  displayFooter() {
+    return this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms/);
+  }
+
   togglePanel() {
     MainStore.togglePanel();
   }
@@ -102,11 +107,8 @@ class Main extends Component {
               <Link to="/compare" tabIndex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="compare.short_title" />
               </Link>
-              <Link to="/data" tabIndex={0}  className="c-nav__item c-nav__item--right">
+              <Link to="/data" tabIndex={0} className="c-nav__item c-nav__item--right">
                 <Translate content="data.short_title" />
-              </Link>
-              <Link to="/terms" tabIndex={0}  className="c-nav__item c-nav__item--right">
-                <Translate content="terms.title" />
               </Link>
               { this.state.userid ?
               <Link to={`/user/${this.state.userid}`} tabIndex={0} className="c-nav__item c-nav__item--right"><Avatar size='inline' initials={this.state.initials} img={this.state.img}/></Link>  :
@@ -125,6 +127,7 @@ class Main extends Component {
                 <Route path="/:city_url_name" component={City} />
               </Switch>
             </React.Suspense>
+          {!this.state.loading && this.displayFooter() && <Footer />}
           </div>
           <div className="u-center-block__content" style={{display: this.state.loading ? 'block' : 'none', width:'200px'}}>
             <div className="loader"></div>

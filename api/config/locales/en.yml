@@ -12,8 +12,7 @@ en:
         total: Ever
         last_month: Last month
     top_systems: Largest systems
-    support: Join our
-    support_link: live chat room at Gitter
+    support_link: Join our chat room at Gitter
     request_city:
       cant_find: Cannot find your city?
       request_it: Request it
