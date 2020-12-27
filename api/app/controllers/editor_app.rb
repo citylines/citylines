@@ -173,6 +173,14 @@ class EditorApp < App
       get_messages_for_city(@city.id).to_json
     end
 
+    get '/messages/count' do |url_name|
+      protect
+
+      @city = City[url_name: url_name]
+
+      get_message_count_for_city(@city.id).to_json
+    end
+
     post '/message' do |url_name|
       payload, header = protect
 

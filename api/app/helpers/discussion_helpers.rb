@@ -10,4 +10,8 @@ module DiscussionHelpers
       }
     end
   end
+
+  def get_message_count_for_city(city_id)
+    {count: DiscussionMessage.where(city_id: city_id).count}
+  end
 end

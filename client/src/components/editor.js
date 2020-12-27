@@ -70,6 +70,7 @@ class Editor extends CityBase {
     MainStore.setLoading();
     EditorStore.load(this.urlName).then(() => {
       MainStore.unsetLoading();
+      EditorStore.getNumberOfDiscussionMsgs(this.urlName);
     });
   }
 
@@ -146,6 +147,13 @@ class Editor extends CityBase {
     EditorStore.closeGeneralAlert(this.urlName);
   }
 
+  discussionMsgsSign(mode) {
+    if (mode != this.modes.DISCUSSION || !this.state.numberOfDiscussionMsgs) {
+      return '';
+    }
+    return `(${this.state.numberOfDiscussionMsgs})`;
+  }
+
   render() {
     if (!this.state.systems) return null;
 
@@ -157,9 +165,9 @@ class Editor extends CityBase {
                 Object.values(this.modes).map(mode => <button
                   key={mode}
                   name={mode}
-                  className={`c-button c-button--ghost-error ${this.currentMode == mode ? 'c-button--active' : ''}`}
+                  className={`c-button c-button--ghost-error u-small ${this.currentMode == mode ? 'c-button--active' : ''}`}
                   onClick={this.bindedToggleMode}>
-                    <Translate content={`editor.${mode}`} />
+                    <Translate content={`editor.${mode}`} /> {this.discussionMsgsSign(mode)}
                 </button>)
               }
             </span>

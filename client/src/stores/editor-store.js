@@ -126,6 +126,14 @@ const EditorStore = Object.assign({}, Store, {
     const json = await response.json();
     return json;
   },
+
+  async getNumberOfDiscussionMsgs(urlName) {
+    const url = `/api/editor/${urlName}/discussion/messages/count`;
+    const response = await fetch(url, {credentials: 'same-origin'});
+    const json = await response.json();
+    this.cityData[urlName].numberOfDiscussionMsgs = json.count;
+    this.emitChangeEvent();
+  },
 /* ------------ */
 
   async load(urlName) {
@@ -152,7 +160,8 @@ const EditorStore = Object.assign({}, Store, {
       selectedFeatureById: cityData.selectedFeatureById,
       savingData: cityData.savingData,
       currentMode: cityData.currentMode,
-      displayGeneralAlert: cityData.displayGeneralAlert
+      displayGeneralAlert: cityData.displayGeneralAlert,
+      numberOfDiscussionMsgs: cityData.numberOfDiscussionMsgs
     }
   },
 
