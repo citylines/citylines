@@ -14,7 +14,6 @@ const DiscussionStore = {...Store, ...{
       const response = await fetch(url, {credentials: 'same-origin'});
       const json = await response.json();
       this.state.msgs = json;
-
       this.emitChangeEvent();
     },
 
