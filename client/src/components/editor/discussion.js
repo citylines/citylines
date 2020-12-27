@@ -6,7 +6,6 @@ class Discussion extends Component {
     super(props, context);
 
     this.state = {newMsg: '', msgs: []};
-
     this.boundOnChange = this.onChange.bind(this);
   }
 
