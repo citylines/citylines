@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import Translate from 'react-translate-component';
 import DiscussionStore from '../../stores/discussion-store';
 
 class Discussion extends Component {
@@ -44,6 +45,7 @@ class Discussion extends Component {
     return (
       <div className="u-letter-box--small o-grid__cell o-grid__cell--width-100 discussion">
         <div className="u-letter-box--small">
+          { this.state.msgs.length == 0 && <NoMsgsSign />}
           { this.state.msgs.map(msg => <Msg
               key={msg.id}
               authorNickname={msg.author_nickname}
@@ -92,6 +94,18 @@ class Msg extends Component {
         </header>
         <div className="c-card__body">
           <p className="c-paragraph">{this.props.content}</p>
+        </div>
+      </div>
+    )
+  }
+}
+
+class NoMsgsSign extends Component {
+  render() {
+    return (
+      <div className="c-card no-msgs-sign">
+        <div className="c-card__body">
+          <Translate content="editor.discussion.no_msgs_sign" />
         </div>
       </div>
     )

@@ -84,7 +84,7 @@ en:
     title: "Edit %(city)s"
     edit_features: Features
     edit_lines: Lines
-    discussion: Discussion
+    edit_discussion: Discussion
     feature_viewer:
       selected_feature: Selected feature
       no_feature_selected: No feature selected.
@@ -140,6 +140,8 @@ en:
       link: contributor terms
     no_lines_alert: There are no lines. Features must be assigned a line before they
       can be saved.
+    discussion:
+      no_msgs_sign: There are no messages yet. Be the one who starts the discussion!
   terms:
     title: Terms of use
     license:

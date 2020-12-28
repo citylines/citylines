@@ -88,7 +88,7 @@ es:
     title: "Editar %(city)s"
     edit_features: Elementos
     edit_lines: Líneas
-    discussion: Discusión
+    edit_discussion: Discusión
     feature_viewer:
       selected_feature: Elemento seleccionado
       no_feature_selected: Ningún elemento seleccionado.
@@ -144,6 +144,8 @@ es:
       link: términos del colaborador
     no_lines_alert: No hay líneas creadas. Los elementos deben tener asignados una línea
       para poder ser guardados.
+    discussion:
+      no_msgs_sign: No hay mensajes todavía. ¡Sé el que comience la discusión!
   terms:
     title: Términos de uso
     license:

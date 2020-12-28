@@ -26,7 +26,7 @@ class Editor extends CityBase {
     this.modes = {
       EDIT_FEATURES: 'edit_features',
       EDIT_LINES: 'edit_lines',
-      DISCUSSION: 'discussion'
+      DISCUSSION: 'edit_discussion'
     }
 
     this.currentMode = this.modes.EDIT_FEATURES;

@@ -905,3 +905,10 @@ a[disabled], a[disabled]:hover {
 .discussion .discussion-message .c-paragraph {
   text-align: justify;
 }
+
+.discussion .no-msgs-sign {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 30%;
+}
