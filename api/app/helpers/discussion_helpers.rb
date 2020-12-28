@@ -6,7 +6,7 @@ module DiscussionHelpers
         content: msg.content,
         author_nickname: msg.user.nickname,
         author_url: msg.user.relative_url,
-        timestamp: msg.created_at,
+        timestamp: msg.created_at.iso8601,
       }
     end
   end
