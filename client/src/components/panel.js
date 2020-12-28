@@ -6,6 +6,7 @@ import downloadImgFromMapCanvas from '../lib/map-to-img.js';
 class PanelHeader extends PureComponent {
   downloadImg() {
     downloadImgFromMapCanvas(this.props.urlName, this.props.map.getCanvas());
+    ga('send', 'event', 'panel', 'download_img', this.props.urlName);
   }
 
   render() {
