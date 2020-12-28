@@ -31,6 +31,7 @@ class Discussion extends Component {
   sendNewMsg() {
     if (!this.validNewMsg()) return;
     DiscussionStore.sendMsg(this.props.urlName, this.state.newMsg);
+    ga('send', 'event', 'discussion', 'new_msg', this.props.urlName);
   }
 
   validNewMsg() {
