@@ -40,6 +40,7 @@ class Map extends Component {
       zoom: props.zoom,
       bearing: props.bearing,
       pitch: props.pitch,
+      preserveDrawingBuffer: true,
       customAttribution: `<a href="/terms">${counterpart('terms.title')}</a> | &copy; Citylines.co contributors`
     });
 
