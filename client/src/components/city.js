@@ -20,6 +20,9 @@ import CityView from './city/city-view';
 const Editor = React.lazy(() => import('./editor'));
 const Draw = React.lazy(() => import('./map/draw'));
 
+import downloadImgFromMapCanvas from '../lib/map-to-img.js';
+
+
 class City extends CityBase {
   constructor(props, context) {
     super(props, context);
@@ -141,6 +144,10 @@ class City extends CityBase {
     EditorStore.setMode(this.urlName, mode);
   }
 
+  onCameraClick(canvas) {
+    downloadImgFromMapCanvas(this.urlName, canvas);
+    ga('send', 'event', 'map', 'download_img', this.urlName);
+  }
   /* ------------- */
 
   panelStyle() {
@@ -196,6 +203,7 @@ class City extends CityBase {
             onMouseMove={this.bindedOnMouseMove}
             onMouseClick={this.bindedOnMouseClick}
             onSatelliteToggle={this.onSatelliteToggle.bind(this)}
+            onCameraClick={this.onCameraClick.bind(this)}
             disableMouseEvents={this.state.playing} >
             { this.state.sources && this.state.sources.map((source) =>
               <Source
