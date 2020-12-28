@@ -904,6 +904,7 @@ a[disabled], a[disabled]:hover {
 
 .discussion .discussion-message .c-paragraph {
   text-align: justify;
+  white-space: pre-wrap;
 }
 
 .discussion .no-msgs-sign {

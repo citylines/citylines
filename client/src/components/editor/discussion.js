@@ -39,7 +39,9 @@ class Discussion extends Component {
   }
 
   onNewMsgKeyDown(e) {
-    if (e.key === 'Enter') this.sendNewMsg();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.sendNewMsg();
+    }
   }
 
   render() {
@@ -56,12 +58,12 @@ class Discussion extends Component {
             />) }
           <div className="c-input-group send-msg">
             <div className="o-field">
-              <input
+              <textarea
                 className="c-field"
                 value={this.state.newMsg}
                 onChange={this.onNewMsgChange.bind(this)}
                 onKeyDown={this.onNewMsgKeyDown.bind(this)}
-              ></input>
+              ></textarea>
             </div>
             <button
               className="c-button c-button--brand"
