@@ -42,17 +42,15 @@ class Discussion extends Component {
 
   render() {
     return (
-      <div className="u-letter-box--small discussion">
-        <div className="o-grid__cell o-grid__cell--width-100">
-          <div>
-            { this.state.msgs.map(msg => <Msg
-                key={msg.id}
-                authorNickname={msg.author_nickname}
-                authorURL={msg.author_url}
-                content={msg.content}
-                timestamp={msg.timestamp}
-              />) }
-          </div>
+      <div className="u-letter-box--small o-grid__cell o-grid__cell--width-100 discussion">
+        <div className="u-letter-box--small">
+          { this.state.msgs.map(msg => <Msg
+              key={msg.id}
+              authorNickname={msg.author_nickname}
+              authorURL={msg.author_url}
+              content={msg.content}
+              timestamp={msg.timestamp}
+            />) }
           <div className="c-input-group send-msg">
             <div className="o-field">
               <input
