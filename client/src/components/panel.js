@@ -3,6 +3,21 @@ import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 
 class PanelHeader extends PureComponent {
+  downloadImg() {
+    const format = "image/png";
+    const quality = 0.9;
+    this.props.map.getCanvas().toBlob(blob => {
+      const anchor = document.createElement('a');
+      anchor.download = `${this.props.urlName}.png`;
+      anchor.href = URL.createObjectURL(blob);
+      anchor.click();
+      URL.revokeObjectURL(anchor.href);
+    },
+    format,
+    quality,
+    );
+  }
+
   render() {
     const editPath = this.props.pathName.includes('/edit');
     const linkLabel = editPath ? <Translate content="city.stop_editing" /> : <Translate content="city.edit" />;
@@ -19,6 +34,7 @@ class PanelHeader extends PureComponent {
               <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
             {!this.props.loading && !editPath &&
               <Link className="c-link" to={`/data?city=${this.props.urlName}#city`}><Translate content="city.config.data"/></Link>}
+            {!this.props.loading && !editPath && <a className="c-link" onClick={this.downloadImg.bind(this)}>Export</a>}
             {!this.props.loading && !editPath &&
               <Link className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
                 to=''
