@@ -897,6 +897,10 @@ a[disabled], a[disabled]:hover {
   margin: 15px 0;
 }
 
+.discussion .send-msg textarea {
+  resize: none;
+}
+
 .discussion .discussion-message .discussion-message-header {
   display: flex;
   justify-content: space-between;
