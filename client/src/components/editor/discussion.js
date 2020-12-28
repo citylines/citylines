@@ -84,12 +84,12 @@ class Msg extends Component {
 
   render() {
     return (
-      <div className="c-card">
+      <div className="c-card discussion-message">
         <header className="c-card__header">
-          <span className="c-heading__sub">
+          <span className="discussion-message-header">
             <Link className="c-link" to={this.props.authorURL} target="_blank">
               {this.props.authorNickname}
-            </Link>, {this.localizedTimestamp(this.props.timestamp)}
+            </Link> <span className="c-text--quiet">{this.localizedTimestamp(this.props.timestamp)}</span>
           </span>
         </header>
         <div className="c-card__body">

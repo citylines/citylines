@@ -892,3 +892,12 @@ a[disabled], a[disabled]:hover {
 .discussion .send-msg {
   margin: 15px 0;
 }
+
+.discussion .discussion-message .discussion-message-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.discussion .discussion-message .c-paragraph {
+  text-align: justify;
+}
