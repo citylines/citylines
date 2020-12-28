@@ -4,6 +4,7 @@ import counterpart from 'counterpart';
 import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
+import CameraControl from './map/camera-control';
 
 class Map extends Component {
   getChildContext() {
@@ -40,6 +41,7 @@ class Map extends Component {
       zoom: props.zoom,
       bearing: props.bearing,
       pitch: props.pitch,
+      preserveDrawingBuffer: true,
       customAttribution: `<a href="/terms">${counterpart('terms.title')}</a> | &copy; Citylines.co contributors`
     });
 
@@ -48,6 +50,9 @@ class Map extends Component {
       defaultStyle: props.mapboxStyle,
       currentStyle: mapStyle,
       onStyleChange: this.props.onSatelliteToggle
+    }));
+    this.map.addControl(new CameraControl({
+      onClick: this.props.onCameraClick
     }));
 
     this.map.on('moveend', () => {
