@@ -7,11 +7,12 @@ import Translate from 'react-translate-component';
 import {PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
-import LinesEditor from './editor/lines-editor';
 import OSMImporter from './editor/osm-importer';
 import NoLinesAlert from './editor/no-lines-alert';
 import GeneralAlert from './editor/general-alert';
-import Discussion from './editor/discussion';
+
+const LinesEditor = React.lazy(() => import('./editor/lines-editor'));
+const Discussion = React.lazy(() => import('./editor/discussion'));
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -171,42 +172,44 @@ class Editor extends CityBase {
                 </button>)
               }
             </span>
-            { this.currentMode === this.modes.EDIT_FEATURES &&
-              <div className="editor-cards-container">
-                { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
-                { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
-                <FeatureViewer
-                  lines={this.state.lines}
-                  systems={this.state.systems}
-                  feature={this.state.selectedFeature}
-                  onFeatureChange={this.bindedOnFeaturePropsChange}
+            <React.Suspense fallback=''>
+              { this.currentMode === this.modes.EDIT_FEATURES &&
+                <div className="editor-cards-container">
+                  { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
+                  { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
+                  <FeatureViewer
+                    lines={this.state.lines}
+                    systems={this.state.systems}
+                    feature={this.state.selectedFeature}
+                    onFeatureChange={this.bindedOnFeaturePropsChange}
+                    />
+                  <ModifiedFeaturesViewer
+                    modifiedFeatures={this.state.modifiedFeatures}
+                    savingData={this.state.savingData}
+                    onClick={this.bindedOnModifiedFeatureClick}
+                    onDiscard={this.bindedOnDiscardChanges}
+                    onSave={this.bindedOnSaveChanges}
                   />
-                <ModifiedFeaturesViewer
-                  modifiedFeatures={this.state.modifiedFeatures}
-                  savingData={this.state.savingData}
-                  onClick={this.bindedOnModifiedFeatureClick}
-                  onDiscard={this.bindedOnDiscardChanges}
-                  onSave={this.bindedOnSaveChanges}
-                />
-                <OSMImporter
-                  zoom={this.state.zoom}
-                  onImport={this.bindedOnImportFromOSMClick}
-                  savingData={this.state.savingData}
-                />
-              </div> }
-            { this.currentMode === this.modes.EDIT_LINES &&
-                <LinesEditor lines={this.state.lines}
-                  systems={this.state.systems}
-                  transportModes={this.state.transportModes}
-                  onSave={this.bindedOnLineSave}
-                  onDelete={this.bindedOnLineDelete}
-                  onCreate={this.bindedOnLineCreate}
-                  onSystemSave={this.bindedOnSystemSave}
-                  onCreateSystem={this.bindedOnCreateSystem}
-                  onSystemDelete={this.bindedOnSystemDelete}
-              /> }
-            { this.currentMode === this.modes.DISCUSSION &&
-                <Discussion urlName={this.urlName} /> }
+                  <OSMImporter
+                    zoom={this.state.zoom}
+                    onImport={this.bindedOnImportFromOSMClick}
+                    savingData={this.state.savingData}
+                  />
+                </div> }
+              { this.currentMode === this.modes.EDIT_LINES &&
+                  <LinesEditor lines={this.state.lines}
+                    systems={this.state.systems}
+                    transportModes={this.state.transportModes}
+                    onSave={this.bindedOnLineSave}
+                    onDelete={this.bindedOnLineDelete}
+                    onCreate={this.bindedOnLineCreate}
+                    onSystemSave={this.bindedOnSystemSave}
+                    onCreateSystem={this.bindedOnCreateSystem}
+                    onSystemDelete={this.bindedOnSystemDelete}
+                /> }
+              { this.currentMode === this.modes.DISCUSSION &&
+                  <Discussion urlName={this.urlName} /> }
+            </React.Suspense>
           </PanelBody>
     )
   }
