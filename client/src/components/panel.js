@@ -6,7 +6,22 @@ class PanelHeader extends PureComponent {
   downloadImg() {
     const format = "image/png";
     const quality = 0.9;
-    this.props.map.getCanvas().toBlob(blob => {
+
+    // Create copy
+    const mapCanvas = this.props.map.getCanvas();
+    const copy = document.createElement('canvas');
+    copy.width = mapCanvas.width;
+    copy.height = mapCanvas.height;
+    const copyCtx = copy.getContext('2d');
+    copyCtx.drawImage(mapCanvas, 0, 0);
+
+    // Add watermark to copy
+    const watermark = `citylines.co/${this.props.urlName}`;
+    copyCtx.font = "35px Arial";
+    const width = copyCtx.measureText(watermark).width;
+    copyCtx.fillText(watermark, copy.width - width - 90, copy.height - 70);
+
+    copy.toBlob(blob => {
       const anchor = document.createElement('a');
       anchor.download = `${this.props.urlName}.png`;
       anchor.href = URL.createObjectURL(blob);
