@@ -77,7 +77,6 @@ class City extends CityBase {
   }
 
   onMapLoad(map) {
-    this.map = map;
     const geo = this.getGeoFromMap(map);
     CityStore.setGeoData(this.urlName, geo);
   }
@@ -171,7 +170,6 @@ class City extends CityBase {
         <>
           <div id="panel" style={this.panelStyle()}>
             <PanelHeader
-              map={this.map}
               name={this.state.name}
               pathName={this.props.location.pathname}
               urlName={this.urlName}

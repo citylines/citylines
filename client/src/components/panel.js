@@ -1,14 +1,8 @@
 import React, {Component, PureComponent} from 'react';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
-import downloadImgFromMapCanvas from '../lib/map-to-img.js';
 
 class PanelHeader extends PureComponent {
-  downloadImg() {
-    downloadImgFromMapCanvas(this.props.urlName, this.props.map.getCanvas());
-    ga('send', 'event', 'panel', 'download_img', this.props.urlName);
-  }
-
   render() {
     const editPath = this.props.pathName.includes('/edit');
     const linkLabel = editPath ? <Translate content="city.stop_editing" /> : <Translate content="city.edit" />;
@@ -25,7 +19,6 @@ class PanelHeader extends PureComponent {
               <Link className="c-link" to={`/compare?cities=${this.props.urlName},`}><Translate content="compare.link" /></Link>}
             {!this.props.loading && !editPath &&
               <Link className="c-link" to={`/data?city=${this.props.urlName}#city`}><Translate content="city.config.data"/></Link>}
-            {!this.props.loading && !editPath && <a className="c-link" onClick={this.downloadImg.bind(this)}>Export</a>}
             {!this.props.loading && !editPath &&
               <Link className={`c-link ${this.props.displaySettings ? 'c-link--brand' : ''}`}
                 to=''
