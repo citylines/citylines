@@ -22,7 +22,6 @@ const Draw = React.lazy(() => import('./map/draw'));
 
 import downloadImgFromMapCanvas from '../lib/map-to-img.js';
 
-
 class City extends CityBase {
   constructor(props, context) {
     super(props, context);
