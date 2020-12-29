@@ -1,7 +1,12 @@
+require "sinatra/namespace"
+
 class EditorApp < App
+  register Sinatra::Namespace
+
   helpers CityHelpers
   helpers OSMHelpers
   helpers EditorHelpers
+  helpers DiscussionHelpers
 
   get '/:url_name/data' do |url_name|
     protect
@@ -157,5 +162,38 @@ class EditorApp < App
     halt unless (route && s && n && w && e)
 
     get_osm_features_collection(@city, route, s, n, w, e).to_json
+  end
+
+  namespace '/:url_name/discussion' do
+    get '/messages' do |url_name|
+      protect
+
+      @city = City[url_name: url_name]
+
+      get_messages_for_city(@city.id).to_json
+    end
+
+    get '/messages/count' do |url_name|
+      protect
+
+      @city = City[url_name: url_name]
+
+      get_message_count_for_city(@city.id).to_json
+    end
+
+    post '/message' do |url_name|
+      payload, header = protect
+
+      @city = City[url_name: url_name]
+      args = JSON.parse(request.body.read, symbolize_names: true)
+
+      DiscussionMessage.create(
+        content: args[:content],
+        city_id: @city.id,
+        user_id: payload['user']['user_id']
+      )
+
+      get_messages_for_city(@city.id).to_json
+    end
   end
 end

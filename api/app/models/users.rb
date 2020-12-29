@@ -34,4 +34,8 @@ class User < Sequel::Model
     url = "https://www.gravatar.com/avatar/#{hashed_email}?s=#{size}"
     self.img_url = url
   end
+
+  def relative_url
+    "/user/#{self.id}"
+  end
 end

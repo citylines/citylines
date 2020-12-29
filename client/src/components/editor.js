@@ -7,10 +7,12 @@ import Translate from 'react-translate-component';
 import {PanelHeader, PanelBody} from './panel';
 import FeatureViewer from './editor/feature-viewer';
 import ModifiedFeaturesViewer from './editor/modified-features-viewer';
-import LinesEditor from './editor/lines-editor';
 import OSMImporter from './editor/osm-importer';
 import NoLinesAlert from './editor/no-lines-alert';
 import GeneralAlert from './editor/general-alert';
+
+const LinesEditor = React.lazy(() => import('./editor/lines-editor'));
+const Discussion = React.lazy(() => import('./editor/discussion'));
 
 import CityStore from '../stores/city-store';
 import EditorStore from '../stores/editor-store';
@@ -22,8 +24,9 @@ class Editor extends CityBase {
     super(props, context);
 
     this.modes = {
-      EDIT_FEATURES: 'edit-features',
-      EDIT_LINES: 'edit-lines'
+      EDIT_FEATURES: 'edit_features',
+      EDIT_LINES: 'edit_lines',
+      DISCUSSION: 'edit_discussion'
     }
 
     this.currentMode = this.modes.EDIT_FEATURES;
@@ -68,6 +71,7 @@ class Editor extends CityBase {
     MainStore.setLoading();
     EditorStore.load(this.urlName).then(() => {
       MainStore.unsetLoading();
+      EditorStore.getNumberOfDiscussionMsgs(this.urlName);
     });
   }
 
@@ -92,13 +96,14 @@ class Editor extends CityBase {
   }
 
   toggleMode(e) {
-    if (e.currentTarget.name === this.currentMode) return;
+    const target = e.currentTarget.name;
 
-    if (this.currentMode === this.modes.EDIT_LINES) {
-      this.currentMode = this.modes.EDIT_FEATURES;
+    if (target === this.currentMode) return;
+
+    this.currentMode = target;
+    if (target === this.modes.EDIT_FEATURES) {
       MainStore.unsetPanelFullWidth();
     } else {
-      this.currentMode = this.modes.EDIT_LINES;
       MainStore.setPanelFullWidth();
     }
 
@@ -143,6 +148,17 @@ class Editor extends CityBase {
     EditorStore.closeGeneralAlert(this.urlName);
   }
 
+  onNewMsgSent() {
+    EditorStore.getNumberOfDiscussionMsgs(this.urlName);
+  }
+
+  discussionMsgsSign(mode) {
+    if (mode != this.modes.DISCUSSION || !this.state.numberOfDiscussionMsgs) {
+      return '';
+    }
+    return `(${this.state.numberOfDiscussionMsgs})`;
+  }
+
   render() {
     if (!this.state.systems) return null;
 
@@ -150,51 +166,57 @@ class Editor extends CityBase {
           <PanelBody>
             <Tags title={'editor.title'} interpolations={{city: this.context.cityName}} />
             <span className="c-input-group edit-mode-buttons">
-              <button name={this.modes.EDIT_FEATURES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_FEATURES ? 'c-button--active' : null}`}
-                      onClick={this.bindedToggleMode}>
-                <Translate content="editor.edit_features" />
-              </button>
-              <button name={this.modes.EDIT_LINES}
-                      className={`c-button c-button--ghost-error ${this.currentMode == this.modes.EDIT_LINES ? 'c-button--active' : null}`}
-                      onClick={this.bindedToggleMode}>
-                <Translate content="editor.edit_lines" />
-              </button>
+              {
+                Object.values(this.modes).map(mode => <button
+                  key={mode}
+                  name={mode}
+                  className={`c-button c-button--ghost-error u-small ${this.currentMode == mode ? 'c-button--active' : ''}`}
+                  onClick={this.bindedToggleMode}>
+                    <Translate content={`editor.${mode}`} /> {this.discussionMsgsSign(mode)}
+                </button>)
+              }
             </span>
-            { this.currentMode === this.modes.EDIT_FEATURES ?
-            <div className="editor-cards-container">
-              { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
-              { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
-              <FeatureViewer
-                lines={this.state.lines}
-                systems={this.state.systems}
-                feature={this.state.selectedFeature}
-                onFeatureChange={this.bindedOnFeaturePropsChange}
-                />
-              <ModifiedFeaturesViewer
-                modifiedFeatures={this.state.modifiedFeatures}
-                savingData={this.state.savingData}
-                onClick={this.bindedOnModifiedFeatureClick}
-                onDiscard={this.bindedOnDiscardChanges}
-                onSave={this.bindedOnSaveChanges}
-              />
-              <OSMImporter
-                zoom={this.state.zoom}
-                onImport={this.bindedOnImportFromOSMClick}
-                savingData={this.state.savingData}
-              />
-            </div>
-            :
-            <LinesEditor lines={this.state.lines}
-                         systems={this.state.systems}
-                         transportModes={this.state.transportModes}
-                         onSave={this.bindedOnLineSave}
-                         onDelete={this.bindedOnLineDelete}
-                         onCreate={this.bindedOnLineCreate}
-                         onSystemSave={this.bindedOnSystemSave}
-                         onCreateSystem={this.bindedOnCreateSystem}
-                         onSystemDelete={this.bindedOnSystemDelete}/>
-            }
+            <React.Suspense fallback=''>
+              { this.currentMode === this.modes.EDIT_FEATURES &&
+                <div className="editor-cards-container">
+                  { this.state.displayGeneralAlert && <GeneralAlert onClose={this.onCloseGeneralAlert.bind(this)}/> }
+                  { this.state.lines && this.state.lines.length == 0 ? <NoLinesAlert /> : "" }
+                  <FeatureViewer
+                    lines={this.state.lines}
+                    systems={this.state.systems}
+                    feature={this.state.selectedFeature}
+                    onFeatureChange={this.bindedOnFeaturePropsChange}
+                    />
+                  <ModifiedFeaturesViewer
+                    modifiedFeatures={this.state.modifiedFeatures}
+                    savingData={this.state.savingData}
+                    onClick={this.bindedOnModifiedFeatureClick}
+                    onDiscard={this.bindedOnDiscardChanges}
+                    onSave={this.bindedOnSaveChanges}
+                  />
+                  <OSMImporter
+                    zoom={this.state.zoom}
+                    onImport={this.bindedOnImportFromOSMClick}
+                    savingData={this.state.savingData}
+                  />
+                </div> }
+              { this.currentMode === this.modes.EDIT_LINES &&
+                  <LinesEditor lines={this.state.lines}
+                    systems={this.state.systems}
+                    transportModes={this.state.transportModes}
+                    onSave={this.bindedOnLineSave}
+                    onDelete={this.bindedOnLineDelete}
+                    onCreate={this.bindedOnLineCreate}
+                    onSystemSave={this.bindedOnSystemSave}
+                    onCreateSystem={this.bindedOnCreateSystem}
+                    onSystemDelete={this.bindedOnSystemDelete}
+                  /> }
+              { this.currentMode === this.modes.DISCUSSION &&
+                  <Discussion
+                    urlName={this.urlName}
+                    onNewMsgSent={this.onNewMsgSent.bind(this)}
+                  /> }
+            </React.Suspense>
           </PanelBody>
     )
   }

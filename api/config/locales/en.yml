@@ -82,8 +82,9 @@ en:
       length: 'Length: %(km)s km'
   editor:
     title: "Edit %(city)s"
-    edit_features: Edit features
-    edit_lines: Edit lines
+    edit_features: Features
+    edit_lines: Lines
+    edit_discussion: Discussion
     feature_viewer:
       selected_feature: Selected feature
       no_feature_selected: No feature selected.
@@ -139,6 +140,9 @@ en:
       link: contributor terms
     no_lines_alert: There are no lines. Features must be assigned a line before they
       can be saved.
+    discussion:
+      new_msg_placeholder: Enter text
+      no_msgs_sign: Here you can:<ul><li>Make notes</li><li>Report problems or make suggestions</li><li>Chat with other contributors</li><li>Or whatever you prefer</li></ul>
   terms:
     title: Terms of use
     license:
