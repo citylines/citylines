@@ -35,4 +35,10 @@ describe User do
       assert @user.img_url
     end
   end
+
+  describe 'URL' do
+    it 'should return the user relative URL' do
+      assert_equal "/user/#{@user.id}", @user.relative_url
+    end
+  end
 end
