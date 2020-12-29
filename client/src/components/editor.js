@@ -148,6 +148,10 @@ class Editor extends CityBase {
     EditorStore.closeGeneralAlert(this.urlName);
   }
 
+  onNewMsgSent() {
+    EditorStore.getNumberOfDiscussionMsgs(this.urlName);
+  }
+
   discussionMsgsSign(mode) {
     if (mode != this.modes.DISCUSSION || !this.state.numberOfDiscussionMsgs) {
       return '';
@@ -206,9 +210,12 @@ class Editor extends CityBase {
                     onSystemSave={this.bindedOnSystemSave}
                     onCreateSystem={this.bindedOnCreateSystem}
                     onSystemDelete={this.bindedOnSystemDelete}
-                /> }
+                  /> }
               { this.currentMode === this.modes.DISCUSSION &&
-                  <Discussion urlName={this.urlName} /> }
+                  <Discussion
+                    urlName={this.urlName}
+                    onNewMsgSent={this.onNewMsgSent.bind(this)}
+                  /> }
             </React.Suspense>
           </PanelBody>
     )

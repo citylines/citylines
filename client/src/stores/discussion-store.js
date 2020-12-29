@@ -17,7 +17,7 @@ const DiscussionStore = {...Store, ...{
       this.emitChangeEvent();
     },
 
-    async sendMsg(urlName, content) {
+    async sendMsg(urlName, content, callback) {
       const url = `/api/editor/${urlName}/discussion/message`;
       const body = JSON.stringify({content: content});
       const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
@@ -25,6 +25,9 @@ const DiscussionStore = {...Store, ...{
       this.state.msgs = json;
       this.state.newMsg = '';
       this.emitChangeEvent();
+      if (typeof callback === 'function') {
+        callback();
+      }
     }
   }
 }
