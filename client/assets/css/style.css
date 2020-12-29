@@ -901,6 +901,10 @@ a[disabled], a[disabled]:hover {
   resize: none;
 }
 
+.discussion .send-msg button {
+  width: 45px;
+}
+
 .discussion .discussion-message .discussion-message-header {
   display: flex;
   justify-content: space-between;

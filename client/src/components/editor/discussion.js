@@ -58,12 +58,14 @@ class Discussion extends Component {
             />) }
           <div className="c-input-group send-msg">
             <div className="o-field">
-              <textarea
+              <Translate
+                component="textarea"
                 className="c-field"
+                attributes={{ placeholder: 'editor.discussion.new_msg_placeholder' }}
                 value={this.state.newMsg}
                 onChange={this.onNewMsgChange.bind(this)}
                 onKeyDown={this.onNewMsgKeyDown.bind(this)}
-              ></textarea>
+              />
             </div>
             <button
               className="c-button c-button--brand"
@@ -92,7 +94,8 @@ class Msg extends Component {
           <span className="discussion-message-header">
             <Link className="c-link" to={this.props.authorURL} target="_blank">
               {this.props.authorNickname}
-            </Link> <span className="c-text--quiet">{this.localizedTimestamp(this.props.timestamp)}</span>
+            </Link>
+            <small className="c-text--quiet">{this.localizedTimestamp(this.props.timestamp)}</small>
           </span>
         </header>
         <div className="c-card__body">
