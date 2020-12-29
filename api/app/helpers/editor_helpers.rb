@@ -143,4 +143,20 @@ module EditorHelpers
     range1.first < range2.last && range2.first < range1.last ?
       [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
   end
+
+
+  def feature_history(feature_class, feature_id)
+    CreatedFeature.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("creation").as(:type)).union(
+      ModifiedFeatureProps.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("props").as(:type)).union(
+        ModifiedFeatureGeo.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("geo").as(:type))
+      )
+    ).order(:created_at).all.map do |el|
+      {
+        user_nickname: el.user.nickname,
+        user_url: el.user.relative_url,
+        timestamp: el[:created_at].iso8601,
+        type: el[:type]
+      }
+    end
+  end
 end
