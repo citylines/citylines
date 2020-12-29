@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 class FeatureHistory extends PureComponent {
   render() {
     return (
-      <div className="c-card--accordion">
+      <div className="c-card--accordion feature-history">
         <input type="checkbox" id="accordion-1"></input>
         <Translate component="label" className="c-card__item" htmlFor="accordion-1" content="editor.feature_viewer.history.title"/>
         <FeatureHistoryContent
@@ -44,8 +44,9 @@ class FeatureHistoryContent extends PureComponent {
         className="c-list__item"
         >
           <small>
-            <a className="c-link" target="_blank" href={record.user_url}>{record.user_nickname}</a>
-            {this.localizedTimestamp(record.timestamp)} (<Translate content={`editor.feature_viewer.history.${record.type}`} />)
+            {this.localizedTimestamp(record.timestamp)}
+            <a className="history-record-author c-link" target="_blank" href={record.user_url}>{record.user_nickname}</a>
+            <span className="history-record-type">(<Translate content={`editor.feature_viewer.history.${record.type}`} />)</span>
           </small>
         </li>)}
       </ul>

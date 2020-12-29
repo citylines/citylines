@@ -925,3 +925,11 @@ a[disabled], a[disabled]:hover {
 .discussion .no-msgs-sign ul {
   text-align:left;
 }
+
+.feature-history .history-record-type {
+  margin-left:5px;
+}
+
+.feature-history .history-record-author {
+  margin-left:8px;
+}
