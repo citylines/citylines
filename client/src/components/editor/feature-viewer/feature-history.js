@@ -38,18 +38,16 @@ class FeatureHistoryContent extends PureComponent {
     if (!this.props.history) return '';
 
     return <div className="c-card__item">
-      <ul className="c-list c-list--unstyled">
+      <ol className="c-list u-small">
       {this.props.history.map(record => <li
         key={`${record.type}-${record.timestamp}`}
         className="c-list__item"
         >
-          <small>
-            {this.localizedTimestamp(record.timestamp)}
-            <a className="history-record-author c-link" target="_blank" href={record.user_url}>{record.user_nickname}</a>
-            <span className="history-record-type">(<Translate content={`editor.feature_viewer.history.${record.type}`} />)</span>
-          </small>
+          {this.localizedTimestamp(record.timestamp)}
+          <a className="history-record-author c-link" target="_blank" href={record.user_url}>{record.user_nickname}</a>
+          <span className="history-record-type">(<Translate content={`editor.feature_viewer.history.${record.type}`} />)</span>
         </li>)}
-      </ul>
+      </ol>
     </div>
   }
 }

@@ -926,6 +926,10 @@ a[disabled], a[disabled]:hover {
   text-align:left;
 }
 
+.feature-history ol {
+  margin-left:10px;
+}
+
 .feature-history .history-record-type {
   margin-left:5px;
 }
