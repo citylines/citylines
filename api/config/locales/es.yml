@@ -108,6 +108,11 @@ es:
         osm_id: Id de OSM
         osm_tags: Tags de OSM
         osm_metadata: Metadata de OSM
+      history:
+        title: Historial del elemento
+        creation: Creación
+        geo: Geo
+        props: Props
     modified_features:
       title: Elementos modificados
       no_features_modified: Ningún elemento modificado.

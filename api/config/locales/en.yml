@@ -104,6 +104,11 @@ en:
         osm_id: OSM Id
         osm_tags: OSM Tags
         osm_metadata: OSM Metadata
+      history:
+        title: Feature history
+        creation: Creation
+        geo: Geo
+        props: Props
     modified_features:
       title: Modified features
       no_features_modified: No features modified.
