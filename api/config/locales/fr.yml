@@ -85,11 +85,12 @@ fr:
       length: 'Longueur: %(km)s km'
   editor:
     title: "Modifier %(city)s"
-    edit_features: Modifier les fonctionnalités
-    edit_lines: Modifier les lignes
+    edit_features: Objets
+    edit_lines: Lignes
+    edit_discussion: Discussion
     feature_viewer:
-      selected_feature: Fonctionnalité sélectionnée
-      no_feature_selected: Aucune fonctionnalité sélectionnée.
+      selected_feature: Objet sélectionné
+      no_feature_selected: Aucune objet sélectionné.
       add_line: Ajouter une ligne
       years:
         from: De l'année
@@ -107,8 +108,8 @@ fr:
         osm_tags: Tags OSM
         osm_metadata: Metadata OSM
     modified_features:
-      title: Fonctionnalités modifiées
-      no_features_modified: Aucune fonctionnalité modifiée.
+      title: Objets modifiés
+      no_features_modified: Aucune objet modifié.
       types:
         geo: "(Geo)"
         props: "(Props)"
@@ -140,8 +141,11 @@ fr:
       title: Attention
       body: Utilisez des sources fiables lors du téléchargement ou de la modification de données, et respectez le travail des autres contributeurs. Assurez-vous également de suivre les
       link: règles des contributeurs
-    no_lines_alert: Il n'y a pas de ligne. Les fonctionnalités doivent être appliquées
+    no_lines_alert: Il n'y a pas de ligne. Les objets doivent être appliquées
       à la ligne avant de pouvoir enregistrer.
+    discussion:
+      new_msg_placeholder: Entrez du texte
+      no_msgs_sign: Ici, vous pouvez:<ul><li>Prendre des notes</li><li>Signaler des problèmes ou faire des suggestions</li><li>Chatter avec d'autres contributeurs</li><li>Ou ce que vous préférez</li></ul>
   terms:
     title: Conditions d'utilisation
     license:

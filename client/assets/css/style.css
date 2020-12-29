@@ -884,3 +884,44 @@ a[disabled], a[disabled]:hover {
   margin-left: 7px;
   vertical-align: text-bottom;
 }
+
+.discussion {
+  max-width: 1000px;
+  height: calc(100% - 61.25px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.discussion .send-msg {
+  margin: 15px 0;
+}
+
+.discussion .send-msg textarea {
+  resize: none;
+}
+
+.discussion .send-msg button {
+  width: 45px;
+}
+
+.discussion .discussion-message .discussion-message-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.discussion .discussion-message .c-paragraph {
+  text-align: justify;
+  white-space: pre-wrap;
+}
+
+.discussion .no-msgs-sign {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 20%;
+}
+
+.discussion .no-msgs-sign ul {
+  text-align:left;
+}

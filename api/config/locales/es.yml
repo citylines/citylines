@@ -86,8 +86,9 @@ es:
       length: 'Longitud: %(km)s km'
   editor:
     title: "Editar %(city)s"
-    edit_features: Editar elementos
-    edit_lines: Editar líneas
+    edit_features: Elementos
+    edit_lines: Líneas
+    edit_discussion: Discusión
     feature_viewer:
       selected_feature: Elemento seleccionado
       no_feature_selected: Ningún elemento seleccionado.
@@ -143,6 +144,9 @@ es:
       link: términos del colaborador
     no_lines_alert: No hay líneas creadas. Los elementos deben tener asignados una línea
       para poder ser guardados.
+    discussion:
+      new_msg_placeholder: Ingresar texto
+      no_msgs_sign: Aquí puedes:<ul><li>Hacer anotaciones</li><li>Reportar problemas o sugerencias</li><li>Conversar con otros colaboradores</li><li>O lo que tu prefieras</li></ul>
   terms:
     title: Términos de uso
     license:
