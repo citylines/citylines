@@ -137,14 +137,6 @@ module EditorHelpers
     end
   end
 
-  private
-
-  def overlapping_range(range1, range2)
-    range1.first < range2.last && range2.first < range1.last ?
-      [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
-  end
-
-
   def feature_history(feature_class, feature_id)
     CreatedFeature.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("creation").as(:type)).union(
       ModifiedFeatureProps.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("props").as(:type)).union(
@@ -158,5 +150,12 @@ module EditorHelpers
         type: el[:type]
       }
     end
+  end
+
+  private
+
+  def overlapping_range(range1, range2)
+    range1.first < range2.last && range2.first < range1.last ?
+      [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
   end
 end
