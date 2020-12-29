@@ -134,6 +134,15 @@ const EditorStore = Object.assign({}, Store, {
     this.cityData[urlName].numberOfDiscussionMsgs = json.count;
     this.emitChangeEvent();
   },
+
+  async getFeatureHistory(urlName, featureClass, featureId) {
+    const url = `/api/editor/${urlName}/history/${featureClass}/${featureId}`;
+    const response = await fetch(url, {credentials: 'same-origin'});
+    const json = await response.json();
+    this.cityData[urlName].selectedFeatureHistory = json;
+    this.emitChangeEvent();
+  },
+
 /* ------------ */
 
   async load(urlName) {
@@ -156,6 +165,7 @@ const EditorStore = Object.assign({}, Store, {
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       selectedFeature: cityData.selectedFeature,
+      selectedFeatureHistory: cityData.selectedFeatureHistory,
       modifiedFeatures: cityData.modifiedFeatures,
       selectedFeatureById: cityData.selectedFeatureById,
       savingData: cityData.savingData,

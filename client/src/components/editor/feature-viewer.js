@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
 import FeatureLinesEditor from './feature-viewer/feature-lines-editor';
+import FeatureHistory from './feature-viewer/feature-history';
 
 class FeatureViewer extends PureComponent {
   constructor(props, context) {
@@ -98,11 +99,13 @@ class FeatureViewer extends PureComponent {
         <div className="c-card__item">
         { content }
         </div>
-        { this.props.feature && <div className="c-card--accordion">
-          <input type="checkbox" id="accordion-1"></input>
-          <label className="c-card__item" htmlFor="accordion-1">Ver historial del elemento</label>
-          <div className="c-card__item">Historial</div>
-        </div> }
+        { this.props.feature &&
+          <FeatureHistory
+            featureId={properties.id}
+            history={this.props.featureHistory}
+            onShowFeatureHistory={this.props.onShowFeatureHistory}
+          />
+        }
       </div>
       )
   }
