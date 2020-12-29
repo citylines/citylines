@@ -83,8 +83,10 @@ class Discussion extends Component {
 
 class Msg extends Component {
   localizedTimestamp(timestamp) {
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const timeOptions = { hour: '2-digit', minute:'2-digit' };
     const localDate = new Date(timestamp);
-    return `${localDate.toLocaleDateString()} ${localDate.toLocaleTimeString()}`;
+    return `${localDate.toLocaleDateString(undefined, dateOptions)} ${localDate.toLocaleTimeString(undefined, timeOptions)}`;
   }
 
   render() {
