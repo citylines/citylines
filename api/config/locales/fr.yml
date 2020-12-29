@@ -144,7 +144,7 @@ fr:
     no_lines_alert: Il n'y a pas de ligne. Les objets doivent être appliquées
       à la ligne avant de pouvoir enregistrer.
     discussion:
-      no_msgs_sign: Il n'y a pas encore de messages. Soyez celui qui lance la discussion!
+      no_msgs_sign: Ici, vous pouvez:<ul><li>Prendre des notes</li><li>Signaler des problèmes ou faire des suggestions</li><li>Chatter avec d'autres contributeurs</li><li>Ou ce que vous préférez</li></ul>
   terms:
     title: Conditions d'utilisation
     license:

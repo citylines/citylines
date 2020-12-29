@@ -915,5 +915,9 @@ a[disabled], a[disabled]:hover {
   max-width: 600px;
   text-align: center;
   margin: 0 auto;
-  margin-bottom: 30%;
+  margin-bottom: 20%;
+}
+
+.discussion .no-msgs-sign ul {
+  text-align:left;
 }

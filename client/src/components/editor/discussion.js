@@ -108,7 +108,7 @@ class NoMsgsSign extends Component {
     return (
       <div className="c-card no-msgs-sign">
         <div className="c-card__body">
-          <Translate content="editor.discussion.no_msgs_sign" />
+          <Translate content="editor.discussion.no_msgs_sign" unsafe={true}/>
         </div>
       </div>
     )
