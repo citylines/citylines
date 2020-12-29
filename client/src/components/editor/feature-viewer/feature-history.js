@@ -1,11 +1,25 @@
-import React, {PureComponent} from 'react';
+import React, {Component, PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
 class FeatureHistory extends PureComponent {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showHistory && prevProps.featureId != this.props.featureId) {
+      this.props.onShowFeatureHistory();
+    }
+  }
+
+  handleOnChange(e) {
+    this.setState({showHistory: e.target.checked}, () => {
+      if (this.state.showHistory) {
+        this.props.onShowFeatureHistory()
+      }
+    });
+  }
+
   render() {
     return (
       <div className="c-card--accordion feature-history">
-        <input type="checkbox" id="accordion-1"></input>
+        <input type="checkbox" id="accordion-1" onChange={this.handleOnChange.bind(this)}></input>
         <Translate component="label" className="c-card__item" htmlFor="accordion-1" content="editor.feature_viewer.history.title"/>
         <FeatureHistoryContent
           featureId={this.props.featureId}
@@ -18,16 +32,6 @@ class FeatureHistory extends PureComponent {
 }
 
 class FeatureHistoryContent extends PureComponent {
-  componentDidMount() {
-    this.props.onShowFeatureHistory();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.featureId != this.props.featureId) {
-      this.props.onShowFeatureHistory();
-    }
-  }
-
   localizedTimestamp(timestamp) {
     const localDate = new Date(timestamp);
     const timeOptions = { hour: '2-digit', minute:'2-digit' };
