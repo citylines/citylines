@@ -138,9 +138,10 @@ module EditorHelpers
   end
 
   def feature_history(feature_class, feature_id)
-    CreatedFeature.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("creation").as(:type)).union(
-      ModifiedFeatureProps.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("props").as(:type)).union(
-        ModifiedFeatureGeo.where(feature_class: feature_class, feature_id: feature_id).select(:user_id, :created_at, Sequel.expr("geo").as(:type))
+    query = {feature_class: feature_class, feature_id: feature_id}
+    CreatedFeature.where(query).select(:user_id, :created_at, Sequel.expr("creation").as(:type)).union(
+      ModifiedFeatureProps.where(query).select(:user_id, :created_at, Sequel.expr("props").as(:type)).union(
+        ModifiedFeatureGeo.where(query).select(:user_id, :created_at, Sequel.expr("geo").as(:type))
       )
     ).order(:created_at).all.map do |el|
       {
