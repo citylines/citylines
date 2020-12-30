@@ -3,11 +3,13 @@ require File.expand_path '../../../test_config', __FILE__
 describe EditorHelpers do
   include EditorHelpers
 
+  before do
+    @city = City.create(name: 'Testonia', url_name: 'testonia')
+    @user = User.create(name: 'Nuno', email: 'nuno@citylines.co')
+  end
+
   describe "update_create_or_delete_feature" do
     before do
-      @city = City.create(name: 'Testonia', url_name: 'testonia')
-      @user = User.create(name: 'Nuno', email: 'nuno@citylines.co')
-
       @system = System.create(name: 'Metro', city_id: @city.id)
       @line1 = Line.create(name:'Line 1', system_id: @system.id, city_id: @city.id, url_name: 'line-1')
       @line2 = Line.create(name:'Line 2', system_id: @system.id, city_id: @city.id, url_name: 'line-2')
@@ -208,6 +210,39 @@ describe EditorHelpers do
           assert_equal original_geo, @section.reload.geometry
         end
       end
+    end
+  end
+
+  describe "feature history" do
+    before do
+      @section = Section.create(city_id: @city.id)
+      @created_feature = CreatedFeature.push(@user, @section)
+      @modif_props = ModifiedFeatureProps.push(@user, @section)
+      @modif_geo = ModifiedFeatureGeo.push(@user, @section)
+    end
+
+    it "should return the history of the feature" do
+      expected_history = [
+        {
+          user_nickname: @user.nickname,
+          user_url: @user.relative_url,
+          timestamp: @created_feature.created_at.iso8601,
+          type: 'creation',
+        },
+        {
+          user_nickname: @user.nickname,
+          user_url: @user.relative_url,
+          timestamp: @modif_props.created_at.iso8601,
+          type: 'props',
+        },
+        {
+          user_nickname: @user.nickname,
+          user_url: @user.relative_url,
+          timestamp: @modif_geo.created_at.iso8601,
+          type: 'geo',
+        },
+      ]
+      assert_equal expected_history, feature_history("Section", @section.id)
     end
   end
 end
