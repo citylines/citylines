@@ -153,6 +153,11 @@ class Editor extends CityBase {
   }
 
   onShowFeatureHistory() {
+    ga('send', 'event', 'editor', 'show_feature_history', this.urlName);
+    this.onUpdateFeatureHistory();
+  }
+
+  onUpdateFeatureHistory() {
     const featureProps = this.state.selectedFeature.properties;
     EditorStore.getFeatureHistory(this.urlName, featureProps.klass, featureProps.id)
   }
@@ -193,6 +198,7 @@ class Editor extends CityBase {
                     featureHistory={this.state.selectedFeatureHistory}
                     onFeatureChange={this.bindedOnFeaturePropsChange}
                     onShowFeatureHistory={this.onShowFeatureHistory.bind(this)}
+                    onUpdateFeatureHistory={this.onUpdateFeatureHistory.bind(this)}
                     />
                   <ModifiedFeaturesViewer
                     modifiedFeatures={this.state.modifiedFeatures}

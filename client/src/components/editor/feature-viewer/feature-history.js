@@ -4,14 +4,14 @@ import Translate from 'react-translate-component';
 class FeatureHistory extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.showHistory && prevProps.featureId != this.props.featureId) {
-      this.props.onShowFeatureHistory();
+      this.props.onUpdateFeatureHistory();
     }
   }
 
   handleOnChange(e) {
     this.setState({showHistory: e.target.checked}, () => {
       if (this.state.showHistory) {
-        this.props.onShowFeatureHistory()
+        this.props.onShowFeatureHistory();
       }
     });
   }
