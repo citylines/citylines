@@ -103,8 +103,8 @@ class FeatureViewer extends PureComponent {
           <FeatureHistory
             featureId={properties.id}
             history={this.props.featureHistory}
-            onShowFeatureHistory={this.props.onShowFeatureHistory}
-            onUpdateFeatureHistory={this.props.onUpdateFeatureHistory}
+            onShow={this.props.onShowFeatureHistory}
+            onUpdate={this.props.onUpdateFeatureHistory}
           />
         }
       </div>
