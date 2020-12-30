@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
 import FeatureLinesEditor from './feature-viewer/feature-lines-editor';
+import FeatureHistory from './feature-viewer/feature-history';
 
 class FeatureViewer extends PureComponent {
   constructor(props, context) {
@@ -98,6 +99,14 @@ class FeatureViewer extends PureComponent {
         <div className="c-card__item">
         { content }
         </div>
+        { this.props.feature &&
+          <FeatureHistory
+            featureId={properties.id}
+            history={this.props.featureHistory}
+            onShow={this.props.onShowFeatureHistory}
+            onUpdate={this.props.onUpdateFeatureHistory}
+          />
+        }
       </div>
       )
   }

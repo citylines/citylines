@@ -152,6 +152,16 @@ class Editor extends CityBase {
     EditorStore.getNumberOfDiscussionMsgs(this.urlName);
   }
 
+  onShowFeatureHistory() {
+    ga('send', 'event', 'editor', 'show_feature_history', this.urlName);
+    this.onUpdateFeatureHistory();
+  }
+
+  onUpdateFeatureHistory() {
+    const featureProps = this.state.selectedFeature.properties;
+    EditorStore.getFeatureHistory(this.urlName, featureProps.klass, featureProps.id)
+  }
+
   discussionMsgsSign(mode) {
     if (mode != this.modes.DISCUSSION || !this.state.numberOfDiscussionMsgs) {
       return '';
@@ -185,7 +195,10 @@ class Editor extends CityBase {
                     lines={this.state.lines}
                     systems={this.state.systems}
                     feature={this.state.selectedFeature}
+                    featureHistory={this.state.selectedFeatureHistory}
                     onFeatureChange={this.bindedOnFeaturePropsChange}
+                    onShowFeatureHistory={this.onShowFeatureHistory.bind(this)}
+                    onUpdateFeatureHistory={this.onUpdateFeatureHistory.bind(this)}
                     />
                   <ModifiedFeaturesViewer
                     modifiedFeatures={this.state.modifiedFeatures}

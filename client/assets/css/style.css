@@ -925,3 +925,19 @@ a[disabled], a[disabled]:hover {
 .discussion .no-msgs-sign ul {
   text-align:left;
 }
+
+.feature-history ol {
+  margin-left:10px;
+}
+
+.feature-history .history-record-type {
+  margin-left:5px;
+}
+
+.feature-history .history-record-author {
+  margin-left:5px;
+}
+
+.feature-history > input:checked+.c-card__item, .c-card__item--active {
+  font-weight:inherit;
+}

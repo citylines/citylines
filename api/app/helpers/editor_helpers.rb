@@ -137,6 +137,22 @@ module EditorHelpers
     end
   end
 
+  def feature_history(feature_class, feature_id)
+    query = {feature_class: feature_class, feature_id: feature_id}
+    CreatedFeature.where(query).select(:user_id, :created_at, Sequel.expr("creation").as(:type)).union(
+      ModifiedFeatureProps.where(query).select(:user_id, :created_at, Sequel.expr("props").as(:type)).union(
+        ModifiedFeatureGeo.where(query).select(:user_id, :created_at, Sequel.expr("geo").as(:type))
+      )
+    ).order(:created_at).all.map do |el|
+      {
+        user_nickname: el.user.nickname,
+        user_url: el.user.relative_url,
+        timestamp: el[:created_at].iso8601,
+        type: el[:type]
+      }
+    end
+  end
+
   private
 
   def overlapping_range(range1, range2)

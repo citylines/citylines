@@ -164,6 +164,11 @@ class EditorApp < App
     get_osm_features_collection(@city, route, s, n, w, e).to_json
   end
 
+  get '/:url_name/history/:feature_class/:feature_id' do |url_name, feature_class, feature_id|
+    protect
+    feature_history(feature_class, feature_id).to_json
+  end
+
   namespace '/:url_name/discussion' do
     get '/messages' do |url_name|
       protect
