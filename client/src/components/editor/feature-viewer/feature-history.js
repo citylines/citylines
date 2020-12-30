@@ -1,7 +1,12 @@
 import React, {Component, PureComponent} from 'react';
 import Translate from 'react-translate-component';
 
-class FeatureHistory extends PureComponent {
+class FeatureHistory extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {showHistory: false};
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.showHistory && prevProps.featureId != this.props.featureId) {
       this.props.onUpdate();
