@@ -12,6 +12,9 @@ class Footer extends PureComponent {
         <span className="copyright c-nav__content">&copy; {`2015-${currentYear}`}
           <img src={assets.path("img/citylines-navbar-textonly.svg")} />
         </span>
+        <Link className="c-nav__item c-nav__item--right" to="/about" tabIndex={0}>
+          About
+        </Link>
         <Link className="c-nav__item c-nav__item--right" to="/terms" tabIndex={0}>
           <Translate content="terms.title" />
         </Link>
