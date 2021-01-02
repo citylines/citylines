@@ -1,17 +1,19 @@
 import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
+import Translate from 'react-translate-component';
+import Tags from './tags';
 
 class About extends PureComponent {
   /* TODO:
-   * - Tags component
    * - i18n
    **/
 
   render() {
     return (
       <div className="o-container o-container--medium u-pillar-box--medium" style={{textAlign: "justify"}}>
+        <Tags title="about.title" />
         <div className="u-letter-box--xlarge letter-with-footer">
-          <h1 className="c-heading">About</h1>
+          <Translate component="h1" className="c-heading" content="about.title" />
           <div className="c-paragraph">
             <Link className="c-link" to="/">Citylines.co</Link> is a collaborative platform for mapping the transit systems of the world. The source code is <a className="c-link" href="https://github.com/citylines">open</a>, licensed under the <a className="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a className="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please refer to the <Link className="c-link" to="/">License section</Link> for more details.
           </div>

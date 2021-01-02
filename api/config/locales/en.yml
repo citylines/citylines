@@ -1,5 +1,7 @@
 ---
 en:
+  about:
+    title: About us
   cities:
     title: We want to map all the transit systems of the world.
     search: Enter a system, a city, or a country

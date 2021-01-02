@@ -1,5 +1,7 @@
 ---
 es:
+  about:
+    title: Sobre nosotros
   cities:
     title: Queremos mapear todos los<br>sistemas de transporte urbano del mundo.
     search: Ingresa un sistema, una ciudad o un país

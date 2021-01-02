@@ -1,5 +1,7 @@
 ---
 fr:
+  about:
+    title: Qui sommes-nous?
   cities:
     title: Construisons les réseaux de transports du monde.
     search: Entrez un système, une ville ou un pays
