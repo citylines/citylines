@@ -2,7 +2,7 @@
 en:
   about:
     title: About us
-    main: '<Link class="c-link" to="/">Citylines.co</Link> is a collaborative platform for mapping the transit systems of the world. The source code is <a class="c-link" href="https://github.com/citylines">open</a>, licensed under the <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please refer to the <a class="c-link" href="/terms">License section</a> for more details.'
+    main: '<a class="c-link" href="/">Citylines.co</a> is a collaborative platform for mapping the transit systems of the world. The source code is <a class="c-link" href="https://github.com/citylines">open</a>, licensed under the <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please, refer to the <a class="c-link" href="/terms">Terms of use</a> for more details.'
     our_mission:
       title: Our mission
       body: Our mission is to create a global repository and visualization tool of transport geodata, specially focused on the history of transit systems.
@@ -11,7 +11,7 @@ en:
       list_li2: 'Routing. We want to be able to build routing-ready data. In order to do this, a series of features are still needed. Nevertheless, <a class="c-link" href="https://github.com/citylines/citylines2network">some tools have already been prototyped</a>.'
     who_are_we:
       title: Who are we?
-      body: '<Link class="c-link" to="/">Citylines.co</Link> is a global comunity of users, contributors and developers. The founder and lead engineer is <a class="c-link" href="https://www.linkedin.com/in/bruno-salerno-b29a8b3/">Bruno Salerno</a>.'
+      body: '<a class="c-link" href="/">Citylines.co</a> is a global comunity of users, contributors and developers. The founder and lead engineer is <a class="c-link" href="https://www.linkedin.com/in/bruno-salerno-b29a8b3/">Bruno Salerno</a>.'
     how_to_contribute:
       title: How to contribute?
       body: You are encouraged to contribute by improving or adding new data through our online editor, or by taking part in the development of the platform. We are actively looking for open source contributors involving data, front and backend development, and design.
