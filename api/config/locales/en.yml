@@ -2,7 +2,7 @@
 en:
   about:
     title: About us
-    main: '<Link class="c-link" to="/">Citylines.co</Link> is a collaborative platform for mapping the transit systems of the world. The source code is <a class="c-link" href="https://github.com/citylines">open</a>, licensed under the <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please refer to the <Link class="c-link" to="/">License section</Link> for more details.'
+    main: '<Link class="c-link" to="/">Citylines.co</Link> is a collaborative platform for mapping the transit systems of the world. The source code is <a class="c-link" href="https://github.com/citylines">open</a>, licensed under the <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please refer to the <a class="c-link" href="/terms">License section</a> for more details.'
     our_mission:
       title: Our mission
       body: Our mission is to create a global repository and visualization tool of transport geodata, specially focused on the history of transit systems.
