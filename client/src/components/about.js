@@ -4,10 +4,6 @@ import Translate from 'react-translate-component';
 import Tags from './tags';
 
 class About extends PureComponent {
-  /* TODO:
-   * - i18n
-   **/
-
   render() {
     return (
       <div className="o-container o-container--medium u-pillar-box--medium" style={{textAlign: "justify"}}>
