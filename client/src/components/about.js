@@ -11,33 +11,35 @@ class About extends PureComponent {
         <div className="u-letter-box--xlarge letter-with-footer">
           <Translate component="h1" className="c-heading" content="about.title" />
           <div className="c-paragraph">
-            <Link className="c-link" to="/">Citylines.co</Link> is a collaborative platform for mapping the transit systems of the world. The source code is <a className="c-link" href="https://github.com/citylines">open</a>, licensed under the <a className="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a className="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please refer to the <Link className="c-link" to="/">License section</Link> for more details.
+            <Translate content="about.main" unsafe={true}/>
           </div>
 
-          <h2 className="c-heading">Our mission</h2>
+          <Translate component="h2" className="c-heading" content="about.our_mission.title" />
           <div className="c-paragraph">
-            Our mission is to create a global repository and visualization tool of transport geodata, specially focused on the history of transit systems.
+            <Translate content="about.our_mission.body" />
           </div>
           <div className="c-paragraph">
-            We also want to develop tools that allow us to manipulate this data, in particular, regarding:
+            <Translate content="about.our_mission.list_intro" />
             <ul className="c-list">
-              <li>Integration with OpenStreetMap (OSM). Currently we only support a simple import mechanism, but we are looking forward to be able to export transit data back to OSM. <a className="c-link" href="https://github.com/citylines/citylines2osm">A working prototype is already available</a>.</li>
-              <li>Routing. We want to be able to build routing-ready data. In order to do this, a series of features are still needed. Nevertheless, <a className="c-link" href="https://github.com/citylines/citylines2network">some tools have already been prototyped</a>.</li>
+              <Translate component="li" content="about.our_mission.list_li1" unsafe={true}/>
+              <Translate component="li" content="about.our_mission.list_li2" unsafe={true}/>
             </ul>
           </div>
 
-          <h2 className="c-heading">Who we are</h2>
+          <Translate component="h2" className="c-heading" content="about.who_are_we.title"/>
           <div className="c-paragraph">
-            <Link className="c-link" to="/">Citylines.co</Link> is a global comunity of users, contributors and developers. The founder and lead engineer is <a className="c-link" href="https://www.linkedin.com/in/bruno-salerno-b29a8b3/">Bruno Salerno</a>.
+            <Translate content="about.who_are_we.body" unsafe={true} />
           </div>
 
-          <h2 className="c-heading">How to colaborate</h2>
+          <Translate component="h2" className="c-heading" content="about.how_to_contribute.title"/>
           <div className="c-paragraph">
-            You are encouraged to contribute by improving or adding new data through our online editor, or by taking part in the development of the platform. We are actively looking for open source contributors involving data, front and backend development, and design.
+            <Translate content="about.how_to_contribute.body" />
           </div>
 
-          <h2 className="c-heading">Reach us</h2>
-            <div>Check out our <a className="c-link" href="https://github.com/citylines/citylines">Github repo</a>, send us an email to <a className="c-link" href="mailto:info@citylines.co">info at citylines.co</a>, or <a className="c-link" href="https://gitter.im/citylines/Lobby?utm_source=share-link&amp;utm_medium=link&amp;utm_campaign=share-link">join our chat room at Gitter</a>.</div>
+          <Translate component="h2" className="c-heading" content="about.reach_us.title" />
+          <div className="c-paragraph">
+            <Translate content="about.reach_us.body" unsafe={true}/>
+          </div>
         </div>
       </div>
     );
