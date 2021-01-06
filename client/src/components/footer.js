@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import assets from '../lib/assets-provider';
 
-class Footer extends PureComponent {
+class Footer extends Component {
   render() {
     const currentYear = new Date().getFullYear();
 
