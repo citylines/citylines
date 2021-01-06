@@ -15,7 +15,7 @@ SitemapGenerator::Interpreter.class_eval {
   end
 }
 
-SitemapGenerator::Sitemap.default_host = 'http://www.citylines.co'
+SitemapGenerator::Sitemap.default_host = 'https://www.citylines.co'
 SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(fog_provider: 'AWS',
                                                                     aws_access_key_id: AWS_ACCESS_KEY_ID,
                                                                     aws_secret_access_key: AWS_SECRET_ACCESS_KEY,
