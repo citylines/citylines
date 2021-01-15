@@ -5,7 +5,7 @@ fr:
     main: '<a class="c-link" href="/">Citylines.co</a> est une plateforme collaborative pour cartographier les systèmes de transports du monde. Le code source est <a class="c-link" href="https://github.com/citylines">libre</a>, sous la <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, et les données sont disponibles sous <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Merci de consulter les <a class="c-link" href="/terms">Conditions d'utilisation</a> pour plus de détails.'
     our_mission:
       title: Notre mission
-      body: Notre mission est de créer un dépôt global et un outil de visualisation des données géographiques de transport, concentré sur l'historique des systèmes de transports.
+      body: Notre mission est de créer un dépôt global et un outil de visualisation des données géographiques de transport, concentrés sur l'historique des systèmes de transports.
       list_intro: 'Nous voulons également développer des outils qui nous permettent de manipuler ces données, notamment :'
       list_li1: 'L'intégration avec OpenStreetMap (OSM). Actuellement, nous ne proposons qu'un simple méchanisme d'importation, mais nous avons hâte de pouvoir aussi exporter les données de transport vers OSM. <a class="c-link" href="https://github.com/citylines/citylines2osm">Un prototype fonctionnel est déjà disponible</a>.'
       list_li2: 'Routage. Nous voulons être en mesure de créer des données prêtes pour le routage. Pour ce faire, une série de fonctionnalités est encore nécessaire. Cependant, <a class="c-link" href="https://github.com/citylines/citylines2network">certains outils ont déjà été prototypés</a>.'
