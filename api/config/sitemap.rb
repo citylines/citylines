@@ -26,6 +26,7 @@ SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
 SitemapGenerator::Sitemap.create do
   add "/", alternates: alternates("/")
+  add "/about", alternates: alternates("/about")
   add "/data", alternates: alternates("/data")
   add "/terms", alternates: alternates("/terms")
 

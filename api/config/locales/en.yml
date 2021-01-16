@@ -1,5 +1,23 @@
 ---
 en:
+  about:
+    title: About us
+    main: '<a class="c-link" href="/">Citylines.co</a> is a collaborative platform for mapping the transit systems of the world. The source code is <a class="c-link" href="https://github.com/citylines">open</a>, licensed under the <a class="c-link" href="https://github.com/citylines/citylines/blob/master/LICENSE.md">MIT license</a>, and the data is available under the <a class="c-link" href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Please, refer to the <a class="c-link" href="/terms">Terms of use</a> for more details.'
+    our_mission:
+      title: Our mission
+      body: Our mission is to create both a global repository and visualization tool of transport geodata, specially focused on the history of transit systems.
+      list_intro: 'We also want to develop tools that allow us to manipulate this data, in particular, regarding:'
+      list_li1: 'Integration with OpenStreetMap (OSM). Currently we only support a simple import mechanism, but we are looking forward to be able to export transit data back to OSM. <a class="c-link" href="https://github.com/citylines/citylines2osm">A working prototype is already available</a>.'
+      list_li2: 'Routing. We want to be able to build routing-ready data. In order to do this, a series of features are still needed. Nevertheless, <a class="c-link" href="https://github.com/citylines/citylines2network">some tools have already been prototyped</a>.'
+    who_are_we:
+      title: Who are we?
+      body: '<a class="c-link" href="/">Citylines.co</a> is a global comunity of users, contributors and developers. The founder and lead engineer is <a class="c-link" href="https://www.linkedin.com/in/bruno-salerno-b29a8b3/">Bruno Salerno</a>.'
+    how_to_contribute:
+      title: How to contribute?
+      body: You are encouraged to contribute by improving or adding new data through our online editor, or by taking part in the development of the platform. We are actively looking for open source contributors involving data, front and backend development, and design.
+    reach_us:
+      title: Reach us
+      body: 'Check out our <a class="c-link" href="https://github.com/citylines/citylines">Github repo</a>, send us an email to <a class="c-link" href="mailto:info@citylines.co">info at citylines.co</a>, or <a class="c-link" href="https://gitter.im/citylines/Lobby?utm_source=share-link&amp;utm_medium=link&amp;utm_campaign=share-link">join our chat room at Gitter</a>.'
   cities:
     title: We want to map all the transit systems of the world.
     search: Enter a system, a city, or a country
