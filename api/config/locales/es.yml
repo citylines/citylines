@@ -8,10 +8,10 @@ es:
       body: Nuestra misión es crear tanto un repositorio como una herramienta de visualización de geodatos de transporte, con énfasis en la historia de los sistemas de transporte masivo.
       list_intro: 'También queremos desarrollar herramientas que nos ayuden a trabajar con esta información, en particular, en relación a dos temas:'
       list_li1: 'Integración con OpenStreetMap (OSM). Actualmente sólo soportamos un simple mecanismo de importación, pero esperamos poder desarrollar herramientas para exportar los datos de vuelta a OSM. <a class="c-link" href="https://github.com/citylines/citylines2osm">Un prototipo ya está disponible</a>.'
-      list_li2: 'Ruteo. Queremos producir datos que estén listos para ruteo. Para esto, una serie de mejoras tienen que ser llevadas a cabo. Sin embargo, <a class="c-link" href="https://github.com/citylines/citylines2network">ya hay una herramienta prototipada</a>.'
+      list_li2: 'Ruteo. Queremos producir datos que estén listos para ruteo. Para esto, una serie de mejoras tienen que ser implementadas. Sin embargo, <a class="c-link" href="https://github.com/citylines/citylines2network">ya hay una herramienta prototipada</a>.'
     who_are_we:
       title: ¿Quiénes somos?
-      body: '<a class="c-link" href="/">Citylines.co</a> es una comunidad global de usuarixs, colaboradorxs y programadorxs. El fundador y desarrollador principal es <a class="c-link" href="https://www.linkedin.com/in/bruno-salerno-b29a8b3/">Bruno Salerno</a>.'
+      body: '<a class="c-link" href="/">Citylines.co</a> es una comunidad global de usuarixs, colaboradorxs y programadorxs. El fundador y desarrollador principal es <a class="c-link" href="mailto:bruno@citylines.co">Bruno Salerno</a>.'
     how_to_contribute:
       title: ¿Cómo colaborar?
       body: Alentamos la colaboración tanto en forma de mejora o agregado de datos a través de nuestro editor online, como bajo la forma de contribuciones al código fuente de la plataforma. Estamos buscando activamente colaboradores relacionados con trabajo con datos, desarrollo front y back, y diseño.
