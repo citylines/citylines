@@ -8,6 +8,7 @@ import Avatar from './user/avatar';
 import Footer from './footer';
 import assets from '../lib/assets-provider';
 
+const About = React.lazy(() => import('./about'));
 const Home = React.lazy(() => import('./home'));
 const City = React.lazy(() => import('./city'));
 const CityComparison = React.lazy(() => import('./city-comparison'));
@@ -56,11 +57,11 @@ class Main extends Component {
   }
 
   displayMenu() {
-    return !this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms|\/compare/);
+    return !this.props.location.pathname.match(/\/$|\user\/|\/about|\/auth|\/data|\/terms|\/compare/);
   }
 
   displayFooter() {
-    return this.props.location.pathname.match(/\/$|\user\/|\/auth|\/data|\/terms/);
+    return this.props.location.pathname.match(/\/$|\user\/|\/about|\/auth|\/data|\/terms/);
   }
 
   togglePanel() {
@@ -118,6 +119,7 @@ class Main extends Component {
             <React.Suspense fallback={<SuspenseLoader />}>
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route path="/about" component={About} />
                 <Route path="/auth" component={Auth} />
                 <Route path="/terms" component={Terms} />
                 <Route path="/data" component={Data} />
