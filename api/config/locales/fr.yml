@@ -11,7 +11,7 @@ fr:
       list_li2: 'Routage. Nous voulons être en mesure de créer des données prêtes pour le routage. Pour ce faire, une série de fonctionnalités est encore nécessaire. Cependant, <a class="c-link" href="https://github.com/citylines/citylines2network">certains outils ont déjà été prototypés</a>.'
     who_are_we:
       title: Qui sommes-nous ?
-      body: '<a class="c-link" href="/">Citylines.co</a> est une communauté mondiale d''utilisateurs, de contributeurs et de développeurs. Le fondateur et ingénieur principal est <a class="c-link" href="mailto:bruno@citylines.co">Bruno Salerno</a>.'
+      body: '<a class="c-link" href="/">Citylines.co</a> est une communauté mondiale d''utilisateurs, de contributeurs et de développeurs. Le fondateur et chef de projet est <a class="c-link" href="mailto:bruno@citylines.co">Bruno Salerno</a>.'
     how_to_contribute:
       title: Comment contribuer ?
       body: Vous êtes invités à contribuer en améliorant ou en ajoutant de nouvelles données dans notre éditeur en ligne, ou en prenant part au développement de la plateforme. Nous recherchons activement des conributeurs concernant les données data, le développement front and backend, et le design.

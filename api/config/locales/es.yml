@@ -11,7 +11,7 @@ es:
       list_li2: 'Ruteo. Queremos producir datos que estén listos para ruteo. Para esto, una serie de mejoras tienen que ser implementadas. Sin embargo, <a class="c-link" href="https://github.com/citylines/citylines2network">ya hay una herramienta prototipada</a>.'
     who_are_we:
       title: ¿Quiénes somos?
-      body: '<a class="c-link" href="/">Citylines.co</a> es una comunidad global de usuarixs, colaboradorxs y programadorxs. El fundador y desarrollador principal es <a class="c-link" href="mailto:bruno@citylines.co">Bruno Salerno</a>.'
+      body: '<a class="c-link" href="/">Citylines.co</a> es una comunidad global de usuarixs, colaboradorxs y programadorxs. El fundador y <i>project lead</i> es <a class="c-link" href="mailto:bruno@citylines.co">Bruno Salerno</a>.'
     how_to_contribute:
       title: ¿Cómo colaborar?
       body: Alentamos la colaboración tanto en forma de mejora o agregado de datos a través de nuestro editor online, como bajo la forma de contribuciones al código fuente de la plataforma. Estamos buscando activamente colaboradores relacionados con trabajo con datos, desarrollo front y back, y diseño.
