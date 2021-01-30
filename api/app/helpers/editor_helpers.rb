@@ -160,18 +160,31 @@ module EditorHelpers
       [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
   end
 
+  def compute_groups(ranges)
+    ranges_hash = find_ranges(ranges)
+    groups_hash = {}
+    groups = {}
+    ranges_hash.each_pair do |key, vals|
+      groups_hash[key] ||= vals.map do |val|
+        if !groups[val]
+          groups[val] = groups.keys.length
+        end
+        groups[val]
+      end
+    end
+    groups_hash
+  end
+
   def find_ranges(ranges)
     ranges_hash = {}
     ranges.each_with_index do |r, idx|
-      intersections = []
-      feature_ranges = []
-      ranges.each do |rr|
+      intersections = ranges.map do |rr|
         next if r == rr
         inter_range = intersect_ranges(r, rr)
         if inter_range && inter_range.begin != inter_range.end
-          intersections << inter_range
+          inter_range
         end
-      end
+      end.compact
       min_begin = intersections.map(&:begin).min
       max_end = intersections.map(&:end).max
       if min_begin && min_begin > r.begin
