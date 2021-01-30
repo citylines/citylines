@@ -130,6 +130,32 @@ describe EditorHelpers do
            assert_equal section_line[:line_group], section_lines[idx].line_group
          end
       end
+
+      it "should test new ranges" do
+        ranges = [1930 .. 1940, 1940 .. 1950, 1945 .. 9999]
+        expected_hash = {
+          1930..1940 => [1930..1940],
+          1940..1950 => [1940..1945, 1945..1950],
+          1945..9999 => [1945..1950, 1950..9999]
+        }
+        assert_equal expected_hash, find_ranges(ranges)
+
+        ranges2 = [1930 .. 1940, 1940 .. 1950, 1938 .. 9999]
+        expected_hash2 = {
+          1930..1940 => [1930..1938, 1938..1940],
+          1940..1950 => [1940..1950],
+          1938..9999 => [1938..1940, 1940..1950, 1950..9999]
+        }
+        assert_equal expected_hash2, find_ranges(ranges2)
+
+        ranges3 = [1938 .. 9999, 1930 .. 1940, 1940 .. 1950]
+        expected_hash3 = {
+          1938..9999 => [1938..1940, 1940..1950, 1950..9999],
+          1930..1940 => [1930..1938, 1938..1940],
+          1940..1950 => [1940..1950]
+        }
+        assert_equal expected_hash3, find_ranges(ranges3)
+      end
     end
 
     describe "sections geometry validation" do
