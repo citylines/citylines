@@ -131,7 +131,7 @@ describe EditorHelpers do
          end
       end
 
-      it "should test new ranges" do
+      it "should compute the right ranges and line groups" do
         ranges = [1930 .. 1940, 1940 .. 1950, 1945 .. 9999]
         expected_ranges = {
           1930..1940 => [1930..1940],
@@ -172,6 +172,7 @@ describe EditorHelpers do
           1940..1950 => [1]
         }
         assert_equal expected_ranges3, find_ranges(ranges3)
+        assert_equal expected_groups3, compute_groups(ranges3)
       end
     end
 
