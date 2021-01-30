@@ -3,3 +3,4 @@ node_modules
 unicorn.pid
 public/
 .DS_Store
+*.swp
