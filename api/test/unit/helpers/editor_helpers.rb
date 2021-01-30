@@ -130,50 +130,6 @@ describe EditorHelpers do
            assert_equal section_line[:line_group], section_lines[idx].line_group
          end
       end
-
-      it "should compute the right ranges and line groups" do
-        ranges = [1930 .. 1940, 1940 .. 1950, 1945 .. 9999]
-        expected_ranges = {
-          1930..1940 => [1930..1940],
-          1940..1950 => [1940..1945, 1945..1950],
-          1945..9999 => [1945..1950, 1950..9999]
-        }
-        expected_groups = {
-          1930..1940 => [0],
-          1940..1950 => [1, 2],
-          1945..9999 => [2, 3]
-        }
-        assert_equal expected_ranges, find_ranges(ranges)
-        assert_equal expected_groups, compute_groups(ranges)
-
-        ranges2 = [1930 .. 1940, 1940 .. 1950, 1938 .. 9999]
-        expected_ranges2 = {
-          1930..1940 => [1930..1938, 1938..1940],
-          1940..1950 => [1940..1950],
-          1938..9999 => [1938..1940, 1940..1950, 1950..9999]
-        }
-        expected_groups2 = {
-          1930..1940 => [0, 1],
-          1940..1950 => [2],
-          1938..9999 => [1, 2, 3]
-        }
-        assert_equal expected_ranges2, find_ranges(ranges2)
-        assert_equal expected_groups2, compute_groups(ranges2)
-
-        ranges3 = [1938 .. 9999, 1930 .. 1940, 1940 .. 1950]
-        expected_ranges3 = {
-          1938..9999 => [1938..1940, 1940..1950, 1950..9999],
-          1930..1940 => [1930..1938, 1938..1940],
-          1940..1950 => [1940..1950]
-        }
-        expected_groups3 = {
-          1938..9999 => [0, 1, 2],
-          1930..1940 => [3, 0],
-          1940..1950 => [1]
-        }
-        assert_equal expected_ranges3, find_ranges(ranges3)
-        assert_equal expected_groups3, compute_groups(ranges3)
-      end
     end
 
     describe "sections geometry validation" do
