@@ -165,7 +165,7 @@ module EditorHelpers
     groups_hash = {}
     groups = {}
     ranges_hash.each_pair do |key, vals|
-      groups_hash[key] ||= vals.map do |val|
+      groups_hash[key] = vals.map do |val|
         if !groups[val]
           groups[val] = groups.keys.length
         end
