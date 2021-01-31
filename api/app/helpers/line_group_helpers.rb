@@ -16,6 +16,7 @@ module LineGroupHelpers
       # NOTE:
       # This assumes that we are going to store the line_groups as an array
       feature_line.line_groups = groups[key]
+      feature_line.save
     end
   end
 
