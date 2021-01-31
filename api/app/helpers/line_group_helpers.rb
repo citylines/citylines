@@ -1,4 +1,24 @@
 module LineGroupHelpers
+  def set_feature_line_groups(feature)
+    feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    attr = feature.is_a?(Station) ? :station_id : :section_id
+
+    feature_ranges = Hash[
+      feature_lines_klass.where(attr => feature.id).all.map do |feature_line|
+        from = feature_line.fromyear || 0
+        to = feature_line.toyear || FeatureCollection::Section::FUTURE
+        [feature_line, from..to]
+      end
+    ]
+
+    groups = compute_groups(fature_ranges.values)
+    feature_ranges.each_pair do |feature_line, key|
+      # NOTE:
+      # This assumes that we are going to store the line_groups as an array
+      feature_line.line_groups = groups[key]
+    end
+  end
+
   def compute_groups(ranges)
     ranges_hash = find_ranges(ranges)
     groups_hash = {}
