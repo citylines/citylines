@@ -50,5 +50,4 @@ module LineGroupHelpers
     valid ||= (new_begin < new_end && exclude_end)
     valid ? Range.new(new_begin, new_end, exclude_end) : nil
   end
-
 end

@@ -45,5 +45,25 @@ describe LineGroupHelpers do
     }
     assert_equal expected_ranges3, find_ranges(ranges3)
     assert_equal expected_groups3, compute_groups(ranges3)
+
+    ranges4 = [1939 .. 1945, 1939 .. 1945]
+    expected_ranges4 = {
+      1939..1945 => [1939..1945],
+    }
+    expected_groups4 = {
+      1939..1945 => [0],
+    }
+    assert_equal expected_ranges4, find_ranges(ranges4)
+    assert_equal expected_groups4, compute_groups(ranges4)
+
+    ranges5 = [1939 .. 1945]
+    expected_ranges5 = {
+      1939..1945 => [1939..1945],
+    }
+    expected_groups5 = {
+      1939..1945 => [0],
+    }
+    assert_equal expected_ranges5, find_ranges(ranges5)
+    assert_equal expected_groups5, compute_groups(ranges5)
   end
 end
