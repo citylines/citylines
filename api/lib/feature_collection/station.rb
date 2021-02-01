@@ -90,6 +90,9 @@ module FeatureCollection
           )
       )::text
       from (
+        with line_groups as (
+          select id, line_group
+          from station_lines, unnest(line_groups) line_group)
         select
           stations.id as station_id,
           line_group,
@@ -114,6 +117,7 @@ module FeatureCollection
             array_agg(lines.url_name) as line_url_names,
             count(lines.id) as lines_count
           from station_lines
+            left join line_groups on line_groups.id = station_lines.id
             left join lines on lines.id = station_lines.line_id
             left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
