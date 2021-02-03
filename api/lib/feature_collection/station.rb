@@ -90,9 +90,6 @@ module FeatureCollection
           )
       )::text
       from (
-        with line_groups as (
-          select id, line_group
-          from station_lines, unnest(line_groups) line_group)
         select
           stations.id as station_id,
           line_group,
@@ -110,18 +107,18 @@ module FeatureCollection
         left join lateral (
           select
             station_id,
-            min(fromyear) as line_fromyear,
-            max(toyear) as line_toyear,
+            station_line_groups.from as line_fromyear,
+            station_line_groups.to as line_toyear,
             line_group,
             coalesce(max(width), 0) as width,
             array_agg(lines.url_name) as line_url_names,
             count(lines.id) as lines_count
           from station_lines
-            left join line_groups on line_groups.id = station_lines.id
+            left join station_line_groups on station_line_id = station_lines.id
             left join lines on lines.id = station_lines.line_id
             left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
-          group by station_id, line_group
+          group by station_id, line_group, line_fromyear, line_toyear
          ) as lines_data on lines_data.station_id = stations.id
           left join lateral (
             select station_id,

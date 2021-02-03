@@ -13,8 +13,9 @@ module LineGroupHelpers
 
     groups = compute_groups(fature_ranges.values)
     feature_ranges.each_pair do |feature_line, key|
-      # NOTE:
+      # FIXME:
       # This assumes that we are going to store the line_groups as an array
+      # This hast o be set in the specific line_groups table
       feature_line.line_groups = groups[key]
       feature_line.save
     end
