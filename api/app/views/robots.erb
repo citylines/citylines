@@ -1,0 +1,6 @@
+<% if APP_ENV == "production" %>
+<%= "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz" %>
+<% else %>
+User-agent: *
+Disallow: /
+<% end %>
