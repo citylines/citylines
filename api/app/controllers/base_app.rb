@@ -1,7 +1,7 @@
 require 'rack/ssl-enforcer'
 
 class BaseApp < App
-  use Rack::SslEnforcer, only_environments: 'production'
+  use Rack::SslEnforcer, only_environments: ['production', 'staging']
 
   set :public_folder, File.join(APP_ROOT, '..', 'public')
   set :views, File.join(APP_ROOT, 'app', 'views')
@@ -23,7 +23,7 @@ class BaseApp < App
   end
 
   get '/robots.txt' do
-    "Sitemap: #{AWS_HOST}sitemaps/sitemap.xml.gz"
+    erb :robots, content_type: "text/plain"
   end
 
   # Pre-render title and description for Compare
