@@ -48,7 +48,10 @@ tools/build_frontend
 Go to localhost:8080 and you should have Citylines running in your machine.
 If you are using Docker Toolbox, the host will probably be something like 192.168.99.100.
 
-Note: Probably in the first run, the server will be broken because migrations are not run. So you can run migrations (see below), and restart the server (`tools/run`)
+- Import a dump:
+Check out the "Import a dump" task in the next section.
+
+Note: If you haven't imported a dump, the server will be broken because migrations are not run. So you can run migrations (see below), and restart the server (`tools/run`)
 
 ### Other tasks
 - Run migrations:
@@ -57,8 +60,9 @@ docker exec -it citylines_web_1 bundle exec rake db:migrate
 ```
 - Import a dump
 ```
-docker exec citylines_db_1 pg_restore --verbose --clean --no-acl --no-owner -U citylines -d citylines <DUMP_PATH>
+gunzip -c dumps/citylines_dev_anonymized.sql.gz -k | docker exec -i citylines_db_1 psql -U citylines citylines
 ```
+Note: the `/dumps` dir of the repo is mounted automatically.
 
 - Connect to the local console
 ```
