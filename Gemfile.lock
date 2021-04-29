@@ -61,7 +61,7 @@ GEM
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-    oauth (0.5.3)
+    oauth (0.5.5)
     oj (3.7.1)
     overpass-api-ruby (0.3.1)
       httpi (~> 2.4)
