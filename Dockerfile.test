@@ -1,4 +1,4 @@
-FROM ruby:2.6-slim-stretch
+FROM ruby:2.6.7-slim-stretch
 
 RUN \
   apt-get update -qq && \
