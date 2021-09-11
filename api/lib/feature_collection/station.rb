@@ -107,8 +107,8 @@ module FeatureCollection
         left join lateral (
           select
             station_id,
-            min(station_line_groups.from) as line_fromyear,
-            max(station_line_groups.to) as line_toyear,
+            station_line_groups.from as line_fromyear,
+            station_line_groups.to as line_toyear,
             line_group,
             coalesce(max(width), 0) as width,
             array_agg(lines.url_name) as line_url_names,
@@ -118,7 +118,7 @@ module FeatureCollection
             left join lines on lines.id = station_lines.line_id
             left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
-          group by station_id, line_group
+          group by station_id, line_group, line_fromyear, line_toyear
          ) as lines_data on lines_data.station_id = stations.id
           left join lateral (
             select station_id,
