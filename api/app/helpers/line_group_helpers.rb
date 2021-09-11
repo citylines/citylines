@@ -8,11 +8,18 @@ module LineGroupHelpers
     feature_line_groups_fkey = feature.is_a?(Station) ? :station_line_id : :section_line_id
 
     # Delete current line groups
-    # puts feature_line_groups_klass.where(feature_line_groups_fkey => feature.send(feature_line_groups_key).map(&:id)).map(&:values) # (&:delete)
+    feature_line_groups_klass.
+      where(feature_line_groups_fkey => feature.send(feature_line_groups_key).map(&:id)).
+      map(&:delete)
 
     # Create new line groups
     get_line_groups_data_for_feature(feature_lines_klass, feature.id, feature_fkey) do |feature_line_id, line_group, from, to|
-      puts "-> #{feature_line_id}, #{line_group}, #{from}, #{to}"
+      feature_line_groups_klass.create(
+        feature_line_groups_fkey => feature_line_id,
+        :line_group => line_group,
+        :from => from,
+        :to => to,
+      )
     end
   end
 
