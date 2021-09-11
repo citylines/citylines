@@ -37,18 +37,33 @@ module LineGroupHelpers
     groups = compute_groups(feature_ranges.values)
     group_ranges = find_ranges(feature_ranges.values)
 
+    count_by_line_group = get_features_count_by_line_group(feature_ranges, groups)
+    provisional_count_by_line_group = Hash.new { |h, k| h[k] = 0 }
+
     feature_ranges.each_pair do |feature_line, key|
       groups[key].each_with_index do |line_group, idx|
         from = group_ranges[key][idx].begin
         from = from == 0 ? nil : from
         to = group_ranges[key][idx].end
         to = to == FeatureCollection::Section::FUTURE ? nil : to
-        # FIXME: count and order are wrong
-        count = group_ranges[key].count
-        order = idx + 1
+
+        count = count_by_line_group[line_group]
+        provisional_count_by_line_group[line_group] += 1
+        order = provisional_count_by_line_group[line_group]
+
         yield(feature_line[:id], line_group, from, to, count, order)
       end
     end
+  end
+
+  def get_features_count_by_line_group(feature_ranges, groups)
+    features_count_by_line_group = Hash.new { |h, k| h[k] = 0 }
+    feature_ranges.each_pair do |feature_line, key|
+      groups[key].each_with_index do |line_group, idx|
+        features_count_by_line_group[line_group] += 1
+      end
+    end
+    features_count_by_line_group
   end
 
   def compute_groups(ranges)
