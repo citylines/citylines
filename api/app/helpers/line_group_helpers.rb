@@ -13,12 +13,14 @@ module LineGroupHelpers
       map(&:delete)
 
     # Create new line groups
-    get_line_groups_data_for_feature(feature_lines_klass, feature.id, feature_fkey) do |feature_line_id, line_group, from, to|
+    get_line_groups_data_for_feature(feature_lines_klass, feature.id, feature_fkey) do |feature_line_id, line_group, from, to, count, order|
       feature_line_groups_klass.create(
         feature_line_groups_fkey => feature_line_id,
         :line_group => line_group,
         :from => from,
         :to => to,
+        :group_members_count => count,
+        :order => order,
       )
     end
   end
@@ -41,7 +43,10 @@ module LineGroupHelpers
         from = from == 0 ? nil : from
         to = group_ranges[key][idx].end
         to = to == FeatureCollection::Section::FUTURE ? nil : to
-        yield(feature_line[:id], line_group, from, to)
+        # FIXME: count and order are wrong
+        count = group_ranges[key].count
+        order = idx + 1
+        yield(feature_line[:id], line_group, from, to, count, order)
       end
     end
   end
