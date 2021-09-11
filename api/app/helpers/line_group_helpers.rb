@@ -1,23 +1,41 @@
 module LineGroupHelpers
   def set_feature_line_groups(feature)
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
-    attr = feature.is_a?(Station) ? :station_id : :section_id
+    feature_fkey = feature.is_a?(Station) ? :station_id : :section_id
 
+    feature_line_groups_klass = feature.is_a?(Station) ? StationLineGroup : SectionLineGroup
+    feature_line_groups_key = feature.is_a?(Station) ? :station_lines : :section_lines
+    feature_line_groups_fkey = feature.is_a?(Station) ? :station_line_id : :section_line_id
+
+    # Delete current line groups
+    # puts feature_line_groups_klass.where(feature_line_groups_fkey => feature.send(feature_line_groups_key).map(&:id)).map(&:values) # (&:delete)
+
+    # Create new line groups
+    get_line_groups_data_for_feature(feature_lines_klass, feature.id, feature_fkey) do |feature_line_id, line_group, from, to|
+      puts "-> #{feature_line_id}, #{line_group}, #{from}, #{to}"
+    end
+  end
+
+  def get_line_groups_data_for_feature(dataset, feature_id, feature_fkey)
     feature_ranges = Hash[
-      feature_lines_klass.where(attr => feature.id).all.map do |feature_line|
+      dataset.where(feature_fkey => feature_id).all.map do |feature_line|
         from = feature_line.fromyear || 0
         to = feature_line.toyear || FeatureCollection::Section::FUTURE
         [feature_line, from..to]
       end
     ]
 
-    groups = compute_groups(fature_ranges.values)
+    groups = compute_groups(feature_ranges.values)
+    group_ranges = find_ranges(feature_ranges.values)
+
     feature_ranges.each_pair do |feature_line, key|
-      # FIXME:
-      # This assumes that we are going to store the line_groups as an array
-      # This hast o be set in the specific line_groups table
-      feature_line.line_groups = groups[key]
-      feature_line.save
+      groups[key].each_with_index do |line_group, idx|
+        from = group_ranges[key][idx].begin
+        from = from == 0 ? nil : from
+        to = group_ranges[key][idx].end
+        to = to == FeatureCollection::Section::FUTURE ? nil : to
+        yield(feature_line[:id], line_group, from, to)
+      end
     end
   end
 
