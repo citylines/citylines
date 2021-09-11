@@ -105,6 +105,7 @@ class Home extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.MIN_MONTH_CONTRIBUTORS = 4;
     this.bindedOnChange = this.onChange.bind(this);
     this.state = HomeStore.getState();
   }
@@ -207,7 +208,8 @@ class Home extends Component {
             <Translate component="h2" className="c-heading" content="cities.contributors.list.title" />
 
             <div className="contributors-list">
-              <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />
+              {this.state.monthTopContributors.length > this.MIN_MONTH_CONTRIBUTORS &&
+                <Translate component="h3" className="c-heading" content="cities.contributors.list.total" />}
               <ol className="c-list">
                 {this.state.topContributors.map(contributor =>
                     <li key={`tcontrib-${contributor.user_id}`} className="c-list__item">
@@ -216,7 +218,7 @@ class Home extends Component {
                   )}
               </ol>
             </div>
-
+            {this.state.monthTopContributors.length > this.MIN_MONTH_CONTRIBUTORS &&
             <div className="contributors-list">
               <Translate component="h3" className="c-heading" content="cities.contributors.list.last_month" />
               <ol className="c-list">
@@ -226,7 +228,7 @@ class Home extends Component {
                     </li>
                   )}
               </ol>
-            </div>
+            </div>}
           </div>
         </div>
       </div>

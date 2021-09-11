@@ -2,8 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     accentless (1.0.0)
-    addressable (2.5.2)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     backports (3.18.1)
     builder (3.2.3)
     coderay (1.1.1)
@@ -50,7 +50,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.5.1)
     minitest (5.8.3)
     mocha (1.2.1)
       metaclass (~> 0.0.1)
@@ -58,10 +58,10 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     naturally (2.1.0)
-    nokogiri (1.11.1)
+    nokogiri (1.11.4)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-    oauth (0.5.3)
+    oauth (0.5.5)
     oj (3.7.1)
     overpass-api-ruby (0.3.1)
       httpi (~> 2.4)
@@ -70,7 +70,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    public_suffix (3.0.2)
+    public_suffix (4.0.6)
     racc (1.5.2)
     rack (2.2.3)
     rack-cache (1.7.0)
@@ -161,7 +161,7 @@ DEPENDENCIES
   unicorn
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.6.7p197
 
 BUNDLED WITH
-   2.1.4
+   2.2.16
