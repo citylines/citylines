@@ -19,8 +19,8 @@ module LineGroupHelpers
   def get_line_groups_data_for_feature(dataset, feature_id, feature_fkey)
     feature_ranges = Hash[
       dataset.where(feature_fkey => feature_id).all.map do |feature_line|
-        from = feature_line.fromyear || 0
-        to = feature_line.toyear || FeatureCollection::Section::FUTURE
+        from = feature_line[:fromyear] || 0
+        to = feature_line[:toyear] || FeatureCollection::Section::FUTURE
         [feature_line, from..to]
       end
     ]
