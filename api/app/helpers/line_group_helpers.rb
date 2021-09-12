@@ -1,19 +1,20 @@
 module LineGroupHelpers
   def set_feature_line_groups(feature)
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
+    feature_lines_key = feature.is_a?(Station) ? :station_lines : :section_lines
     feature_fkey = feature.is_a?(Station) ? :station_id : :section_id
 
     feature_line_groups_klass = feature.is_a?(Station) ? StationLineGroup : SectionLineGroup
-    feature_line_groups_key = feature.is_a?(Station) ? :station_lines : :section_lines
+    feature_line_groups_key = feature.is_a?(Station) ? :station_line_groups : :section_line_groups
     feature_line_groups_fkey = feature.is_a?(Station) ? :station_line_id : :section_line_id
 
+    feature_lines = feature.send(feature_lines_key)
+
     # Delete current line groups
-    feature_line_groups_klass.
-      where(feature_line_groups_fkey => feature.send(feature_line_groups_key).map(&:id)).
-      map(&:delete)
+    feature_lines.map(&feature_line_groups_key).flatten.map(&:destroy)
 
     # Create new line groups
-    get_line_groups_data_for_feature(feature_lines_klass, feature.id, feature_fkey) do |feature_line_id, line_group, from, to, count, order|
+    get_line_groups_data_from_feature_lines(feature_lines) do |feature_line_id, line_group, from, to, count, order|
       feature_line_groups_klass.create(
         feature_line_groups_fkey => feature_line_id,
         :line_group => line_group,
@@ -25,9 +26,9 @@ module LineGroupHelpers
     end
   end
 
-  def get_line_groups_data_for_feature(dataset, feature_id, feature_fkey)
+  def get_line_groups_data_from_feature_lines(feature_lines)
     feature_ranges = Hash[
-      dataset.where(feature_fkey => feature_id).all.map do |feature_line|
+      feature_lines.map do |feature_line|
         from = feature_line[:fromyear] || 0
         to = feature_line[:toyear] || FeatureCollection::Section::FUTURE
         [feature_line, from..to]

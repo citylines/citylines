@@ -43,7 +43,8 @@ Sequel.migration do
 
       feature_ids = from(feature_lines_table).distinct(attr).select(attr).all.map{|r| r[attr]}
       feature_ids.each do |feature_id|
-        get_line_groups_data_for_feature(from(feature_lines_table), feature_id, attr) do |feature_line_id, line_group, from, to, count, order|
+        feature_lines = from(feature_lines_table).where(attr => feature_id).all
+        get_line_groups_data_from_feature_lines(feature_lines) do |feature_line_id, line_group, from, to, count, order|
           from(groups_table).insert(
             foreign_attr => feature_line_id,
             :line_group => line_group,
