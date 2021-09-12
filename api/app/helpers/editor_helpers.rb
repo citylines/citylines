@@ -125,11 +125,4 @@ module EditorHelpers
       }
     end
   end
-
-  private
-
-  def overlapping_range(range1, range2)
-    range1.first < range2.last && range2.first < range1.last ?
-      [range1.min, range2.min].min .. [range1.max, range2.max].max : nil
-  end
 end
