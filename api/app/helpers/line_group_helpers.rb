@@ -34,7 +34,7 @@ module LineGroupHelpers
         from = feature_line[:fromyear] || 0
         to = feature_line[:toyear] || FeatureCollection::Section::FUTURE
         [feature_line, from..to]
-      end
+      end.uniq
     ]
 
     groups = compute_groups(feature_ranges.values)
@@ -70,6 +70,7 @@ module LineGroupHelpers
   end
 
   def compute_groups(ranges)
+    ranges = ranges.uniq
     ranges_hash = find_ranges(ranges)
     groups_hash = {}
     groups = {}
@@ -85,6 +86,7 @@ module LineGroupHelpers
   end
 
   def find_ranges(ranges)
+    ranges = ranges.uniq
     ranges_hash = {}
     ranges.each_with_index do |r, idx|
       intersections = ranges.map do |rr|

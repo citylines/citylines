@@ -66,4 +66,18 @@ describe LineGroupHelpers do
     assert_equal expected_ranges5, find_ranges(ranges5)
     assert_equal expected_groups5, compute_groups(ranges5)
   end
+
+  it "should remove duplicated ranges" do
+    ranges = [1930 .. 1940, 1930 .. 9999, 1930 .. 9999]
+    expected_ranges = {
+      1930..1940 => [1930..1940],
+      1930..9999 => [1930..1940, 1940..9999]
+    }
+    expected_groups = {
+      1930..1940 => [0],
+      1930..9999 => [0, 1],
+    }
+    assert_equal expected_ranges, find_ranges(ranges)
+    assert_equal expected_groups, compute_groups(ranges)
+  end
 end
