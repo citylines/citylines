@@ -1,6 +1,8 @@
 require File.expand_path '../../../../test_config', __FILE__
 
 describe FeatureCollection::Section do
+  include LineGroupHelpers
+
   before do
     @city = City.new(name: 'Some city',
                         start_year: 2017,
@@ -19,6 +21,8 @@ describe FeatureCollection::Section do
     @section.save
 
     @section_line = SectionLine.create(section_id: @section.id, line_id: @line.id, city_id: @city.id)
+
+    set_feature_line_groups(@section)
 
     @city.reload
   end
@@ -87,6 +91,8 @@ describe FeatureCollection::Section do
       @section_line.toyear = 1999
       @section_line.save
 
+      set_feature_line_groups(@section)
+
       feature = FeatureCollection::Section.by_feature(@section.id).first
 
       assert_equal 'Feature', feature[:type]
@@ -136,7 +142,7 @@ describe FeatureCollection::Section do
       assert_equal 'Feature', feature[:type]
       assert feature[:geometry]
 
-      expected_properties = {id: "#{@section.id}-#{@line.url_name}",
+      expected_properties = {id: "#{@section.id}-#{@line.url_name}-0",
                              klass: "Section",
                              line_url_name: @line.url_name,
                              width: @line.width,
@@ -153,6 +159,8 @@ describe FeatureCollection::Section do
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
 
+      set_feature_line_groups(@section)
+
       features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
 
       assert 2, features.count
@@ -163,7 +171,7 @@ describe FeatureCollection::Section do
       assert_equal 'Feature', features.last[:type]
       assert features.last[:geometry]
 
-      expected_properties1 = {id: "#{@section.id}-#{@line.url_name}",
+      expected_properties1 = {id: "#{@section.id}-#{@line.url_name}-0",
                              klass: "Section",
                              line_url_name: @line.url_name,
                              width: @line.width * 0.75,
@@ -175,7 +183,7 @@ describe FeatureCollection::Section do
 
       assert_equal expected_properties1, features.first[:properties]
 
-      expected_properties2 = {id: "#{@section.id}-#{@line2.url_name}",
+      expected_properties2 = {id: "#{@section.id}-#{@line2.url_name}-0",
                              klass: "Section",
                              line_url_name: @line2.url_name,
                              width: @line2.width * 0.75,
@@ -194,19 +202,18 @@ describe FeatureCollection::Section do
       # Original line
       @section_line.toyear = 1995
       @section_line.save
-      # default line_group is zero
 
       # New line before 1995
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id, toyear: 1995)
-      # default line_group is zero
 
       # One single line after 1995
       # ##########################
       # This line has another line_group, in order to show it with another offset
-      # The line_group is set when updating the feature (see EditorHelpers).
       @line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
-      SectionLine.create(line_id: @line3.id, section_id: @section.id, city_id: @city.id, fromyear: 1995, line_group: 1)
+      SectionLine.create(line_id: @line3.id, section_id: @section.id, city_id: @city.id, fromyear: 1995)
+
+      set_feature_line_groups(@section)
 
       features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
 
@@ -214,7 +221,7 @@ describe FeatureCollection::Section do
 
       expected_properties = [
         {
-          id: "#{@section.id}-#{@line.url_name}",
+          id: "#{@section.id}-#{@line.url_name}-0",
           klass: "Section",
           line_url_name: @line.url_name,
           width: @line.width * 0.75,
@@ -225,7 +232,7 @@ describe FeatureCollection::Section do
           closure: 1995
         },
         {
-          id: "#{@section.id}-#{@line2.url_name}",
+          id: "#{@section.id}-#{@line2.url_name}-0",
           klass: "Section",
           line_url_name: @line2.url_name,
           width: @line2.width * 0.75,
@@ -236,7 +243,7 @@ describe FeatureCollection::Section do
           closure: 1995
         },
         {
-          id: "#{@section.id}-#{@line3.url_name}",
+          id: "#{@section.id}-#{@line3.url_name}-1",
           klass: "Section",
           line_url_name: @line3.url_name,
           width: @line3.width,
@@ -267,6 +274,8 @@ describe FeatureCollection::Section do
 	      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
 	      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
 
+        set_feature_line_groups(@section)
+
 	      assert_equal 2, @section.lines.count
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
@@ -282,6 +291,8 @@ describe FeatureCollection::Section do
 	      line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
 	      SectionLine.create(line_id: line3.id, section_id: @section.id, city_id: @city.id)
 
+        set_feature_line_groups(@section)
+
 	      assert_equal 3, @section.lines.count
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
@@ -290,16 +301,17 @@ describe FeatureCollection::Section do
         end
 	    end
 
-      it "should use the wider line if lines belong to different transport modes" do
+      it "should use the each line width if lines belong to different transport modes" do
         line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 1)
         SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+        set_feature_line_groups(@section)
 
         assert_equal 2, @section.lines.count
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-        features.map do |feature|
-          assert_equal line2.width * 0.75, feature[:properties][:width]
-        end
+        expected_widths = [@line, line2].map {|line| line.transport_mode.width * 0.75}
+        assert_equal expected_widths, features.map {|feature| feature[:properties][:width]}
       end
 
       it "should use the min_width" do
@@ -309,6 +321,8 @@ describe FeatureCollection::Section do
 
         line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 8)
         SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
+
+        set_feature_line_groups(@section)
 
         assert_equal 2, @section.lines.count
 

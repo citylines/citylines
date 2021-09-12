@@ -1,6 +1,8 @@
 require File.expand_path '../../../../test_config', __FILE__
 
 describe FeatureCollection::Station do
+  include LineGroupHelpers
+
   before do
     @city = City.new(name: 'Some city',
                         start_year: 2017,
@@ -19,6 +21,8 @@ describe FeatureCollection::Station do
     @station.save
 
     @station_line = StationLine.create(station_id: @station.id, line_id: @line.id, city_id: @city.id)
+
+    set_feature_line_groups(@station)
 
     @city.reload
   end
@@ -132,7 +136,7 @@ describe FeatureCollection::Station do
     it "formatted_feature should add width and buildstart_end to raw_feature, remove osm fields, lines and name, and overwrite the id" do
       expected_feature = FeatureCollection::Station.by_feature(@station.id).first
       expected_feature[:properties].merge!(
-        id: "#{@station.id}-#{@station_line.line_group}",
+        id: "#{@station.id}-0",
         width: @line.width,
         inner_width: @line.width - 2,
         buildstart_end: @station.opening,
@@ -149,7 +153,7 @@ describe FeatureCollection::Station do
       @station.save
 
       feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
-      expected_properties = {id: "#{@station.id}-#{@station_line.line_group}",
+      expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              opening: FeatureCollection::Station::FUTURE,
@@ -169,7 +173,7 @@ describe FeatureCollection::Station do
 
       feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
 
-      expected_properties = {id: "#{@station.id}-#{@station_line.line_group}",
+      expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              opening: @station.opening,
@@ -187,6 +191,8 @@ describe FeatureCollection::Station do
       second_line = Line.create(name:'Other line', city_id: @city.id, url_name:'other-line-url-name', system_id: @system.id)
 
       StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
+
+      set_feature_line_groups(@station)
 
       feature_props = FeatureCollection::Station.by_feature(@station.id, formatted: true).first[:properties]
 
@@ -206,19 +212,18 @@ describe FeatureCollection::Station do
       # Original line:
       @station_line.toyear = 1995
       @station_line.save
-      # default line_group is zero
 
       # New line before 1995
       line2 = Line.create(name:'Line 2', city_id: @city.id, url_name:'line2', system_id: @system.id)
       StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id, toyear: 1995)
-      # default line_group is zero
 
       # One single line after 1995
       # ##########################
       # This line has another line_group.
-      # The line_group is set when updating the feature (see EditorHelpers).
       line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
-      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995, line_group: 1)
+      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995)
+
+      set_feature_line_groups(@station)
 
       features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
 
@@ -251,6 +256,8 @@ describe FeatureCollection::Station do
       it "should set the radius using the line with the max width" do
         line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
         StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
+
+        set_feature_line_groups(@station)
 
         feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
 
