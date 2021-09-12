@@ -92,13 +92,35 @@ class DetailedData extends Component {
     return [ ...new Set(allModes) ].filter(e => e && e != 'default');
   }
 
-  render() {
+  getOtherLines() {
     const currentUrlNames = this.props.currentLines.map(l => l.url_name);
-
-    const otherLines = this.props.lines.
+    return this.props.lines.
       filter(line => currentUrlNames.indexOf(line.url_name) == -1).
       sort((a,b) => a.from && b.from && a.from > b.from ? 1 : -1);
+  }
 
+  getCurrentOperationDates() {
+    if (this.props.isStation) {
+      return {from: this.props.opening, to: this.props.closure}
+    }
+    const currentLine = this.props.currentLines[0];
+    /* opening and closure refer to the specific line group (abstraction to show features),
+     * while from and to refer to the section line (actual line data).
+     * If the latter aren't set it means that the opening and the closure
+     * are set based on the feature info*/
+    return {
+      from: currentLine.from || this.props.opening,
+      to: currentLine.to || this.props.closure
+    }
+  }
+
+  getCurrentYear() {
+    return (new Date).getFullYear();
+  }
+
+  render() {
+    const otherLines = this.getOtherLines();
+    const operationDates = this.getCurrentOperationDates();
     const i18nFeaturekey = this.props.isStation ? 'station' : 'track';
 
     return (
@@ -117,8 +139,8 @@ class DetailedData extends Component {
             <li className="c-list__item"><Translate content="city.popup.length" with={{km: formatNumber(parseFloat(this.props.length)/1000)}} /></li>}
           { validFeatureValue(this.props.buildstart) &&
               <li className="c-list__item"><Translate content="city.popup.construction" with={{from: this.props.buildstart, to: validOrToday(this.props.buildstart_end)}} /></li>}
-          { (validFeatureValue(this.props.opening) && this.props.opening <= (new Date).getFullYear()) &&
-              <li className="c-list__item"><Translate content="city.popup.operation" with={{from: this.props.opening, to: validOrToday(this.props.closure)}} /></li>}
+          { (validFeatureValue(operationDates.from) && operationDates.from <= this.getCurrentYear()) &&
+              <li className="c-list__item"><Translate content="city.popup.operation" with={{from: operationDates.from, to: validOrToday(operationDates.to)}} /></li>}
           { validFeatureValue(this.props.feature_closure) &&
               <li className="c-list__item"><Translate content="city.popup.closure" with={{year: this.props.feature_closure}} /></li> }
           { otherLines.length > 0 &&
