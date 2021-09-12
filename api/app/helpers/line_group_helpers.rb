@@ -24,6 +24,8 @@ module LineGroupHelpers
         :order => order,
       )
     end
+
+    feature.reload
   end
 
   def get_line_groups_data_from_feature_lines(feature_lines)

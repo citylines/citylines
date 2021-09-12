@@ -22,6 +22,7 @@ describe FeatureCollection::Section do
 
     @section_line = SectionLine.create(section_id: @section.id, line_id: @line.id, city_id: @city.id)
 
+    @section.reload
     set_feature_line_groups(@section)
 
     @city.reload
@@ -91,6 +92,7 @@ describe FeatureCollection::Section do
       @section_line.toyear = 1999
       @section_line.save
 
+      @section.reload
       set_feature_line_groups(@section)
 
       feature = FeatureCollection::Section.by_feature(@section.id).first
@@ -159,6 +161,7 @@ describe FeatureCollection::Section do
       @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
       SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id)
 
+      @section.reload
       set_feature_line_groups(@section)
 
       features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
@@ -213,6 +216,7 @@ describe FeatureCollection::Section do
       @line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
       SectionLine.create(line_id: @line3.id, section_id: @section.id, city_id: @city.id, fromyear: 1995)
 
+      @section.reload
       set_feature_line_groups(@section)
 
       features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
@@ -274,6 +278,7 @@ describe FeatureCollection::Section do
 	      line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
 	      SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
 
+        @section.reload
         set_feature_line_groups(@section)
 
 	      assert_equal 2, @section.lines.count
@@ -291,6 +296,7 @@ describe FeatureCollection::Section do
 	      line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
 	      SectionLine.create(line_id: line3.id, section_id: @section.id, city_id: @city.id)
 
+        @section.reload
         set_feature_line_groups(@section)
 
 	      assert_equal 3, @section.lines.count
@@ -305,6 +311,7 @@ describe FeatureCollection::Section do
         line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 1)
         SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
 
+        @section.reload
         set_feature_line_groups(@section)
 
         assert_equal 2, @section.lines.count
@@ -322,6 +329,7 @@ describe FeatureCollection::Section do
         line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 8)
         SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
 
+        @section.reload
         set_feature_line_groups(@section)
 
         assert_equal 2, @section.lines.count

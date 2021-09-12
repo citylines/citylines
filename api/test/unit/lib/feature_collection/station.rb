@@ -22,6 +22,7 @@ describe FeatureCollection::Station do
 
     @station_line = StationLine.create(station_id: @station.id, line_id: @line.id, city_id: @city.id)
 
+    @station.reload
     set_feature_line_groups(@station)
 
     @city.reload
@@ -192,6 +193,7 @@ describe FeatureCollection::Station do
 
       StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
 
+      @station.reload
       set_feature_line_groups(@station)
 
       feature_props = FeatureCollection::Station.by_feature(@station.id, formatted: true).first[:properties]
@@ -223,6 +225,7 @@ describe FeatureCollection::Station do
       line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
       StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995)
 
+      @station.reload
       set_feature_line_groups(@station)
 
       features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
@@ -257,6 +260,7 @@ describe FeatureCollection::Station do
         line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
         StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
 
+        @station.reload
         set_feature_line_groups(@station)
 
         feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
