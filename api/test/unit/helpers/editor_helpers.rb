@@ -122,12 +122,12 @@ describe EditorHelpers do
         assert_equal [@line1, @line2, @line3], @section.lines
 
         # Overlapping year ranges should have the same line_group
-        [{fromyear: 1930, toyear: 1940, line_group: 0},
-         {fromyear: 1940, toyear: 1950, line_group: 1},
-         {fromyear: 1945, toyear: nil,  line_group: 1}].each_with_index do |section_line, idx|
+        [{fromyear: 1930, toyear: 1940, line_groups: [0]},
+         {fromyear: 1940, toyear: 1950, line_groups: [1, 2]},
+         {fromyear: 1945, toyear: nil,  line_groups: [2, 3]}].each_with_index do |section_line, idx|
            assert_equal section_line[:fromyear], section_lines[idx].fromyear
            assert_equal section_line[:toyear], section_lines[idx].toyear
-           assert_equal section_line[:line_group], section_lines[idx].line_group
+           assert_equal section_line[:line_groups], section_lines[idx].section_line_groups.map(&:line_group)
          end
       end
     end
