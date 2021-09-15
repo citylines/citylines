@@ -80,7 +80,7 @@ module LineGroupHelpers
           groups[val] = groups.keys.length
         end
         groups[val]
-      end
+      end.uniq
     end
     groups_hash
   end
@@ -95,13 +95,16 @@ module LineGroupHelpers
         if inter_range && inter_range.begin != inter_range.end
           inter_range
         end
-      end.compact
+      end.compact.uniq
       min_begin = intersections.map(&:begin).min
       max_end = intersections.map(&:end).max
-      if min_begin && min_begin > r.begin
-        intersections << (r.begin .. min_begin)
-      elsif max_end && max_end < r.end
-        intersections << (max_end .. r.end)
+      new_range = if min_begin && min_begin > r.begin
+                    (r.begin .. min_begin)
+                  elsif max_end && max_end < r.end
+                    (max_end .. r.end)
+                  end
+      if new_range and !intersections.include?(new_range)
+        intersections << new_range
       end
       if intersections.blank?
         intersections << r
