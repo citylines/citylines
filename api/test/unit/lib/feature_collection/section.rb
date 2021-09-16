@@ -266,6 +266,97 @@ describe FeatureCollection::Section do
       end
     end
 
+    it "should handle complex simultaneous lines" do
+      # New line before from 1990
+      @line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2')
+      SectionLine.create(line_id: @line2.id, section_id: @section.id, city_id: @city.id, fromyear: 1990)
+
+      # Line between 1995 and 1998
+      @line3 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 3', url_name:'test-line-3')
+      SectionLine.create(line_id: @line3.id, section_id: @section.id, city_id: @city.id, fromyear: 1995, toyear: 1998)
+
+      @section.reload
+      set_feature_line_groups(@section)
+
+      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+
+      assert 6, features.count
+
+      expected_properties = [
+        {
+          id: "#{@section.id}-#{@line.url_name}-0",
+          klass: "Section",
+          line_url_name: @line.url_name,
+          width: 6,
+          offset: 0,
+          opening: 1985,
+          buildstart: 1980,
+          buildstart_end: 1985,
+          closure: 1990,
+        },
+        {
+          id: "#{@section.id}-test-line-1",
+          klass: "Section",
+          opening: 1990,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1999,
+          line_url_name: "test-line",
+          width: 4.5,
+          offset: -2.25,
+        },
+        {
+          id: "#{@section.id}-test-line-2",
+          klass: "Section",
+          opening: 1995,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1998,
+          line_url_name: "test-line",
+          width: 3.96,
+          offset: -3.96,
+        },
+        {
+          id: "#{@section.id}-test-line-2-1",
+          klass: "Section",
+          opening: 1990,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1999,
+          line_url_name: "test-line-2",
+          width: 4.5,
+          offset: 2.25,
+        },
+        {
+          id: "#{@section.id}-test-line-2-2",
+          klass: "Section",
+          opening: 1995,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1998,
+          line_url_name: "test-line-2",
+          width: 3.96,
+          offset: 0.0,
+        },
+        {
+          id: "#{@section.id}-test-line-3-2",
+          klass: "Section",
+          opening: 1995,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1998,
+          line_url_name: "test-line-3",
+          width: 3.96,
+          offset: 3.96,
+        },
+      ]
+
+      features.each_with_index do |feature, idx|
+        assert_equal 'Feature', feature[:type]
+        assert feature[:geometry]
+        assert_equal expected_properties[idx], feature[:properties]
+      end
+    end
     describe "width" do
 	    it "should return the right width when the section has 1 line" do
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
