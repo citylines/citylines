@@ -144,7 +144,7 @@ describe FeatureCollection::Station do
         line_url_name: @station.lines.first.url_name,
       ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata, :lines, :name].include?(f)}
 
-      formatted_feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+      formatted_feature = get_station_formatted_features(@station).first
       assert_equal expected_feature, formatted_feature
     end
 
@@ -153,7 +153,7 @@ describe FeatureCollection::Station do
       @station.closure = nil
       @station.save
 
-      feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+      feature = get_station_formatted_features(@station).first
       expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
@@ -172,8 +172,7 @@ describe FeatureCollection::Station do
       @station.buildstart = nil
       @station.save
 
-      feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
-
+      feature = get_station_formatted_features(@station).first
       expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
@@ -196,7 +195,7 @@ describe FeatureCollection::Station do
       @station.reload
       set_feature_line_groups(@station)
 
-      feature_props = FeatureCollection::Station.by_feature(@station.id, formatted: true).first[:properties]
+      feature_props = get_station_formatted_features(@station).first[:properties]
 
       assert_equal 2, @station.lines.count
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
@@ -228,8 +227,7 @@ describe FeatureCollection::Station do
       @station.reload
       set_feature_line_groups(@station)
 
-      features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
-
+      features = get_station_formatted_features(@station)
       assert_equal 2, features.count
 
       # Before 1995:
@@ -267,8 +265,7 @@ describe FeatureCollection::Station do
       @station.reload
       set_feature_line_groups(@station)
 
-      features = FeatureCollection::Station.by_feature(@station.id, formatted: true).sort_by{|f| f[:id]}
-
+      features = get_station_formatted_features(@station)
       assert_equal 4, features.count
 
       # 1985 - 1990:
@@ -328,7 +325,7 @@ describe FeatureCollection::Station do
         @station.reload
         set_feature_line_groups(@station)
 
-        feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+        feature = get_station_formatted_features(@station).first
 
         assert line2.width > @line.width
         assert_equal 2, @station.lines.count
@@ -341,11 +338,17 @@ describe FeatureCollection::Station do
         @line.transport_mode_id = 7
         @line.save
 
-        feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+        feature = get_station_formatted_features(@station).first
 
         assert_equal 3, feature[:properties][:width]
         assert_equal 0, feature[:properties][:inner_width]
       end
     end
   end
+end
+
+def get_station_formatted_features(station)
+    FeatureCollection::Station.by_feature(station.id, formatted: true).sort_by do |f|
+      f[:id]
+    end
 end

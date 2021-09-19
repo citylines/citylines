@@ -136,8 +136,7 @@ describe FeatureCollection::Section do
 
   describe "formatted_feature" do
     it "should handle one line" do
-      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-
+      features = get_section_formatted_features(@section)
       assert 1, features.count
       feature = features.first
 
@@ -164,8 +163,7 @@ describe FeatureCollection::Section do
       @section.reload
       set_feature_line_groups(@section)
 
-      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-
+      features = get_section_formatted_features(@section)
       assert 2, features.count
 
       assert_equal 'Feature', features.first[:type]
@@ -219,8 +217,7 @@ describe FeatureCollection::Section do
       @section.reload
       set_feature_line_groups(@section)
 
-      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-
+      features = get_section_formatted_features(@section)
       assert 3, features.count
 
       expected_properties = [
@@ -278,8 +275,7 @@ describe FeatureCollection::Section do
       @section.reload
       set_feature_line_groups(@section)
 
-      features = FeatureCollection::Section.by_feature(@section.id, formatted: true).sort_by{|f| f[:id]}
-
+      features = get_section_formatted_features(@section)
       assert 6, features.count
 
       expected_properties = [
@@ -317,17 +313,6 @@ describe FeatureCollection::Section do
           offset: -3.96,
         },
         {
-          id: "#{@section.id}-test-line-3",
-          klass: "Section",
-          opening: 1998,
-          buildstart: 0,
-          buildstart_end: 0,
-          closure: 1999,
-          line_url_name: "test-line",
-          width: 4.5,
-          offset: -2.25,
-        },
-        {
           id: "#{@section.id}-test-line-2-1",
           klass: "Section",
           opening: 1990,
@@ -359,6 +344,17 @@ describe FeatureCollection::Section do
           line_url_name: "test-line-2",
           width: 4.5,
           offset: 2.25,
+        },
+        {
+          id: "#{@section.id}-test-line-3",
+          klass: "Section",
+          opening: 1998,
+          buildstart: 0,
+          buildstart_end: 0,
+          closure: 1999,
+          line_url_name: "test-line",
+          width: 4.5,
+          offset: -2.25,
         },
         {
           id: "#{@section.id}-test-line-3-2",
@@ -454,4 +450,10 @@ describe FeatureCollection::Section do
       end
     end
   end
+end
+
+def get_section_formatted_features(section)
+    FeatureCollection::Section.by_feature(section.id, formatted: true).sort_by do |f|
+      f[:properties][:id]
+    end
 end
