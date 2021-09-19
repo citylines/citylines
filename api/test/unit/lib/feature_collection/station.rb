@@ -287,8 +287,8 @@ describe FeatureCollection::Station do
       feature = features[1][:properties]
       assert_equal "#{@station.id}-1", feature[:id]
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
-      assert_equal feature[:line_url_name_1], 'a-url-name'
-      assert_equal feature[:line_url_name_2], 'line2'
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2', feature[:line_url_name_2]
       refute feature[:line_url_name_3]
       assert_equal 0, feature[:buildstart]
       assert_equal 0, feature[:buildstart_end]
@@ -299,9 +299,9 @@ describe FeatureCollection::Station do
       feature = features[2][:properties]
       assert_equal "#{@station.id}-2", feature[:id]
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
-      assert_equal feature[:line_url_name_1], 'a-url-name'
-      assert_equal feature[:line_url_name_2], 'line2'
-      assert_equal feature[:line_url_name_3], 'line3'
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2', feature[:line_url_name_2]
+      assert_equal 'line3', feature[:line_url_name_3]
       assert_equal 0, feature[:buildstart]
       assert_equal 0, feature[:buildstart_end]
       assert_equal 1995, feature[:opening]
@@ -311,8 +311,8 @@ describe FeatureCollection::Station do
       feature = features[3][:properties]
       assert_equal "#{@station.id}-3", feature[:id]
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
-      assert_equal feature[:line_url_name_1], 'a-url-name'
-      assert_equal feature[:line_url_name_2], 'line2'
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2',feature[:line_url_name_2]
       refute feature[:line_url_name_3]
       assert_equal 0, feature[:buildstart]
       assert_equal 0, feature[:buildstart_end]
