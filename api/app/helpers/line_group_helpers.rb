@@ -128,6 +128,6 @@ module LineGroupHelpers
       if n >= range.begin and n < range.end
         index
       end
-    end.compact
+    end.compact.to_set
   end
 end
