@@ -109,7 +109,6 @@ module LineGroupHelpers
         from = n
       end
     end
-    new_ranges
     Hash[
       ranges.map do |range|
         [range, new_ranges.select do |r|
