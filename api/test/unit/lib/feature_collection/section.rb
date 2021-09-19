@@ -278,7 +278,7 @@ describe FeatureCollection::Section do
       @section.reload
       set_feature_line_groups(@section)
 
-      features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
+      features = FeatureCollection::Section.by_feature(@section.id, formatted: true).sort_by{|f| f[:id]}
 
       assert 6, features.count
 

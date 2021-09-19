@@ -267,7 +267,7 @@ describe FeatureCollection::Station do
       @station.reload
       set_feature_line_groups(@station)
 
-      features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
+      features = FeatureCollection::Station.by_feature(@station.id, formatted: true).sort_by{|f| f[:id]}
 
       assert_equal 4, features.count
 
