@@ -86,6 +86,7 @@ module LineGroupHelpers
   end
 
   def find_ranges(ranges)
+    ranges.sort_by! {|r| r.begin}
     min_r = ranges.map(&:begin).min
     max_r = ranges.map(&:end).max
     orig_max_r = max_r
