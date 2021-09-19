@@ -1,5 +1,6 @@
 module LineGroupHelpers
-  RANGES_MAX_YEAR = 2050
+  RANGES_MIN_YEAR = 1500
+  RANGES_MAX_YEAR = 2100
 
   def set_feature_line_groups(feature)
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
@@ -96,13 +97,15 @@ module LineGroupHelpers
     end
     curr_lines = nil
     from = min_r
+    if min_r < RANGES_MIN_YEAR
+      min_r = RANGES_MIN_YEAR
+    end
     new_ranges = []
     (min_r .. max_r).each do |n|
       idxs = get_intersecting_idxs(n, ranges)
       if !curr_lines
         curr_lines = idxs
-      end
-      if idxs != curr_lines or n == max_r
+      elsif idxs != curr_lines or n == max_r
         curr_lines = idxs
         if n == max_r
           n = orig_max_r
