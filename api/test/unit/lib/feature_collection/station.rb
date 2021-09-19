@@ -255,6 +255,71 @@ describe FeatureCollection::Station do
       assert_equal @station.closure, after_1995[:closure]
     end
 
+    it "should handle complex simultaneous lines" do
+      # New line form 1990
+      line2 = Line.create(name:'Line 2', city_id: @city.id, url_name:'line2', system_id: @system.id)
+      StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id, fromyear: 1990)
+
+      # Line between 1995 and 1997
+      line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
+      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995, toyear: 1997)
+
+      @station.reload
+      set_feature_line_groups(@station)
+
+      features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
+
+      assert_equal 4, features.count
+
+      # 1985 - 1990:
+      feature = features[0][:properties]
+      assert_equal "#{@station.id}-0", feature[:id]
+      assert_equal 'a-url-name', feature[:line_url_name]
+      refute feature[:line_url_name_1]
+      refute feature[:line_url_name_2]
+      refute feature[:line_url_name_3]
+      assert_equal @station.buildstart, feature[:buildstart]
+      assert_equal @station.opening, feature[:buildstart_end]
+      assert_equal @station.opening, feature[:opening]
+      assert_equal 1990, feature[:closure]
+
+      # 1990 - 1995:
+      feature = features[1][:properties]
+      assert_equal "#{@station.id}-1", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal feature[:line_url_name_1], 'a-url-name'
+      assert_equal feature[:line_url_name_2], 'line2'
+      refute feature[:line_url_name_3]
+      assert_equal 0, feature[:buildstart]
+      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1990, feature[:opening]
+      assert_equal 1995, feature[:closure]
+
+      # 1995 - 1997:
+      feature = features[2][:properties]
+      assert_equal "#{@station.id}-2", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal feature[:line_url_name_1], 'a-url-name'
+      assert_equal feature[:line_url_name_2], 'line2'
+      assert_equal feature[:line_url_name_3], 'line3'
+      assert_equal 0, feature[:buildstart]
+      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1995, feature[:opening]
+      assert_equal 1997, feature[:closure]
+
+      # 1997 - 1999:
+      feature = features[3][:properties]
+      assert_equal "#{@station.id}-3", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal feature[:line_url_name_1], 'a-url-name'
+      assert_equal feature[:line_url_name_2], 'line2'
+      refute feature[:line_url_name_3]
+      assert_equal 0, feature[:buildstart]
+      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1997, feature[:opening]
+      assert_equal 1999, feature[:closure]
+    end
+
     describe "width" do
       it "should set the radius using the line with the max width" do
         line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
