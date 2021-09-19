@@ -86,41 +86,44 @@ module LineGroupHelpers
   end
 
   def find_ranges(ranges)
-    ranges = ranges.uniq
-    ranges_hash = {}
-    ranges.each_with_index do |r, idx|
-      intersections = ranges.map do |rr|
-        next if r == rr
-        inter_range = intersect_ranges(r, rr)
-        if inter_range && inter_range.begin != inter_range.end
-          inter_range
-        end
-      end.compact.uniq
-      min_begin = intersections.map(&:begin).min
-      max_end = intersections.map(&:end).max
-      if min_begin && min_begin > r.begin
-        intersections |= [r.begin .. min_begin]
-      end
-      if max_end && max_end < r.end
-        intersections |= [max_end .. r.end]
-      end
-      if intersections.blank?
-        intersections << r
-      end
-      ranges_hash[r] = intersections.sort_by{|i| i.begin}
+    min_r = ranges.map(&:begin).min
+    max_r = ranges.map(&:end).max
+    orig_max_r = max_r
+    if max_r > 2100
+        max_r = 2100
     end
-    ranges_hash
+    curr_lines = nil
+    from = min_r
+    new_ranges = []
+    (min_r .. max_r).each do |n|
+      idxs = get_intersecting_idxs(n, ranges)
+      if !curr_lines
+        curr_lines = idxs
+      end
+      if idxs != curr_lines or n == max_r
+        curr_lines = idxs
+        if n == max_r
+          n = orig_max_r
+        end
+        new_ranges << (from .. n)
+        from = n
+      end
+    end
+    new_ranges
+    Hash[
+      ranges.map do |range|
+        [range, new_ranges.select do |r|
+          r.begin >= range.begin and r.end <= range.end
+        end]
+      end
+    ]
   end
 
-  def intersect_ranges(r1, r2)
-    # Taken from:
-    # https://stackoverflow.com/a/15273442/3095803
-    new_end = [r1.end, r2.end].min
-    new_begin = [r1.begin, r2.begin].max
-    exclude_end = (r2.exclude_end? && new_end == r2.end) || (r1.exclude_end? && new_end == r1.end)
-
-    valid = (new_begin <= new_end && !exclude_end)
-    valid ||= (new_begin < new_end && exclude_end)
-    valid ? Range.new(new_begin, new_end, exclude_end) : nil
+  def get_intersecting_idxs(n, ranges)
+    ranges.map.with_index do |range, index|
+      if n >= range.begin and n < range.end
+        index
+      end
+    end.compact
   end
 end

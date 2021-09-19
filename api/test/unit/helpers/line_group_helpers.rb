@@ -65,6 +65,45 @@ describe LineGroupHelpers do
     }
     assert_equal expected_ranges5, find_ranges(ranges5)
     assert_equal expected_groups5, compute_groups(ranges5)
+
+    ranges6 = [0..999999, 1995..1997]
+    expected_ranges6 = {
+      0..999999 => [0..1995, 1995..1997, 1997..999999],
+      1995..1997 => [1995..1997],
+    }
+    expected_groups6 = {
+      0..999999 => [0, 1, 2],
+      1995..1997 => [1],
+    }
+    assert_equal expected_ranges6, find_ranges(ranges6)
+    assert_equal expected_groups6, compute_groups(ranges6)
+
+    ranges7 = [1990..2000, 1995..2005]
+    expected_ranges7 = {
+      1990..2000 => [1990..1995, 1995..2000],
+      1995..2005 => [1995..2000, 2000..2005],
+    }
+    expected_groups7 = {
+      1990..2000 => [0, 1],
+      1995..2005 => [1, 2],
+    }
+    assert_equal expected_ranges7, find_ranges(ranges7)
+    assert_equal expected_groups7, compute_groups(ranges7)
+
+    ranges8 = [0..9999, 1990..2000, 1995..2005]
+    expected_ranges8 = {
+      0..9999 => [0..1990, 1990..1995, 1995..2000, 2000..2005, 2005..9999],
+      1990..2000 => [1990..1995, 1995..2000],
+      1995..2005 => [1995..2000, 2000..2005],
+
+    }
+    expected_groups8 = {
+      0..9999 => [0, 1, 2, 3, 4],
+      1990..2000 => [1, 2],
+      1995..2005 => [2, 3],
+    }
+    assert_equal expected_ranges8, find_ranges(ranges8)
+    assert_equal expected_groups8, compute_groups(ranges8)
   end
 
   it "should remove/avoid duplicated ranges" do
@@ -82,13 +121,13 @@ describe LineGroupHelpers do
 
     ranges2 = [1930..1940, 1930..9999, 1935..1939]
     expected_ranges2 = {
-      1930..1940 => [1930..1940, 1935..1939],
-      1930..9999 => [1930..1940, 1935..1939, 1940..9999],
+      1930..1940 => [1930..1935, 1935..1939, 1939..1940],
+      1930..9999 => [1930..1935, 1935..1939, 1939..1940, 1940..9999],
       1935..1939 => [1935..1939],
     }
     expected_groups2 = {
-      1930..1940 => [0, 1],
-      1930..9999 => [0, 1, 2],
+      1930..1940 => [0, 1, 2],
+      1930..9999 => [0, 1, 2, 3],
       1935..1939 => [1],
     }
     assert_equal expected_ranges2, find_ranges(ranges2)
