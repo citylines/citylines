@@ -16,7 +16,7 @@ describe LineGroupHelpers do
       1945..9999 => [2, 3]
     }
     assert_equal expected_ranges, find_ranges(ranges)
-    assert_equal expected_groups, compute_groups(ranges)
+    assert_equal expected_groups, compute_groups(ranges, expected_ranges)
 
     ranges2 = [1930 .. 1940, 1940 .. 1950, 1938 .. 9999]
     expected_ranges2 = {
@@ -30,7 +30,7 @@ describe LineGroupHelpers do
       1938..9999 => [1, 2, 3]
     }
     assert_equal expected_ranges2, find_ranges(ranges2)
-    assert_equal expected_groups2, compute_groups(ranges2)
+    assert_equal expected_groups2, compute_groups(ranges2, expected_ranges2)
 
     ranges3 = [1938 .. 9999, 1930 .. 1940, 1940 .. 1950]
     expected_ranges3 = {
@@ -44,7 +44,7 @@ describe LineGroupHelpers do
       1940..1950 => [2]
     }
     assert_equal expected_ranges3, find_ranges(ranges3)
-    assert_equal expected_groups3, compute_groups(ranges3)
+    assert_equal expected_groups3, compute_groups(ranges3, expected_ranges3)
 
     ranges4 = [1939 .. 1945, 1939 .. 1945]
     expected_ranges4 = {
@@ -54,7 +54,7 @@ describe LineGroupHelpers do
       1939..1945 => [0],
     }
     assert_equal expected_ranges4, find_ranges(ranges4)
-    assert_equal expected_groups4, compute_groups(ranges4)
+    assert_equal expected_groups4, compute_groups(ranges4, expected_ranges4)
 
     ranges5 = [1939 .. 1945]
     expected_ranges5 = {
@@ -64,7 +64,7 @@ describe LineGroupHelpers do
       1939..1945 => [0],
     }
     assert_equal expected_ranges5, find_ranges(ranges5)
-    assert_equal expected_groups5, compute_groups(ranges5)
+    assert_equal expected_groups5, compute_groups(ranges5, expected_ranges5)
 
     ranges6 = [0..999999, 1995..1997]
     expected_ranges6 = {
@@ -76,7 +76,7 @@ describe LineGroupHelpers do
       1995..1997 => [1],
     }
     assert_equal expected_ranges6, find_ranges(ranges6)
-    assert_equal expected_groups6, compute_groups(ranges6)
+    assert_equal expected_groups6, compute_groups(ranges6, expected_ranges6)
 
     ranges7 = [1990..2000, 1995..2005]
     expected_ranges7 = {
@@ -88,7 +88,7 @@ describe LineGroupHelpers do
       1995..2005 => [1, 2],
     }
     assert_equal expected_ranges7, find_ranges(ranges7)
-    assert_equal expected_groups7, compute_groups(ranges7)
+    assert_equal expected_groups7, compute_groups(ranges7, expected_ranges7)
 
     ranges8 = [0..9999, 1990..2000, 1995..2005]
     expected_ranges8 = {
@@ -103,7 +103,7 @@ describe LineGroupHelpers do
       1995..2005 => [2, 3],
     }
     assert_equal expected_ranges8, find_ranges(ranges8)
-    assert_equal expected_groups8, compute_groups(ranges8)
+    assert_equal expected_groups8, compute_groups(ranges8, expected_ranges8)
   end
 
   it "should remove/avoid duplicated ranges" do
@@ -117,7 +117,7 @@ describe LineGroupHelpers do
       1930..9999 => [0, 1],
     }
     assert_equal expected_ranges, find_ranges(ranges)
-    assert_equal expected_groups, compute_groups(ranges)
+    assert_equal expected_groups, compute_groups(ranges, expected_ranges)
 
     ranges2 = [1930..1940, 1930..9999, 1935..1939]
     expected_ranges2 = {
@@ -131,7 +131,7 @@ describe LineGroupHelpers do
       1935..1939 => [1],
     }
     assert_equal expected_ranges2, find_ranges(ranges2)
-    assert_equal expected_groups2, compute_groups(ranges2)
+    assert_equal expected_groups2, compute_groups(ranges2, expected_ranges2)
   end
 
   describe "set_feature_line_groups" do

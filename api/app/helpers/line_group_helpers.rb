@@ -1,4 +1,6 @@
 module LineGroupHelpers
+  RANGES_MAX_YEAR = 2050
+
   def set_feature_line_groups(feature)
     feature_lines_klass = feature.is_a?(Station) ? StationLine : SectionLine
     feature_lines_key = feature.is_a?(Station) ? :station_lines : :section_lines
@@ -37,8 +39,8 @@ module LineGroupHelpers
       end.uniq
     ]
 
-    groups = compute_groups(feature_ranges.values)
     group_ranges = find_ranges(feature_ranges.values)
+    groups = compute_groups(feature_ranges.values, group_ranges)
 
     count_by_line_group = get_features_count_by_line_group(feature_ranges, groups)
     provisional_count_by_line_group = Hash.new { |h, k| h[k] = 0 }
@@ -69,9 +71,8 @@ module LineGroupHelpers
     features_count_by_line_group
   end
 
-  def compute_groups(ranges)
+  def compute_groups(ranges, ranges_hash)
     ranges = ranges.uniq
-    ranges_hash = find_ranges(ranges)
     groups_hash = {}
     groups = {}
     ranges_hash.each_pair do |key, vals|
@@ -90,8 +91,8 @@ module LineGroupHelpers
     min_r = ranges.map(&:begin).min
     max_r = ranges.map(&:end).max
     orig_max_r = max_r
-    if max_r > 2100
-        max_r = 2100
+    if max_r > RANGES_MAX_YEAR
+        max_r = RANGES_MAX_YEAR
     end
     curr_lines = nil
     from = min_r
