@@ -173,11 +173,13 @@ describe LineGroupHelpers do
 
       expected_line_groups = [
         {section_line_id: @section_line.id, from: nil, to: 1940, line_group: 0, group_members_count: 1, order: 1},
-        {section_line_id: @section_line.id, from: 1940, to: nil, line_group: 1, group_members_count: 2, order: 1},
-        {section_line_id: @section_line.id, from: 1960, to: 1990, line_group: 2, group_members_count:3, order: 1},
-        {section_line_id: section_line2.id, from: 1940, to: nil, line_group: 1, group_members_count: 2, order: 2},
+        {section_line_id: @section_line.id, from: 1940, to: 1960, line_group: 1, group_members_count: 2, order: 1},
+        {section_line_id: @section_line.id, from: 1960, to: 1990, line_group: 2, group_members_count: 3, order: 1},
+        {section_line_id: @section_line.id, from: 1990, to: nil, line_group: 3, group_members_count: 2, order: 1},
+        {section_line_id: section_line2.id, from: 1940, to: 1960, line_group: 1, group_members_count: 2, order: 2},
         {section_line_id: section_line2.id, from: 1960, to: 1990, line_group: 2, group_members_count: 3, order: 2},
-        {section_line_id: section_line3.id, from: 1960, to: 1990, line_group: 2, group_members_count: 3, order: 3}
+        {section_line_id: section_line2.id, from: 1990, to: nil, line_group: 3, group_members_count: 2, order: 2},
+        {section_line_id: section_line3.id, from: 1960, to: 1990, line_group: 2, group_members_count: 3, order: 3},
       ]
       assert_equal expected_line_groups, get_section_line_groups(@section)
     end
@@ -192,12 +194,14 @@ describe LineGroupHelpers do
 
       expected_line_groups = [
         {section_line_id: @section_line.id, from: nil, to: 1940, line_group: 0, group_members_count: 1, order: 1},
-        {section_line_id: @section_line.id, from: 1940, to: 1980, line_group: 1, group_members_count: 2, order: 1},
-        {section_line_id: @section_line.id, from: 1960, to: 1990, line_group: 2, group_members_count: 2, order: 1},
-        {section_line_id: section_line2.id, from: 1940, to: 1980, line_group: 1, group_members_count: 2, order: 2},
-        {section_line_id: section_line2.id, from: 1960, to: 1980, line_group: 3, group_members_count: 2, order: 1},
-        {section_line_id: section_line3.id, from: 1960, to: 1990, line_group: 2, group_members_count: 2, order: 2},
-        {section_line_id: section_line3.id, from: 1960, to: 1980, line_group: 3, group_members_count: 2, order: 2}
+        {section_line_id: @section_line.id, from: 1940, to: 1960, line_group: 1, group_members_count: 2, order: 1},
+        {section_line_id: @section_line.id, from: 1960, to: 1980, line_group: 2, group_members_count: 3, order: 1},
+        {section_line_id: @section_line.id, from: 1980, to: 1990, line_group: 3, group_members_count: 2, order: 1},
+        {section_line_id: @section_line.id, from: 1990, to: nil, line_group: 4, group_members_count: 1, order: 1},
+        {section_line_id: section_line2.id, from: 1940, to: 1960, line_group: 1, group_members_count: 2, order: 2},
+        {section_line_id: section_line2.id, from: 1960, to: 1980, line_group: 2, group_members_count: 3, order: 2},
+        {section_line_id: section_line3.id, from: 1960, to: 1980, line_group: 2, group_members_count: 3, order: 3},
+        {section_line_id: section_line3.id, from: 1980, to: 1990, line_group: 3, group_members_count: 2, order: 2}
       ]
       assert_equal expected_line_groups, get_section_line_groups(@section)
     end
