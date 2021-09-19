@@ -111,7 +111,7 @@ module FeatureCollection
             station_line_groups.to as line_toyear,
             line_group,
             coalesce(max(width), 0) as width,
-            array_agg(lines.url_name) as line_url_names,
+            array_agg(lines.url_name order by lines.id) as line_url_names,
             count(lines.id) as lines_count
           from station_lines
             left join station_line_groups on station_line_id = station_lines.id
