@@ -148,7 +148,7 @@ describe FeatureCollection::Station do
       assert_equal expected_feature, formatted_feature
     end
 
-    it "should use FUTURE values if opening or closure are nil" do
+    it "should use nil and FUTURE values if opening or closure are nil" do
       @station.opening = nil
       @station.closure = nil
       @station.save
@@ -157,7 +157,6 @@ describe FeatureCollection::Station do
       expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
-                             opening: FeatureCollection::Station::FUTURE,
                              buildstart: @station.buildstart,
                              buildstart_end: FeatureCollection::Station::FUTURE,
                              closure: FeatureCollection::Station::FUTURE,
@@ -247,8 +246,8 @@ describe FeatureCollection::Station do
       assert_equal 'line3', after_1995[:line_url_name]
       refute after_1995[:line_url_name_1]
       refute after_1995[:line_url_name_2]
-      assert_equal 0, after_1995[:buildstart]
-      assert_equal 0, after_1995[:buildstart_end]
+      assert_equal 1995, after_1995[:buildstart]
+      assert_equal 1995, after_1995[:buildstart_end]
       assert_equal 1995, after_1995[:opening]
       assert_equal @station.closure, after_1995[:closure]
     end
@@ -287,8 +286,8 @@ describe FeatureCollection::Station do
       assert_equal 'a-url-name', feature[:line_url_name_1]
       assert_equal 'line2', feature[:line_url_name_2]
       refute feature[:line_url_name_3]
-      assert_equal 0, feature[:buildstart]
-      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1990, feature[:buildstart]
+      assert_equal 1990, feature[:buildstart_end]
       assert_equal 1990, feature[:opening]
       assert_equal 1995, feature[:closure]
 
@@ -299,8 +298,8 @@ describe FeatureCollection::Station do
       assert_equal 'a-url-name', feature[:line_url_name_1]
       assert_equal 'line2', feature[:line_url_name_2]
       assert_equal 'line3', feature[:line_url_name_3]
-      assert_equal 0, feature[:buildstart]
-      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1995, feature[:buildstart]
+      assert_equal 1995, feature[:buildstart_end]
       assert_equal 1995, feature[:opening]
       assert_equal 1997, feature[:closure]
 
@@ -311,8 +310,8 @@ describe FeatureCollection::Station do
       assert_equal 'a-url-name', feature[:line_url_name_1]
       assert_equal 'line2',feature[:line_url_name_2]
       refute feature[:line_url_name_3]
-      assert_equal 0, feature[:buildstart]
-      assert_equal 0, feature[:buildstart_end]
+      assert_equal 1997, feature[:buildstart]
+      assert_equal 1997, feature[:buildstart_end]
       assert_equal 1997, feature[:opening]
       assert_equal 1999, feature[:closure]
     end

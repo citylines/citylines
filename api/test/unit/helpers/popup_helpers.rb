@@ -111,7 +111,7 @@ describe PopupHelpers do
             'transport_mode_name' => @line1.transport_mode.name,
             'color' => @line1.color,
             'label_font_color' => line_label_font_color(@line1.color),
-            'from' => @section.closure,
+            'from' => nil,
             'to' => @section.closure
           }]
         }
@@ -164,7 +164,7 @@ describe PopupHelpers do
             'transport_mode_name' => @line1.transport_mode.name,
             'color' => @line1.color,
             'label_font_color' => line_label_font_color(@line1.color),
-            'from' => FeatureCollection::Section::FUTURE,
+            'from' => nil,
             'to' => FeatureCollection::Section::FUTURE
           }]
         }
