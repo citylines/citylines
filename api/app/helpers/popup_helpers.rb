@@ -52,10 +52,11 @@ module PopupHelpers
       id = feature.delete(:id)
       feature[:lines].each do |line|
         line['label_font_color'] = line_label_font_color(line['color'])
-        line['from'] ||= feature[:buildstart_end]
+        line['from'] ||= feature[:opening_fallback]
         line['to'] ||= feature[:feature_closure]
         line.delete('historic') unless line['historic']
       end
+      feature.delete(:opening_fallback)
       data_by_key[id] = feature.reject{|k,v| v.blank?}
     end
 
@@ -74,6 +75,7 @@ module PopupHelpers
       select
         concat('#{klass}','-',id) as id,
         buildstart,
+        opening as opening_fallback,
         coalesce(opening,closure,#{future}) as buildstart_end,
         coalesce(closure,#{future}) as feature_closure,
         #{klass == 'Section' ? 'length' : 'null::int as length'},

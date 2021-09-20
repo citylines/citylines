@@ -65,9 +65,9 @@ module FeatureCollection
                     'properties', json_build_object(
                         'id', concat(station_id,'-',line_group),
                         'klass', 'Station',
-                        'opening', coalesce(line_fromyear, opening, #{FUTURE}),
-                        'buildstart', case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
-                        'buildstart_end',case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
+                        'opening', actual_opening,
+                        'buildstart', case when actual_opening = min_fromyear or min_fromyear is null then coalesce(buildstart, opening) else actual_opening end,
+                        'buildstart_end', coalesce(actual_opening, closure, #{FUTURE}),
                         'closure', coalesce(line_toyear, closure, #{FUTURE}),
                         'line_url_name', (case
                                             when lines_count > 1 then '#{SHARED_STATION_LINE_URL_NAME}'
@@ -95,9 +95,9 @@ module FeatureCollection
           line_group,
           geometry,
           opening,
+          coalesce(line_fromyear, opening) as actual_opening,
           buildstart,
           closure,
-          line_fromyear,
           line_toyear,
           least(min_fromyear, opening) as min_fromyear,
           width,
