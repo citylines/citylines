@@ -8,6 +8,7 @@ import Main from './components/main';
 Counterpart.setMissingEntryGenerator((key) => '');
 
 import assets from './lib/assets-provider';
+assets.setCDNURL(window.CDN_URL);
 assets.loadPaths(window.assetsPaths);
 
 render(

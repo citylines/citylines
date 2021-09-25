@@ -64,6 +64,7 @@
         // The assetsPaths is defined so it can be used by the assetsProvider
         window.assetsPaths = <%= (Sprockets::Helpers.manifest ? Sprockets::Helpers.manifest.assets : {}).to_json %>;
         window.locale = <%= @locale.to_json %>;
+        window.CDN_URL = <%= CDN_URL.to_json %>;
       </script>
       <script src="<%= webpack_asset_path('main.js') %>"></script>
     </body>

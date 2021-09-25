@@ -1,7 +1,11 @@
 class AssetsProvider {
   constructor() {
     this.paths = {};
-    this.cdn = "//cdn.citylines.co";
+    this.cdn = null;
+  }
+
+  setCDNURL(cdn_url) {
+    this.cdn = `//${cdn_url}`;
   }
 
   // Sets Sprocket's manifest paths map
@@ -9,7 +13,8 @@ class AssetsProvider {
     this.paths = paths;
   }
 
-  // Returns the manifest paths (production) or the default ones (development)
+  // Returns the manifest paths with the CDN (production, staging)
+  // or the default ones (development)
   path(key) {
     if (this.paths[key]) {
       return `${this.cdn}/assets/${this.paths[key]}`
