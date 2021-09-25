@@ -11,6 +11,7 @@ require 'sequel'
 require 'sinatra'
 require 'sinatra/asset_pipeline'
 
+require_relative 'cdn'
 require_relative 'aws'
 require_relative 'database'
 require_relative 'mapbox'
