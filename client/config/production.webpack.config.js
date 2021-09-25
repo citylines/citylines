@@ -13,7 +13,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../../public/assets'),
-    publicPath: 'https://cdn.citylines.co/assets/',
+    publicPath: process.env.NODE_ENV == 'staging' ? 'https://d1lna4hvnypvq3.cloudfront.net' : 'https://cdn.citylines.co/assets/',
     filename: '[name].[contenthash].js',
     chunkFilename: 'chunk.[name].[contenthash].js'
   },
@@ -32,7 +32,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
       }
     }),
     new ManifestPlugin({
