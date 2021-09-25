@@ -91,5 +91,8 @@ tools/frontend_tests
 
 ### About the assets
 The js files are built, bundled and hashed by Webpack (in public/assets). From the backend, the main.js file is included in the index.erb file with the help of the webpack manifest and the webpack helpers module (basically, the webpack_asset_path helper function).
-The other kinds of files, such as imgs and css, are stored in client/assets, and turned into their hashed-public versions (in public/assets/) by Sprockets. The assetPath code is isued once to add the citylines logo (hashed by Sprockets) from the frontend.
+The other kinds of files, such as imgs and css, are stored in client/assets, and turned into their hashed-public versions (in public/assets/) by Sprockets. The AssetsProvider code is used once to add the citylines logo (hashed by Sprockets) from the frontend.
 Eventually, evertyhing should be done by Webpack.
+
+#### About the CDN
+The CDN is set in the backend based on the enviroment and used there by sprockets and by the webpack helper function. It is sent to the frontend by setting `window.CDN_URL`, which is then passed to `AssetsProvider` and also used to set Webpack's `public_path` (which is done dynamically in `public-path.js`).
