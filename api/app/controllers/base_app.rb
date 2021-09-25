@@ -8,7 +8,7 @@ class BaseApp < App
 
   set :assets_paths, %w(../../client/assets)
   set :assets_precompile, %w(*.css *.png *.svg)
-  set :assets_host, CDN_URL
+  set :assets_host, CDN_DOMAIN
   set :assets_protocol, :https
 
   register Sinatra::AssetPipeline

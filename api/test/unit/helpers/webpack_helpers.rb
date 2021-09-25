@@ -6,7 +6,13 @@ describe WebpackHelpers do
   describe 'webpack_asset_path' do
     it 'should return the actual path from the manifest' do
       stubs(:webpack_manifest).returns({'main.js' => 'theactual/path.js'})
-      assert_equal 'theactual/path.js', webpack_asset_path('main.js')
+      assert_equal '/assets/theactual/path.js', webpack_asset_path('main.js')
+    end
+
+    it 'should include the cdn' do
+      stubs(:cdn_url).returns('https://my.cdn.cloudfront.net')
+      stubs(:webpack_manifest).returns({'main.js' => 'theactual/path.js'})
+      assert_equal 'https://my.cdn.cloudfront.net/assets/theactual/path.js', webpack_asset_path('main.js')
     end
 
     it 'should return nil if the manifest is missing' do
