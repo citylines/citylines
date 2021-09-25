@@ -13,7 +13,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../../public/assets'),
-    publicPath: process.env.NODE_ENV == 'staging' ? 'https://d1lna4hvnypvq3.cloudfront.net/' : 'https://cdn.citylines.co/assets/',
+    publicPath: process.env.NODE_ENV == 'staging' ? 'https://d1lna4hvnypvq3.cloudfront.net/assets/' : 'https://cdn.citylines.co/assets/',
     filename: '[name].[contenthash].js',
     chunkFilename: 'chunk.[name].[contenthash].js'
   },
