@@ -4,8 +4,8 @@ class AssetsProvider {
     this.cdn = null;
   }
 
-  setCDNURL(cdn_url) {
-    this.cdn = `//${cdn_url}`;
+  setCDNURL(cdnURL) {
+    this.cdn = cdnURL;
   }
 
   // Sets Sprocket's manifest paths map
