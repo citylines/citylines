@@ -6,7 +6,7 @@ class Section < Sequel::Model(:sections)
   include FeatureBackup
 
   many_to_many :lines, join_table: :section_lines
-  one_to_many :section_lines
+  one_to_many :section_lines, order: :id
   many_to_one :city
 
   plugin :geometry

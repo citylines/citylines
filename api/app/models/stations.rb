@@ -5,7 +5,7 @@ class Station < Sequel::Model(:stations)
   include FeatureBackup
 
   many_to_many :lines, join_table: :station_lines
-  one_to_many :station_lines
+  one_to_many :station_lines, order: :id
   many_to_one :city
 
   plugin :geometry
