@@ -95,7 +95,7 @@ module FeatureCollection
       from (
         with groups_width as (
             select line_group,
-              sections.id as section_id,
+              section_id,
               max(greatest(transport_modes.min_width, (
                 case
                   when section_line_groups.group_members_count = 1 then transport_modes.width
@@ -103,12 +103,11 @@ module FeatureCollection
                   else transport_modes.width * 0.66
                 end
             ))) as width
-            from sections
-            join section_lines on section_lines.section_id = sections.id
+            from section_lines
             join section_line_groups on section_line_id = section_lines.id
             join lines on line_id = lines.id
             join transport_modes on lines.transport_mode_id = transport_modes.id
-            group by line_group, sections.id
+            group by line_group, section_id
         )
         select
           sections.id as section_id,
