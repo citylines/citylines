@@ -93,22 +93,6 @@ module FeatureCollection
           )
       )::text
       from (
-        with groups_width as (
-            select line_group,
-              section_id,
-              max(greatest(transport_modes.min_width, (
-                case
-                  when section_line_groups.group_members_count = 1 then transport_modes.width
-                  when section_line_groups.group_members_count = 2 then transport_modes.width * 0.75
-                  else transport_modes.width * 0.66
-                end
-            ))) as width
-            from section_lines
-            join section_line_groups on section_line_id = section_lines.id
-            join lines on line_id = lines.id
-            join transport_modes on lines.transport_mode_id = transport_modes.id
-            group by line_group, section_id
-        )
         select
           sections.id as section_id,
           geometry,
@@ -127,7 +111,6 @@ module FeatureCollection
           join section_lines on section_lines.section_id = sections.id
           join section_line_groups on section_line_id = section_lines.id
           join lines on line_id = lines.id
-          join groups_width on groups_width.section_id = sections.id and groups_width.line_group = section_line_groups.line_group
           join lateral (
             select section_id,
             min(fromyear) as min_fromyear
@@ -135,6 +118,23 @@ module FeatureCollection
             where section_id = sections.id
             group by section_id
           ) as all_lines_data on all_lines_data.section_id = sections.id
+          join lateral (
+            select line_group,
+              section_id,
+              max(greatest(transport_modes.min_width, (
+                case
+                  when section_line_groups.group_members_count = 1 then transport_modes.width
+                  when section_line_groups.group_members_count = 2 then transport_modes.width * 0.75
+                  else transport_modes.width * 0.66
+                end
+            ))) as width
+            from section_lines
+            join section_line_groups on section_line_id = section_lines.id
+            join lines on line_id = lines.id
+            join transport_modes on lines.transport_mode_id = transport_modes.id
+            where section_id = sections.id
+            group by line_group, section_id
+        ) as groups_width on groups_width.section_id = sections.id and groups_width.line_group = section_line_groups.line_group
           where ?
         ) as sections_data
     }.freeze
