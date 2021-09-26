@@ -416,7 +416,7 @@ describe FeatureCollection::Section do
         end
 	    end
 
-      it "should use the each line width if lines belong to different transport modes" do
+      it "should use the wider line if lines belong to different transport modes" do
         line2 = Line.create(city_id: @city.id, system_id: @system.id, name: 'Test line 2', url_name:'test-line-2', transport_mode_id: 1)
         SectionLine.create(line_id: line2.id, section_id: @section.id, city_id: @city.id)
 
@@ -426,8 +426,12 @@ describe FeatureCollection::Section do
         assert_equal 2, @section.lines.count
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
-        expected_widths = [@line, line2].map {|line| line.transport_mode.width * 0.75}
-        assert_equal expected_widths, features.map {|feature| feature[:properties][:width]}
+        features.map do |feature|
+           assert_equal line2.width * 0.75, feature[:properties][:width]
+         end
+
+        expected_offsets = [-3.375, 3.375]
+        assert_equal expected_offsets, features.map {|feature| feature[:properties][:offset]}
       end
 
       it "should use the min_width" do

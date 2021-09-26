@@ -56,8 +56,6 @@ module FeatureCollection
     # The next query uses the line group as a way of dealing with different concurrent lines at different times, on the same
     # feature.
     # Within the same line group, the (group member´s) count is the same for all elements, but the rest of the attrs differ
-    # Note: now the widht and the min_widht are not the result of an agg function, so they may be different for features in the same
-    # line group
 
     FORMATTED_FEATURE_COLLECTION = %Q{
       select json_build_object(
@@ -95,6 +93,23 @@ module FeatureCollection
           )
       )::text
       from (
+        with groups_width as (
+            select line_group,
+              sections.id as section_id,
+              max(greatest(transport_modes.min_width, (
+                case
+                  when section_line_groups.group_members_count = 1 then transport_modes.width
+                  when section_line_groups.group_members_count = 2 then transport_modes.width * 0.75
+                  else transport_modes.width * 0.66
+                end
+            ))) as width
+            from sections
+            join section_lines on section_lines.section_id = sections.id
+            join section_line_groups on section_line_id = section_lines.id
+            join lines on line_id = lines.id
+            join transport_modes on lines.transport_mode_id = transport_modes.id
+            group by line_group, sections.id
+        )
         select
           sections.id as section_id,
           geometry,
@@ -105,21 +120,15 @@ module FeatureCollection
           section_line_groups.to as line_toyear,
           least(min_fromyear, opening) as min_fromyear,
           lines.url_name as line_url_name,
-          line_group,
-          greatest(transport_modes.min_width, (
-              case
-                when section_line_groups.group_members_count = 1 then transport_modes.width
-                when section_line_groups.group_members_count = 2 then transport_modes.width * 0.75
-                else transport_modes.width * 0.66
-              end
-          )) as width,
+          section_line_groups.line_group,
+          groups_width.width,
           section_line_groups.order as position,
           section_line_groups.group_members_count as count
         from sections
           join section_lines on section_lines.section_id = sections.id
           join section_line_groups on section_line_id = section_lines.id
           join lines on line_id = lines.id
-          join transport_modes on lines.transport_mode_id = transport_modes.id
+          join groups_width on groups_width.section_id = sections.id and groups_width.line_group = section_line_groups.line_group
           join lateral (
             select section_id,
             min(fromyear) as min_fromyear
