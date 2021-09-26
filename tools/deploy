@@ -1,3 +1,6 @@
 #!/bin/bash
 
+# NOTE: THIS SCRIPT IS DEPRECATED AS DEPLOYEMENTS NOW ARE
+# PROMOTIONS FROM STAGING. NOW MIGRATIONS RUN IN THE RELEASE PHASE (see Procfile)
+
 git push heroku master && heroku run RACK_ENV=production bundle exec rake db:migrate && heroku restart
