@@ -427,8 +427,8 @@ describe FeatureCollection::Section do
 
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
         features.map do |feature|
-           assert_equal line2.width * 0.75, feature[:properties][:width]
-         end
+          assert_equal line2.width * 0.75, feature[:properties][:width]
+        end
 
         expected_offsets = [-3.375, 3.375]
         assert_equal expected_offsets, features.map {|feature| feature[:properties][:offset]}
