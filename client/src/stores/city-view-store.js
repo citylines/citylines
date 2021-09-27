@@ -213,14 +213,13 @@ const CityViewStore = Object.assign({}, Store, {
 
     const featuresData = await this.fetchFeaturesPopupData(featuresIds);
 
-    features.
-      map((el,idx) => {
-        el.properties = { ...el.properties, ...featuresData[el.properties._key]};
-    });
+    const updatedFeatures = features.map((el,idx) => (
+      {properties: { ...el.properties, ...featuresData[el.properties._key]}}
+    ));
 
     cityData.clickedFeatures = {
       point: point,
-      features: features
+      features: updatedFeatures
     }
 
     this.emitChangeEvent();

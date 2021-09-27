@@ -65,9 +65,9 @@ module FeatureCollection
                     'properties', json_build_object(
                         'id', concat(station_id,'-',line_group),
                         'klass', 'Station',
-                        'opening', coalesce(line_fromyear, opening, #{FUTURE}),
-                        'buildstart', case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(buildstart,opening) else 0 end,
-                        'buildstart_end',case when coalesce(line_fromyear, opening) = min_fromyear or min_fromyear is null then coalesce(opening, closure, #{FUTURE}) else 0 end,
+                        'opening', actual_opening,
+                        'buildstart', case when actual_opening = min_fromyear or min_fromyear is null then coalesce(buildstart, opening) else actual_opening end,
+                        'buildstart_end', coalesce(actual_opening, closure, #{FUTURE}),
                         'closure', coalesce(line_toyear, closure, #{FUTURE}),
                         'line_url_name', (case
                                             when lines_count > 1 then '#{SHARED_STATION_LINE_URL_NAME}'
@@ -95,9 +95,9 @@ module FeatureCollection
           line_group,
           geometry,
           opening,
+          coalesce(line_fromyear, opening) as actual_opening,
           buildstart,
           closure,
-          line_fromyear,
           line_toyear,
           least(min_fromyear, opening) as min_fromyear,
           width,
@@ -107,17 +107,18 @@ module FeatureCollection
         left join lateral (
           select
             station_id,
-            min(fromyear) as line_fromyear,
-            max(toyear) as line_toyear,
+            station_line_groups.from as line_fromyear,
+            station_line_groups.to as line_toyear,
             line_group,
             coalesce(max(width), 0) as width,
-            array_agg(lines.url_name) as line_url_names,
+            array_agg(lines.url_name order by lines.id) as line_url_names,
             count(lines.id) as lines_count
           from station_lines
+            left join station_line_groups on station_line_id = station_lines.id
             left join lines on lines.id = station_lines.line_id
             left join transport_modes on transport_modes.id = transport_mode_id
           where station_id = stations.id
-          group by station_id, line_group
+          group by station_id, line_group, line_fromyear, line_toyear
          ) as lines_data on lines_data.station_id = stations.id
           left join lateral (
             select station_id,

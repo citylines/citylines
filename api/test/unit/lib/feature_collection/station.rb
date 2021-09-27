@@ -1,6 +1,8 @@
 require File.expand_path '../../../../test_config', __FILE__
 
 describe FeatureCollection::Station do
+  include LineGroupHelpers
+
   before do
     @city = City.new(name: 'Some city',
                         start_year: 2017,
@@ -19,6 +21,9 @@ describe FeatureCollection::Station do
     @station.save
 
     @station_line = StationLine.create(station_id: @station.id, line_id: @line.id, city_id: @city.id)
+
+    @station.reload
+    set_feature_line_groups(@station)
 
     @city.reload
   end
@@ -132,27 +137,26 @@ describe FeatureCollection::Station do
     it "formatted_feature should add width and buildstart_end to raw_feature, remove osm fields, lines and name, and overwrite the id" do
       expected_feature = FeatureCollection::Station.by_feature(@station.id).first
       expected_feature[:properties].merge!(
-        id: "#{@station.id}-#{@station_line.line_group}",
+        id: "#{@station.id}-0",
         width: @line.width,
         inner_width: @line.width - 2,
         buildstart_end: @station.opening,
         line_url_name: @station.lines.first.url_name,
       ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata, :lines, :name].include?(f)}
 
-      formatted_feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+      formatted_feature = get_station_formatted_features(@station).first
       assert_equal expected_feature, formatted_feature
     end
 
-    it "should use FUTURE values if opening or closure are nil" do
+    it "should use nil and FUTURE values if opening or closure are nil" do
       @station.opening = nil
       @station.closure = nil
       @station.save
 
-      feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
-      expected_properties = {id: "#{@station.id}-#{@station_line.line_group}",
+      feature = get_station_formatted_features(@station).first
+      expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
-                             opening: FeatureCollection::Station::FUTURE,
                              buildstart: @station.buildstart,
                              buildstart_end: FeatureCollection::Station::FUTURE,
                              closure: FeatureCollection::Station::FUTURE,
@@ -167,9 +171,8 @@ describe FeatureCollection::Station do
       @station.buildstart = nil
       @station.save
 
-      feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
-
-      expected_properties = {id: "#{@station.id}-#{@station_line.line_group}",
+      feature = get_station_formatted_features(@station).first
+      expected_properties = {id: "#{@station.id}-0",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              opening: @station.opening,
@@ -188,7 +191,10 @@ describe FeatureCollection::Station do
 
       StationLine.create(line_id: second_line.id, station_id: @station.id, city_id: @city.id)
 
-      feature_props = FeatureCollection::Station.by_feature(@station.id, formatted: true).first[:properties]
+      @station.reload
+      set_feature_line_groups(@station)
+
+      feature_props = get_station_formatted_features(@station).first[:properties]
 
       assert_equal 2, @station.lines.count
       assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature_props[:line_url_name]
@@ -206,22 +212,21 @@ describe FeatureCollection::Station do
       # Original line:
       @station_line.toyear = 1995
       @station_line.save
-      # default line_group is zero
 
       # New line before 1995
       line2 = Line.create(name:'Line 2', city_id: @city.id, url_name:'line2', system_id: @system.id)
       StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id, toyear: 1995)
-      # default line_group is zero
 
       # One single line after 1995
       # ##########################
       # This line has another line_group.
-      # The line_group is set when updating the feature (see EditorHelpers).
       line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
-      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995, line_group: 1)
+      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995)
 
-      features = FeatureCollection::Station.by_feature(@station.id, formatted: true)
+      @station.reload
+      set_feature_line_groups(@station)
 
+      features = get_station_formatted_features(@station)
       assert_equal 2, features.count
 
       # Before 1995:
@@ -241,10 +246,74 @@ describe FeatureCollection::Station do
       assert_equal 'line3', after_1995[:line_url_name]
       refute after_1995[:line_url_name_1]
       refute after_1995[:line_url_name_2]
-      assert_equal 0, after_1995[:buildstart]
-      assert_equal 0, after_1995[:buildstart_end]
+      assert_equal 1995, after_1995[:buildstart]
+      assert_equal 1995, after_1995[:buildstart_end]
       assert_equal 1995, after_1995[:opening]
       assert_equal @station.closure, after_1995[:closure]
+    end
+
+    it "should handle complex simultaneous lines" do
+      # New line form 1990
+      line2 = Line.create(name:'Line 2', city_id: @city.id, url_name:'line2', system_id: @system.id)
+      StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id, fromyear: 1990)
+
+      # Line between 1995 and 1997
+      line3 = Line.create(name:'Line 3', city_id: @city.id, url_name:'line3', system_id: @system.id)
+      StationLine.create(line_id: line3.id, station_id: @station.id, city_id: @city.id, fromyear: 1995, toyear: 1997)
+
+      @station.reload
+      set_feature_line_groups(@station)
+
+      features = get_station_formatted_features(@station)
+      assert_equal 4, features.count
+
+      # 1985 - 1990:
+      feature = features[0][:properties]
+      assert_equal "#{@station.id}-0", feature[:id]
+      assert_equal 'a-url-name', feature[:line_url_name]
+      refute feature[:line_url_name_1]
+      refute feature[:line_url_name_2]
+      refute feature[:line_url_name_3]
+      assert_equal @station.buildstart, feature[:buildstart]
+      assert_equal @station.opening, feature[:buildstart_end]
+      assert_equal @station.opening, feature[:opening]
+      assert_equal 1990, feature[:closure]
+
+      # 1990 - 1995:
+      feature = features[1][:properties]
+      assert_equal "#{@station.id}-1", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2', feature[:line_url_name_2]
+      refute feature[:line_url_name_3]
+      assert_equal 1990, feature[:buildstart]
+      assert_equal 1990, feature[:buildstart_end]
+      assert_equal 1990, feature[:opening]
+      assert_equal 1995, feature[:closure]
+
+      # 1995 - 1997:
+      feature = features[2][:properties]
+      assert_equal "#{@station.id}-2", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2', feature[:line_url_name_2]
+      assert_equal 'line3', feature[:line_url_name_3]
+      assert_equal 1995, feature[:buildstart]
+      assert_equal 1995, feature[:buildstart_end]
+      assert_equal 1995, feature[:opening]
+      assert_equal 1997, feature[:closure]
+
+      # 1997 - 1999:
+      feature = features[3][:properties]
+      assert_equal "#{@station.id}-3", feature[:id]
+      assert_equal FeatureCollection::Station::SHARED_STATION_LINE_URL_NAME, feature[:line_url_name]
+      assert_equal 'a-url-name', feature[:line_url_name_1]
+      assert_equal 'line2',feature[:line_url_name_2]
+      refute feature[:line_url_name_3]
+      assert_equal 1997, feature[:buildstart]
+      assert_equal 1997, feature[:buildstart_end]
+      assert_equal 1997, feature[:opening]
+      assert_equal 1999, feature[:closure]
     end
 
     describe "width" do
@@ -252,7 +321,10 @@ describe FeatureCollection::Station do
         line2 = Line.create(name: 'Other line', city_id: @city.id, url_name: 'other-line', system_id: @system.id, transport_mode_id: 1)
         StationLine.create(line_id: line2.id, station_id: @station.id, city_id: @city.id)
 
-        feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+        @station.reload
+        set_feature_line_groups(@station)
+
+        feature = get_station_formatted_features(@station).first
 
         assert line2.width > @line.width
         assert_equal 2, @station.lines.count
@@ -265,11 +337,17 @@ describe FeatureCollection::Station do
         @line.transport_mode_id = 7
         @line.save
 
-        feature = FeatureCollection::Station.by_feature(@station.id, formatted: true).first
+        feature = get_station_formatted_features(@station).first
 
         assert_equal 3, feature[:properties][:width]
         assert_equal 0, feature[:properties][:inner_width]
       end
     end
   end
+end
+
+def get_station_formatted_features(station)
+    FeatureCollection::Station.by_feature(station.id, formatted: true).sort_by do |f|
+      f[:id]
+    end
 end
