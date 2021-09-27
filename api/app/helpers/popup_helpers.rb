@@ -57,7 +57,12 @@ module PopupHelpers
         line.delete('historic') unless line['historic']
       end
       feature.delete(:opening_fallback)
-      data_by_key[id] = feature.reject{|k,v| v.blank?}
+      if id.include?('Station')
+        feature.delete(:length)
+      else
+        feature.delete(:name)
+      end
+      data_by_key[id] = feature
     end
 
     data_by_key
