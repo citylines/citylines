@@ -16,13 +16,11 @@ class MouseEvents {
         ids[type].push(id);
       });
 
-      let setHoverIds = false;
       Object.entries(ids).map(([featureType, ids]) => {
         this.mapper.setHoverIds(featureType, ids);
-        setHoverIds = true;
       });
 
-      if (setHoverIds && typeof callback === 'function') callback();
+      if (typeof callback === 'function') callback();
   }
 
   calculateLayerNames() {
