@@ -57,10 +57,10 @@ class Mapper {
   }
 
   setHoverIds(type, ids) {
-    if ((ids && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) ||
-        (!ids && this.currentHoverId[type] == this.NO_HOVER_IDS)) return;
+    if (((!ids || !ids.length) && this.currentHoverId[type] == this.NO_HOVER_IDS) ||
+      (ids && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids))) return;
 
-    if (!ids) {
+    if (!ids || !ids.length) {
       this.currentHoverId[type] = this.NO_HOVER_IDS;
     } else {
       this.currentHoverId[type] = ids;

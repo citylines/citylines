@@ -38,5 +38,32 @@ describe("LinesMapper", () => {
         expect(layer.filter).toBeTruthy();
       });
     });
-  })
+  });
+
+  describe("setHoverIds", () => {
+    it("should set the right hover ids", () => {
+      const linesMapper = new LinesMapper({
+        urlName:'test-city',
+        style: new Style([])
+      });
+
+      linesMapper.setHoverIds('sections', [34, 101]);
+      expect(linesMapper.currentHoverId).toEqual({
+        sections: [34, 101],
+        stations: ['none']
+      });
+
+      linesMapper.setHoverIds('stations', [987]);
+      expect(linesMapper.currentHoverId).toEqual({
+        sections: [34, 101],
+        stations: [987]
+      });
+
+      linesMapper.setHoverIds('sections', []);
+      expect(linesMapper.currentHoverId).toEqual({
+        sections: ['none'],
+        stations: [987]
+      });
+    });
+  });
 });
