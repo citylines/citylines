@@ -50,7 +50,7 @@ describe("LinesMapper", () => {
       linesMapper.setHoverIds('sections', [34, 101]);
       expect(linesMapper.currentHoverId).toEqual({
         sections: [34, 101],
-        stations: ['none']
+        stations: []
       });
 
       linesMapper.setHoverIds('stations', [987]);
@@ -61,7 +61,7 @@ describe("LinesMapper", () => {
 
       linesMapper.setHoverIds('sections', []);
       expect(linesMapper.currentHoverId).toEqual({
-        sections: ['none'],
+        sections: [],
         stations: [987]
       });
     });
