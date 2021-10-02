@@ -12,9 +12,8 @@ class Mapper {
     this.SOURCE_TYPES = ['sections', 'stations'];
     this.sources = [];
 
-    this.currentHoverId = {sections: ['none'], stations: ['none']};
+    this.currentHoverId = {sections: [], stations: []};
 
-    this.NO_HOVER_IDS = ['none'];
     // Set this.layerNames;
   }
 
@@ -57,15 +56,14 @@ class Mapper {
   }
 
   setHoverIds(type, ids) {
-    if ((ids && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) ||
-        (!ids && this.currentHoverId[type] == this.NO_HOVER_IDS)) return;
-
-    if (!ids) {
-      this.currentHoverId[type] = this.NO_HOVER_IDS;
-    } else {
-      this.currentHoverId[type] = ids;
+    if (!ids.length && !this.currentHoverId[type].length) {
+      return;
+    }
+    if (ids.length && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) {
+      return;
     }
 
+    this.currentHoverId[type] = ids;
     this.updateLayers();
   }
 

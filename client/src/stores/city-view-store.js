@@ -62,7 +62,7 @@ const CityViewStore = Object.assign({}, Store, {
     const linesShown = cityData.linesShown || cityData.lines.map((line) => line.url_name);
     cityData.linesMapper = new LinesMapper({style: style, linesShown: linesShown, urlName: urlName});
     cityData.timeline = new Timeline(cityData.linesMapper, cityData.years);
-    cityData.mouseEvents = new MouseEvents(style, {lines: cityData.linesMapper});
+    cityData.mouseEvents = new MouseEvents(cityData.linesMapper);
 
     const startingYear = cityData.years.default || cityData.years.start;
     cityData.timeline.toYear(startingYear);

@@ -1,55 +1,29 @@
-import mapboxgl from 'mapbox-gl';
-
 class MouseEvents {
-  constructor(style, mappers) {
-    this.style = style;
-    this.mappers = mappers;
-
+  constructor(mapper) {
+    this.mapper = mapper;
     this.layerNames = this.calculateLayerNames();
   }
 
   hover(features, callback) {
-      const ids = {lines: {sections: [], stations: []}, plans: {sections: [], stations: []}};
+      const ids = {sections: [], stations: []};
 
       features.map((feature) => {
         const type = feature.layer.type == 'circle'? 'stations' : 'sections';
         const id = feature.properties.id;
-
-        const mapperType = feature.properties.plan ? 'plans' : 'lines';
-
-        ids[mapperType] = ids[mapperType] || {};
-        ids[mapperType][type] = ids[mapperType][type] || [];
-        ids[mapperType][type].push(id);
+        ids[type].push(id);
       });
 
-      let setHoverIds = false;
-      Object.entries(this.mappers).map((entry) => {
-        const mapperType = entry[0];
-        const mapper = entry[1];
-        if (typeof ids[mapperType] === 'undefined') return;
-        Object.entries(ids[mapperType]).map((idEntry) => {
-          const type = idEntry[0];
-          const idsMapperType = idEntry[1];
-          mapper.setHoverIds(type, idsMapperType);
-          setHoverIds = true;
-        });
+      Object.entries(ids).map(([featureType, ids]) => {
+        this.mapper.setHoverIds(featureType, ids);
       });
 
-      if (setHoverIds && typeof callback === 'function') callback();
+      if (typeof callback === 'function') callback();
   }
 
+  // These are the layers where we are going to listen for mouse events
   calculateLayerNames() {
-    const layers = [];
-    Object.values(this.mappers).map((mapper) => {
-      Object.values(mapper.layerNames).map((type) => {
-        type.map((layer) => {
-          if (!layer.includes('hover') && !layer.includes('inner')) {
-            layers.push(layer);
-          }
-        });
-      });
-    });
-    return layers;
+    return Object.values(this.mapper.layerNames).flat()
+      .filter(layer => !layer.includes('hover') && !layer.includes('inner'));
   }
 }
 
