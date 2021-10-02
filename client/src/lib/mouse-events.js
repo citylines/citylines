@@ -1,8 +1,5 @@
-import mapboxgl from 'mapbox-gl';
-
 class MouseEvents {
-  constructor(style, mapper) {
-    this.style = style;
+  constructor(mapper) {
     this.mapper = mapper;
     this.layerNames = this.calculateLayerNames();
   }
@@ -23,6 +20,7 @@ class MouseEvents {
       if (typeof callback === 'function') callback();
   }
 
+  // These are the layers where we are going to listen for mouse events
   calculateLayerNames() {
     return Object.values(this.mapper.layerNames).flat()
       .filter(layer => !layer.includes('hover') && !layer.includes('inner'));
