@@ -81,7 +81,7 @@ module PopupHelpers
         concat('#{klass}','-',id) as id,
         buildstart,
         opening as opening_fallback,
-        coalesce(min_fromyear, opening, closure, #{future}) as buildstart_end,
+        least(min_fromyear, opening, closure, #{future}) as buildstart_end,
         coalesce(closure,#{future}) as feature_closure,
         #{klass == 'Section' ? 'length' : 'null::int as length'},
         #{klass == 'Station' ? 'name' : 'null as name'},
