@@ -81,7 +81,7 @@ module PopupHelpers
         concat('#{klass}','-',id) as id,
         buildstart,
         opening as opening_fallback,
-        coalesce(opening,closure,#{future}) as buildstart_end,
+        coalesce(min_fromyear, opening, closure, #{future}) as buildstart_end,
         coalesce(closure,#{future}) as feature_closure,
         #{klass == 'Section' ? 'length' : 'null::int as length'},
         #{klass == 'Station' ? 'name' : 'null as name'},
@@ -90,7 +90,7 @@ module PopupHelpers
       left join lateral (
         select
           #{aux_table_id},
-          json_agg(json_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'historic',systems.historic,'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines
+          json_agg(json_build_object('name', lines.name,'url_name',lines.url_name, 'system', coalesce(systems.name,''),'historic',systems.historic,'transport_mode_name',transport_modes.name,'color',color,'from',fromyear,'to',toyear)) as lines, min(fromyear) as min_fromyear
         from #{aux_table_name}
           left join lines on lines.id = #{aux_table_name}.line_id
           left join systems on systems.id = system_id
