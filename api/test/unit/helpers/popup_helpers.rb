@@ -200,6 +200,36 @@ describe PopupHelpers do
       assert_equal expected_data, popup_features_data("Section-#{@section.id}")
     end
 
+    it "should use the line's fromyear attr if the global opening date is not set" do
+      @section_line1.fromyear = 1986
+      @section_line1.toyear = 1998
+      @section_line1.save
+
+      @section.opening = nil
+      @section.save
+
+      expected_data = {
+        "Section-#{@section.id}" => {
+          buildstart: @section.buildstart,
+          buildstart_end: @section_line1.fromyear,
+          feature_closure: @section.closure,
+          length: @section.length,
+          lines: [{
+            'name' => @line1.name,
+            'url_name' => @line1.url_name,
+            'system' => @line1.system.name,
+            'transport_mode_name' => @line1.transport_mode.name,
+            'color' => @line1.color,
+            'label_font_color' => line_label_font_color(@line1.color),
+            'from' => 1986,
+            'to' => 1998
+          }]
+        }
+      }
+
+      assert_equal expected_data, popup_features_data("Section-#{@section.id}")
+    end
+
     it "should return handle historical system" do
       @system.historic = true
       @system.save
