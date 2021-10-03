@@ -186,6 +186,33 @@ describe FeatureCollection::Station do
       assert_equal expected_properties, feature[:properties]
     end
 
+    it "should use the line data if there are no global values" do
+      @station.buildstart = nil
+      @station.opening = nil
+      @station.closure = nil
+      @station.save
+
+      @station_line.fromyear = 1940
+      @station_line.toyear = 1960
+      @station_line.save
+
+      set_feature_line_groups(@station)
+      feature = get_station_formatted_features(@station).first
+
+      expected_properties = {id: "#{@station.id}-0",
+                             klass: "Station",
+                             line_url_name: @station.lines.first.url_name,
+                             opening: @station_line.fromyear,
+                             buildstart: @station_line.fromyear,
+                             buildstart_end: @station_line.fromyear,
+                             closure: @station_line.toyear,
+                             width: @line.width,
+                             inner_width: @line.width - 2,
+      }
+
+      assert_equal expected_properties, feature[:properties]
+    end
+
     it "should return the 'shared station' url_name, and the extra url_nam attrs, if it has more than 1 line" do
       second_line = Line.create(name:'Other line', city_id: @city.id, url_name:'other-line-url-name', system_id: @system.id)
 

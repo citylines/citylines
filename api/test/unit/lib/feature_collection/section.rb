@@ -375,6 +375,33 @@ describe FeatureCollection::Section do
         assert_equal expected_properties[idx], feature[:properties]
       end
     end
+
+    it "should use the line data if there are no global values" do
+      @section.buildstart = nil
+      @section.opening = nil
+      @section.closure = nil
+      @section.save
+
+      @section_line.fromyear = 1956
+      @section_line.toyear = 1999
+      @section_line.save
+
+      set_feature_line_groups(@section)
+      feature = get_section_formatted_features(@section).first
+
+      expected_properties = {id: "#{@section.id}-#{@line.url_name}-0",
+                             klass: "Section",
+                             line_url_name: @line.url_name,
+                             width: @line.width,
+                             offset: 0,
+                             opening: @section_line.fromyear,
+                             buildstart: @section_line.fromyear,
+                             buildstart_end: @section_line.fromyear,
+                             closure: @section_line.toyear}
+
+      assert_equal expected_properties, feature[:properties]
+    end
+
     describe "width" do
 	    it "should return the right width when the section has 1 line" do
         features = FeatureCollection::Section.by_feature(@section.id, formatted: true)
