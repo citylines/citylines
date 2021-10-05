@@ -66,7 +66,7 @@ module FeatureCollection
                         'id', concat(station_id,'-',line_group),
                         'klass', 'Station',
                         'opening', actual_opening,
-                        'buildstart', case when actual_opening = min_fromyear or min_fromyear is null then coalesce(buildstart, opening) else actual_opening end,
+                        'buildstart', case when actual_opening = min_fromyear or min_fromyear is null then coalesce(buildstart, actual_opening) else actual_opening end,
                         'buildstart_end', coalesce(actual_opening, closure, #{FUTURE}),
                         'closure', coalesce(line_toyear, closure, #{FUTURE}),
                         'line_url_name', (case
