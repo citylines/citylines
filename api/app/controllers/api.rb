@@ -122,7 +122,7 @@ class Api < App
 
       halt 404 unless @city
 
-      last_modified last_modified_base_data(@city)
+      last_modified ensure_date_is_in_current_year(last_modified_base_data(@city))
 
       Oj.dump({ lines: city_lines(@city),
         systems: city_systems(@city),
@@ -140,15 +140,7 @@ class Api < App
 
       halt 404 unless @city
 
-      last_updated = last_modified_years_data(@city)
-
-      # We add this hack so we have current year's data
-      # if the original data is cached
-      if last_updated.year < Time.now.year
-        last_updated = Time.new(Time.now.year,1,1) + 1
-      end
-
-      last_modified last_updated
+      last_modified ensure_date_is_in_current_year(last_modified_years_data(@city))
 
       Oj.dump(lines_length_by_year(@city))
     end
