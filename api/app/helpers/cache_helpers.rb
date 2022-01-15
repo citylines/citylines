@@ -55,4 +55,11 @@ module CacheHelpers
       union(SystemBackup.where(city_id: city.id).select(Sequel.function(:max, :created_at)), all: true).
       union(LineBackup.where(city_id: city.id).select(Sequel.function(:max, :created_at)), all: true)
   end
+
+  def ensure_date_is_in_current_year(date)
+    if date.year < Time.now.year
+      return Time.new(Time.now.year, 1, 1) + 1
+    end
+    date
+  end
 end
