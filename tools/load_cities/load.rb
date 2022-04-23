@@ -1,9 +1,7 @@
 require_relative "../../api/config/boot.rb"
 require "csv"
 
-filename = ENV['FILENAME']
-
-CSV.foreach(filename, headers:true, header_converters: :symbol) do |row|
+CSV.parse(ARGF.read, headers:true, header_converters: :symbol) do |row|
   city = row[:city].strip
   country = row[:country].strip
   state = row[:state] && row[:state] != '' ? row[:state].strip : nil

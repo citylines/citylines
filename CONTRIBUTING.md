@@ -72,7 +72,11 @@ tools/local_console
 - Load some cities:
 
 ```
-docker exec -it -e FILENAME=tools/load_cities/infoplease_cities_formatted.csv citylines_web_1 bundle exec ruby tools/load_cities/load.rb
+docker exec -it citylines_web_1 bundle exec ruby tools/load_cities/load.rb tools/load_cities/infoplease_cities_formatted.csv
+```
+or
+```
+cat tools/load_cities/infoplease_cities_formatted.csv | docker exec -i citylines_web_1 ruby tools/load_cities/load.rb
 ```
 ### Testing
 
