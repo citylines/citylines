@@ -63,7 +63,8 @@ module OSMHelpers
     properties = {
       osm_id: element[:id],
       osm_tags: element[:tags].to_json,
-      osm_metadata: {version: element[:version]}.to_json
+      osm_metadata: {version: element[:version]}.to_json,
+      osm_imported: true,
     }
 
     if type == "node" && element[:tags] && element[:tags][:name]

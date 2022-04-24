@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 import CutLineControl from './cut-line-control';
 
+const drawThemeDefault = require('@mapbox/mapbox-gl-draw/src/lib/theme');
+import drawThemeOSM from './draw-theme-osm';
+
+
 class Draw extends Component {
   constructor(props, context) {
     super(props, context);
@@ -55,7 +59,9 @@ class Draw extends Component {
         point: true,
         line_string: true,
         trash: true
-      }
+      },
+      userProperties: true,
+      styles: [...drawThemeDefault, ...drawThemeOSM]
     }
 
     // we hardcode the CutLineMode here so we encapsulate the code in
