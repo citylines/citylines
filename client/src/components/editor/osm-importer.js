@@ -6,13 +6,14 @@ class OSMImporter extends PureComponent {
     super(props, context);
 
     this.ROUTES = [
-      'train',
+      'bicycle',
+      'bus',
+      'ferry',
       'light_rail',
       'subway',
+      'train',
       'tram',
-      'bus',
       'trolleybus',
-      'bicycle'
     ];
 
     this.bindedImport = this.import.bind(this);
