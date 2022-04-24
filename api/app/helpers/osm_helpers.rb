@@ -64,7 +64,7 @@ module OSMHelpers
       osm_id: element[:id],
       osm_tags: element[:tags].to_json,
       osm_metadata: {version: element[:version]}.to_json,
-      # osm_imported is a temporary attribute that we use give custom style
+      # osm_imported is a temporary attribute that we use to give custom style
       # to the osm features before they are stored
       osm_imported: true,
     }
