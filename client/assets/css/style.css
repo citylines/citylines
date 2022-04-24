@@ -886,7 +886,6 @@ a[disabled], a[disabled]:hover {
 }
 
 .discussion {
-  max-width: 1000px;
   height: calc(100% - 61.25px);
   overflow: auto;
   display: flex;
@@ -903,6 +902,10 @@ a[disabled], a[disabled]:hover {
 
 .discussion .send-msg button {
   width: 45px;
+}
+
+.discussion .discussion-message {
+  margin-bottom: 15px;
 }
 
 .discussion .discussion-message .discussion-message-header {
