@@ -130,7 +130,7 @@ describe OSMHelpers do
 
       expected_feature = {
         type: "Feature",
-        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station", osm_metadata: {version: 2}.to_json},
+        properties: {osm_id: 81551275, osm_tags: {name: "Test Station"}.to_json, name: "Test Station", osm_metadata: {version: 2}.to_json, osm_imported: true},
         geometry: {
           type: "Point",
           coordinates: [-58.4059239, -34.6065585]
@@ -150,7 +150,7 @@ describe OSMHelpers do
 
       expected_feature = {
         type: "Feature",
-        properties: {osm_id: 26192812, osm_tags: {electrified: "contact_line"}.to_json, osm_metadata: {version: 2}.to_json},
+        properties: {osm_id: 26192812, osm_tags: {electrified: "contact_line"}.to_json, osm_metadata: {version: 2}.to_json, osm_imported: true},
         geometry: {
           type: "LineString",
           coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -180,7 +180,13 @@ describe OSMHelpers do
     expected_features = [
       {
         type: "Feature",
-        properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station", osm_metadata: {version: 1}.to_json},
+        properties: {
+          osm_id: 81551275,
+          osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json,
+          name: "Test Station",
+          osm_metadata: {version: 1}.to_json,
+          osm_imported: true
+        },
         geometry: {
           type: "Point",
           coordinates: [-58.4059239, -34.6065585]
@@ -188,7 +194,7 @@ describe OSMHelpers do
       },
       {
         type: "Feature",
-        properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 2}.to_json},
+        properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 2}.to_json, osm_imported: true},
         geometry: {
           type: "LineString",
           coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -228,7 +234,7 @@ describe OSMHelpers do
       expected_features = [
         {
           type: "Feature",
-          properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 1}.to_json},
+          properties: {osm_id: 26192812, osm_tags: "null", osm_metadata: {version: 1}.to_json, osm_imported: true},
           geometry: {
             type: "LineString",
             coordinates: [[-58.4061094, -34.6077615], [-58.4620776, -34.5855604]]
@@ -263,7 +269,13 @@ describe OSMHelpers do
       expected_features = [
         {
           type: "Feature",
-          properties: {osm_id: 81551275, osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json, name: "Test Station", osm_metadata: {version: 2}.to_json},
+          properties: {
+            osm_id: 81551275,
+            osm_tags: {name: "Test Station", public_transport: "stop_position"}.to_json,
+            name: "Test Station",
+            osm_metadata: {version: 2}.to_json,
+            osm_imported: true
+          },
           geometry: {
             type: "Point",
             coordinates: [-58.4059239, -34.6065585]
