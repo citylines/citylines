@@ -5,7 +5,7 @@ export default [
     "filter": [
       "all",
       ["==", ["get", "active"], "false"],
-      ["==", ["get", "user_osm_imported"], true]
+      ["==", ["get", "user_not_saved"], true]
     ],
     "layout": {
       "line-cap": "round",
@@ -22,7 +22,7 @@ export default [
     "filter": [
       "all",
       ["==", ["get", "active"], "true"],
-      ["==", ["get", "user_osm_imported"], true]
+      ["==", ["get", "user_not_saved"], true]
     ],
     "layout": {
       "line-cap": "round",
@@ -39,7 +39,7 @@ export default [
     "type": "circle",
     "filter": [
       "all",
-      ["==", ["get", "user_osm_imported"], true],
+      ["==", ["get", "user_not_saved"], true],
     ],
     "paint": {
       "circle-color": "#fff",
@@ -52,7 +52,7 @@ export default [
     "filter": [
       "all",
       ["==", ["get", "active"], "false"],
-      ["==", ["get", "user_osm_imported"], true],
+      ["==", ["get", "user_not_saved"], true],
     ],
     "paint": {
       "circle-color": "#ff0000",
@@ -65,7 +65,7 @@ export default [
     "filter": [
       "all",
       ["==", ["get", "active"], "true"],
-      ["==", ["get", "user_osm_imported"], true],
+      ["==", ["get", "user_not_saved"], true],
     ],
     "paint": {
       "circle-color": "#00b400",
