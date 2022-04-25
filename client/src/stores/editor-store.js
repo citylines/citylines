@@ -366,7 +366,6 @@ const EditorStore = Object.assign({}, Store, {
 
     this.setFeatureCreated(urlName, data.features.map(f => {
       f.id = `osm_${f.properties.osm_id}`;
-      f.properties.not_saved = true;
       return f;
     }));
   },
