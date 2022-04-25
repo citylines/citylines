@@ -6,7 +6,7 @@ import CutLineMode from 'mapbox-gl-draw-cut-line-mode';
 import CutLineControl from './cut-line-control';
 
 const drawThemeDefault = require('@mapbox/mapbox-gl-draw/src/lib/theme');
-import drawThemeOSM from './draw-theme-osm';
+import drawThemeCitylines from './draw-theme-citylines';
 
 
 class Draw extends Component {
@@ -61,7 +61,7 @@ class Draw extends Component {
         trash: true
       },
       userProperties: true,
-      styles: [...drawThemeDefault, ...drawThemeOSM]
+      styles: [...drawThemeDefault, ...drawThemeCitylines]
     }
 
     // we hardcode the CutLineMode here so we encapsulate the code in
