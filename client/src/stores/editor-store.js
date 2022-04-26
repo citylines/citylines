@@ -246,6 +246,7 @@ const EditorStore = Object.assign({}, Store, {
 
     const modifiedFeature = cityData.modifiedFeatures[key];
     modifiedFeature.feature = Object.assign({}, feature);
+    modifiedFeature.feature.properties.not_saved = true;
 
     return modifiedFeature;
   },
@@ -290,6 +291,7 @@ const EditorStore = Object.assign({}, Store, {
       feature.properties.buildstart = undefinedOrDefault(feature.properties.buildstart);
       feature.properties.closure = undefinedOrDefault(feature.properties.closure);
       feature.properties.lines = feature.properties.lines || [];
+      feature.properties.not_saved = true;
 
       if (klass == 'Station' && !feature.properties.name) feature.properties.name = '';
 
