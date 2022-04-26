@@ -1,6 +1,6 @@
 export default [
   {
-    "id": "osm-imported-section-inactive",
+    "id": "not-saved-section-inactive",
     "type": "line",
     "filter": [
       "all",
@@ -17,7 +17,7 @@ export default [
     }
   },
   {
-    "id": "osm-imported-section-active",
+    "id": "not-saved-section-active",
     "type": "line",
     "filter": [
       "all",
@@ -35,7 +35,7 @@ export default [
     }
   },
   {
-    "id": "osm-imported-station-halo",
+    "id": "not-saved-station-halo",
     "type": "circle",
     "filter": [
       "all",
@@ -47,7 +47,7 @@ export default [
     }
   },
   {
-    "id": "osm-imported-station-inactive",
+    "id": "not-saved-station-inactive",
     "type": "circle",
     "filter": [
       "all",
@@ -60,7 +60,7 @@ export default [
     }
   },
   {
-    "id": "osm-imported-station-active",
+    "id": "not-saved-station-active",
     "type": "circle",
     "filter": [
       "all",
