@@ -84,7 +84,9 @@ class LinesMapper extends Mapper {
   getLayout(layerName) {
     if (layerName != 'labels_opening') return {};
     return {
-      "text-field": ["get", "name"],
+      'text-field': ['get', 'name'],
+      'text-offset': [0, 1],
+      'text-size': 12,
     }
   }
 
