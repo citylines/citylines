@@ -10,24 +10,22 @@ class LinesMapper extends Mapper {
 
     this.SOURCES_DATA = [
       {
-        mbType: 'line',
-        clType: 'sections',
-        source: 'sections_source',
+        endpoint: 'sections',
+        source_name: 'sections_source',
         layers: [
-          'sections_buildstart',
-          'sections_opening',
-          'sections_hover',
+          {name: 'sections_buildstart', type: 'line'},
+          {name: 'sections_opening', type: 'line'},
+          {name: 'sections_hover', type: 'line'},
         ],
       },
       {
-        mbType: 'circle',
-        clType: 'stations',
-        source: 'stations_source',
+        endpoint: 'stations',
+        source_name: 'stations_source',
         layers: [
-          'stations_buildstart',
-          'stations_opening',
-          'stations_hover',
-          'stations_inner_layer',
+          {name: 'stations_buildstart', type: 'circle'},
+          {name: 'stations_opening', type: 'circle'},
+          {name: 'stations_hover', type: 'circle'},
+          {name: 'stations_inner_layer', type: 'circle'},
         ],
       },
     ];

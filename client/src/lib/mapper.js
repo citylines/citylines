@@ -17,9 +17,9 @@ class Mapper {
   updateLayers() {
     this.sources = this.SOURCES_DATA.map(sourceData => {
         return {
-          name: sourceData.source,
-          layers: sourceData.layers.map(layerName => this.layer(sourceData.source, layerName, sourceData.mbType)),
-          data: `/api/${this.urlName}/source/${sourceData.clType}`
+          name: sourceData.source_name,
+          layers: sourceData.layers.map(layer => this.layer(sourceData.source_name, layer.name, layer.type)),
+          data: `/api/${this.urlName}/source/${sourceData.endpoint}`
         };
       }
     )
@@ -29,7 +29,7 @@ class Mapper {
     // To implement
   }
 
-  layer(sourceName, layerName, mbFeatureType) {
+  layer(sourceName, layerName, featureType) {
     const paint = this.style.get(layerName);
     if (JSON.stringify(this.paintCache[layerName]) != JSON.stringify(paint)) {
       this.paintCache[layerName] = paint;
@@ -43,7 +43,7 @@ class Mapper {
     return {
       id: layerName,
       source: sourceName,
-      type: mbFeatureType,
+      type: featureType,
       paint: this.paintCache[layerName],
       filter: this.filterCache[layerName]
     };
