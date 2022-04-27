@@ -22,7 +22,7 @@ class MouseEvents {
 
   // These are the layers where we are going to listen for mouse events
   calculateLayerNames() {
-    return Object.values(this.mapper.layerNames).flat()
+    return this.mapper.SOURCES_DATA.map(source => source.layers).flat()
       .filter(layer => !layer.includes('hover') && !layer.includes('inner'));
   }
 }

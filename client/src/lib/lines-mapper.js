@@ -8,19 +8,29 @@ class LinesMapper extends Mapper {
 
     this.currentYear = null;
 
-    this.layerNames = {
-      sections: [
-        'sections_buildstart',
-        'sections_opening',
-        'sections_hover'
-      ],
-      stations: [
-        'stations_buildstart',
-        'stations_opening',
-        'stations_hover',
-        'stations_inner_layer'
-      ]
-    };
+    this.SOURCES_DATA = [
+      {
+        mbType: 'line',
+        clType: 'sections',
+        source: 'sections_source',
+        layers: [
+          'sections_buildstart',
+          'sections_opening',
+          'sections_hover',
+        ],
+      },
+      {
+        mbType: 'circle',
+        clType: 'stations',
+        source: 'stations_source',
+        layers: [
+          'stations_buildstart',
+          'stations_opening',
+          'stations_hover',
+          'stations_inner_layer',
+        ],
+      },
+    ];
   }
 
   filter(layer) {
