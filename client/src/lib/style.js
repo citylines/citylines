@@ -31,6 +31,12 @@ class Style {
   }
 
   calculate(type, operation) {
+    if (type == "labels") {
+      return {
+        'text-color': "#000",
+      };
+    }
+
     const colorCategory = type === 'sections' ? 'line-color' : 'circle-color';
     const widthCategory = type === 'sections' ? 'line-width' : 'circle-radius';
 

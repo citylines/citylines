@@ -194,6 +194,7 @@ class Source extends Component {
         source={this.props.name}
         type={layer.type}
         paint={layer.paint}
+        layout={layer.layout}
         filter={layer.filter}
         />
       )
@@ -224,7 +225,8 @@ class Layer extends Component {
       id: this.props.id,
       source: this.props.source,
       type: this.props.type,
-      paint: this.props.paint
+      paint: this.props.paint,
+      layout: this.props.layout,
     });
 
     this.map.setFilter(this.props.id, this.props.filter);

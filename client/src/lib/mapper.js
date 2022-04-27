@@ -45,7 +45,8 @@ class Mapper {
       source: sourceName,
       type: featureType,
       paint: this.paintCache[layerName],
-      filter: this.filterCache[layerName]
+      filter: this.filterCache[layerName],
+      layout: this.getLayout(layerName),
     };
   }
 

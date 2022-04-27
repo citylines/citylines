@@ -26,6 +26,7 @@ class LinesMapper extends Mapper {
           {name: 'stations_opening', type: 'circle'},
           {name: 'stations_hover', type: 'circle'},
           {name: 'stations_inner_layer', type: 'circle'},
+          {name: 'labels_opening', type: 'symbol'},
         ],
       },
     ];
@@ -78,6 +79,13 @@ class LinesMapper extends Mapper {
     filter.push(linesShownFilter);
 
     return filter;
+  }
+
+  getLayout(layerName) {
+    if (layerName != 'labels_opening') return {};
+    return {
+      "text-field": ["get", "name"],
+    }
   }
 
   setYear(year) {
