@@ -218,6 +218,11 @@ class Layer extends Component {
     if (nextProps.filter && nextProps.filter !== this.props.filter) {
       this.map.setFilter(this.props.id, nextProps.filter);
     }
+
+    if (nextProps.layout && this.props.layout &&
+      nextProps.layout.visibility != this.props.layout.visibility) {
+      this.map.setLayoutProperty(this.props.id, 'visibility', nextProps.layout.visibility);
+    }
   }
 
   load() {
