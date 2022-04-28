@@ -7,7 +7,7 @@ class LinesMapper extends Mapper {
     this.linesShown = args.linesShown || [];
 
     this.currentYear = null;
-    this.displayStationsLabels = true;
+    this.displayStationLabels = true;
 
     this.SOURCES_DATA = [
       {
@@ -88,13 +88,17 @@ class LinesMapper extends Mapper {
       'text-field': ['get', 'name'],
       'text-offset': [0, 1.25],
       'text-size': 12,
-      'visibility': this.displayStationsLabels ? 'visible' : 'none',
+      'visibility': this.displayStationLabels ? 'visible' : 'none',
     }
   }
 
   setYear(year) {
     this.currentYear = year;
+    this.updateLayers();
+  }
 
+  toggleStationLabels() {
+    this.displayStationLabels = !this.displayStationLabels;
     this.updateLayers();
   }
 }

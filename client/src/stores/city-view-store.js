@@ -113,6 +113,7 @@ const CityViewStore = Object.assign({}, Store, {
       playing: cityData.timeline ? cityData.timeline.playing : false,
       speed: cityData.timeline ? cityData.timeline.speed : null,
       clickedFeatures: cityData.clickedFeatures,
+      displayStationLabels: cityData.linesMapper ? cityData.linesMapper.displayStationLabels : true,
       mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : [],
       kmOperative: cityData.kmInfo ? cityData.kmInfo.kmOperative : null,
       kmUnderConstruction: cityData.kmInfo ? cityData.kmInfo.kmUnderConstruction : null
@@ -175,6 +176,12 @@ const CityViewStore = Object.assign({}, Store, {
     cityData.linesMapper.updateLayers();
     cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
 
+    this.emitChangeEvent();
+  },
+
+  toggleStationLabels() {
+    const cityData = this.cityData[urlName];
+    cityData.linesMapper.toggleStationLabels();
     this.emitChangeEvent();
   },
 

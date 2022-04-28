@@ -150,7 +150,8 @@ class CityView extends CityBase {
                 speed={this.state.speed}
                 onSpeedChange={this.bindedHandleSpeedChange}
                 showTransportModes={this.state.showTransportModes}
-i               onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
+                onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
+                displayStationLabels={this.state.displayStationLabels}
               /> }
           { this.props.displayShare && <CityToggleableContainer><Share /></CityToggleableContainer>}
           <div className="year-and-km-container">
