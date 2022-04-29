@@ -21,8 +21,8 @@ class CitySettings extends PureComponent {
         <label className="c-field c-field--choice">
           <input
             type="checkbox"
-            checked={this.props.displayStationLabels}
-          /> Display station labels
+            checked={this.props.showStationLabels}
+          /> Show station labels
         </label>
       </CityToggleableContainer>
     )

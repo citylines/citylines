@@ -106,6 +106,7 @@ const CityViewStore = Object.assign({}, Store, {
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
+      showStationLabels: cityData.linesMapper ? cityData.linesMapper.showStationLabels : true,
       sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown.slice() : [],
       years: cityData.years,
@@ -113,7 +114,6 @@ const CityViewStore = Object.assign({}, Store, {
       playing: cityData.timeline ? cityData.timeline.playing : false,
       speed: cityData.timeline ? cityData.timeline.speed : null,
       clickedFeatures: cityData.clickedFeatures,
-      displayStationLabels: cityData.linesMapper ? cityData.linesMapper.displayStationLabels : true,
       mouseEventsLayerNames: cityData.mouseEvents ? cityData.mouseEvents.layerNames : [],
       kmOperative: cityData.kmInfo ? cityData.kmInfo.kmOperative : null,
       kmUnderConstruction: cityData.kmInfo ? cityData.kmInfo.kmUnderConstruction : null
