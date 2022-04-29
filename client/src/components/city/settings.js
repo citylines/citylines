@@ -22,6 +22,7 @@ class CitySettings extends PureComponent {
           <input
             type="checkbox"
             checked={this.props.showStationLabels}
+            onChange={this.props.onShowStationLabelsChange}
           /> Show station labels
         </label>
       </CityToggleableContainer>

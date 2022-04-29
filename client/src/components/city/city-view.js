@@ -92,6 +92,10 @@ class CityView extends CityBase {
     CityViewStore.setShowTransportModes(this.urlName, e.target.checked);
   }
 
+  handleStationLabelsChange() {
+    CityViewStore.toggleStationLabels(this.urlName);
+  }
+
   selectedSystem() {
     // TODO: shall this be deprecated in favour of the systems param?
     // (which allow multiple system?)
@@ -152,6 +156,7 @@ class CityView extends CityBase {
                 showTransportModes={this.state.showTransportModes}
                 onShowTransportModesChange={this.handleTransportModesChange.bind(this)}
                 showStationLabels={this.state.showStationLabels}
+                onShowStationLabelsChange={this.handleStationLabelsChange.bind(this)}
               /> }
           { this.props.displayShare && <CityToggleableContainer><Share /></CityToggleableContainer>}
           <div className="year-and-km-container">

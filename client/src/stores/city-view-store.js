@@ -179,7 +179,7 @@ const CityViewStore = Object.assign({}, Store, {
     this.emitChangeEvent();
   },
 
-  toggleStationLabels() {
+  toggleStationLabels(urlName) {
     const cityData = this.cityData[urlName];
     cityData.linesMapper.toggleStationLabels();
     this.emitChangeEvent();
