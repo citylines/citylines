@@ -33,7 +33,7 @@ class Style {
   calculate(type, operation) {
     if (type == 'labels') {
       return {
-        'text-color': '#464646',
+        'text-color': '#000',
         'text-halo-blur': 2,
         'text-halo-width': 3,
         'text-halo-color': '#fff',
