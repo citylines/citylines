@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
 import CameraControl from './map/camera-control';
-import StationLabelsControl from './map/station-labels';
+import StationLabelsControl from './map/station-labels-control';
 
 class Map extends Component {
   getChildContext() {
