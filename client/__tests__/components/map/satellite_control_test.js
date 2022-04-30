@@ -15,9 +15,11 @@ describe("SatelliteControl", () => {
   const sources = {sections_source: 'a source', stations_source: 'a source'};
   const layers = [{id: 'sections_buildstart'}, {id: 'stations_opening'}, {id: 'gl-draw-layer'}];
   const defaultStyle = 'default-style';
+  const container = document.createElement('div');
 
   it("should init the control with the default style", () => {
     const control = new SatelliteControl({
+      container: container,
       defaultStyle: defaultStyle
     });
 
@@ -44,8 +46,9 @@ describe("SatelliteControl", () => {
 
   it("should init the control with the satellite style", () => {
     const control = new SatelliteControl({
+      container: container,
+      currentStyle: (new SatelliteControl).styles.satellite,
       defaultStyle: defaultStyle,
-      currentStyle: (new SatelliteControl).styles.satellite
     });
 
     const map = new MapMock();
