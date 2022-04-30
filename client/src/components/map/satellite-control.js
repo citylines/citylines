@@ -57,7 +57,7 @@ class SatelliteControl {
   fetchSourcesAndLayers() {
     const currentStyle = this._map.getStyle();
 
-    const layers = currentStyle.layers.filter(l => (l.id.includes('sections_') || l.id.includes('stations_') || l.id.includes('gl-draw')));
+    const layers = currentStyle.layers.filter(l => (l.id.includes('sections_') || l.id.includes('stations_') || l.id.includes('gl-draw') || l.id.includes('labels')));
 
     const sources = {};
     const validSources = ['sections_source', 'stations_source', 'mapbox-gl-draw-cold', 'mapbox-gl-draw-hot'];
