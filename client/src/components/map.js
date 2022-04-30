@@ -49,14 +49,20 @@ class Map extends Component {
     // ---- Controls -----
     // TODO: Move this controls into a separate MapControls component, child of Map
     this.map.addControl(new mapboxgl.NavigationControl());
+
+    const container = document.createElement('div');
+    container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
     this.map.addControl(new SatelliteControl({
-      defaultStyle: props.mapboxStyle,
+      container: container,
       currentStyle: mapStyle,
+      defaultStyle: props.mapboxStyle,
       onStyleChange: this.props.onSatelliteToggle
     }));
     this._stationLabelsControl = new StationLabelsControl({
-      showStationLabels: this.props.showStationLabels,
+      container: container,
       onClick: this.props.onStationLabelsToggle,
+      showStationLabels: this.props.showStationLabels,
     });
     this.map.addControl(this._stationLabelsControl);
     this.map.addControl(new CameraControl({
