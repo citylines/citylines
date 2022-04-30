@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
 import CameraControl from './map/camera-control';
+import StationLabelsControl from './map/station-labels';
 
 class Map extends Component {
   getChildContext() {
@@ -45,15 +46,23 @@ class Map extends Component {
       customAttribution: `<a href="/terms">${counterpart('terms.title')}</a> | &copy; Citylines.co contributors`
     });
 
+    // ---- Controls -----
+    // TODO: Move this controls into a separate MapControls component, child of Map
     this.map.addControl(new mapboxgl.NavigationControl());
     this.map.addControl(new SatelliteControl({
       defaultStyle: props.mapboxStyle,
       currentStyle: mapStyle,
       onStyleChange: this.props.onSatelliteToggle
     }));
+    this._stationLabelsControl = new StationLabelsControl({
+      showStationLabels: this.props.showStationLabels,
+      onClick: this.props.onStationLabelsToggle,
+    });
+    this.map.addControl(this._stationLabelsControl);
     this.map.addControl(new CameraControl({
       onClick: this.props.onCameraClick
     }));
+    // ------------------
 
     this.map.on('moveend', () => {
       if (typeof props.onMove === 'function') props.onMove(this.map);
@@ -139,6 +148,10 @@ class Map extends Component {
       if (this.map.getZoom().toFixed(2) != nextProps.zoom) {
         this.map.flyTo({zoom: nextProps.zoom});
       }
+    }
+
+    if (typeof nextProps.showStationLabels == 'boolean' && nextProps.showStationLabels != this.props.showStationLabels) {
+      this._stationLabelsControl.setState(nextProps.showStationLabels);
     }
   }
 

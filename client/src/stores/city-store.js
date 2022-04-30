@@ -65,6 +65,7 @@ const CityStore = Object.assign({}, Store, {
       playing: cityViewState.playing,
       mouseEventsLayerNames: cityViewState.mouseEventsLayerNames,
       clickedFeatures: cityViewState.clickedFeatures,
+      showStationLabels: cityViewState.showStationLabels,
       drawFeatures: editorState.features,
       drawSelectedFeatureById: editorState.selectedFeatureById,
       drawCurrentMode: editorState.currentMode
