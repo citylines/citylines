@@ -61,12 +61,12 @@ class Map extends Component {
     }));
     this._stationLabelsControl = new StationLabelsControl({
       container: container,
-      onClick: this.props.onStationLabelsToggle,
+      onClick: () => {this.props.onStationLabelsToggle()},
       showStationLabels: this.props.showStationLabels,
     });
     this.map.addControl(this._stationLabelsControl);
     this.map.addControl(new CameraControl({
-      onClick: this.props.onCameraClick
+      onClick: (canvas) => {this.props.onCameraClick(canvas)},
     }));
     // ------------------
 
@@ -156,7 +156,9 @@ class Map extends Component {
       }
     }
 
-    if (typeof nextProps.showStationLabels == 'boolean' && nextProps.showStationLabels != this.props.showStationLabels) {
+    if (typeof nextProps.showStationLabels == 'boolean' &&
+      nextProps.showStationLabels != this.props.showStationLabels &&
+      this._stationLabelsControl) {
       this._stationLabelsControl.setState(nextProps.showStationLabels);
     }
   }

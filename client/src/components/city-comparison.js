@@ -16,6 +16,8 @@ import CitiesStore from '../stores/cities-store';
 import CityStore from '../stores/city-store';
 import CityViewStore from '../stores/city-view-store';
 
+import downloadImgFromMapCanvas from '../lib/map-to-img.js';
+
 class CityComparison extends CityBase {
   constructor(props, context) {
     super(props, context);
@@ -298,6 +300,9 @@ class CityComparison extends CityBase {
             onMouseMove={(point, features) => {CityViewStore.hover(urlName, features)}}
             onMouseClick={(point, features) => {CityViewStore.clickFeatures(urlName, point, features)}}
             onMove={this.handleMapMove.bind(this)}
+            onCameraClick={(canvas) => {downloadImgFromMapCanvas(urlName, canvas)}}
+            showStationLabels={state.showStationLabels}
+            onStationLabelsToggle={() => {CityViewStore.toggleStationLabels(urlName)}}
             disableMouseEvents={state.playing} >
             { state.sources && state.sources.map((source) =>
               <Source
