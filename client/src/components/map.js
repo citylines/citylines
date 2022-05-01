@@ -47,7 +47,7 @@ class Map extends Component {
     });
 
     // ---- Controls -----
-    // TODO: Move this controls into a separate MapControls component, child of Map
+    // TODO: Move these controls into a separate MapControls component, child of Map
     this.map.addControl(new mapboxgl.NavigationControl());
 
     const container = document.createElement('div');
