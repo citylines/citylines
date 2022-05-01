@@ -11,7 +11,6 @@ describe("StationLabelsControl", () => {
       onClick: () => {mockOnClick()},
     });
     control.onAdd();
-
     expect(control._button.className).toEqual("mapbox-gl-draw_ctrl-draw-btn fas fa-comment");
 
     control.setState(true)
