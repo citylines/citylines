@@ -1,5 +1,6 @@
 import {PureComponent} from 'react';
 import queryString from 'query-string';
+import deepEqual from '../lib/deep-equal';
 
 class CityBase extends PureComponent {
   params() {
@@ -14,7 +15,7 @@ class CityBase extends PureComponent {
 
     // If new params are equal to the current ones, we don't push the state to the
     // browser history
-    if (JSON.stringify(params) === JSON.stringify(this.params())) return;
+    if (deepEqual(params, this.params())) return;
 
     this.props.history.push({...this.props.location, search: '?' + queryString.stringify(params)});
   }

@@ -1,3 +1,5 @@
+import deepEqual from './deep-equal';
+
 class Mapper {
   constructor(args) {
     args = args || {};
@@ -37,12 +39,12 @@ class Mapper {
 
   layer(sourceName, layerName, featureType) {
     const paint = this.style.get(layerName);
-    if (JSON.stringify(this.paintCache[layerName]) != JSON.stringify(paint)) {
+    if (!deepEqual(this.paintCache[layerName], paint)) {
       this.paintCache[layerName] = paint;
     }
 
     const filter = this.filter(layerName);
-    if (JSON.stringify(this.filterCache[layerName]) != JSON.stringify(filter)) {
+    if (!deepEqual(this.filterCache[layerName], filter)) {
       this.filterCache[layerName] = filter;
     }
 
@@ -59,7 +61,7 @@ class Mapper {
     if (!ids.length && !this.currentHoverId[type].length) {
       return;
     }
-    if (ids.length && JSON.stringify(this.currentHoverId[type]) == JSON.stringify(ids)) {
+    if (ids.length && deepEqual(this.currentHoverId[type], ids)) {
       return;
     }
 

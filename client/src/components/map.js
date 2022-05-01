@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
 import CameraControl from './map/camera-control';
+import deepEqual from '../lib/deep-equal';
 
 class Map extends Component {
   getChildContext() {
@@ -127,10 +128,10 @@ class Map extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.center && !this.map) {
       this.setMap(nextProps);
-    } else if (nextProps.center && nextProps.center != this.props.center && JSON.stringify(nextProps.center) != JSON.stringify(this.props.center)) {
+    } else if (nextProps.center && nextProps.center != this.props.center && !deepEqual(nextProps.center, this.props.center)) {
       let current = this.map.getCenter().wrap();
       current = [current.lng.toFixed(6), current.lat.toFixed(6)];
-      if (JSON.stringify(nextProps.center) != JSON.stringify(current)) {
+      if (!deepEqual(nextProps.center, current)) {
         this.map.flyTo({center: nextProps.center});
       }
     }
@@ -214,7 +215,7 @@ class Layer extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.filter && nextProps.filter !== this.props.filter) {
+    if (nextProps.filter && !deepEqual(nextProps.filter, this.props.filter)) {
       this.map.setFilter(this.props.id, nextProps.filter);
     }
   }
