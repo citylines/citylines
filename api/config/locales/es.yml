@@ -83,6 +83,7 @@ es:
       title: Ajustes
       timeline_speed: Velocidad de la línea de tiempo
       show_transport_modes: Mostrar modos de transporte
+      show_station_labels: Mostrar nombres de estaciones
       data: Datos
     share: Compartir
     km_operative: 'Operativos: %(km)s km'

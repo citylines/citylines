@@ -82,6 +82,7 @@ fr:
       title: Paramètres
       timeline_speed: Vitesse de défilement
       show_transport_modes: Voir les moyens de transport
+      show_station_labels: Voir les noms des stations
       data: Données
     share: Partager
     km_operative: 'En fonctionnement : %(km)s km'

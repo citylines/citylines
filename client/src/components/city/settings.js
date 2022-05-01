@@ -23,7 +23,7 @@ class CitySettings extends PureComponent {
             type="checkbox"
             checked={this.props.showStationLabels}
             onChange={this.props.onShowStationLabelsChange}
-          /> Show station labels
+          /> <Translate content="city.config.show_station_labels" />
         </label>
       </CityToggleableContainer>
     )

@@ -79,6 +79,7 @@ en:
       title: Settings
       timeline_speed: Timeline speed
       show_transport_modes: Show transport modes
+      show_station_labels: Show station names
       data: Data
     share: Share
     km_operative: 'Operative: %(km)s km'
