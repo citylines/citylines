@@ -7,20 +7,30 @@ class LinesMapper extends Mapper {
     this.linesShown = args.linesShown || [];
 
     this.currentYear = null;
+    this.showStationLabels = true;
 
-    this.layerNames = {
-      sections: [
-        'sections_buildstart',
-        'sections_opening',
-        'sections_hover'
-      ],
-      stations: [
-        'stations_buildstart',
-        'stations_opening',
-        'stations_hover',
-        'stations_inner_layer'
-      ]
-    };
+    this.SOURCES_DATA = [
+      {
+        endpoint: 'sections',
+        source_name: 'sections_source',
+        layers: [
+          {name: 'sections_buildstart', type: 'line'},
+          {name: 'sections_opening', type: 'line'},
+          {name: 'sections_hover', type: 'line'},
+        ],
+      },
+      {
+        endpoint: 'stations',
+        source_name: 'stations_source',
+        layers: [
+          {name: 'stations_buildstart', type: 'circle'},
+          {name: 'stations_opening', type: 'circle'},
+          {name: 'stations_hover', type: 'circle'},
+          {name: 'stations_inner_layer', type: 'circle'},
+          {name: 'labels_opening', type: 'symbol'},
+        ],
+      },
+    ];
   }
 
   filter(layer) {
@@ -72,9 +82,23 @@ class LinesMapper extends Mapper {
     return filter;
   }
 
+  getLayout(layerName) {
+    if (layerName != 'labels_opening') return {};
+    return {
+      'text-field': ['get', 'name'],
+      'text-offset': [0, 1.25],
+      'text-size': 12,
+      'visibility': this.showStationLabels ? 'visible' : 'none',
+    }
+  }
+
   setYear(year) {
     this.currentYear = year;
+    this.updateLayers();
+  }
 
+  toggleStationLabels() {
+    this.showStationLabels = !this.showStationLabels;
     this.updateLayers();
   }
 }

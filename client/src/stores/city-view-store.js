@@ -106,6 +106,7 @@ const CityViewStore = Object.assign({}, Store, {
       systems: cityData.systems,
       transportModes: cityData.transport_modes,
       showTransportModes: cityData.showTransportModes || false,
+      showStationLabels: cityData.linesMapper ? cityData.linesMapper.showStationLabels : true,
       sources: cityData.linesMapper ? cityData.linesMapper.sources : [],
       linesShown: cityData.linesMapper ? cityData.linesMapper.linesShown.slice() : [],
       years: cityData.years,
@@ -175,6 +176,12 @@ const CityViewStore = Object.assign({}, Store, {
     cityData.linesMapper.updateLayers();
     cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
 
+    this.emitChangeEvent();
+  },
+
+  toggleStationLabels(urlName) {
+    const cityData = this.cityData[urlName];
+    cityData.linesMapper.toggleStationLabels();
     this.emitChangeEvent();
   },
 

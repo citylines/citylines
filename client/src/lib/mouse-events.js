@@ -1,5 +1,6 @@
 class MouseEvents {
   constructor(mapper) {
+    this.WITHOUT_EVENTS_KEYWORDS = ['hover', 'inner', 'labels'];
     this.mapper = mapper;
     this.layerNames = this.calculateLayerNames();
   }
@@ -22,8 +23,12 @@ class MouseEvents {
 
   // These are the layers where we are going to listen for mouse events
   calculateLayerNames() {
-    return Object.values(this.mapper.layerNames).flat()
-      .filter(layer => !layer.includes('hover') && !layer.includes('inner'));
+    const allLayerNames = this.mapper.SOURCES_DATA.map(source => source.layers.map(layer => layer.name)).flat();
+    return allLayerNames.filter(layer =>
+      !this.WITHOUT_EVENTS_KEYWORDS.some(keyword =>
+        layer.includes(keyword)
+      )
+    );
   }
 }
 

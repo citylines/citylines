@@ -120,6 +120,15 @@ class City extends CityBase {
     this.updateParams({map: mapStyle});
   }
 
+  onCameraClick(canvas) {
+    downloadImgFromMapCanvas(this.urlName, canvas);
+    ga('send', 'event', 'map', 'download_img', this.urlName);
+  }
+
+  onStationLabelsToggle() {
+    CityViewStore.toggleStationLabels(this.urlName);
+  }
+
   /* Draw Listeners */
 
   onSelectionChange(features) {
@@ -140,11 +149,6 @@ class City extends CityBase {
 
   onDrawModeChange(mode) {
     EditorStore.setMode(this.urlName, mode);
-  }
-
-  onCameraClick(canvas) {
-    downloadImgFromMapCanvas(this.urlName, canvas);
-    ga('send', 'event', 'map', 'download_img', this.urlName);
   }
   /* ------------- */
 
@@ -201,6 +205,8 @@ class City extends CityBase {
             onMouseClick={this.bindedOnMouseClick}
             onSatelliteToggle={this.onSatelliteToggle.bind(this)}
             onCameraClick={this.onCameraClick.bind(this)}
+            showStationLabels={this.state.showStationLabels}
+            onStationLabelsToggle={this.onStationLabelsToggle.bind(this)}
             disableMouseEvents={this.state.playing} >
             { this.state.sources && this.state.sources.map((source) =>
               <Source

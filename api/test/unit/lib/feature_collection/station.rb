@@ -142,7 +142,7 @@ describe FeatureCollection::Station do
         inner_width: @line.width - 2,
         buildstart_end: @station.opening,
         line_url_name: @station.lines.first.url_name,
-      ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata, :lines, :name].include?(f)}
+      ).reject!{|f| [:osm_tags, :osm_id, :osm_metadata, :lines].include?(f)}
 
       formatted_feature = get_station_formatted_features(@station).first
       assert_equal expected_feature, formatted_feature
@@ -155,6 +155,7 @@ describe FeatureCollection::Station do
 
       feature = get_station_formatted_features(@station).first
       expected_properties = {id: "#{@station.id}-0",
+                             name: "Some station",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              buildstart: @station.buildstart,
@@ -173,6 +174,7 @@ describe FeatureCollection::Station do
 
       feature = get_station_formatted_features(@station).first
       expected_properties = {id: "#{@station.id}-0",
+                             name: "Some station",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              opening: @station.opening,
@@ -200,6 +202,7 @@ describe FeatureCollection::Station do
       feature = get_station_formatted_features(@station).first
 
       expected_properties = {id: "#{@station.id}-0",
+                             name: "Some station",
                              klass: "Station",
                              line_url_name: @station.lines.first.url_name,
                              opening: @station_line.fromyear,

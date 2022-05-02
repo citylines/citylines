@@ -64,6 +64,7 @@ module FeatureCollection
                     'geometry',   ST_AsGeoJSON(geometry, #{Sequel::Plugins::Geometry::MAX_PRECISION})::json,
                     'properties', json_build_object(
                         'id', concat(station_id,'-',line_group),
+                        'name', name,
                         'klass', 'Station',
                         'opening', actual_opening,
                         'buildstart', case when actual_opening = min_fromyear or min_fromyear is null then coalesce(buildstart, actual_opening) else actual_opening end,
@@ -91,6 +92,7 @@ module FeatureCollection
       )::text
       from (
         select
+          name,
           stations.id as station_id,
           line_group,
           geometry,

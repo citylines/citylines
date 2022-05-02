@@ -31,6 +31,15 @@ class Style {
   }
 
   calculate(type, operation) {
+    if (type == 'labels') {
+      return {
+        'text-color': '#000',
+        'text-halo-blur': 2,
+        'text-halo-width': 3,
+        'text-halo-color': 'rgba(255,255,255,0.9)',
+      };
+    }
+
     const colorCategory = type === 'sections' ? 'line-color' : 'circle-color';
     const widthCategory = type === 'sections' ? 'line-width' : 'circle-radius';
 

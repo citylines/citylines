@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import SatelliteControl from './map/satellite-control';
 import CameraControl from './map/camera-control';
+import StationLabelsControl from './map/station-labels-control';
 
 class Map extends Component {
   getChildContext() {
@@ -45,15 +46,29 @@ class Map extends Component {
       customAttribution: `<a href="/terms">${counterpart('terms.title')}</a> | &copy; Citylines.co contributors`
     });
 
+    // ---- Controls -----
+    // TODO: Move these controls into a separate MapControls component, child of Map
     this.map.addControl(new mapboxgl.NavigationControl());
+
+    const container = document.createElement('div');
+    container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
     this.map.addControl(new SatelliteControl({
-      defaultStyle: props.mapboxStyle,
+      container: container,
       currentStyle: mapStyle,
+      defaultStyle: props.mapboxStyle,
       onStyleChange: this.props.onSatelliteToggle
     }));
+    this._stationLabelsControl = new StationLabelsControl({
+      container: container,
+      onClick: () => {this.props.onStationLabelsToggle()},
+      showStationLabels: this.props.showStationLabels,
+    });
+    this.map.addControl(this._stationLabelsControl);
     this.map.addControl(new CameraControl({
-      onClick: this.props.onCameraClick
+      onClick: (canvas) => {this.props.onCameraClick(canvas)},
     }));
+    // ------------------
 
     this.map.on('moveend', () => {
       if (typeof props.onMove === 'function') props.onMove(this.map);
@@ -140,6 +155,12 @@ class Map extends Component {
         this.map.flyTo({zoom: nextProps.zoom});
       }
     }
+
+    if (typeof nextProps.showStationLabels == 'boolean' &&
+      nextProps.showStationLabels != this.props.showStationLabels &&
+      this._stationLabelsControl) {
+      this._stationLabelsControl.setState(nextProps.showStationLabels);
+    }
   }
 
   render() {
@@ -194,6 +215,7 @@ class Source extends Component {
         source={this.props.name}
         type={layer.type}
         paint={layer.paint}
+        layout={layer.layout}
         filter={layer.filter}
         />
       )
@@ -217,6 +239,11 @@ class Layer extends Component {
     if (nextProps.filter && nextProps.filter !== this.props.filter) {
       this.map.setFilter(this.props.id, nextProps.filter);
     }
+
+    if (nextProps.layout && this.props.layout &&
+      nextProps.layout.visibility != this.props.layout.visibility) {
+      this.map.setLayoutProperty(this.props.id, 'visibility', nextProps.layout.visibility);
+    }
   }
 
   load() {
@@ -224,7 +251,8 @@ class Layer extends Component {
       id: this.props.id,
       source: this.props.source,
       type: this.props.type,
-      paint: this.props.paint
+      paint: this.props.paint,
+      layout: this.props.layout,
     });
 
     this.map.setFilter(this.props.id, this.props.filter);

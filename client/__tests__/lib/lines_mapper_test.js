@@ -30,12 +30,19 @@ describe("LinesMapper", () => {
       expect(sources[1].name).toEqual('stations_source');
       expect(sources[1].data).toEqual('/api/test-city/source/stations');
       expect(sources[1].layers.map(l => l.id)).
-        toEqual(['stations_buildstart', 'stations_opening', 'stations_hover', 'stations_inner_layer']);
+        toEqual(['stations_buildstart', 'stations_opening', 'stations_hover', 'stations_inner_layer', 'labels_opening']);
       expect([...new Set(sources[1].layers.map(l => l.source))]).toEqual(['stations_source']);
-      expect([...new Set(sources[1].layers.map(l => l.type))]).toEqual(['circle']);
-      sources[1].layers.map(layer => {
+      expect([...new Set(sources[1].layers.map(l => l.type))]).toEqual(['circle', 'symbol']);
+      sources[1].layers.slice(0, -1).map(layer => {
         expect(layer.paint).toBeTruthy();
         expect(layer.filter).toBeTruthy();
+        expect(layer.layout).toEqual({});
+      });
+      sources[1].layers.slice(-1).map(layer => {
+        expect(layer.paint).toBeTruthy();
+        expect(layer.filter).toBeTruthy();
+        expect(layer.layout).toBeTruthy();
+        expect(layer.layout).not.toEqual({});
       });
     });
   });

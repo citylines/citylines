@@ -18,6 +18,13 @@ class CitySettings extends PureComponent {
             onChange={this.props.onShowTransportModesChange}
           /> <Translate content="city.config.show_transport_modes" />
         </label>
+        <label className="c-field c-field--choice">
+          <input
+            type="checkbox"
+            checked={this.props.showStationLabels}
+            onChange={this.props.onShowStationLabelsChange}
+          /> <Translate content="city.config.show_station_labels" />
+        </label>
       </CityToggleableContainer>
     )
   }
