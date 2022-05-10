@@ -38,6 +38,8 @@ describe("LinesMapper", () => {
         expect(layer.filter).toBeTruthy();
         expect(layer.layout).toEqual({});
       });
+
+      // Stations' labels
       sources[1].layers.slice(-1).map(layer => {
         expect(layer.paint).toBeTruthy();
         expect(layer.filter).toBeTruthy();
@@ -70,6 +72,46 @@ describe("LinesMapper", () => {
       expect(linesMapper.currentHoverId).toEqual({
         sections: [],
         stations: [987]
+      });
+    });
+  });
+
+  describe('getLayout', () => {
+    it('should return the right layout for the labels layer', () => {
+      const linesMapper = new LinesMapper({
+        urlName:'test-city',
+        style: new Style([])
+      });
+
+      expect(linesMapper.showStationLabels).toEqual(true);
+      expect(linesMapper.getLayout('labels_opening')).toEqual({
+        'text-field': ['get', 'name'],
+        'text-offset': [0, 1.25],
+        'text-size': 12,
+        'visibility': 'visible',
+      });
+
+      linesMapper.toggleStationLabels();
+      expect(linesMapper.getLayout('labels_opening')).toEqual({
+        'text-field': ['get', 'name'],
+        'text-offset': [0, 1.25],
+        'text-size': 12,
+        'visibility': 'none',
+      });
+    });
+
+    it('should return the right layout for the rest of the layers', () => {
+      const linesMapper = new LinesMapper({
+        urlName:'test-city',
+        style: new Style([])
+      });
+      linesMapper.updateLayers();
+      linesMapper.sources.map((source) => {
+        source.layers.map((layer) => {
+          if (layer.id != 'labels_opening') {
+            expect(linesMapper.getLayout(layer.id)).toEqual({});
+          }
+        });
       });
     });
   });

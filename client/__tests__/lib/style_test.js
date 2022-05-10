@@ -83,6 +83,19 @@ describe("calculate", () => {
 
       expect(style.calculate('stations', 'opening')).toEqual(expectedStyle);
     });
+
+    it("should return the labels style", () => {
+      const style = new Style([]);
+
+      const expectedStyle = {
+        'text-color': '#000',
+        'text-halo-blur': 2,
+        'text-halo-width': 3,
+        'text-halo-color': 'rgba(255,255,255,0.9)',
+      };
+
+      expect(style.calculate('labels', 'opening')).toEqual(expectedStyle);
+    });
   });
 
   describe("sections", () => {
