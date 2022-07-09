@@ -40,7 +40,6 @@ fr:
       a collaborative où chacun peut créer les réseaux de transports du monde
     log_in: Identification
   auth:
-    log_in_with_google: Identification avec Google
     log_in_with_twitter: Identification avec Twitter
     disclaimer: En vous inscrivant vous acceptez les
     disclaimer_link: règles des contributeurs

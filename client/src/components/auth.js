@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import MainStore from '../stores/main-store';
-import GoogleLogin from 'react-google-login';
+import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
 import Translate from 'react-translate-component';
 
 class Auth extends Component {
@@ -24,7 +24,7 @@ class Auth extends Component {
 
   async onGoogleResponse(googleResponse) {
     const url = '/api/auth';
-    const token = googleResponse.tokenId;
+    const token = googleResponse.credential;
     const body = JSON.stringify({token: token});
 
     const response = await fetch(url, {method: 'POST', body: body, credentials: 'same-origin'});
@@ -45,13 +45,11 @@ class Auth extends Component {
             <div className="o-form-element" style={{textAlign: 'center'}}>
             <ul className="auth">
               {this.state.google_client_id &&
-                <li><Translate
-                  component={GoogleLogin}
-                  clientId={this.state.google_client_id}
-                  attributes={{buttonText: "auth.log_in_with_google"}}
-                  fetchBasicProfile={true}
-                  autoLoad={true}
-                  onSuccess={this.onGoogleResponse.bind(this)} /></li>
+                <li>
+                  <GoogleOAuthProvider clientId={this.state.google_client_id}>
+                    <GoogleLogin onSuccess={this.onGoogleResponse.bind(this)} />
+                  </GoogleOAuthProvider>
+                </li>
               }
               <li><Translate content="auth.log_in_with_twitter" component="a" href="/api/auth/twitter" className="twitter"/></li>
               </ul>
