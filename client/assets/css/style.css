@@ -651,11 +651,12 @@ button.save-system {
 ul.auth {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 200px;
 }
 
 ul.auth li {
-  margin-bottom:5px;
+  margin-bottom:10px;
 }
 
 ul.auth a.twitter {
