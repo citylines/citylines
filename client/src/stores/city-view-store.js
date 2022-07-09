@@ -156,6 +156,7 @@ const CityViewStore = Object.assign({}, Store, {
 
   toggleLine(urlName, lineUrlName) {
     const cityData = this.cityData[urlName];
+    if (!cityData.kmInfo) return;
     cityData.linesMapper.toggleLine(lineUrlName);
     cityData.kmInfo.update({lines: cityData.linesMapper.linesShown});
 
@@ -164,7 +165,7 @@ const CityViewStore = Object.assign({}, Store, {
 
   toggleAllLines(urlName, systemId, checked) {
     const cityData = this.cityData[urlName];
-
+    if (!cityData.kmInfo) return;
     const systemLines = cityData.lines.filter((line) => line.system_id == systemId).map(line => line.url_name);
 
     cityData.linesMapper.linesShown = cityData.linesMapper.linesShown.filter(line => !systemLines.includes(line));
@@ -187,6 +188,7 @@ const CityViewStore = Object.assign({}, Store, {
 
   showAllSystems(urlName) {
     const cityData = this.cityData[urlName];
+    if (!cityData.kmInfo) return;
     cityData.linesMapper.linesShown = cityData.lines.map((line) => line.url_name);
 
     cityData.linesMapper.updateLayers();
