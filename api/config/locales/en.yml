@@ -39,7 +39,6 @@ en:
     description: citylines.co is a collaborative platform for mapping the transit systems of the world!
     log_in: Log in
   auth:
-    log_in_with_google: Log in with Google
     log_in_with_twitter: Log in with Twitter
     disclaimer: By logging in you are agreeing to the
     disclaimer_link: contributor terms
