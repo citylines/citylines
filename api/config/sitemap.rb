@@ -4,7 +4,7 @@ require 'fog-aws'
 
 SitemapGenerator::Interpreter.class_eval {
   def alternates(url)
-    LOCALES.keys.map do |lang|
+    I18n.available_locales.map do |lang|
       href = Addressable::URI.parse("#{Sitemap.default_host}#{url}")
       href.query_values = (href.query_values || {}).merge(locale: lang)
       {
