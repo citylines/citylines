@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f docker-compose.test.backend.yml up --exit-code-from web_test
+docker-compose -f docker-compose.test.backend.yml up --exit-code-from web_test $@

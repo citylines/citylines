@@ -3,7 +3,12 @@ require "http/accept"
 module I18nHelpers
   def browser_locale(request)
     return if request.env["HTTP_ACCEPT_LANGUAGE"].blank?
-    languages = HTTP::Accept::Languages.parse(request.env["HTTP_ACCEPT_LANGUAGE"])
+    begin
+      languages = HTTP::Accept::Languages.parse(request.env["HTTP_ACCEPT_LANGUAGE"])
+    rescue HTTP::Accept::ParseError
+      logger.warn("Invalid HTTP_ACCEPT_LANGUAGE header: #{request.env["HTTP_ACCEPT_LANGUAGE"]}")
+      return
+    end
     locales = languages.map{|lang| lang.locale.split("-").first.to_sym}.uniq
     (locales & I18n.available_locales).first
   end
