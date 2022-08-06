@@ -945,3 +945,7 @@ a[disabled], a[disabled]:hover {
 .feature-history > input:checked+.c-card__item, .c-card__item--active {
   font-weight:inherit;
 }
+
+.about.sponsor-button {
+  margin-top: 5px;
+}

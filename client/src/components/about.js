@@ -5,6 +5,7 @@ import Tags from './tags';
 
 class About extends PureComponent {
   render() {
+    const githubSponsorsButton = '<iframe src="https://github.com/sponsors/citylines/button" title="Sponsor citylines" height="35" width="116" style="border: 0;"></iframe>';
     return (
       <div className="o-container o-container--medium u-pillar-box--medium" style={{textAlign: "justify"}}>
         <Tags title="about.title" />
@@ -34,6 +35,10 @@ class About extends PureComponent {
           <Translate component="h2" className="c-heading" content="about.how_to_contribute.title"/>
           <div className="c-paragraph">
             <Translate content="about.how_to_contribute.body" />
+          </div>
+          <div className="c-paragraph">
+            <Translate content="about.how_to_contribute.sponsor" unsafe={true}/>
+            <div className="about sponsor-button"dangerouslySetInnerHTML={{__html: githubSponsorsButton}}></div>
           </div>
 
           <Translate component="h2" className="c-heading" content="about.reach_us.title" />
