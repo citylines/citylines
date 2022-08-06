@@ -15,6 +15,7 @@ fr:
     how_to_contribute:
       title: Comment contribuer ?
       body: Vous êtes invités à contribuer en améliorant ou en ajoutant de nouvelles données dans notre éditeur en ligne, ou en prenant part au développement de la plateforme. Nous recherchons activement des conributeurs concernant les données data, le développement front and backend, et le design.
+      sponsor: 'Vous pouvez également collaborer en aidant financièrement via le <a class="c-link" href="https://github.com/sponsors/citylines">programme de parrainage Github</a>:'
     reach_us:
       title: Nous joindre
       body: 'Découvrez notre <a class="c-link" href="https://github.com/citylines/citylines">dépôt Github</a>, envoyez-nous un email <a class="c-link" href="mailto:info@citylines.co">info at citylines.co</a>, ou <a class="c-link" href="https://gitter.im/citylines/Lobby?utm_source=share-link&amp;utm_medium=link&amp;utm_campaign=share-link">rejoignez notre discussion sur Gitter</a>.'

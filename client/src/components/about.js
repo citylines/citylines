@@ -37,7 +37,7 @@ class About extends PureComponent {
             <Translate content="about.how_to_contribute.body" />
           </div>
           <div className="c-paragraph">
-            You can also help us by sponsoring Citylines through the Github Sponsors Program:
+            <Translate content="about.how_to_contribute.sponsor" unsafe={true}/>
             <div className="about sponsor-button"dangerouslySetInnerHTML={{__html: githubSponsorsButton}}></div>
           </div>
 
