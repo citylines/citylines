@@ -3,12 +3,12 @@ import Translate from 'react-translate-component';
 
 class FeatureLinesEditor extends PureComponent {
   onAddLine(e) {
-    const [line, line_url_name, system] = e.target.value.split(',');
+    const selectedOption = e.target.selectedOptions[0];
 
     const newLine = {
-      line: line,
-      line_url_name: line_url_name,
-      system: system
+      line: selectedOption.getAttribute('line-name'),
+      line_url_name: selectedOption.getAttribute('line-url-name'),
+      system: selectedOption.getAttribute('system-name'),
     }
 
     this.props.onAddLine(newLine);
@@ -49,7 +49,11 @@ class FeatureLinesEditor extends PureComponent {
           <select className="c-field u-xsmall" onChange={this.onAddLine.bind(this)}>
             <Translate component="option" content="editor.feature_viewer.add_line"/>
             {this.remainingLines().map(l =>
-              <option key={l.line.url_name} value={`${l.line.name},${l.line.url_name},${l.system.name}`}>{l.label}</option>
+              <option key={l.line.url_name}
+                      line-name={l.line.name}
+                      line-url-name={l.line.url_name}
+                      system-name={l.system.name}
+              >{l.label}</option>
             )}
           </select>
         </li>
