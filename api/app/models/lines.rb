@@ -15,7 +15,7 @@ class Line < Sequel::Model(:lines)
   many_to_many :stations, join_table: :station_lines
 
   def generate_url_name
-    self.url_name = "#{self.id}-#{self.name.strip.accentless.gsub(/\s|\//,'-').downcase}"
+    self.url_name = "#{self.id}-#{self.name.strip.accentless.gsub(/\s|\.|,|\//,'-').downcase}"
   end
 
   def remove_from_feature(feature)
