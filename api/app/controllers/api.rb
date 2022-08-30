@@ -27,7 +27,7 @@ class Api < App
   get '/i18n' do
     cache_control :no_store
 
-    set_locale(params, nil)
+    set_locale(params, request)
     locale_translations.to_json
   end
 
