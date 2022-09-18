@@ -26,8 +26,9 @@ class TimelineSpeedControl extends PureComponent {
           className="c-range"
           min={this.minSpeed}
           max={this.maxSpeed}
-          value={this.speed()}
-          onChange={this.handleSpeedChange.bind(this)}
+          defaultValue={this.speed()}
+          onKeyUp={this.handleSpeedChange.bind(this)}
+          onMouseUp={this.handleSpeedChange.bind(this)}
         />
       </div>
     )
