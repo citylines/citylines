@@ -11,6 +11,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../../public/assets'),
+    publicPath: '',
     filename: '[name].js',
     chunkFilename: 'chunk.[name].js'
   },
