@@ -1,15 +1,11 @@
 var path = require('path');
 var webpack = require("webpack");
-var ManifestPlugin = require('webpack-manifest-plugin');
+var { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.jsx'),
 
   mode: 'production',
-
-  node: {
-    fs: "empty"
-  },
 
   output: {
     path: path.resolve(__dirname, '../../public/assets'),
@@ -34,8 +30,11 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
       }
     }),
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: 'webpack.manifest.json'
+    }),
+    new webpack.ProvidePlugin({
+       process: 'process/browser'
     })
   ]
 };

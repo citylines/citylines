@@ -11,6 +11,9 @@
   },
   "author": "Bruno Salerno",
   "license": "MIT",
+  "engines": {
+    "node": ">=17.0.0 <18.0.0"
+  },
   "dependencies": {
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@react-oauth/google": "^0.2.6",
@@ -18,6 +21,7 @@
     "counterpart": "^0.18.6",
     "mapbox-gl": "^1.2.1",
     "mapbox-gl-draw-cut-line-mode": "^1.0.4",
+    "process": "^0.11.10",
     "prop-types": "^15.7.2",
     "query-string": "^6.9.0",
     "react": "^16.12.0",
@@ -41,9 +45,10 @@
     "core-js": "3",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-manifest-plugin": "^2.2.0"
+    "util": "^0.12.5",
+    "webpack": "^5.62.2",
+    "webpack-cli": "^4.10",
+    "webpack-manifest-plugin": "^5.0.0"
   },
   "jest": {
     "testURL": "http://localhost/"

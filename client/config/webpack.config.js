@@ -1,14 +1,11 @@
 var path = require('path');
-var ManifestPlugin = require('webpack-manifest-plugin');
+var { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+var webpack = require('webpack')
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.jsx'),
 
   mode: 'development',
-
-  node: {
-    fs: "empty"
-  },
 
   devtool: 'source-map',
 
@@ -30,8 +27,11 @@ module.exports = {
   },
 
   plugins: [
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: 'webpack.manifest.json'
+    }),
+    new webpack.ProvidePlugin({
+       process: 'process/browser'
     })
   ]
 };
