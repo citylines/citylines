@@ -1,6 +1,6 @@
 ![citylines.co](https://cdn.citylines.co/assets/img/citylines-main-aec6d0c73bba3874859021b2e2189296024498d29abc866eacffb5a76c74f3f6.svg)
 ---
-[![CircleCI](https://circleci.com/gh/citylines/citylines/tree/master.svg?style=svg)](https://circleci.com/gh/citylines/citylines/tree/master)
+[![Build Citylines](https://github.com/citylines/citylines/actions/workflows/build.yaml/badge.svg)](https://github.com/citylines/citylines/actions/workflows/build.yaml)
 [![Gitter](https://badges.gitter.im/citylines/Lobby.svg)](https://gitter.im/citylines/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 This is the source code of [citylines.co](https://www.citylines.co), a collaborative platform for mapping the transit systems of the world. The distinct feature of [citylines.co](https://www.citylines.co) is that it puts emphasis on the historical evolution of the networks.
