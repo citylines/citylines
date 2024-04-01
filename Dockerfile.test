@@ -1,4 +1,4 @@
-FROM ruby:2.6.7-slim-stretch
+FROM ruby:2.6.10-slim
 
 RUN \
   apt-get update -qq && \
@@ -23,7 +23,7 @@ WORKDIR /app
 ADD Gemfile Gemfile.lock /app/
 
 RUN \
-  gem install bundler && \
+  gem install bundler -v 2.4.22 && \
   bundle install --jobs 20 --retry 5
 
 ADD . /app/
