@@ -15,6 +15,8 @@ class UserApp < App
     user_id = params[:user_id]
     user = User[user_id]
 
+    halt 404 unless user
+
     {
       name: user.nickname,
       img: user.img_url,
