@@ -66,7 +66,7 @@ class Auth < App
     end
 
     get do
-      callback_url = "http://www.citylines.co/api/auth/twitter/callback"
+      callback_url = "https://www.citylines.co/api/auth/twitter/callback"
 
       request_token = @consumer.get_request_token(oauth_callback: callback_url)
 
