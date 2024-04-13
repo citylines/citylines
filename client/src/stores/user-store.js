@@ -18,7 +18,7 @@ const UserStore = Object.assign({}, Store, {
     }
 
     const json = await response.json();
-    return json;
+    return {...json, error: undefined};
   },
 
   getState() {
