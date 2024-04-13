@@ -18,7 +18,7 @@ const UserStore = Object.assign({}, Store, {
     }
 
     const json = await response.json();
-    return {...json, error: undefined};
+    return {...json, loggedUserId: MainStore.getUser().userid, error: undefined};
   },
 
   getState() {
@@ -32,6 +32,7 @@ const UserStore = Object.assign({}, Store, {
     const json = await response.json();
     this.userData = {...this.userData, ...json};
     MainStore.setUser({...MainStore.getUser(), initials: json.initials});
+    this.emitChangeEvent();
   },
 
   async setGravatar(userId) {
@@ -48,6 +49,7 @@ const UserStore = Object.assign({}, Store, {
     const json = await response.json();
     this.userData = {...this.userData, ...json};
     MainStore.setUser({...MainStore.getUser(), img: json.img});
+    this.emitChangeEvent();
   }
 });
 
