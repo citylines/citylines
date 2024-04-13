@@ -16,12 +16,12 @@ class User extends Component {
 
     this.userId = this.props.match.params.user_id;
 
-    this.bindedOnChange = this.onChange.bind(this);
+    this.boundOnChange = this.onChange.bind(this);
   }
 
   componentWillUnmount() {
-    UserStore.removeChangeListener(this.bindedOnChange);
-    MainStore.removeChangeListener(this.bindedOnChange);
+    UserStore.removeChangeListener(this.boundOnChange);
+    MainStore.removeChangeListener(this.boundOnChange);
   }
 
   onChange() {
@@ -29,8 +29,8 @@ class User extends Component {
   }
 
   componentDidMount() {
-    UserStore.addChangeListener(this.bindedOnChange);
-    MainStore.addChangeListener(this.bindedOnChange);
+    UserStore.addChangeListener(this.boundOnChange);
+    MainStore.addChangeListener(this.boundOnChange);
 
     MainStore.setLoading();
     UserStore.load(this.userId).then(() => MainStore.unsetLoading());
@@ -38,7 +38,6 @@ class User extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.user_id == this.props.match.params.user_id) return;
-
     MainStore.setLoading();
     this.userId = nextProps.match.params.user_id;
     UserStore.load(this.userId).then(() => MainStore.unsetLoading());
