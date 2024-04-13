@@ -92,8 +92,22 @@ class User extends Component {
     UserStore.removeGravatar(this.userId);
   }
 
+  errorMsg() {
+      return (
+        <div className="o-container o-container--medium u-pillar-box--medium">
+          <div className="u-letter-box--large">
+            <h1 className="c-heading"><Translate content="user.error"/></h1>
+          </div>
+        </div>
+      )
+  }
+
   render() {
     if (!this.state || Object.entries(this.state).length === 0) return null;
+
+    if (this.state.error) {
+      return this.errorMsg();
+    }
 
     return (
       <div className="o-container o-container--medium u-pillar-box--medium">

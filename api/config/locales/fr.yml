@@ -251,6 +251,7 @@ fr:
     you_never_contributed: Vous n'avez contribué à aucune ville pour l'instant !
     user_never_contributed: "%(name)s n'a contribué à aucune ville pour l'instant"
     see_cities: Voir les villes
+    error: L'utilisateur n'existe pas :/
   error:
     title: L'URL saisie ne correspond à aucune ville
     subtitle: L'URL peut avoir été mal saisie, ou nous n'avons pas encore préparé la

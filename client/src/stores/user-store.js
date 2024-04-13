@@ -12,6 +12,11 @@ const UserStore = Object.assign({}, Store, {
   async getUserData(userId) {
     const url = `/api/user?user_id=${userId}`;
     const response = await fetch(url);
+
+    if (response.status == 404) {
+      return {error: 'Missing user'}
+    }
+
     const json = await response.json();
     return json;
   },
