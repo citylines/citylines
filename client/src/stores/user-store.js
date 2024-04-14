@@ -18,11 +18,15 @@ const UserStore = Object.assign({}, Store, {
     }
 
     const json = await response.json();
-    return {...json, loggedUserId: MainStore.getUser().userid, error: undefined};
+    return {...json, error: undefined};
   },
 
   getState() {
-    return this.userData;
+    return {
+      ...this.userData,
+	    loggedUserId: MainStore.getUser().userid,
+	    loading: MainStore.getState().loading
+    };
   },
 
   async updateUserNickname(userId, nickname) {
@@ -32,7 +36,6 @@ const UserStore = Object.assign({}, Store, {
     const json = await response.json();
     this.userData = {...this.userData, ...json};
     MainStore.setUser({...MainStore.getUser(), initials: json.initials});
-    this.emitChangeEvent();
   },
 
   async setGravatar(userId) {
@@ -49,7 +52,6 @@ const UserStore = Object.assign({}, Store, {
     const json = await response.json();
     this.userData = {...this.userData, ...json};
     MainStore.setUser({...MainStore.getUser(), img: json.img});
-    this.emitChangeEvent();
   }
 });
 
