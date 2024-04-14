@@ -4,6 +4,7 @@ import Translate from 'react-translate-component';
 import Tags from '../tags';
 import {formatNumber} from '../../lib/number-tools';
 
+import MainStore from '../../stores/main-store';
 import UserStore from '../../stores/user-store';
 
 import Avatar from './avatar';
@@ -20,6 +21,7 @@ class User extends Component {
 
   componentWillUnmount() {
     UserStore.removeChangeListener(this.boundOnChange);
+    MainStore.removeChangeListener(this.boundOnChange);
   }
 
   onChange() {
@@ -28,13 +30,16 @@ class User extends Component {
 
   componentDidMount() {
     UserStore.addChangeListener(this.boundOnChange);
-    UserStore.load(this.userId);
+    MainStore.addChangeListener(this.boundOnChange);
+    MainStore.setLoading();
+    UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.user_id == this.props.match.params.user_id) return;
+    MainStore.setLoading();
     this.userId = nextProps.match.params.user_id;
-    UserStore.load(this.userId);
+    UserStore.load(this.userId).then(() => MainStore.unsetLoading());
   }
 
   km(city) {
@@ -96,7 +101,7 @@ class User extends Component {
   }
 
   render() {
-    if (!this.state || Object.entries(this.state).length === 0) return null;
+    if (!this.state || Object.entries(this.state).length === 0 || this.state.loading) return null;
 
     if (this.state.error) {
       return this.errorMsg();
