@@ -18,7 +18,7 @@
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@react-oauth/google": "^0.2.6",
     "browser-cookies": "^1.1.0",
-    "counterpart": "^0.18.6",
+    "counterpart": "BrunoSalerno/counterpart#remove-util-dependency",
     "mapbox-gl": "^1.2.1",
     "mapbox-gl-draw-cut-line-mode": "^1.0.4",
     "process": "^0.11.10",
@@ -32,7 +32,6 @@
     "react-interpolate-component": "^0.12.0",
     "react-router-dom": "^5.1.2",
     "react-translate-component": "^0.15.1",
-    "util": "^0.12.5",
     "uuid": "^3.0.1",
     "whatwg-fetch": "^1.0.0"
   },
