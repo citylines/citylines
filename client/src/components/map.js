@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOMServer from 'react-dom/server'
+import {renderToStaticMarkup} from 'react-dom/server'
 import counterpart from 'counterpart';
 import mapboxgl from 'mapbox-gl';
 import PropTypes from 'prop-types';
@@ -282,7 +282,7 @@ class Popup extends Component {
   load(props) {
     this.popup = new mapboxgl.Popup()
       .setLngLat(props.point)
-      .setHTML(ReactDOMServer.renderToStaticMarkup(props.children))
+      .setHTML(renderToStaticMarkup(props.children))
       .addTo(this.map)
       .on('close', () => {
         if (typeof props.onClose === 'function') props.onClose();
