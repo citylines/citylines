@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import findDOMNode from 'react-dom';
 import Translate from 'react-translate-component';
 import Tags from './tags';
 
@@ -16,15 +16,15 @@ class Terms extends Component {
 
   checkHash() {
     if (this.props.location.hash.includes('cookies')) {
-      ReactDOM.findDOMNode(this.refs.cookies).scrollIntoView();
+      findDOMNode(this.refs.cookies).scrollIntoView();
     }
 
     if (this.props.location.hash.includes('contributor')) {
-      ReactDOM.findDOMNode(this.refs.contributor).scrollIntoView();
+      findDOMNode(this.refs.contributor).scrollIntoView();
     }
 
     if (this.props.location.hash.includes('privacy')) {
-      ReactDOM.findDOMNode(this.refs.privacy).scrollIntoView();
+      findDOMNode(this.refs.privacy).scrollIntoView();
     }
   }
 

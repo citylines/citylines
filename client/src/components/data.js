@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import {Link} from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Tags from './tags';
@@ -44,7 +44,7 @@ class Data extends Component {
 
   checkHash() {
     if (this.props.location.hash.includes('city')) {
-      ReactDOM.findDOMNode(this.refs.city).scrollIntoView();
+      findDOMNode(this.refs.city).scrollIntoView();
     }
   }
 
