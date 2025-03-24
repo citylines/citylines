@@ -11,7 +11,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
-    dalli (2.7.6)
+    dalli (3.2.3)
     database_cleaner (1.5.3)
     excon (0.71.0)
     execjs (2.7.0)
